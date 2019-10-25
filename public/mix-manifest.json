@@ -1,0 +1,14 @@
+{
+    "/js/admin.js": "/js/admin.js",
+    "/css/app.css": "/css/app.css",
+    "/css/vendor/bootstrap.css": "/css/vendor/bootstrap.css",
+    "/css/vendor/bootstrap_limitless.css": "/css/vendor/bootstrap_limitless.css",
+    "/css/vendor/components.css": "/css/vendor/components.css",
+    "/css/vendor/layout.css": "/css/vendor/layout.css",
+    "/css/vendor/colors.css": "/css/vendor/colors.css",
+    "/js/buyer.js": "/js/buyer.js",
+    "/js/seller.js": "/js/seller.js",
+    "/css/admin.css": "/css/admin.css",
+    "/js/limitless.js": "/js/limitless.js",
+    "/css/seller.css": "/css/seller.css"
+}

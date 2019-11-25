@@ -30,5 +30,15 @@ class SellersTableSeeder extends Seeder
             'email_verified_at' => Carbon::now()->toDateTimeString(),
             'phone_verified_at' => Carbon::now()->toDateTimeString()
         ]);
+
+        Seller::create([
+            'name' => "Shahzaib Munawar",
+            'email' => "m.shahzaib108@gmail.com",
+            'password' => \Hash::make('secret123'),
+            'phone' => "+923484022311",
+            'email_verified_at' => Carbon::now()->toDateTimeString(),
+            'phone_verified_at' => Carbon::now()->toDateTimeString()
+        ]);
+        
     }
 }

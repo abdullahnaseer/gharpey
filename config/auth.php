@@ -1,3 +1,4 @@
+
 <?php
 
 return [
@@ -50,9 +51,8 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
-            'provider' => 'buyer',
-            'hash' => false,
+            'driver' => 'passport',
+            'provider' => 'buyers',
         ],
     ],
 

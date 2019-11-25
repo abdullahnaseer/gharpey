@@ -39,6 +39,6 @@ class SellersTableSeeder extends Seeder
             'email_verified_at' => Carbon::now()->toDateTimeString(),
             'phone_verified_at' => Carbon::now()->toDateTimeString()
         ]);
-        
+
     }
 }

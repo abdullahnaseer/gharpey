@@ -2,6 +2,10 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\EnsureSellerAddressIsAdded;
+use App\Http\Middleware\EnsureSellerEmailIsVerified;
+use App\Http\Middleware\EnsureSellerPhoneIsVerified;
+use App\Http\Middleware\EnsureSellerPhoneIsAdded;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -41,6 +45,13 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
         ],
+
+        'seller.verified' => [
+            EnsureSellerEmailIsVerified::class,
+            EnsureSellerPhoneIsAdded::class,
+            EnsureSellerPhoneIsVerified::class,
+            EnsureSellerAddressIsAdded::class
+        ]
     ];
 
     /**
@@ -60,6 +71,10 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'seller.verified_email' => EnsureSellerEmailIsVerified::class,
+        'seller.verified_phone' => EnsureSellerPhoneIsVerified::class,
+        'seller.input_phone' => EnsureSellerPhoneIsAdded::class,
+        'seller.input_address' => EnsureSellerAddressIsAdded::class
     ];
 
     /**

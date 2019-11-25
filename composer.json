@@ -10,8 +10,15 @@
     "require": {
         "php": "^7.2",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^6.4",
+        "laracasts/flash": "^3.0",
         "laravel/framework": "^6.0",
+        "laravel/nexmo-notification-channel": "^2.2",
+        "laravel/passport": "^8.0",
         "laravel/tinker": "^1.0",
+        "laravelcollective/html": "^6.0",
+        "nexmo/client": "^2.0",
+        "nexmo/laravel": "^2.1",
         "twilio/sdk": "^5.37"
     },
     "require-dev": {

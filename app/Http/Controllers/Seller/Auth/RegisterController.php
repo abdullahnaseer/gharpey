@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Seller\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Seller;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -28,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/seller/dashboard';
 
     /**
      * Create a new controller instance.
@@ -37,7 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest:seller')->except('logout');
     }
 
     /**
@@ -61,6 +62,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:sellers'],
+            'cnic' => ['required', 'string', 'regex:/\d{5}-\d{7}-\d{1}/'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -76,7 +78,19 @@ class RegisterController extends Controller
         return Seller::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'cnic' => $data['cnic'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+
+    /**
+     * Get the guard to be used during registration.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('seller');
     }
 }

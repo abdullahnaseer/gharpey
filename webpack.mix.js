@@ -45,7 +45,6 @@ mix.scripts([
     'resources/js/limitless/demo_pages/dashboard.js',
 ], 'public/js/limitless.js');
 
-
 mix.styles([
     'public/css/vendor/bootstrap.css',
     'public/css/vendor/bootstrap_limitless.css',

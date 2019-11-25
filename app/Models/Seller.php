@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\MustVerifyPhone as MustVerifyPhoneContract;
+use App\Models\Traits\MustVerifyPhone;
+use App\Notifications\ResetPassword;
+use App\Notifications\VerifyEmail;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Seller extends Authenticatable
+class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneContract
 {
-    use Notifiable;
+    use Notifiable, MustVerifyPhone;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +21,10 @@ class Seller extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone', 'password',
+        'name', 'email', 'phone', 'cnic', 'password',
+        'warehouse_location_id', 'warehouse_address',
+        'business_location_id', 'business_address',
+        'return_location_id', 'return_address',
     ];
 
     /**
@@ -39,15 +46,73 @@ class Seller extends Authenticatable
         'phone_verified_at' => 'datetime',
     ];
 
-    public function hasVerifiedPhone()
+    public function hasWarehouseAddress()
     {
-        return ! is_null($this->phone_verified_at);
+        return ! is_null($this->warehouse_location_id) && ! is_null($this->warehouse_address);
     }
 
-    public function markPhoneAsVerified()
+    public function hasBusinessAddress()
     {
-        return $this->forceFill([
-            'phone_verified_at' => $this->freshTimestamp(),
+        return ! is_null($this->business_location_id) && ! is_null($this->business_address);
+    }
+
+    public function hasReturnAddress()
+    {
+        return ! is_null($this->return_location_id) && ! is_null($this->return_address);
+    }
+
+    public function hasAddress()
+    {
+        return ($this->hasWarehouseAddress() &&
+                $this->hasReturnAddress() &&
+                $this->hasBusinessAddress());
+    }
+
+    public function hasPhone()
+    {
+        return ! is_null($this->phone);
+    }
+
+    public function phoneVerifyCode()
+    {
+        $code = random_int(10000, 99999);
+
+        $this->forceFill([
+            'verification_code' => $code
         ])->save();
+
+        return $code;
+    }
+
+    /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail('seller'));
+    }
+
+    /**
+     * Route notifications for the Nexmo channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForNexmo($notification)
+    {
+        return $this->getPhoneForVerification();
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token, 'seller'));
     }
 }

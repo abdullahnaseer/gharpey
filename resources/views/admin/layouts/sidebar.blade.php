@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="media-body">
-                        <div class="media-title font-weight-semibold">Victoria Baker</div>
+                        <div class="media-title font-weight-semibold">{{ auth('admin')->user()->name }}</div>
                         <div class="font-size-xs opacity-50">
                             <i class="icon-pin font-size-sm"></i> &nbsp;Santa Ana, CA
                         </div>
@@ -50,11 +50,16 @@
                 <li class="nav-item">
                     <a href="index.html" class="nav-link active">
                         <i class="icon-home4"></i>
-                        <span>
-									Dashboard
-								</span>
+                        <span>Dashboard</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.location.countries.index')}}" class="nav-link">
+                        <i class="icon-home4"></i>
+                        <span>Locations</span>
+                    </a>
+                </li>
+
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Layouts</span></a>
 

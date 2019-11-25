@@ -19,13 +19,28 @@ class CreateSellersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
 
-            $table->string('phone')->unique()->nullable();
+            $table->string('phone')->nullable();
             $table->string('verification_code')->nullable();
             $table->timestamp('phone_verified_at')->nullable();
+
+            $table->string('cnic')->nullable();
+
+            $table->string('warehouse_address')->nullable();
+            $table->unsignedInteger('warehouse_location_id')->nullable();
+
+            $table->string('business_address')->nullable();
+            $table->unsignedInteger('business_location_id')->nullable();
+
+            $table->string('return_address')->nullable();
+            $table->unsignedInteger('return_location_id')->nullable();
 
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('warehouse_location_id')->references('id')->on('city_areas')->onDelete('set null');
+            $table->foreign('business_location_id')->references('id')->on('city_areas')->onDelete('set null');
+            $table->foreign('return_location_id')->references('id')->on('city_areas')->onDelete('set null');
         });
 
         Schema::create('seller_password_resets', function (Blueprint $table) {

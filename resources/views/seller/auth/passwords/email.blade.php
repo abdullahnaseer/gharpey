@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('seller.layouts.auth')
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-3">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Reset Password') }}</div>
@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('password.email') }}">
+                    <form method="POST" action="{{ route('seller.password.email') }}">
                         @csrf
 
                         <div class="form-group row">

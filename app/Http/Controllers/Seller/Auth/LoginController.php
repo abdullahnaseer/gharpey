@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -25,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin';
+    protected $redirectTo = '/seller/dashboard';
 
     /**
      * Get the guard to be used during authentication.
@@ -34,7 +35,7 @@ class LoginController extends Controller
      */
     protected function guard()
     {
-        return auth()->guard('admin');
+        return auth()->guard('seller');
     }
 
 
@@ -45,7 +46,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('admin.auth.login');
+        return view('seller.auth.login');
     }
 
     /**
@@ -59,4 +60,17 @@ class LoginController extends Controller
         $this->middleware('guest:seller')->except('logout');
         $this->middleware('guest')->except('logout');
     }
+
+
+    /**
+     * The user has logged out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return mixed
+     */
+    protected function loggedOut(Request $request)
+    {
+        return redirect()->route('seller.home');
+    }
+
 }

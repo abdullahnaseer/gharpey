@@ -13,9 +13,15 @@ class AdminsTableSeeder extends Seeder
     public function run()
     {
         Admin::create([
-            'name' => "Admin",
+            'name' => "Muhammad Abdullah",
             'email' => "abdullahnaseer999@gmail.com",
-            'password' => \Hash::make('secret'),
+            'password' => \Hash::make('secret123'),
+        ]);
+
+        Admin::create([
+            'name' => "Malik Abdullah",
+            'email' => "abdullah.billx@gmail.com",
+            'password' => \Hash::make('secret123'),
         ]);
     }
 }

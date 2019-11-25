@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'GharPey') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -21,20 +21,24 @@
     <script src="{{asset('js/seller.js')}}"></script>
 </head>
 <body>
+    <!-- Main navbar -->
+    @include('seller.layouts.navbar', ['auth' => false])
+    <!-- /main navbar -->
 
-<!-- Main navbar -->
-@include('seller.layouts.navbar')
-<!-- /main navbar -->
+    <!-- Page content -->
+    <div class="page-content">
+        @auth('seller')
+            <!-- Main sidebar -->
+            @include('seller.layouts.sidebar')
+            <!-- /main sidebar -->
+        @endauth
 
-<!-- Page content -->
-<div class="page-content">
-    <!-- Main sidebar -->
-    @include('seller.layouts.sidebar')
-    <!-- /main sidebar -->
-
-    @yield('content')
-</div>
-<!-- /page content -->
-
+        <!-- Main content -->
+        <div class="content-wrapper">
+            @yield('content')
+        </div>
+        <!-- /Main content -->
+    </div>
+    <!-- /page content -->
 </body>
 </html>

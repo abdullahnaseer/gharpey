@@ -14,9 +14,9 @@ class CreateCityAreasTable extends Migration
     public function up()
     {
         Schema::create('city_areas', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name');
-            $table->unsignedInteger('city_id')->index();
+            $table->unsignedBigInteger('city_id')->index();
             $table->string('zip')->nullable();
             $table->timestamps();
 

@@ -19,11 +19,13 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             if($guard == 'admin')
-                return redirect('/admin');
+                return redirect('/admin/dashboard');
+            elseif($guard == 'moderator')
+                return redirect('/moderator/dashboard');
             elseif($guard == 'seller')
-                return redirect('/seller');
+                return redirect('/seller/dashboard');
             else
-                return redirect('/buyer');
+                return redirect('/buyer/dashboard');
         }
 
         return $next($request);

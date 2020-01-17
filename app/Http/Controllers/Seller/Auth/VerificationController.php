@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Seller\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Events\Verified;
-use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class VerificationController extends Controller
 {
@@ -44,8 +44,8 @@ class VerificationController extends Controller
     /**
      * Show the email verification notice.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function show(Request $request)
     {
@@ -54,21 +54,30 @@ class VerificationController extends Controller
             : view('seller.auth.verify');
     }
 
+    /**
+     * Get the post register / login redirect path.
+     *
+     * @return string
+     */
+    public function redirectPath()
+    {
+        return route('seller.phone_verification.input');
+    }
 
     /**
      * Mark the authenticated user's email address as verified.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @param Request $request
+     * @return Response
+     * @throws AuthorizationException
      */
     public function verify(Request $request)
     {
-        if (! hash_equals((string) $request->route('id'), (string) $request->user('seller')->getKey())) {
+        if (!hash_equals((string)$request->route('id'), (string)$request->user('seller')->getKey())) {
             throw new AuthorizationException;
         }
 
-        if (! hash_equals((string) $request->route('hash'), sha1($request->user('seller')->getEmailForVerification()))) {
+        if (!hash_equals((string)$request->route('hash'), sha1($request->user('seller')->getEmailForVerification()))) {
             throw new AuthorizationException;
         }
 
@@ -86,8 +95,8 @@ class VerificationController extends Controller
     /**
      * Resend the email verification notification.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function resend(Request $request)
     {
@@ -98,16 +107,5 @@ class VerificationController extends Controller
         $request->user('seller')->sendEmailVerificationNotification();
 
         return back()->with('resent', true);
-    }
-
-
-    /**
-     * Get the post register / login redirect path.
-     *
-     * @return string
-     */
-    public function redirectPath()
-    {
-        return route('seller.phone_verification.input');
     }
 }

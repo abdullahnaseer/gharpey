@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class ServiceRequestAnswerFile extends Model
+{
+    public $timestamps = false;
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'file_path', 'file_type'
+    ];
+
+    /**
+     * Get all of the answers.
+     */
+    public function answer()
+    {
+        return $this->morphMany('App\Models\ServiceRequestAnswer', 'answer');
+    }
+}

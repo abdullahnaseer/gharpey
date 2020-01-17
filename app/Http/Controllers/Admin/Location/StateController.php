@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin\Location;
 
 use App\DataTables\StatesDataTable;
+use App\Http\Controllers\Controller;
 use App\Models\Country;
 use App\Models\State;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 
 class StateController extends Controller
 {
@@ -21,10 +22,22 @@ class StateController extends Controller
     }
 
     /**
+     * Return a listing of the resource.
+     *
+     * @param int $country_id
+     * @return Response
+     */
+    public function json($country_id)
+    {
+        $records = State::where('country_id', $country_id)->get();
+        return $records;
+    }
+
+    /**
      * Display a listing of the resource.
      *
-     * @param  \App\Models\Country $country
-     * @return \Illuminate\Http\Response
+     * @param Country $country
+     * @return Response
      */
     public function index(Country $country)
     {
@@ -35,14 +48,14 @@ class StateController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Country $country
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Country $country
+     * @return Response
      */
     public function store(Request $request, Country $country)
     {
         $request->validate([
-            'name' => 'required|unique:states,name,null,null,country_id,'.$country->id.'|min:3'
+            'name' => 'required|unique:states,name,null,null,country_id,' . $country->id . '|min:3'
         ]);
 
         $state = $country->states()->create(['name' => $request->input('name')]);
@@ -54,15 +67,15 @@ class StateController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Country $country
-     * @param  \App\Models\State $state
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Country $country
+     * @param State $state
+     * @return Response
      */
     public function update(Request $request, Country $country, State $state)
     {
         $request->validate([
-            'name' => 'required|unique:states,name,null,null,country_id,'.$country->id.'|min:3'
+            'name' => 'required|unique:states,name,null,null,country_id,' . $country->id . '|min:3'
         ]);
 
         $state->name = $request->name;
@@ -75,9 +88,9 @@ class StateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Country $country
-     * @param  \App\Models\State $state
-     * @return \Illuminate\Http\Response
+     * @param Country $country
+     * @param State $state
+     * @return Response
      */
     public function destroy(Request $request, Country $country, State $state)
     {

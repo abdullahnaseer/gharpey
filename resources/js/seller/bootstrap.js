@@ -7,7 +7,29 @@ window._ = require('lodash');
  */
 
 try {
-    require('./limitless');
+    // Keentheme"s plugins
+    window.KTUtil = require("../metronic/global/components/base/util");
+    window.KTApp = require("../metronic/global/components/base/app");
+    window.KTAvatar = require("../metronic/global/components/base/avatar");
+    window.KTDialog = require("../metronic/global/components/base/dialog");
+    window.KTHeader = require("../metronic/global/components/base/header");
+    window.KTMenu = require("../metronic/global/components/base/menu");
+    window.KTOffcanvas = require("../metronic/global/components/base/offcanvas");
+    window.KTPortlet = require("../metronic/global/components/base/portlet");
+    window.KTScrolltop = require("../metronic/global/components/base/scrolltop");
+    window.KTToggle = require("../metronic/global/components/base/toggle");
+    window.KTWizard = require("../metronic/global/components/base/wizard");
+    require("../metronic/global/components/base/datatable/core.datatable");
+    require("../metronic/global/components/base/datatable/datatable.checkbox");
+    require("../metronic/global/components/base/datatable/datatable.rtl");
+
+    // Layout scripts
+    window.KTLayout = require("../metronic/global/layout/layout");
+    window.KTChat = require("../metronic/global/layout/chat");
+    require("../metronic/global/layout/demo-panel");
+    require("../metronic/global/layout/offcanvas-panel");
+    require("../metronic/global/layout/quick-panel");
+    require("../metronic/global/layout/quick-search");
 } catch (e) {}
 
 /**

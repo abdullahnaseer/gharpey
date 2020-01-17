@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\EnsureSellerAddressIsAdded;
 use App\Http\Middleware\EnsureSellerEmailIsVerified;
+use App\Http\Middleware\EnsureSellerIsApproved;
 use App\Http\Middleware\EnsureSellerPhoneIsVerified;
 use App\Http\Middleware\EnsureSellerPhoneIsAdded;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -51,6 +52,14 @@ class Kernel extends HttpKernel
             EnsureSellerPhoneIsAdded::class,
             EnsureSellerPhoneIsVerified::class,
             EnsureSellerAddressIsAdded::class
+        ],
+
+        'seller.approved' => [
+            EnsureSellerEmailIsVerified::class,
+            EnsureSellerPhoneIsAdded::class,
+            EnsureSellerPhoneIsVerified::class,
+            EnsureSellerAddressIsAdded::class,
+            EnsureSellerIsApproved::class
         ]
     ];
 
@@ -74,7 +83,8 @@ class Kernel extends HttpKernel
         'seller.verified_email' => EnsureSellerEmailIsVerified::class,
         'seller.verified_phone' => EnsureSellerPhoneIsVerified::class,
         'seller.input_phone' => EnsureSellerPhoneIsAdded::class,
-        'seller.input_address' => EnsureSellerAddressIsAdded::class
+        'seller.input_address' => EnsureSellerAddressIsAdded::class,
+        'seller.approved' => EnsureSellerIsApproved::class
     ];
 
     /**

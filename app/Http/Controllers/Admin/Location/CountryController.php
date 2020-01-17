@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin\Location;
 
 use App\DataTables\CountriesDataTable;
-use App\Models\Country;
-use App\Models\State;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Country;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CountryController extends Controller
 {
@@ -21,9 +21,20 @@ class CountryController extends Controller
     }
 
     /**
+     * Return a listing of the resource.
+     *
+     * @return Response
+     */
+    public function json()
+    {
+        $countries = Country::get();
+        return $countries;
+    }
+
+    /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -34,8 +45,8 @@ class CountryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -52,14 +63,14 @@ class CountryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Spatie\Permission\Models\Country $country
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param \Spatie\Permission\Models\Country $country
+     * @return Response
      */
     public function update(Request $request, Country $country)
     {
         $request->validate([
-            'name' => 'required|unique:countries,name,'.$country->id.'|min:3'
+            'name' => 'required|unique:countries,name,' . $country->id . '|min:3'
         ]);
 
         $country->name = $request->name;
@@ -72,8 +83,8 @@ class CountryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Spatie\Permission\Models\Country $country
-     * @return \Illuminate\Http\Response
+     * @param \Spatie\Permission\Models\Country $country
+     * @return Response
      */
     public function destroy(Request $request, Country $country)
     {

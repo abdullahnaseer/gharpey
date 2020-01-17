@@ -11,11 +11,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(CityAreasSeeder::class);
+
         $this->call(AdminsTableSeeder::class);
-//        $this->call(SellersTableSeeder::class);
+        $this->call(ModeratorsTableSeeder::class);
+        $this->call(SellersTableSeeder::class);
         $this->call(BuyersTableSeeder::class);
 
-        $this->call(CityAreasSeeder::class);
+        $this->call(CategoriesTableSeeder::class);
 
         \Illuminate\Support\Facades\DB::insert(
             'insert into oauth_clients (name, redirect, personal_access_client, password_client, revoked, created_at, updated_at) values (?, ?, ?, ?, ?, ?, ?)'

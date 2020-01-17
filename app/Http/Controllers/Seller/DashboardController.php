@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Support\Renderable;
 
 class DashboardController extends Controller
 {
@@ -15,13 +15,13 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth:seller');
-        $this->middleware('seller.verified');
+        $this->middleware('seller.approved');
     }
 
     /**
      * Show the application dashboard for seller.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index()
     {

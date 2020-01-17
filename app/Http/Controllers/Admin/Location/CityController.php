@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Location;
 
+use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Country;
 use App\Models\State;
-use App\Models\City;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 
 class CityController extends Controller
 {
@@ -21,11 +22,24 @@ class CityController extends Controller
     }
 
     /**
+     * Return a listing of the resource.
+     *
+     * @param int $country_id
+     * @param int $state_id
+     * @return Response
+     */
+    public function json($country_id, $state_id)
+    {
+        $records = City::where('state_id', $state_id)->get();
+        return $records;
+    }
+
+    /**
      * Display a listing of the resource.
      *
-     * @param  \App\Models\Country $country
-     * @param  \App\Models\State $state
-     * @return \Illuminate\Http\Response
+     * @param Country $country
+     * @param State $state
+     * @return Response
      */
     public function index(Country $country, State $state)
     {
@@ -36,15 +50,15 @@ class CityController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Country $country
-     * @param  \App\Models\State $state
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Country $country
+     * @param State $state
+     * @return Response
      */
     public function store(Request $request, Country $country, State $state)
     {
         $request->validate([
-            'name' => 'required|unique:cities,name,null,null,state_id,'.$state->id.'|min:3'
+            'name' => 'required|unique:cities,name,null,null,state_id,' . $state->id . '|min:3'
         ]);
 
         $city = $state->cities()->create(['name' => $request->input('name')]);
@@ -56,16 +70,16 @@ class CityController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Country $country
-     * @param  \App\Models\State $state
-     * @param  \App\Models\City $city
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Country $country
+     * @param State $state
+     * @param City $city
+     * @return Response
      */
     public function update(Request $request, Country $country, State $state, City $city)
     {
         $request->validate([
-            'name' => 'required|unique:cities,name,null,null,state_id,'.$state->id.'|min:3'
+            'name' => 'required|unique:cities,name,null,null,state_id,' . $state->id . '|min:3'
         ]);
 
         $city->name = $request->name;
@@ -78,10 +92,10 @@ class CityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Country $country
-     * @param  \App\Models\State $state
-     * @param  \App\Models\City $city
-     * @return \Illuminate\Http\Response
+     * @param Country $country
+     * @param State $state
+     * @param City $city
+     * @return Response
      */
     public function destroy(Request $request, Country $country, State $state, City $city)
     {

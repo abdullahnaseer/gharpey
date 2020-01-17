@@ -1,4 +1,4 @@
-@extends('seller.layouts.auth')
+@extends('seller.layouts.app')
 
 @section('content')
 <div class="container">
@@ -14,7 +14,11 @@
                         </div>
                     @endif
 
-                    You are on homepage of seller!
+                    You are on homepage
+                        <div>
+                            <a href="{{route("seller.login")}}" class="btn btn-primary">Login</a>
+                            <a href="{{route("seller.register")}}" class="btn btn-primary">Register</a>
+                        </div>
                 </div>
             </div>
         </div>

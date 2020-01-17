@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Seller\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Rules\Phone;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 
 class PhoneVerificationController extends Controller
@@ -25,8 +27,8 @@ class PhoneVerificationController extends Controller
     /**
      * Show the phone form.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function input(Request $request)
     {
@@ -59,9 +61,9 @@ class PhoneVerificationController extends Controller
     /**
      * Mark the authenticated user's phone as verified.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @param Request $request
+     * @return Response
+     * @throws AuthorizationException
      */
     public function verify(Request $request)
     {
@@ -83,8 +85,8 @@ class PhoneVerificationController extends Controller
     /**
      * Resend the phone verification notification.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function resend(Request $request)
     {

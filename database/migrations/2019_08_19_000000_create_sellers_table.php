@@ -18,6 +18,7 @@ class CreateSellersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('approved_at')->nullable();
 
             $table->string('phone')->nullable();
             $table->string('verification_code')->nullable();
@@ -26,13 +27,13 @@ class CreateSellersTable extends Migration
             $table->string('cnic')->nullable();
 
             $table->string('warehouse_address')->nullable();
-            $table->unsignedInteger('warehouse_location_id')->nullable();
+            $table->unsignedBigInteger('warehouse_location_id')->nullable();
 
             $table->string('business_address')->nullable();
-            $table->unsignedInteger('business_location_id')->nullable();
+            $table->unsignedBigInteger('business_location_id')->nullable();
 
             $table->string('return_address')->nullable();
-            $table->unsignedInteger('return_location_id')->nullable();
+            $table->unsignedBigInteger('return_location_id')->nullable();
 
             $table->string('password');
             $table->rememberToken();

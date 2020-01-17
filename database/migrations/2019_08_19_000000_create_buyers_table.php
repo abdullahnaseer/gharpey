@@ -17,10 +17,15 @@ class CreateBuyersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->unsignedBigInteger('location_id')->index()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('location_id')->references('id')->on('city_areas');
         });
 
         Schema::create('buyer_password_resets', function (Blueprint $table) {

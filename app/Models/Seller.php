@@ -25,6 +25,7 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
         'warehouse_location_id', 'warehouse_address',
         'business_location_id', 'business_address',
         'return_location_id', 'return_address',
+        'approved_at'
     ];
 
     /**
@@ -44,6 +45,7 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
     protected $casts = [
         'email_verified_at' => 'datetime',
         'phone_verified_at' => 'datetime',
+        'approved_at' => 'datetime'
     ];
 
     public function hasWarehouseAddress()
@@ -71,6 +73,23 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
     public function hasPhone()
     {
         return ! is_null($this->phone);
+    }
+
+    public function isApproved()
+    {
+        return ! is_null($this->approved_at);
+    }
+
+    /**
+     * Mark the given user's account as approved.
+     *
+     * @return bool
+     */
+    public function approveAccount()
+    {
+        return $this->forceFill([
+            'approved_at' => $this->freshTimestamp(),
+        ])->save();
     }
 
     public function phoneVerifyCode()
@@ -114,5 +133,49 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token, 'seller'));
+    }
+
+    /**
+     * Get the location that owns the Seller.
+     */
+    public function business_location()
+    {
+        return $this->belongsTo(CityArea::class, 'business_location_id', 'id');
+    }
+
+    /**
+     * Get the location that owns the Seller.
+     */
+    public function warehouse_location()
+    {
+        return $this->belongsTo(CityArea::class, 'warehouse_location_id', 'id');
+    }
+
+    /**
+     * Get the location that owns the Seller.
+     */
+    public function return_location()
+    {
+        return $this->belongsTo(CityArea::class, 'return_location_id', 'id');
+    }
+
+    /**
+     * Get the products for the seller.
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'seller_id', 'id');
+    }
+
+    /**
+     * The services that belong to the seller.
+     */
+    public function services()
+    {
+        return $this->belongsToMany(Service::class,
+            'service_seller',
+            'seller_id',
+            'service_id')
+            ->using(ServiceSeller::class);
     }
 }

@@ -41,6 +41,10 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        'moderator' => [
+            'driver' => 'session',
+            'provider' => 'moderators',
+        ],
         'seller' => [
             'driver' => 'session',
             'provider' => 'sellers',
@@ -78,12 +82,14 @@ return [
              'driver' => 'eloquent',
              'model' => App\Models\Admin::class,
          ],
-
+         'moderators' => [
+             'driver' => 'eloquent',
+             'model' => App\Models\Moderator::class,
+         ],
         'sellers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Seller::class,
         ],
-
         'buyers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Buyer::class,
@@ -109,6 +115,11 @@ return [
         'admins' => [
             'provider' => 'admins',
             'table' => 'admin_password_resets',
+            'expire' => 60,
+        ],
+        'moderators' => [
+            'provider' => 'moderators',
+            'table' => 'moderator_password_resets',
             'expire' => 60,
         ],
         'sellers' => [

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Seller\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class LoginController extends Controller
 {
@@ -29,27 +31,6 @@ class LoginController extends Controller
     protected $redirectTo = '/seller/dashboard';
 
     /**
-     * Get the guard to be used during authentication.
-     *
-     * @return \Illuminate\Contracts\Auth\StatefulGuard
-     */
-    protected function guard()
-    {
-        return auth()->guard('seller');
-    }
-
-
-    /**
-     * Show the application's login form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showLoginForm()
-    {
-        return view('seller.auth.login');
-    }
-
-    /**
      * Create a new controller instance.
      *
      * @return void
@@ -57,15 +38,35 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest:admin')->except('logout');
+        $this->middleware('guest:moderator')->except('logout');
         $this->middleware('guest:seller')->except('logout');
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * Show the application's login form.
+     *
+     * @return Response
+     */
+    public function showLoginForm()
+    {
+        return view('seller.auth.login');
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return StatefulGuard
+     */
+    protected function guard()
+    {
+        return auth()->guard('seller');
+    }
 
     /**
      * The user has logged out of the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return mixed
      */
     protected function loggedOut(Request $request)

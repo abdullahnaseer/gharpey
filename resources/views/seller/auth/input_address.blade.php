@@ -1,10 +1,10 @@
-@extends('seller.layouts.auth')
+@extends('seller.layouts.app')
 
 @section('styles')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 
-@section('scripts')
+@push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
@@ -96,12 +96,12 @@
             });
         });
     </script>
-@endsection
+@endpush
 
 @section('content')
     <div class="container">
         <div class="row justify-content-center mt-3">
-            <div class="col-lg-6 col-md-8 col-sm-10">
+            <div class="col-lg-10 col-md-10 col-sm-12">
                 @if (session('status'))
                     <div class="alert alert-success" role="alert">
                         {{ session('status') }}
@@ -112,7 +112,7 @@
                     @csrf
                     @php($types = array('warehouse', 'business', 'return'))
                     @foreach($types as $type)
-                        <div class="card">
+                        <div class="card mb-4">
                             <div class="card-header">{{ucfirst($type)}} Address</div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-center">

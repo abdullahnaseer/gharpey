@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class LoginController extends Controller
 {
@@ -29,27 +31,6 @@ class LoginController extends Controller
     protected $redirectTo = '/admin/dashboard';
 
     /**
-     * Get the guard to be used during authentication.
-     *
-     * @return \Illuminate\Contracts\Auth\StatefulGuard
-     */
-    protected function guard()
-    {
-        return auth()->guard('admin');
-    }
-
-
-    /**
-     * Show the application's login form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showLoginForm()
-    {
-        return view('admin.auth.login');
-    }
-
-    /**
      * Create a new controller instance.
      *
      * @return void
@@ -59,11 +40,30 @@ class LoginController extends Controller
         $this->middleware('guest:admin')->except('logout');
     }
 
+    /**
+     * Show the application's login form.
+     *
+     * @return Response
+     */
+    public function showLoginForm()
+    {
+        return view('admin.auth.login');
+    }
+
+    /**
+     * Get the guard to be used during authentication.
+     *
+     * @return StatefulGuard
+     */
+    protected function guard()
+    {
+        return auth()->guard('admin');
+    }
 
     /**
      * The user has logged out of the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return mixed
      */
     protected function loggedOut(Request $request)

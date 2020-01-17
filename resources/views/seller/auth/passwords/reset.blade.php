@@ -1,65 +1,50 @@
-@extends('seller.layouts.auth')
+@extends('seller.layouts.app' )
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center mt-3">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('seller.password.update') }}">
-                        @csrf
-
-                        <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <div class="kt-login__form">
+        <div class="kt-login__title">
+            <h3>Reset Password</h3>
         </div>
+
+        @if (session('status'))
+            <div class="alert alert-success" role="alert">
+                {{ session('status') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form class="kt-form" method="POST" action="{{ route('seller.password.update') }}" id="kt_login_form">
+            @csrf
+            <input type="hidden" name="token" value="{{ $token }}">
+
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Email Address" name="email" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" placeholder="Password" name="password" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <input id="password-confirm" type="password" placeholder="Confirm Password"
+                       class="form-control" name="password_confirmation" required
+                       autocomplete="new-password">
+            </div>
+
+            <div class="kt-login__actions">
+                <button id="kt_login_forgot_submit"
+                        class="btn btn-brand btn-elevate kt-login__btn-primary">Submit
+                </button>&nbsp;&nbsp;
+                <a href="{{route('seller.login')}}" id="kt_login_forgot_cancel"
+                   class="btn btn-light btn-elevate kt-login__btn-secondary">Cancel</a>
+            </div>
+        </form>
     </div>
-</div>
 @endsection

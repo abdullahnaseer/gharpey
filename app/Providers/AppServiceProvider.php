@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Buyer;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Airlock\Airlock;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Airlock::useUserModel(Buyer::class);
     }
 }

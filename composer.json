@@ -12,6 +12,7 @@
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.4",
         "laracasts/flash": "^3.0",
+        "laravel/airlock": "^0.1.0",
         "laravel/framework": "^6.0",
         "laravel/nexmo-notification-channel": "^2.2",
         "laravel/passport": "^8.0",

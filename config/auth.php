@@ -54,6 +54,11 @@ return [
             'provider' => 'buyers',
         ],
 
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'buyers',
+        ],
+
         'api' => [
             'driver' => 'passport',
             'provider' => 'buyers',

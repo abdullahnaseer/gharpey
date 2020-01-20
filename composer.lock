@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cce34b7b62cd36eb476a2ae1db8707ea",
+    "content-hash": "e4278cb342a1b24b2e84524af8f4d75e",
     "packages": [
         {
             "name": "defuse/php-encryption",
@@ -908,6 +908,66 @@
             ],
             "description": "Easy flash notifications",
             "time": "2019-09-03T18:59:42+00:00"
+        },
+        {
+            "name": "laravel/airlock",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/airlock.git",
+                "reference": "ae43b6eb7d6bcc0e5d32536b85a5092b9b90a78f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/airlock/zipball/ae43b6eb7d6bcc0e5d32536b85a5092b9b90a78f",
+                "reference": "ae43b6eb7d6bcc0e5d32536b85a5092b9b90a78f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/contracts": "^6.0|^7.0",
+                "illuminate/database": "^6.0|^7.0",
+                "illuminate/support": "^6.0|^7.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "^4.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Airlock\\AirlockServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Airlock\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Laravel Airlock provides a featherweight authentication system for SPAs and simple APIs.",
+            "keywords": [
+                "airlock",
+                "auth",
+                "laravel"
+            ],
+            "time": "2020-01-20T16:57:40+00:00"
         },
         {
             "name": "laravel/framework",

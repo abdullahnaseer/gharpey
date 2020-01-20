@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
+//use Laravel\Passport\HasApiTokens;
+use Laravel\Airlock\Airlock;
+use Laravel\Airlock\HasApiTokens;
 
 class Buyer extends Authenticatable implements MustVerifyEmail
 {
@@ -30,6 +32,15 @@ class Buyer extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    /**
+     * Get the access tokens that belong to the user.
+     */
+    public function tokens()
+    {
+        return $this->hasMany(Airlock::$personalAccessTokenModel, 'user_id');
+    }
 
     /**
      * The attributes that should be cast to native types.

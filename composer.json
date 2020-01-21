@@ -15,7 +15,6 @@
         "laravel/airlock": "^0.1.0",
         "laravel/framework": "^6.0",
         "laravel/nexmo-notification-channel": "^2.2",
-        "laravel/passport": "^8.0",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^6.0",
         "nexmo/client": "^2.0",

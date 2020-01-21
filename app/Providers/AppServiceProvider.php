@@ -26,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Airlock::useUserModel(Buyer::class);
+
     }
 }

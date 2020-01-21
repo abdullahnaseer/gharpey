@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
-class LoginController extends Controller
+class LogoutController extends Controller
 {
     /**
      * Create a new login token.
@@ -18,7 +18,7 @@ class LoginController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function login(Request $request): JsonResponse
+    public function logout(Request $request): JsonResponse
     {
         $validator = $this->validator($request->all());
 
@@ -31,22 +31,14 @@ class LoginController extends Controller
                 ], 422);
         }
 
-        $user = \App\Models\Buyer::where('email', $request->email)->first();
-
-        if (! $user || ! Hash::check($request->password, $user->password)) {
-            return response()->json(
-                [
-                    'status' => 422,
-                    'message' => 'Incorrect Credentials',
-                    'errors' => ValidationException::withMessages(['email' => ['The provided credentials are incorrect.']])->errors()
-                ], 422);
-        }
+        $user = $request->user();
+        $user->tokens()->where('name', $request->input('device_name'))->each->delete();
 
         return response()->json(
             [
                 'status' => 200,
-                'message' => 'Successfully Logged In',
-                'data' => ['user' => $user, 'token' => $user->createToken($request->device_name)->plainTextToken]
+                'message' => 'Successfully Logged Out',
+                'data' => ['user' => $user]
             ], 200);
     }
 
@@ -59,8 +51,6 @@ class LoginController extends Controller
     private function validator(array $data): \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make($data, [
-            'email' => 'required|email',
-            'password' => 'required',
             'device_name' => 'required'
         ]);
     }

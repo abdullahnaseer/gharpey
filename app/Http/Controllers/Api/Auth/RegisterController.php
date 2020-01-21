@@ -5,36 +5,40 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Buyer;
 use App\Rules\Phone;
-use App\User;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-
     /**
-     * Create a new controller instance.
+     * Register the user.
      *
-     * @return void
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function __construct()
-    {
-
-    }
-
-    public function register(Request $request)
+    public function register(Request $request): JsonResponse
     {
         $validator = $this->validator($request->all());
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
+        if ($validator->fails())
+            return response()->json(
+                [
+                    'status' => 422,
+                    'message' => 'Validation Failed',
+                    'errors' => $validator->errors()
+                ], 422);
 
         event(new Registered($user = $this->create($request->all())));
 
-        return $user;
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Successfully Logged In',
+                'data' => ['user' => $user, 'token' => $user->createToken($request->device_name)->plainTextToken]
+            ], 200);
     }
 
     /**

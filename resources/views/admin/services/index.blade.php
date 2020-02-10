@@ -10,8 +10,8 @@
     <div class="kt-input-icon kt-input-icon--left">
         <input type="text" class="form-control" placeholder="Search..." id="generalSearch">
         <span class="kt-input-icon__icon kt-input-icon__icon--left">
-                                            <span><i class="la la-search"></i></span>
-                                        </span>
+            <span><i class="la la-search"></i></span>
+        </span>
     </div>
 @endsection
 
@@ -20,37 +20,36 @@
 @endpush
 
 @section('content')
-        <div class="kt-portlet kt-portlet--mobile">
-            <div class="kt-portlet__head kt-portlet__head--lg">
-                <div class="kt-portlet__head-label">
-										<span class="kt-portlet__head-icon">
-											<i class="kt-font-brand flaticon2-line-chart"></i>
-										</span>
-                    <h3 class="kt-portlet__head-title">
-                        Services
-                    </h3>
-                </div>
-                <div class="kt-portlet__head-toolbar">
-                    <div class="kt-portlet__head-wrapper">
-                        <div class="kt-portlet__head-actions">
-                            <a class="btn btn-brand btn-elevate btn-icon-sm"  href="{{route('admin.services.create')}}">
-                                <i class="la la-plus"></i>
-                                New Record
-                            </a>
-                        </div>
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="kt-font-brand flaticon2-line-chart"></i>
+                </span>
+                <h3 class="kt-portlet__head-title">
+                    Services
+                </h3>
+            </div>
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-wrapper">
+                    <div class="kt-portlet__head-actions">
+                        <a class="btn btn-brand btn-elevate btn-icon-sm"  href="{{route('admin.services.create')}}">
+                            <i class="la la-plus"></i>
+                            New Record
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="kt-portlet__body kt-portlet__body--fit">
-                <!--begin: Datatable -->
-                <div class="kt-datatable" id="json_data"></div>
-                <!--end: Datatable -->
-            </div>
         </div>
+        <div class="kt-portlet__body kt-portlet__body--fit">
+            <!--begin: Datatable -->
+            <div class="kt-datatable" id="json_data"></div>
+            <!--end: Datatable -->
+        </div>
+    </div>
 @stop
 
 @push('modals')
-    @include('admin.services.modals.edit')
     @include('admin.services.modals.delete')
 @endpush
 
@@ -143,9 +142,9 @@
                             overflow: 'visible',
                             template: function(row) {
                                 return '\
-						<!--<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details" data-toggle="modal" data-target="#editModal" data-id="' + row.id + '" data-name="' + row.name + '" data-description="' + row.description + '"data-category="' + row.category_id + '">\
+						<a href="{{url("/admin/services")}}/'+row.id+'/edit" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">\
 						 	<i class="la la-edit"></i>\
-						</a>-->\
+						</a>\
 						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Delete" data-toggle="modal" data-target="#deleteModal" data-id="' + row.id + '">\
 							<i class="la la-trash"></i>\
 						</a>\

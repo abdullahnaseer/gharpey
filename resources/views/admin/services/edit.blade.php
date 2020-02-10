@@ -21,7 +21,7 @@
 
 @section('content')
     @php($i = 0)
-    {{ Form::open(['route' => 'admin.services.store', 'method' => 'POST', 'files' => true]) }}
+    {{ Form::model($service, ['route' => ['admin.services.update', $service->id], 'method' => 'PUT', 'files' => true]) }}
     <div class="kt-portlet kt-portlet--mobile">
         <div class="kt-portlet__head kt-portlet__head--lg">
             <div class="kt-portlet__head-label">
@@ -97,6 +97,7 @@
                                 </div>
                             </div>
                             <div class="kt-portlet__body">
+                                {!! Form::hidden('question_id[]', null, ['class' => 'question_id']) !!}
                                 <div class="form-group row">
                                     {!! Form::label('title', 'Title', ['class' => "col-form-label col-md-3"]) !!}
                                     <div class="col-md-9">
@@ -138,6 +139,68 @@
                             </div>
                         </div>
                     @endforeach
+                @else
+                    @foreach($service->questions as $question)
+                        <div class="kt-portlet kt-portlet--sortable">
+                            <div class="kt-portlet__head">
+                                <div class="kt-portlet__head-label">
+                                    <h3 class="kt-portlet__head-title">
+                                        Question
+                                    </h3>
+                                </div>
+                                <div class="kt-portlet__head-toolbar">
+                                    <div class="kt-portlet__head-group">
+                                        <button role="button" class="btn btn-sm btn-icon btn-success btn-elevate btn-icon-md remove-question-btn"><i class="la la-close"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kt-portlet__body">
+                                {!! Form::hidden('question_id[]', $question->id, ['class' => 'question_id']) !!}
+                                <div class="form-group row">
+                                    {!! Form::label('title', 'Title', ['class' => "col-form-label col-md-3"]) !!}
+                                    <div class="col-md-9">
+                                        {!! Form::text('title['.$loop->index.']', $question->title, ['class' => "form-control input-title", "required" => "required"]) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    {!! Form::label('question', 'Question', ['class' => "col-form-label col-md-3"]) !!}
+                                    <div class="col-md-9">
+                                        {!! Form::text('question['.$loop->index.']', $question->question, ['class' => "form-control input-question", "required" => "required"]) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    {!! Form::label('type', 'Type', ['class' => "col-form-label col-md-3"]) !!}
+                                    <div class="col-md-9">
+                                        {!! Form::select('type['.$loop->index.']', array_combine(\App\Models\ServiceQuestion::TYPES, \App\Models\ServiceQuestion::TYPES), $question->type, ['class' => "form-control type select-type", "required" => "required"]) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    {!! Form::label('auth_type', 'Auth Type', ['class' => "col-form-label col-md-3"]) !!}
+                                    <div class="col-md-9">
+                                        {!! Form::select('auth_type['.$loop->index.']', array_combine(\App\Models\ServiceQuestion::AUTH_RULES, \App\Models\ServiceQuestion::AUTH_RULES), $question->auth_rule, ['class' => "form-control select-auth-type", "required" => "required"]) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    {!! Form::label('is_required', 'Is Required?', ['class' => "col-form-label col-md-3"]) !!}
+                                    <div class="col-md-9">
+                                        {!! Form::select('is_required['.$loop->index.']', [true => 'yes' , false => 'no'], $question->is_required, ['class' => "form-control select-required", "required" => "required"]) !!}
+                                    </div>
+                                </div>
+
+                                <div class="choices form-group row" style="display: {{ ($question->type === \App\Models\ServiceQuestion::TYPE_SELECT || $question->type === \App\Models\ServiceQuestion::TYPE_SELECT_MULTIPLE) ? "block" : "none" }};">
+                                    {!! Form::label('choices', 'Choices', ['class' => "col-form-label col-md-3"]) !!}
+                                    <div class="col-md-9">
+                                        @if($question->type === \App\Models\ServiceQuestion::TYPE_SELECT || $question->type === \App\Models\ServiceQuestion::TYPE_SELECT_MULTIPLE)
+                                            @php($c = $question->choices->pluck('choice', 'choice'))
+                                            {!! Form::select('choices['.$loop->index.'][]', $c, $question->choices->pluck('choice'), ['class' => "form-control choices-select", "multiple" => "multiple"]) !!}
+                                        @else
+                                            {!! Form::select('choices['.$loop->index.'][]', [], [], ['class' => "form-control choices-select", "multiple" => "multiple"]) !!}
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 @endif
             </div>
 
@@ -164,6 +227,7 @@
                 </div>
             </div>
             <div class="kt-portlet__body">
+                {!! Form::hidden('question_id[]', null, ['class' => 'question_id']) !!}
                 <div class="form-group row">
                     {!! Form::label('title', 'Title', ['class' => "col-form-label col-md-3"]) !!}
                     <div class="col-md-9">
@@ -219,6 +283,7 @@
         function fixChoiceInputsIndexes()
         {
             $('#kt_sortable_portlets > .kt-portlet').each(function( index ) {
+                $(this).find('.question_id').attr('name', 'question_id['+index+']');
                 $(this).find('.input-title').attr('name', 'title['+index+']');
                 $(this).find('.input-question').attr('name', 'question['+index+']');
                 $(this).find('.select-type').attr('name', 'type['+index+']');
@@ -231,7 +296,6 @@
         }
 
         var KTPortletDraggable = function () {
-
             return {
                 //main function to initiate the module
                 init: function () {

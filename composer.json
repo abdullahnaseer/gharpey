@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "darryldecode/cart": "^4.1",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.4",
         "laracasts/flash": "^3.0",

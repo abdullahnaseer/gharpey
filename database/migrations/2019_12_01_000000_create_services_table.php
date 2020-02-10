@@ -39,6 +39,7 @@ class CreateServicesTable extends Migration
             $table->unsignedBigInteger('seller_id')->index();
             $table->unsignedDecimal('price', 16, 4);
             $table->mediumText('description')->nullable();
+            $table->string('featured_image')->nullable();
             $table->timestamps();
 
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');

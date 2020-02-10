@@ -102,6 +102,7 @@ Route::name('seller.')->prefix('seller')->namespace('Seller')->group(function ()
 Route::namespace('Buyer')->name('buyer.')->group(function () {
     Auth::routes(['verify' => true]);
     Route::get('/', 'HomeController@index')->name('home');
+    Route::resource('products', 'ProductController');
 });
 
 

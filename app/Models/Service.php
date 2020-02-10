@@ -45,7 +45,6 @@ class Service extends Model
         $i = 0;
         foreach ($request->input('type', []) as $input)
         {
-//            return ($input . "-". $i);
             if($input === ServiceQuestion::TYPE_SELECT || $input === ServiceQuestion::TYPE_SELECT_MULTIPLE)
             {
                 $rules['choices.'.$i] = 'required|array';

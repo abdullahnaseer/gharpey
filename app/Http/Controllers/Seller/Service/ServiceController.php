@@ -6,10 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Moderator;
 use App\Models\Service;
 use App\Models\ServiceCategory;
+use App\Models\ServiceSeller;
 use App\Rules\Phone;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\View\View;
 use Str;
 
 class ServiceController extends Controller
@@ -39,12 +43,12 @@ class ServiceController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return Factory|View
      */
     public function index()
     {
         return view('seller.services.index', [
-            'services' => Service::whereNotIn('id', auth('seller')->user()->services()->get()->pluck('id'))->get(),
+            'services' => Service::whereNotIn('id', ServiceSeller::where('seller_id', auth('seller')->id())->get()->pluck('service_id'))->get(),
         ]);
     }
 
@@ -52,23 +56,22 @@ class ServiceController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|min:3|max:255',
+            'service_id' => 'required|exists:services,id',
+            'price' => 'required|numeric|min:100|max:20000',
             'description' => 'required|min:10|max:1000',
             'featured_image' => 'required|file|image',
-            'category_id' => 'required|numeric|exists:service_categories,id',
-            'price' => 'required|numeric|min:100|max:20000',
         ]);
 
-        $fields = $request->only(['name', 'description', 'category_id', 'price']);
+        $fields = $request->only(['service_id', 'name', 'description', 'price']);
         $fields['featured_image'] = $request->file('featured_image')->store('public/services');
+        $fields['seller_id'] = auth('seller')->id();
 
-        $service = auth('seller')->user()->services()->create($fields);
-        $service->update(['slug' => \Illuminate\Support\Str::slug($service->name . ' ' . $service->id)]);
+        $serviceSeller = ServiceSeller::create($fields);
 
         flash('Successfully created the new record!')->success();
         return redirect()->route('seller.services.index');
@@ -79,22 +82,21 @@ class ServiceController extends Controller
      *
      * @param Request $request
      * @param int $record_id
-     * @return Response
+     * @return RedirectResponse
      */
     public function update(Request $request, int $record_id)
     {
         $request->validate([
-            'name' => 'required|min:3|max:255',
-            'description' => 'required|min:10|max:1000',
-            'featured_image' => 'nullable|file|image',
-            'category_id' => 'required|numeric|exists:service_categories,id',
+            'service_id' => 'required|exists:services,id',
             'price' => 'required|numeric|min:100|max:20000',
+            'description' => 'required|min:10|max:1000',
+            'featured_image' => 'required|file|image',
         ]);
 
-        $record = auth('seller')->user()->services()->findOrFail($record_id);
+        $record = ServiceSeller::where('seller_id', auth('seller')->id())->findOrFail($record_id);
 
-        $fields = $request->only(['name', 'description', 'category_id', 'price']);
-        $fields['slug'] = \Illuminate\Support\Str::slug($record->name . ' ' . $record->id);
+        $fields = $request->only(['service_id', 'name', 'description', 'price']);
+        $fields['seller_id'] = auth('seller')->id();
         if($request->hasFile('featured_image'))
             $fields['featured_image'] = $request->file('featured_image')->store('public/services');
 
@@ -108,7 +110,7 @@ class ServiceController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $record_id
-     * @return Response
+     * @return RedirectResponse
      */
     public function destroy(Request $request, int $record_id)
     {

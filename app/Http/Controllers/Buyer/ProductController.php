@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        Product::pagiante(15);
     }
 
     /**
@@ -48,7 +48,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::findOrFail($id);
-        return $product;
+        return view('buyer.products.show', ['product' => $product]);
     }
 
     /**

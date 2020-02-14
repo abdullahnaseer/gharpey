@@ -78,7 +78,7 @@ class Service extends Model
      */
     public function sellers()
     {
-        return $this->belongsToMany(Seller::class, 'service_seller', 'seller_id', 'service_id')
+        return $this->belongsToMany(Seller::class, 'service_seller', 'service_id', 'seller_id')
             ->using(ServiceSeller::class)
             ->withPivot([
                 'id'

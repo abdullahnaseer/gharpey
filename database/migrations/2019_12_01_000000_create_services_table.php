@@ -45,6 +45,15 @@ class CreateServicesTable extends Migration
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
             $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
         });
+
+        Schema::create('service_seller_location', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('service_seller_id')->index();
+            $table->unsignedBigInteger('location_id')->index();
+            $table->string('location_type');
+
+            $table->foreign('service_seller_id')->references('id')->on('service_seller')->onDelete('cascade');
+        });
     }
 
     /**
@@ -54,6 +63,7 @@ class CreateServicesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('service_seller_location');
         Schema::dropIfExists('service_seller');
         Schema::dropIfExists('services');
         Schema::dropIfExists('service_categories');

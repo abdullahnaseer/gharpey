@@ -21,3 +21,4 @@ Route::middleware('auth:airlock')->group(function () {
     Route::get('/user', 'UserController@user');
 });
 
+Route::resource('products', 'ProductController');

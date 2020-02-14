@@ -13,10 +13,9 @@ class CityAreasSeeder extends Seeder
     {
         $country = \App\Models\Country::create(['name' => 'Pakistan']);
 
-        $states = ['Punjab', 'Sindh', 'Balochistan', 'Khyber Pakhtunkhwa', 'Islamabad Capital Territory'];
-        foreach ($states as $state)
-            \App\Models\State::create(['name' => $state, 'country_id' => $country->id]);
-
+        $states = ['PN' => 'Punjab', 'SN' =>  'Sindh', 'BL' => 'Balochistan', 'KP' => 'Khyber Pakhtunkhwa', 'IS' => 'Islamabad Capital Territory'];
+        foreach ($states as $iso => $state)
+            \App\Models\State::create(['name' => $state, 'iso' => $iso, 'country_id' => $country->id]);
 
         $state = \App\Models\State::where('name', 'Islamabad Capital Territory')->first();
         $cities = ['Islamabad'];

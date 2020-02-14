@@ -15,6 +15,7 @@ class State extends Model
      */
     public $fillable = [
         'name',
+        'iso',
         'country_id'
     ];
 

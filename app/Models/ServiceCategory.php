@@ -27,6 +27,6 @@ class ServiceCategory extends Model
      */
     public function services()
     {
-        return $this->belongsToMany('App\Models\Service', 'service_category', 'category_id', 'service_id');
+        return $this->hasMany(Service::class, 'category_id');
     }
 }

@@ -103,6 +103,15 @@ Route::namespace('Buyer')->name('buyer.')->group(function () {
     Auth::routes(['verify' => true]);
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('products', 'ProductController');
+
+    // Service Routes
+    Route::resource('services', 'ServiceController')->only(['index', 'show']);
+    Route::resource('services.sellers', 'ServiceSellerController')->only(['show']);
+    Route::post('/services/{service}', 'ServiceController@serviceRequest');
+    Route::get('/service-categories/{id}', 'ServiceCategoryController@show');
+    Route::get('/services/location/{state_code}', 'LocationController@state');
+    Route::get('/services/location/{state_code}/{city_id}', 'LocationController@city');
+    Route::get('/services/location/{state_code}/{city_slug}/{service_slug}', 'LocationController@service');
 });
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller\Service;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Moderator;
 use App\Models\Service;
 use App\Models\ServiceCategory;
@@ -49,6 +50,7 @@ class ServiceController extends Controller
     {
         return view('seller.services.index', [
             'services' => Service::whereNotIn('id', ServiceSeller::where('seller_id', auth('seller')->id())->get()->pluck('service_id'))->get(),
+            'cities' => City::all()
         ]);
     }
 
@@ -61,9 +63,10 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'service_id' => 'required|exists:services,id',
+            'service_id' => 'required|exists:services,id|unique:service_seller,service_id,NULL,id,seller_id,'.auth()->id(),
             'price' => 'required|numeric|min:100|max:20000',
             'description' => 'required|min:10|max:1000',
+            'cities' => 'required|exists:cities,id',
             'featured_image' => 'required|file|image',
         ]);
 
@@ -72,6 +75,7 @@ class ServiceController extends Controller
         $fields['seller_id'] = auth('seller')->id();
 
         $serviceSeller = ServiceSeller::create($fields);
+        $serviceSeller->states()->sync($request->input('cities'));
 
         flash('Successfully created the new record!')->success();
         return redirect()->route('seller.services.index');
@@ -87,9 +91,10 @@ class ServiceController extends Controller
     public function update(Request $request, int $record_id)
     {
         $request->validate([
-            'service_id' => 'required|exists:services,id',
+            'service_id' => 'required|exists:services,id|unique:service_seller,service_id,'.$record_id.',id,seller_id,'.auth()->id(),
             'price' => 'required|numeric|min:100|max:20000',
             'description' => 'required|min:10|max:1000',
+            'cities' => 'required|exists:cities,id',
             'featured_image' => 'required|file|image',
         ]);
 
@@ -101,6 +106,7 @@ class ServiceController extends Controller
             $fields['featured_image'] = $request->file('featured_image')->store('public/services');
 
         $record->update($fields);
+        $record->states()->sync($request->input('cities'));
 
         flash('Successfully modified the record!')->success();
         return redirect()->route('seller.services.index');
@@ -114,7 +120,7 @@ class ServiceController extends Controller
      */
     public function destroy(Request $request, int $record_id)
     {
-        $record = auth('seller')->user()->services()->findOrFail($record_id);
+        $record = ServiceSeller::where('seller_id', auth('seller')->id())->findOrFail($record_id);
         $record->delete();
         flash('Successfully deleted the record!')->success();
 

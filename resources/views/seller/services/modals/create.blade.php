@@ -26,6 +26,10 @@
                     {!! Form::label('featured_image', 'Featured Image', ['class' => "col-form-label"]) !!}
                     {!! Form::file('featured_image') !!}
                 </div>
+                <div class="form-group">
+                    {!! Form::label('cities', 'Cities Available', ['class' => "col-form-label"]) !!}
+                    {!! Form::select('cities', $cities->pluck('name', 'id'), null, ['class' => "form-control", "multiple" => "multiple"]) !!}
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

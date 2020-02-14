@@ -15,7 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        Product::pagiante(15);
+        $products = Product::paginate(15);
+        return view('buyer.products.index', ['products' => $products]);
     }
 
     /**

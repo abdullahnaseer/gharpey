@@ -15,4 +15,12 @@ class ProductCategory extends Model
         'name', 'slug', 'featured_image'
     ];
 
+    /**
+     * Get the products for the product category.
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id');
+    }
+
 }

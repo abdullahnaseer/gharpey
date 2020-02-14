@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -15,6 +16,8 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $categories = ProductCategory::with('products')->get();
+        return $categories;
         return Product::paginate(50);
     }
 

@@ -76,6 +76,14 @@ class Service extends Model
     /**
      * The sellers that belong to the service.
      */
+    public function service_sellers()
+    {
+        return $this->hasMany(ServiceSeller::class,'service_id');
+    }
+
+    /**
+     * The sellers that belong to the service.
+     */
     public function sellers()
     {
         return $this->belongsToMany(Seller::class, 'service_seller', 'service_id', 'seller_id')

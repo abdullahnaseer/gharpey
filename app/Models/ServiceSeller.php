@@ -14,6 +14,13 @@ class ServiceSeller extends Pivot
      */
     public $incrementing = true;
 
+    /**
+     * Get the owning service_seller_able model.
+     */
+    public function seller()
+    {
+        return $this->belongsTo(\App\Models\Seller::class, 'seller_id');
+    }
 
     /**
      * Get all of the states that are assigned this service.

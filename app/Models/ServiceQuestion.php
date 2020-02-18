@@ -47,7 +47,7 @@ class ServiceQuestion extends Model
      * @var array
      */
     protected $fillable = [
-        'order_priority', 'title', 'question', 'type', 'is_locked', 'is_required', 'auth_rule'
+        'order_priority', 'title', 'name', 'question', 'type', 'is_locked', 'is_required', 'auth_rule'
     ];
 
     /**

@@ -12,13 +12,11 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
     public function index()
     {
-        $categories = ProductCategory::with('products')->get();
-        return $categories;
-        return Product::paginate(50);
+        return ProductCategory::with('products')->get();
     }
 
     /**

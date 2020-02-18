@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Buyer;
 use App\Models\City;
 use App\Models\CityArea;
 use App\Models\Referral;
@@ -20,11 +21,13 @@ use App\Models\ServiceRequestAnswerFile;
 use App\Models\ServiceRequestAnswerText;
 use App\Models\ServiceRequestAnswerTextMultiline;
 use App\Models\ServiceRequestAnswerTime;
+use App\Models\ServiceSeller;
 use App\Models\State;
 use App\Models\User;
 use App\Rules\Phone;
 use App\Rules\ServiceRequestLocation;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -58,45 +61,66 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($service_slug)
+    public function show(Request $request, $service_slug)
     {
-        $service = Service::where('slug', $service_slug)->with('sellers')->firstOrFail();
+        $service = Service::where('slug', $service_slug)->with(['category', 'category.services', 'questions'])->firstOrFail();
+        $cities = City::all();
 
-        return $service;
+        if($request->has('city_id'))
+        {
+            $city = City::with(['state'])->findOrFail($request->input('city_id'));
 
-        return view('services.show', ['service' => $service]);
+            $service_sellers = ServiceSeller::whereHas('cities', function (Builder $query) use ($request) {
+                $query->where('location_id', $request->input('city_id'));
+            })->where('service_id', $service->id)
+                ->with(['seller'])
+                ->get();
+        }
+
+        return view('buyer.services.show', [
+            'service' => $service,
+            'cities' => $cities,
+            'city' => isset($city) ? $city : null,
+            'service_sellers' => isset($service_sellers) ? $service_sellers : null
+        ]);
     }
+
+
 
     /**
      * Store request data.
      *
      * @return \Illuminate\Http\Response
      */
-    public function serviceRequest(Request $request, $service_id)
+    public function store(Request $request)
     {
-        $service = Service::where('id', (int) $service_id)->with('questions')->firstOrFail();
-        $validatedData = $this->validateAnswers($service, $request);
+        $service = Service::with(['questions'])->findOrFail((int) $request->input('service_id'));
+        $service_seller = ServiceSeller::with([])->findOrFail((int) $request->input('service_seller_id'));
+        $validatedData = $this->validateAnswers($service, $service_seller, $request);
+
+//        return $validatedData;
 
         $serviceRequest = ServiceRequest::create([
-            'service_id' => $service->id,
-            'user_id' => auth()->id(),
-            'city_area_id' => CityArea::where('zip', $validatedData['city_id'])->first()->id
+            'service_seller_id' => $service_seller->id,
+            'buyer_id' => auth('buyer')->id(),
+            'location_id' => City::find($validatedData['city_id'])->id
         ]);
 
-        $user = new User();
+        $user = new Buyer();
 
         foreach ($service->questions as $q)
         {
             if(isset($validatedData['answer-'.$q->id]))
             {
-                if($q->is_only_for_authenticated) {
+                if($q->auth_rule == ServiceQuestion::AUTH_REQUIRED) {
                     if (!auth()->check())
                         continue;
                 }
-                if($q->is_only_for_guest) {
+                if($q->auth_rule == ServiceQuestion::AUTH_GUEST) {
                     if (!auth()->guest())
                         continue;
                 }
+
                 $answers = array();
                 if($q->type == ServiceQuestion::TYPE_BOOLEAN)
                     $answers[] = ServiceRequestAnswerBoolean::create(['answer' => $validatedData['answer-'.$q->id]]);
@@ -156,42 +180,41 @@ class ServiceController extends Controller
             }
         }
 
-        if(auth()->guest())
-            $this->registerAndLoginGuestUser($user, $serviceRequest);
+//        if(auth()->guest())
+//            $this->registerAndLoginGuestUser($user, $serviceRequest);
 
-        return view("services.success");
+        return view("buyer.services.success");
 //        return redirect()->back()->with('status', 'Your Request have been submitted successfully!!!');
     }
 
-    private function validateAnswers(Service $service, Request $request)
+    private function validateAnswers(Service $service, ServiceSeller $service_seller, Request $request)
     {
-        $rules = array('city_id' => [
-            'bail',
-            'required',
-            'exists:city_areas,zip',
-            new ServiceRequestLocation($service->id)
-        ]);
+        $rules = [
+            'city_id' => [
+                'bail',
+                'required',
+                'exists:cities,id',
+                Rule::exists('service_seller_location', 'location_id')->where(function ($query) use ($service_seller) {
+                    $query->where('location_type', \App\Models\City::class);
+                    $query->where('service_seller_id', $service_seller->id);
+                }),
+            ]
+        ];
         foreach ($service->questions as $q)
         {
             $rules['answer-'.$q->id] = '';
-            foreach ($q->rules as $rule)
-            {
-                if($rule->rule == ServiceQuestionValidationRule::AUTH_REQUIRED) {
-                    if (!auth()->check()) {
-                        $rules['answer-'.$q->id] = '';
-                        continue 2;
-                    }
-                }
-                if($rule->rule == ServiceQuestionValidationRule::AUTH_GUEST) {
-                    if (!auth()->guest()) {
-                        $rules['answer-'.$q->id] = '';
-                        continue 2;
-                    }
-                }
 
-                if($rule->rule == ServiceQuestionValidationRule::REQUIRED)
-                    $rules['answer-'.$q->id] .= 'required|';
+            if($q->auth_rule == ServiceQuestion::AUTH_REQUIRED) {
+                if (!auth()->check())
+                    continue;
             }
+            if($q->auth_rule == ServiceQuestion::AUTH_GUEST) {
+                if (!auth()->guest())
+                    continue;
+            }
+
+            if($q->is_required)
+                $rules['answer-'.$q->id] .= 'required|';
 
             if($q->type == ServiceQuestion::TYPE_BOOLEAN)
                 $rules['answer-'.$q->id] .= 'boolean';
@@ -228,32 +251,32 @@ class ServiceController extends Controller
         return $request->validate($rules);
     }
 
-    private function registerAndLoginGuestUser(User $user, ServiceRequest $serviceRequest)
-    {
-        $user->save();
-        $user->username = str_slug($user->name, '-') . $user->id;
-        $user->save();
-        $serviceRequest->user_id = $user->id;
-        $serviceRequest->save();
-
-        $user->syncRoles([User::USER]);
-        auth()->loginUsingId($user->id);
-
-        if(\Cookie::get('referrer')){
-            $referrer = User::find((int) \Cookie::get('referrer'));
-
-            if(!is_null($referrer))
-            {
-                Referral::create([
-                    'referee_id' => $user->id,
-                    'referrer_id' => $referrer->id,
-                    'commission' => $referrer->referral_commission
-                ]);
-            }
-        }
-
-        $user->sendEmailVerificationNotification();
-
-        return true;
-    }
+//    private function registerAndLoginGuestUser(User $user, ServiceRequest $serviceRequest)
+//    {
+//        $user->save();
+//        $user->username = str_slug($user->name, '-') . $user->id;
+//        $user->save();
+//        $serviceRequest->user_id = $user->id;
+//        $serviceRequest->save();
+//
+//        $user->syncRoles([User::USER]);
+//        auth()->loginUsingId($user->id);
+//
+//        if(\Cookie::get('referrer')){
+//            $referrer = User::find((int) \Cookie::get('referrer'));
+//
+//            if(!is_null($referrer))
+//            {
+//                Referral::create([
+//                    'referee_id' => $user->id,
+//                    'referrer_id' => $referrer->id,
+//                    'commission' => $referrer->referral_commission
+//                ]);
+//            }
+//        }
+//
+//        $user->sendEmailVerificationNotification();
+//
+//        return true;
+//    }
 }

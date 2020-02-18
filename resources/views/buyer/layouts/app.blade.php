@@ -19,7 +19,7 @@
 
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{url('assets1/css/style.min.css')}}">
-    <link rel="stylesheet" href="{{url('assets1/css/mystyle.min.css')}}">
+{{--    <link rel="stylesheet" href="{{url('assets1/css/mystyle.min.css')}}">--}}
 </head>
 
 <body>
@@ -46,8 +46,10 @@
     <script src="{{url('assets1/js/jquery.min.js')}}"></script>
     <script src="{{url('assets1/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{url('assets1/js/plugins.min.js')}}"></script>
+    <script src="{{url('assets1/js/nouislider.min.js')}}"></script>
 
     <!-- Main JS File -->
     <script src="{{url('assets1/js/main.min.js')}}"></script>
+    @yield('scripts')
 </body>
 </html>

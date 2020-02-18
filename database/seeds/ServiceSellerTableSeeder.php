@@ -28,7 +28,7 @@ class ServiceSellerTableSeeder extends Seeder
                         ->first()))
                     {
                         $serviceSeller->save();
-                        $serviceSeller->cities()->sync($cities->random(3)->pluck('id'));
+                        $serviceSeller->cities()->sync($cities->random(7)->pluck('id'));
                     }
                 });
 

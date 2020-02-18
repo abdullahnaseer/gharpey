@@ -15,9 +15,10 @@ class CreateServiceQuestionsTable extends Migration
     {
         Schema::create('service_questions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('service_id')->index();
-            $table->unsignedBigInteger('seller_service_id')->index()->nullable();
+            $table->unsignedBigInteger('service_id')->index()->nullable();
+            $table->unsignedBigInteger('service_seller_id')->index()->nullable();
             $table->unsignedInteger('order_priority')->default(0);
+            $table->string('name')->nullable();
             $table->string('title')->nullable();
             $table->text('question')->nullable();
             $table->enum('type', [
@@ -40,6 +41,7 @@ class CreateServiceQuestionsTable extends Migration
             $table->timestamps();
 
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
+            $table->foreign('service_seller_id')->references('id')->on('service_seller')->onDelete('cascade');
         });
 
         Schema::create('service_question_choices', function (Blueprint $table) {

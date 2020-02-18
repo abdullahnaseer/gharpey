@@ -15,15 +15,16 @@ class CreateServiceRequestsTable extends Migration
     {
         Schema::create('service_requests', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('service_seller_id')->index();
+            $table->unsignedBigInteger('service_seller_id')->index()->nullable();
             $table->unsignedBigInteger('buyer_id')->index()->nullable();
             $table->unsignedBigInteger('location_id')->index()->nullable();
+            $table->string('location_type')->default(\App\Models\City::class);
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
 
-            $table->foreign('service_seller_id')->references('id')->on('service_seller')->onDelete('cascade');
+            $table->foreign('service_seller_id')->references('id')->on('service_seller')->onDelete('set null');
             $table->foreign('buyer_id')->references('id')->on('buyers')->onDelete('set null');
-            $table->foreign('location_id')->references('id')->on('city_areas')->onDelete('cascade');
+            $table->foreign('location_id')->references('id')->on('cities')->onDelete('set null');
         });
     }
 

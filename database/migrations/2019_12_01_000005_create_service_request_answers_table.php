@@ -65,7 +65,7 @@ class CreateServiceRequestAnswersTable extends Migration
         Schema::create('service_request_answer_files', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('file_path');
-            $table->string('file_type');
+            $table->string('file_type')->nullable();
         });
     }
 

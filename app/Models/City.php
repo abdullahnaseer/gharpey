@@ -51,4 +51,13 @@ class City extends Model
         return $this->hasMany('App\Models\CityArea');
     }
 
+    /**
+     * Get the owning service_seller_able model.
+     */
+    public function service_sellers()
+    {
+        return $this->belongsToMany(\App\Models\ServiceSeller::class, 'service_seller_location', 'location_id', 'service_seller_id')
+                    ->where('location_type', \App\Models\City::class)
+                    ->withPivot([]);
+    }
 }

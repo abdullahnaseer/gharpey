@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\CityArea;
 use App\Models\Service;
+use App\Models\ServiceSeller;
 use App\Models\State;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Jenssegers\Agent\Agent;
 
@@ -78,4 +80,18 @@ class LocationController extends Controller
     }
 
 
+    /**
+     * Show the Sellers of service for specified city.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show($service_slug, $city_id)
+    {
+        $service = Service::where('slug', $service_slug)->firstOrFail();
+        $city = City::with(['state', 'service_sellers' => function($query) use ($service) {
+            $query->where('service_id', $service->id);
+        }])->findOrFail($city_id);
+
+        return $city;
+    }
 }

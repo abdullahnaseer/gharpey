@@ -102,7 +102,6 @@ class CheckoutController extends Controller
     {
         $cart = \Cart::session($request->session()->get('_token'));
         $shipping = $request->session()->get('shipping');
-        dd($request->all());
 
 //        $serviceRequestInvoice = ServiceRequestInvoice::with('request')->findOrFail((int) $serviceRequestInvoiceId);
 
@@ -145,7 +144,7 @@ class CheckoutController extends Controller
             }
 
             \App\Models\Transaction::create([
-                'buyer_id' => is_null($buyer) ? null : $buyer->id,
+                'user_id' => is_null($buyer) ? null : $buyer->id,
                 'reference_id' => $order->id,
                 'reference_type' => \App\Models\ServiceRequestInvoice::class,
                 'type' => \App\Models\Transaction::TYPE_CREDIT,
@@ -155,7 +154,7 @@ class CheckoutController extends Controller
             ]);
 
             \App\Models\Transaction::create([
-                'buyer_id' => is_null($buyer) ? null : $buyer->id,
+                'user_id' => is_null($buyer) ? null : $buyer->id,
                 'reference_id' => $order->id,
                 'reference_type' => \App\Models\ServiceRequestInvoice::class,
                 'type' => \App\Models\Transaction::TYPE_DEBIT,

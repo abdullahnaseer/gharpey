@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -53,10 +55,37 @@ class Buyer extends Authenticatable implements MustVerifyEmail
 
 
     /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail('buyer'));
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token, 'buyer'));
+    }
+
+    /**
      * Get the location that owns the resource.
      */
     public function location()
     {
         return $this->belongsTo(CityArea::class, 'location_id', 'id');
+    }
+
+
+    public function getCart()
+    {
+        return Cart::session(request()->session()->get('_token'))->getContent();
     }
 }

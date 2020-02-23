@@ -11,6 +11,9 @@
     <meta name="description" content="Porto - Bootstrap eCommerce Template">
     <meta name="author" content="SW-THEMES">
 
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{url('assets1/images/icons/favicon.ico')}}">
 
@@ -20,6 +23,7 @@
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{url('assets1/css/style.min.css')}}">
 {{--    <link rel="stylesheet" href="{{url('assets1/css/mystyle.min.css')}}">--}}
+    @yield('styles')
 </head>
 
 <body>
@@ -28,6 +32,10 @@
         @include('buyer.layouts.includes.header')
 
         <main class="main">
+            <div class="container mt-5">
+                @include('flash::message')
+            </div>
+
             @yield('content')
 
             <div class="mb-4"></div>

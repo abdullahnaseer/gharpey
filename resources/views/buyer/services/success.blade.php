@@ -15,7 +15,7 @@
         <h2 class="m-padding-20">Thank You We Have Receive Your Request!</h2>
         <hr>
         <div>
-            @if(auth()->user()->hasVerifiedEmail())
+            @if(auth('buyer')->user()->hasVerifiedEmail())
                 <p>Please allow us a few hours to contact you with your personalized quote base on the information you
                     provided us. </p>
             @else

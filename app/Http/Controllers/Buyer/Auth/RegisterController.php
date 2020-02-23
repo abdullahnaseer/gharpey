@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Buyer\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Buyer;
+use App\Models\City;
 use App\User;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -50,7 +52,9 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('buyer.auth.register');
+        return view('buyer.auth.register', [
+            'cities' => City::with('areas')->get()
+        ]);
     }
 
     /**
@@ -63,8 +67,10 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:buyers'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'address' => ['required', 'string', 'min:8'],
+            'area' => ['required', 'integer', 'exists:city_areas,id'],
         ]);
     }
 
@@ -76,10 +82,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        return Buyer::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'address' => $data['address'],
+            'location_id' => $data['area'],
         ]);
     }
 

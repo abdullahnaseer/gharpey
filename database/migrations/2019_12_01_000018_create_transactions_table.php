@@ -16,8 +16,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedBigInteger('user_id')->index()->nullable();
-            $table->string('user_type')->nullable();
+            $table->unsignedBigInteger('buyer_id')->index()->nullable();
 
             $table->unsignedBigInteger('reference_id')->index()->nullable();
             $table->string('reference_type')->nullable();
@@ -28,7 +27,7 @@ class CreateTransactionsTable extends Migration
             $table->text("note")->nullable();
             $table->timestamps();
 
-//            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('buyer_id')->references('id')->on('buyers')->onDelete('set null');
         });
     }
 

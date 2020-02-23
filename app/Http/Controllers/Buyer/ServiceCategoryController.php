@@ -58,19 +58,6 @@ class ServiceCategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function showOurServices()
-    {
-        $serviceCategory = ServiceCategory::get();
-        $index = 0;
-
-        foreach ($serviceCategory as $service) {
-            $services[$index++] = ServiceCategory::where('slug',$service->slug)->with('services')->firstOrFail();
-        }
-
-        return view('services.our-services')->with('category' , $serviceCategory)
-                                            ->with('services',$services);
-    }
-
     /**
      * Show the form for editing the specified resource.
      *

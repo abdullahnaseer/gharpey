@@ -85,14 +85,14 @@
                 </nav>
 
                 <div class="row row-sm">
-                        @foreach($products as $product)
+                    @foreach($products as $product)
                         <div class="col-6 col-md-4">
                             <div class="product">
                                 <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
+                                    <a href="{{route('buyer.products.show', [$product->slug])}}" class="product-image">
                                         <img src="{{str_replace("public","/storage",$product->featured_image)}}" alt="product">
                                     </a>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
+                                    {{--                                    <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
                                 </figure>
                                 <div class="product-details">
                                     <div class="ratings-container">
@@ -104,30 +104,35 @@
                                     </div>
                                     <!-- End .product-container -->
                                     <h2 class="product-title  m-b-5">
-                                        <a href="product.html">
+                                        <a href="{{route('buyer.products.show', [$product->slug])}}">
                                             {{$product->name}} </a>
                                     </h2>
                                     <div class="price-box  m-b-5">
-                                        <span class="product-price">{{$product->price}}</span>
+                                        <span class="product-price">Rs. {{$product->price}}</span>
                                     </div>
                                     <!-- End .price-box -->
                                     <p class="product-location float-left d-flex ml-5  m-b-5">
                                         <img src="assets/images/svg/shop/shop.svg" class="mr-2 d-inline-block" width="15" alt="">
 
-                                        <a href="product.html">ShopName</a>
+                                        <a href="{{route('buyer.products.show', [$product->id])}}">{{$product->seller->name}}</a>
                                     </p>
                                     <p class="product-location mr-5 text-right">
                                         <img src="assets/images/svg/shop/map-pin.svg" width="15" alt="">
-                                        <a href="product.html">Sialkot</a>
+                                        <a href="#">Islamabad</a>
                                     </p>
                                     <div class="product-action ml-5">
 
+                                        @if(is_null($product->cart_item))
+                                            <a href="{{route('buyer.products.cart.create', [$product->id])}}" class="paction add-cart" title="Add to Cart">
+                                                <span>Add to Cart</span>
+                                            </a>
+                                        @else
+                                            <a href="{{route('buyer.products.cart.create', [$product->id, 'remove'])}}" class="paction add-cart" title="Add to Cart">
+                                                <span>Remove from Cart</span>
+                                            </a>
+                                        @endif
 
-                                        <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                            <span>Add to Cart</span>
-                                        </a>
-
-                                        <a href="#" class="paction add-wishlist" title="Add to Wishlist">
+                                        <a href="{{route('buyer.products.wishlist.create', [$product->id])}}" class="paction add-wishlist" title="Add to Wishlist">
                                             <span>Add to Wishlist</span>
                                         </a>
                                     </div>
@@ -136,36 +141,14 @@
                                 <!-- End .product-details -->
                             </div>
                         </div>
-                        @endforeach
-                        <!-- End .product -->
+                @endforeach
+                <!-- End .product -->
 
                     <!-- End .col-md-4 -->
                 </div>
                 <!-- End .row -->
 
-                <nav class="toolbox toolbox-pagination">
-                    <div class="toolbox-item toolbox-show">
-                        <label>Showing 1–9 of 60 results</label>
-                    </div>
-                    <!-- End .toolbox-item -->
-
-                    <ul class="pagination">
-                        <li class="page-item disabled">
-                            <a class="page-link page-link-btn" href="#"><i class="icon-angle-left"></i></a>
-                        </li>
-                        <li class="page-item active">
-                            <a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><span>...</span></li>
-                        <li class="page-item"><a class="page-link" href="#">15</a></li>
-                        <li class="page-item">
-                            <a class="page-link page-link-btn" href="#"><i class="icon-angle-right"></i></a>
-                        </li>
-                    </ul>
-                </nav>
+                {{ $products->links() }}
             </div>
             <!-- End .col-lg-9 -->
 

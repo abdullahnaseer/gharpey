@@ -94,14 +94,20 @@
 {{--                                    </div><!-- End .product-filters-container -->--}}
 
                                     <div class="product-action product-all-icons">
-                                        <div class="product-single-qty">
-                                            <input class="horizontal-quantity form-control" type="text">
-                                        </div><!-- End .product-single-qty -->
+{{--                                        <div class="product-single-qty">--}}
+{{--                                            <input class="horizontal-quantity form-control" type="text">--}}
+{{--                                        </div><!-- End .product-single-qty -->--}}
 
-                                        <a href="cart.html" class="paction add-cart" title="Add to Cart">
+                                        @if(is_null($cart_item))
+                                        <a href="{{route('buyer.products.cart.create', [$product->id])}}" class="paction add-cart" title="Add to Cart">
                                             <span>Add to Cart</span>
                                         </a>
-                                        <a href="#" class="paction add-wishlist" title="Add to Wishlist">
+                                        @else
+                                            <a href="{{route('buyer.products.cart.create', [$product->id, 'remove'])}}" class="paction add-cart" title="Add to Cart">
+                                                <span>Remove from Cart</span>
+                                            </a>
+                                        @endif
+                                        <a href="{{route('buyer.products.wishlist.create', [$product->id])}}" class="paction add-wishlist" title="Add to Wishlist">
                                             <span>Add to Wishlist</span>
                                         </a>
                                     </div><!-- End .product-action -->

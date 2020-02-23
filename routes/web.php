@@ -104,9 +104,22 @@ Route::namespace('Buyer')->name('buyer.')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('products', 'ProductController');
 
+    Route::get('checkout', 'Product\CheckoutController@getShipping')->name('checkout.shipping.get');
+    Route::post('checkout', 'Product\CheckoutController@postShipping')->name('checkout.shipping.post');
+
+    Route::get('checkout/payment', 'Product\CheckoutController@getPayment')->name('checkout.payment.get');
+    Route::post('checkout/payment', 'Product\CheckoutController@postPayment')->name('checkout.payment.post');
+
+    Route::post('checkout/charge', 'Product\CheckoutController@charge')->name('checkout.charge');
+
+    Route::resource('cart', 'Product\CartController')->only(['index', 'store']);
+    Route::resource('products.cart', 'Product\CartController')->only(['create', 'store']);
+    Route::resource('products.wishlist', 'Product\WishlistController')->only(['index', 'create', 'store']);
+
     // Service Routes
     Route::resource('services', 'ServiceController')->only(['index', 'show', 'store']);
     Route::resource('services.sellers', 'ServiceSellerController')->only(['show']);
+
 
 //    Route::post('/services/{service}', 'ServiceController@serviceRequest');
 //    Route::get('/service-categories/{id}', 'ServiceCategoryController@show');

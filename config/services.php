@@ -34,4 +34,10 @@ return [
         'sms_from' => '923366633352',
     ],
 
+    'stripe' => [
+        'model' => App\Models\Buyer::class,
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+    ],
+
 ];

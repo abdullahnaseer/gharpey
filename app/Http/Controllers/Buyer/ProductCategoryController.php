@@ -3,24 +3,20 @@
 namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
+use App\Models\ProductCategory;
+use App\Models\ServiceCategory;
 use Illuminate\Http\Request;
-use Cart;
 
-class ProductController extends Controller
+class ProductCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $products = Product::paginate(15);
-        $products->each(function ($product) use ($request) {
-            $product->cart_item = Cart::session($request->session()->get('_token'))->get($product->id);
-        });
-        return view('buyer.products.index', ['products' => $products]);
+        //
     }
 
     /**
@@ -47,39 +43,40 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Request $request
-     * @param string $slug
+     * @param  \App\Models\ServiceCategory  $serviceCategory
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $slug)
+    public function show($slug)
     {
-        $product = Product::where('slug', $slug)->firstOrFail();
-        $cartItem = Cart::session($request->session()->get('_token'))->get($product->id);
-        return view('buyer.products.show', [
-            'product' => $product,
-            'cart_item' => $cartItem
-        ]);
+        $productCategory = ProductCategory::where('slug', $slug)->with('products')->firstOrFail();
+
+        return view('buyer.products.categories.show', ['category' => $productCategory]);
     }
+
+    /**
+     * Display our services.
+     *
+     * @return \Illuminate\Http\Response
+     */
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\ServiceCategory  $serviceCategory
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ServiceCategory $serviceCategory)
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\ServiceCategory  $serviceCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ServiceCategory $serviceCategory)
     {
         //
     }
@@ -87,10 +84,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\ServiceCategory  $serviceCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ServiceCategory $serviceCategory)
     {
         //
     }

@@ -66,6 +66,10 @@ class ServiceController extends Controller
         $service = Service::where('slug', $service_slug)->with(['category', 'category.services', 'questions'])->firstOrFail();
         $cities = City::all();
 
+        $service->questions->prepend(ServiceQuestion::where('name', 'guest.phone')->first());
+        $service->questions->prepend(ServiceQuestion::where('name', 'guest.email')->first());
+        $service->questions->prepend(ServiceQuestion::where('name', 'guest.name')->first());
+
         if($request->has('city_id'))
         {
             $city = City::with(['state'])->findOrFail($request->input('city_id'));
@@ -86,19 +90,22 @@ class ServiceController extends Controller
     }
 
 
-
     /**
      * Store request data.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $service = Service::with(['questions'])->findOrFail((int) $request->input('service_id'));
         $service_seller = ServiceSeller::with([])->findOrFail((int) $request->input('service_seller_id'));
-        $validatedData = $this->validateAnswers($service, $service_seller, $request);
 
-//        return $validatedData;
+        $service->questions->prepend(ServiceQuestion::where('name', 'guest.phone')->first());
+        $service->questions->prepend(ServiceQuestion::where('name', 'guest.email')->first());
+        $service->questions->prepend(ServiceQuestion::where('name', 'guest.name')->first());
+
+        $validatedData = $this->validateAnswers($service, $service_seller, $request);
 
         $serviceRequest = ServiceRequest::create([
             'service_seller_id' => $service_seller->id,
@@ -113,11 +120,11 @@ class ServiceController extends Controller
             if(isset($validatedData['answer-'.$q->id]))
             {
                 if($q->auth_rule == ServiceQuestion::AUTH_REQUIRED) {
-                    if (!auth()->check())
+                    if (!auth('buyer')->check())
                         continue;
                 }
                 if($q->auth_rule == ServiceQuestion::AUTH_GUEST) {
-                    if (!auth()->guest())
+                    if (!auth('buyer')->guest())
                         continue;
                 }
 
@@ -180,13 +187,19 @@ class ServiceController extends Controller
             }
         }
 
-//        if(auth()->guest())
-//            $this->registerAndLoginGuestUser($user, $serviceRequest);
+        if(auth()->guest())
+            $this->registerAndLoginGuestUser($user, $serviceRequest);
 
         return view("buyer.services.success");
 //        return redirect()->back()->with('status', 'Your Request have been submitted successfully!!!');
     }
 
+    /**
+     * @param Service $service
+     * @param ServiceSeller $service_seller
+     * @param Request $request
+     * @return array
+     */
     private function validateAnswers(Service $service, ServiceSeller $service_seller, Request $request)
     {
         $rules = [
@@ -220,7 +233,7 @@ class ServiceController extends Controller
                 $rules['answer-'.$q->id] .= 'boolean';
             else if($q->type == ServiceQuestion::TYPE_TEXT) {
                 if($q->name == 'guest.email')
-                    $rules['answer-'.$q->id] .= 'email|unique:users,email';
+                    $rules['answer-'.$q->id] .= 'email|unique:buyers,email';
                 else if($q->name == 'guest.email')
                     $rules['answer-'.$q->id] .= [new Phone()];
                 else
@@ -251,19 +264,21 @@ class ServiceController extends Controller
         return $request->validate($rules);
     }
 
-//    private function registerAndLoginGuestUser(User $user, ServiceRequest $serviceRequest)
-//    {
-//        $user->save();
-//        $user->username = str_slug($user->name, '-') . $user->id;
-//        $user->save();
-//        $serviceRequest->user_id = $user->id;
-//        $serviceRequest->save();
-//
-//        $user->syncRoles([User::USER]);
-//        auth()->loginUsingId($user->id);
-//
+    /**
+     * @param Buyer $user
+     * @param ServiceRequest $serviceRequest
+     * @return bool
+     */
+    private function registerAndLoginGuestUser(Buyer $user, ServiceRequest $serviceRequest)
+    {
+        $user->save();
+        $serviceRequest->buyer_id = $user->id;
+        $serviceRequest->save();
+
+        auth('buyer')->loginUsingId($user->id);
+
 //        if(\Cookie::get('referrer')){
-//            $referrer = User::find((int) \Cookie::get('referrer'));
+//            $referrer = Buyer::find((int) \Cookie::get('referrer'));
 //
 //            if(!is_null($referrer))
 //            {
@@ -274,9 +289,9 @@ class ServiceController extends Controller
 //                ]);
 //            }
 //        }
-//
-//        $user->sendEmailVerificationNotification();
-//
-//        return true;
-//    }
+
+        $user->sendEmailVerificationNotification();
+
+        return true;
+    }
 }

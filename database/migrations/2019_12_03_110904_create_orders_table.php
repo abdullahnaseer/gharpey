@@ -16,6 +16,8 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('buyer_id')->index()->nullable();
+
+            $table->string('shipping_phone')->nullable();
             $table->string('shipping_address')->nullable();
             $table->unsignedBigInteger('shipping_location_id')->index()->nullable();
 

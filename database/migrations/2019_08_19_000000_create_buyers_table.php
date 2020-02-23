@@ -21,7 +21,7 @@ class CreateBuyersTable extends Migration
             $table->string('address')->nullable();
             $table->unsignedBigInteger('location_id')->index()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
 

@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Models\Buyer;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Airlock\Airlock;
+use Illuminate\Support\Facades\View;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Airlock::useUserModel(Buyer::class);
-
     }
 }

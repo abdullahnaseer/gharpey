@@ -46,47 +46,31 @@
                     <h3>Summary</h3>
 
                     <h4>
-                        <a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button" aria-expanded="false" aria-controls="order-cart-section">2 products in Cart</a>
+                        <a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button" aria-expanded="false" aria-controls="order-cart-section">{{$cart->getContent()->count()}} products in Cart</a>
                     </h4>
 
                     <div class="collapse" id="order-cart-section">
                         <table class="table table-mini-cart">
                             <tbody>
-                            <tr>
-                                <td class="product-col">
-                                    <figure class="product-image-container">
-                                        <a href="product.html" class="product-image">
-                                            <img src="assets/images/products/product-1.jpg" alt="product">
-                                        </a>
-                                    </figure>
-                                    <div>
-                                        <h2 class="product-title">
-                                            <a href="product.html">Men Watch</a>
-                                        </h2>
+                            @foreach($cart->getContent() as $item)
+                                <tr>
+                                    <td class="product-col">
+                                        <figure class="product-image-container">
+                                            <a href="{{route('buyer.products.show', [$item->model->slug])}}" class="product-image">
+                                                <img src="{{str_replace("public","/storage",$item->model->featured_image)}}" alt="product">
+                                            </a>
+                                        </figure>
+                                        <div>
+                                            <h2 class="product-title">
+                                                <a href="{{route('buyer.products.show', [$item->model->slug])}}">{{$item->name}}</a>
+                                            </h2>
 
-                                        <span class="product-qty">Qty: 4</span>
-                                    </div>
-                                </td>
-                                <td class="price-col">$17.90</td>
-                            </tr>
-
-                            <tr>
-                                <td class="product-col">
-                                    <figure class="product-image-container">
-                                        <a href="product.html" class="product-image">
-                                            <img src="assets/images/products/product-2.jpg" alt="product">
-                                        </a>
-                                    </figure>
-                                    <div>
-                                        <h2 class="product-title">
-                                            <a href="product.html">Men Watch-Black</a>
-                                        </h2>
-
-                                        <span class="product-qty">Qty: 4</span>
-                                    </div>
-                                </td>
-                                <td class="price-col">$7.90</td>
-                            </tr>
+                                            <span class="product-qty">Qty: {{$item->quantity}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="price-col">Rs. {{$item->getPriceSum()}}</td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -287,7 +271,7 @@
 
                             setTimeout(function () {
                                 console.log('redirect to success');
-                                {{--$(location).attr('href', "{{route('user.service-requests.show', $request->id)}}");--}}
+                                $(location).attr('href', "{{route('buyer.checkout.success')}}");
                             }, 3000);
                         } else if (data.error) {
                             console.log('fail');
@@ -536,8 +520,9 @@
                                         $('#pay-success').slideDown();
 
                                         setTimeout(function () {
+
                                             console.log('redirecting');
-                                            {{--$(location).attr('href', "{{route('user.service-requests.show', $request->id)}}");--}}
+                                            $(location).attr('href', "{{route('buyer.checkout.success')}}");
                                         }, 3000);
                                     } else if (data.error) {
                                         console.log('fail');

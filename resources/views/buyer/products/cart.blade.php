@@ -135,7 +135,7 @@
                     </table>
 
                     <div class="checkout-methods">
-                        <a href="checkout-shipping.html" class="btn btn-block btn-sm btn-primary">Go to Checkout</a>
+                        <a href="{{route('buyer.checkout.shipping.get')}}" class="btn btn-block btn-sm btn-primary">Go to Checkout</a>
                     </div>
                     <!-- End .checkout-methods -->
                 </div>

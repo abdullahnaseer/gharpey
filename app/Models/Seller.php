@@ -178,4 +178,24 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
             'service_id')
             ->using(ServiceSeller::class);
     }
+
+    /**
+     * Get the balance logs for the user.
+     */
+    public function transactions()
+    {
+        return $this->hasMany(\App\Models\Transaction::class, 'user_id', 'id')
+            ->where('user_type', Seller::class);
+    }
+
+    /**
+     * Get the balance logs for the user.
+     */
+    public function last_transaction()
+    {
+        return $this
+            ->hasOne(\App\Models\Transaction::class, 'user_id', 'id')
+            ->where('user_type', Seller::class)
+            ->orderByDesc('id');
+    }
 }

@@ -27,7 +27,8 @@
                     <li>
                         <h2 class="step-title">Shipping Address</h2>
 
-                        <form method="POST" action="{{ route('buyer.login') }}">
+                        @guest('buyer')
+                            <form method="POST" action="{{ route('buyer.login') }}">
                             @csrf
                             <input type="hidden" name="return_url" value="{{route('buyer.checkout.shipping.get')}}">
 
@@ -71,12 +72,13 @@
                             </div>
                             <!-- End .form-footer -->
                         </form>
+                        @endguest
 
                         <form action="{{route('buyer.checkout.shipping.post')}}" method="POST">
                             @csrf
                             <div class="form-group required-field">
                                 <label>Name</label>
-                                <input name="name" type="text" class="form-control  @error('area') is-invalid @enderror" required>
+                                <input name="name" type="text" class="form-control  @error('name') is-invalid @enderror" required value="{{old('name', auth('buyer')->check() ? auth('buyer')->user()->name : null)}}">
 
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
@@ -87,12 +89,12 @@
 
                             <div class="form-group required-field">
                                 <label>Address </label>
-                                <input name="address" type="text" class="form-control  @error('area') is-invalid @enderror" required>
+                                <input name="address" type="text" class="form-control  @error('address') is-invalid @enderror" required value="{{old('address', auth('buyer')->check() ? auth('buyer')->user()->address : null)}}">
 
                                 @error('address')
                                 <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                             <!-- End .form-group -->
@@ -106,7 +108,7 @@
                                             @if($city->areas->count())
                                                 <optgroup label="{{$city->name}}">
                                                     @foreach($city->areas as $area)
-                                                        <option value="{{$area->id}}" @if((int) old('area') == $area->id) selected @endif>{{$area->name}}</option>
+                                                        <option value="{{$area->id}}" @if((int) old('area', auth('buyer')->check() ? auth('buyer')->user()->location_id : null) == $area->id) selected @endif>{{$area->name}}</option>
                                                     @endforeach
                                                 </optgroup>
                                             @endif
@@ -124,7 +126,7 @@
                             <div class="form-group required-field">
                                 <label>Phone Number </label>
                                 <div class="form-control-tooltip">
-                                    <input name="phone" type="tel" class="form-control  @error('phone') is-invalid @enderror" required>
+                                    <input name="phone" type="tel" class="form-control  @error('phone') is-invalid @enderror" required value="{{old('phone', auth('buyer')->check() ? auth('buyer')->user()->phone : null)}}">
                                     <span class="input-tooltip" data-toggle="tooltip" title="For delivery questions." data-placement="right"><i class="icon-question-circle"></i></span>
 
                                     @error('phone')
@@ -152,7 +154,7 @@
                     <h3>Summary</h3>
 
                     <h4>
-                        <a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button" aria-expanded="false" aria-controls="order-cart-section">2 products in Cart</a>
+                        <a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button" aria-expanded="false" aria-controls="order-cart-section">{{$cart->getContent()->count()}} products in Cart</a>
                     </h4>
 
                     <div class="collapse" id="order-cart-section">

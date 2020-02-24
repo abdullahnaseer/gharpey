@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Buyer\Product;
 
 use App\Http\Controllers\Controller;
+use App\Models\Buyer;
 use App\Models\City;
 use App\Models\CityArea;
 use App\Models\Order;
 use App\Models\ProductOrder;
+use App\Models\Seller;
+use App\Notifications\ProductOrderNotification;
 use App\Rules\Phone;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -102,17 +105,13 @@ class CheckoutController extends Controller
     {
         $cart = \Cart::session($request->session()->get('_token'));
         $shipping = $request->session()->get('shipping');
-
-//        $serviceRequestInvoice = ServiceRequestInvoice::with('request')->findOrFail((int) $serviceRequestInvoiceId);
+        $amount = $cart->getTotal();
+        $buyer = auth('buyer')->check() ? auth()->user() : null;
 
         try {
             // Set your secret key: remember to change this to your live secret key in production
             // See your keys here: https://dashboard.stripe.com/account/apikeys
             \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
-
-            $amount = $cart->getTotal();
-
-            $buyer = auth('buyer')->check() ? auth()->user() : null;
 
             // Token is created using Checkout or Elements!
             // Get the payment token ID submitted by the form:
@@ -135,16 +134,32 @@ class CheckoutController extends Controller
 
             foreach ($cart->getContent() as $item)
             {
-                ProductOrder::create([
+                $productOrder = ProductOrder::create([
                     'order_id' => $order->id,
                     'product_id' => $item->model->id,
-                    'price' => $item->model->price,
+                    'price' => $item->getPriceSum(),
                     'quantity' => $item->quantity,
                 ]);
+
+                $seller = $item->model->seller;
+
+                \App\Models\Transaction::create([
+                    'user_id' => $seller->id,
+                    'user_type' => Seller::class,
+                    'reference_id' => $order->id,
+                    'reference_type' => \App\Models\ServiceRequestInvoice::class,
+                    'type' => \App\Models\Transaction::TYPE_CREDIT,
+                    'amount' => $item->getPriceSum(),
+                    'balance' => $seller->transactions()->sum('amount') + $amount,
+                    'note' => '',
+                ]);
+
+                $seller->notify(new ProductOrderNotification($productOrder));
             }
 
             \App\Models\Transaction::create([
                 'user_id' => is_null($buyer) ? null : $buyer->id,
+                'user_type' => Buyer::class,
                 'reference_id' => $order->id,
                 'reference_type' => \App\Models\ServiceRequestInvoice::class,
                 'type' => \App\Models\Transaction::TYPE_CREDIT,
@@ -155,6 +170,7 @@ class CheckoutController extends Controller
 
             \App\Models\Transaction::create([
                 'user_id' => is_null($buyer) ? null : $buyer->id,
+                'user_type' => Buyer::class,
                 'reference_id' => $order->id,
                 'reference_type' => \App\Models\ServiceRequestInvoice::class,
                 'type' => \App\Models\Transaction::TYPE_DEBIT,
@@ -163,11 +179,18 @@ class CheckoutController extends Controller
                 'note' => '',
             ]);
 
+            $cart->clear();
+
             return response()->json(['success' => 'Payment was successful']);
         } catch (\Exception $ex) {
 //            return $ex->getMessage();
             return response()->json(['error' => $ex->getMessage()]);
 //            return response()->json(['error' => 'Payment was declined']);
         }
+    }
+
+    public function success()
+    {
+        return view('buyer.products.checkout.success');
     }
 }

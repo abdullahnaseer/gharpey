@@ -112,6 +112,8 @@ Route::namespace('Buyer')->name('buyer.')->group(function () {
 
     Route::post('checkout/charge', 'Product\CheckoutController@charge')->name('checkout.charge');
 
+    Route::get('checkout/success', 'Product\CheckoutController@success')->name('checkout.success');
+
     Route::resource('cart', 'Product\CartController')->only(['index', 'store']);
     Route::resource('products.cart', 'Product\CartController')->only(['create', 'store']);
     Route::resource('products.wishlist', 'Product\WishlistController')->only(['index', 'create', 'store']);

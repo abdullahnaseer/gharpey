@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductOrder extends Model
 {
+    protected $table = 'product_order';
+
     /**
      * The attributes that are mass assignable.
      *

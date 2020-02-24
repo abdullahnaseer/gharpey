@@ -88,4 +88,25 @@ class Buyer extends Authenticatable implements MustVerifyEmail
     {
         return Cart::session(request()->session()->get('_token'))->getContent();
     }
+
+
+    /**
+     * Get the balance logs for the user.
+     */
+    public function transactions()
+    {
+        return $this->hasMany(\App\Models\Transaction::class, 'user_id', 'id')
+            ->where('user_type', Buyer::class);
+    }
+
+    /**
+     * Get the balance logs for the user.
+     */
+    public function last_transaction()
+    {
+        return $this
+            ->hasOne(\App\Models\Transaction::class, 'user_id', 'id')
+            ->where('user_type', Buyer::class)
+            ->orderByDesc('id');
+    }
 }

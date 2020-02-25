@@ -61,9 +61,10 @@ class ProductController extends Controller
             'featured_image' => 'required|file|image',
             'category_id' => 'required|numeric|exists:product_categories,id',
             'price' => 'required|numeric|min:100|max:20000',
+            'inventory' => 'required|numeric|min:0|max:10000',
         ]);
 
-        $fields = $request->only(['name', 'description', 'category_id', 'price']);
+        $fields = $request->only(['name', 'description', 'category_id', 'price', 'inventory']);
         $fields['featured_image'] = $request->file('featured_image')->store('public/products');
 
         $product = auth('seller')->user()->products()->create($fields);
@@ -88,11 +89,12 @@ class ProductController extends Controller
             'featured_image' => 'nullable|file|image',
             'category_id' => 'required|numeric|exists:product_categories,id',
             'price' => 'required|numeric|min:100|max:20000',
+            'inventory' => 'required|numeric|min:0|max:10000',
         ]);
 
         $record = auth('seller')->user()->products()->findOrFail($record_id);
 
-        $fields = $request->only(['name', 'description', 'category_id', 'price']);
+        $fields = $request->only(['name', 'description', 'category_id', 'price', 'inventory']);
         $fields['slug'] = \Illuminate\Support\Str::slug($record->name . ' ' . $record->id);
         if($request->hasFile('featured_image'))
             $fields['featured_image'] = $request->file('featured_image')->store('public/products');

@@ -13,5 +13,6 @@ $factory->define(\App\Models\Product::class, function (Faker $faker) {
 //        'featured_image' => $faker->imageUrl(),
         'featured_image' => '/assets/media/products/product'.rand(1, 28).'.jpg',
         'price' => $arr[array_rand($arr)],
+        'inventory' => rand(0, 15),
     ];
 });

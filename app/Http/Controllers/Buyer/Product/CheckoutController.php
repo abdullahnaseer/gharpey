@@ -141,6 +141,8 @@ class CheckoutController extends Controller
                     'quantity' => $item->quantity,
                 ]);
 
+                $item->model->update(['inventory' => $item->model->inventory - $item->quantity]);
+
                 $seller = $item->model->seller;
 
                 \App\Models\Transaction::create([

@@ -37,9 +37,11 @@ class CreateProductsTable extends Migration
             $table->text('description')->nullable();
             $table->unsignedDecimal('price', 16, 2);
 
-//            $table->unsignedBigInteger('approved_by_id')->nullable();
-//            $table->string('approved_by_type')->nullable();
-//            $table->timestamp('approved_at')->nullable();
+            $table->integer('inventory')->nullable();
+
+            $table->unsignedBigInteger('approved_by_id')->nullable()->default(1);
+            $table->string('approved_by_type')->nullable()->default("App\\\Models\\\Admin");
+            $table->timestamp('approved_at')->nullable()->useCurrent();
 
             $table->timestamps();
 

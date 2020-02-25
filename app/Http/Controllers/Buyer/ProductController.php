@@ -17,7 +17,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::whereNotNull('id');
+        $products = Product::where('inventory', '>', 0);
         if($request->has('category'))
             $products = $products->where('category_id', $request->input('category'));
 

@@ -18,7 +18,7 @@ class CreateServiceRequestsTable extends Migration
             $table->unsignedBigInteger('service_seller_id')->index()->nullable();
             $table->unsignedBigInteger('buyer_id')->index()->nullable();
             $table->unsignedBigInteger('location_id')->index()->nullable();
-            $table->string('location_type')->default(\App\Models\City::class);
+            $table->string('location_type')->default("App\\\Models\\\City");
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
 

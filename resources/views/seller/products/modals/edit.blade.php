@@ -23,6 +23,10 @@
                     {!! Form::number('price', null, ['class' => "form-control", "required" => "required"]) !!}
                 </div>
                 <div class="form-group">
+                    {!! Form::label('inventory', 'Inventory', ['class' => "col-form-label"]) !!}
+                    {!! Form::number('inventory', null, ['class' => "form-control", "required" => "required", "min" => 0]) !!}
+                </div>
+                <div class="form-group">
                     {!! Form::label('category_id', 'Category', ['class' => "col-form-label"]) !!}
                     {!! Form::select('category_id', $categories->pluck('name', 'id'), null, ['class' => "form-control", "required" => "required"]) !!}
                 </div>

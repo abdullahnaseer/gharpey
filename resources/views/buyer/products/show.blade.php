@@ -4,9 +4,10 @@
         <nav aria-label="breadcrumb" class="breadcrumb-nav mt-5">
             <div class="container">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>
-                    <li class="breadcrumb-item"><a href="#">Electronics</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Headsets</li>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{url('/')}}"><i class="icon-home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="{{route('buyer.products.index')}}">Products</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{$product->name}}</li>
                 </ol>
             </div><!-- End .container -->
         </nav>
@@ -93,21 +94,28 @@
 {{--                                        </div><!-- End .product-single-filter -->--}}
 {{--                                    </div><!-- End .product-filters-container -->--}}
 
+                                    @if($product->inventory <= 0)
+                                        <div class="alert alert-danger">This product is out of stock!</div>
+                                    @endif
                                     <div class="product-action product-all-icons">
 {{--                                        <div class="product-single-qty">--}}
 {{--                                            <input class="horizontal-quantity form-control" type="text">--}}
 {{--                                        </div><!-- End .product-single-qty -->--}}
 
                                         @if(is_null($cart_item))
-                                        <a href="{{route('buyer.products.cart.create', [$product->id])}}" class="paction add-cart" title="Add to Cart">
-                                            <span>Add to Cart</span>
-                                        </a>
+                                            @if($product->inventory > 0)
+                                                <a href="{{route('buyer.products.cart.create', [$product->id])}}" class="paction add-cart" title="Add to Cart">
+                                                    <span>Add to Cart</span>
+                                                </a>
+                                            @endif
                                         @else
                                             <a href="{{route('buyer.products.cart.create', [$product->id, 'remove'])}}" class="paction add-cart" title="Add to Cart">
                                                 <span>Remove from Cart</span>
                                             </a>
                                         @endif
-                                        <a href="{{route('buyer.products.wishlist.create', [$product->id])}}" class="paction add-wishlist" title="Add to Wishlist">
+                                        <a href="{{route('buyer.products.wishlist.create', [$product->id])}}" class="paction add-wishlist" title="Add to Wishlist"
+                                            style="background-color: #9a2693;color: white;"
+                                        >
                                             <span>Add to Wishlist</span>
                                         </a>
                                     </div><!-- End .product-action -->

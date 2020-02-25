@@ -13,7 +13,14 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'featured_image', 'seller_id', 'category_id', 'price', 'slug'
+        'name',
+        'description',
+        'featured_image',
+        'seller_id',
+        'category_id',
+        'price',
+        'slug',
+        'inventory'
     ];
 
     /**
@@ -30,5 +37,13 @@ class Product extends Model
     public function orders()
     {
         return $this->hasMany(ProductOrder::class);
+    }
+
+    /**
+     * The wishlist buyer that belong to the product.
+     */
+    public function wishlist_buyers()
+    {
+        return $this->belongsToMany(\App\Models\Buyer::class, 'wishlist')->using(Wishlist::class);
     }
 }

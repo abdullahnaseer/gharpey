@@ -16,10 +16,10 @@ class CreateSupportTicketsTable extends Migration
         Schema::create('support_tickets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->string('user_type')->default(\App\Models\Buyer::class);
+            $table->string('user_type')->default("App\\\Models\\\Buyer");
 
             $table->unsignedBigInteger('moderator_id');
-            $table->string('moderator_type')->default(\App\Models\Buyer::class);
+            $table->string('moderator_type')->default("App\\\Models\\\Buyer");
 
             $table->timestamp('resolved_at')->nullable();
             $table->timestamps();

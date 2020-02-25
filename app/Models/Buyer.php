@@ -109,4 +109,12 @@ class Buyer extends Authenticatable implements MustVerifyEmail
             ->where('user_type', Buyer::class)
             ->orderByDesc('id');
     }
+
+    /**
+     * The wishlist products that belong to the buyer.
+     */
+    public function wishlist_products()
+    {
+        return $this->belongsToMany(\App\Models\Product::class, 'wishlist')->using(Wishlist::class);
+    }
 }

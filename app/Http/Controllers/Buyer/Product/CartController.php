@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -47,6 +46,11 @@ class CartController extends Controller
 
         if($is_add_action)
         {
+            if($product->inventory <= 0)
+            {
+                flash()->error('Product is out of stock!');
+                return redirect()->back();
+            }
             // add the product to cart
             Cart::session($userID)->add(array(
                 'id' => $product->id,
@@ -89,12 +93,25 @@ class CartController extends Controller
         $quantities = $request->input('quantity', []);
         for ($i = 0, $iMax = count($products); $i < $iMax; $i++)
         {
-            $cart->update($products[$i], array(
-                'quantity' => array(
-                    'relative' => false,
-                    'value' => $quantities[$i]
-                ),
-            ));
+            $product = Product::findOrFail($products[$i]);
+            if($quantities[$i] <= $product->inventory)
+            {
+                $cart->update($products[$i], array(
+                    'quantity' => array(
+                        'relative' => false,
+                        'value' => $quantities[$i]
+                    ),
+                ));
+            } else {
+                $cart->update($products[$i], array(
+                    'quantity' => array(
+                        'relative' => false,
+                        'value' => $product->inventory
+                    ),
+                ));
+                flash()->error('Product "' . $product->name . '" not has enough stock');
+            }
+
         }
 
         flash()->success('Cart Updated Successfully.');

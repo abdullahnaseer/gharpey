@@ -9,7 +9,7 @@ use App\Models\CityArea;
 use App\Models\Order;
 use App\Models\ProductOrder;
 use App\Models\Seller;
-use App\Notifications\ProductOrderNotification;
+use App\Notifications\Seller\ProductOrder\ProductOrderNotification;
 use App\Rules\Phone;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -146,11 +146,11 @@ class CheckoutController extends Controller
                 \App\Models\Transaction::create([
                     'user_id' => $seller->id,
                     'user_type' => Seller::class,
-                    'reference_id' => $order->id,
-                    'reference_type' => \App\Models\ServiceRequestInvoice::class,
+                    'reference_id' => $productOrder->id,
+                    'reference_type' => \App\Models\ProductOrder::class,
                     'type' => \App\Models\Transaction::TYPE_CREDIT,
                     'amount' => $item->getPriceSum(),
-                    'balance' => $seller->transactions()->sum('amount') + $amount,
+                    'balance' => $seller->transactions()->sum('amount') + $item->getPriceSum(),
                     'note' => '',
                 ]);
 
@@ -161,7 +161,7 @@ class CheckoutController extends Controller
                 'user_id' => is_null($buyer) ? null : $buyer->id,
                 'user_type' => Buyer::class,
                 'reference_id' => $order->id,
-                'reference_type' => \App\Models\ServiceRequestInvoice::class,
+                'reference_type' => \App\Models\Order::class,
                 'type' => \App\Models\Transaction::TYPE_CREDIT,
                 'amount' => $amount,
                 'balance' => is_null($buyer) ? null : $buyer->transactions()->sum('amount') + $amount,
@@ -172,7 +172,7 @@ class CheckoutController extends Controller
                 'user_id' => is_null($buyer) ? null : $buyer->id,
                 'user_type' => Buyer::class,
                 'reference_id' => $order->id,
-                'reference_type' => \App\Models\ServiceRequestInvoice::class,
+                'reference_type' => \App\Models\Order::class,
                 'type' => \App\Models\Transaction::TYPE_DEBIT,
                 'amount' => -$amount,
                 'balance' => is_null($buyer) ? null : $buyer->transactions()->sum('amount') - $amount,

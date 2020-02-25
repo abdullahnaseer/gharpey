@@ -67,6 +67,11 @@
                                 aria-haspopup="true"><a href="{{route('admin.products.tags.index')}}" class="kt-menu__link "><i
                                         class="kt-menu__link-icon flaticon-users"></i><span
                                         class="kt-menu__link-text">Tags</span></a></li>
+
+                            <li class="kt-menu__item {{ (request()->is('moderator/products/orders')) ? 'kt-menu__item--active' : '' }} "
+                                aria-haspopup="true"><a href="{{route('moderator.orders.index')}}" class="kt-menu__link "><i
+                                        class="kt-menu__link-icon flaticon-users"></i><span
+                                        class="kt-menu__link-text">Orders</span></a></li>
                         </ul>
                     </div>
                 </li>

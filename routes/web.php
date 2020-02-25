@@ -72,6 +72,9 @@ Route::name('moderator.')->prefix('moderator')->namespace('Moderator')->group(fu
         Route::resource('buyers', 'BuyerController')->only(['index', 'store', 'update', 'destroy']);
     });
 
+    Route::post('products/orders/json', 'Product\OrderController@json')->name('orders.json');
+    Route::resource('products/orders', 'Product\OrderController')->only(['index', 'edit']);
+
     Route::post('products/json', 'Product\ProductController@json')->name('products.json');
     Route::resource('products', 'Product\ProductController')->only(['index', 'store', 'update', 'destroy']);
 
@@ -92,6 +95,8 @@ Route::name('seller.')->prefix('seller')->namespace('Seller')->group(function ()
     // Auth Routes End
 
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::post('products/orders/json', 'Product\OrderController@json')->name('orders.json');
+    Route::resource('products/orders', 'Product\OrderController')->only(['index', 'edit']);
     Route::post('products/json', 'Product\ProductController@json')->name('products.json');
     Route::resource('products', 'Product\ProductController')->only(['index', 'store', 'update', 'destroy']);
 

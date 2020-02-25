@@ -30,10 +30,14 @@
                     <h4 class="kt-menu__section-text">Products</h4>
                     <i class="kt-menu__section-icon flaticon-more-v2"></i>
                 </li>
-                <li class="kt-menu__item {{ (request()->is('seller/products*')) ? 'kt-menu__item--active' : '' }} "
+                <li class="kt-menu__item {{ (request()->is('seller/products')) ? 'kt-menu__item--active' : '' }} "
                     aria-haspopup="true"><a href="{{route('seller.products.index')}}" class="kt-menu__link "><i
                             class="kt-menu__link-icon flaticon-users"></i><span
                             class="kt-menu__link-text">All Products</span></a></li>
+                <li class="kt-menu__item {{ (request()->is('seller/products/orders')) ? 'kt-menu__item--active' : '' }} "
+                    aria-haspopup="true"><a href="{{route('seller.orders.index')}}" class="kt-menu__link "><i
+                            class="kt-menu__link-icon flaticon-users"></i><span
+                            class="kt-menu__link-text">Orders</span></a></li>
 
                 <li class="kt-menu__section ">
                     <h4 class="kt-menu__section-text">Services</h4>

@@ -168,6 +168,14 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
     }
 
     /**
+     * Get the products for the seller.
+     */
+    public function product_orders()
+    {
+        return $this->hasManyThrough(ProductOrder::class, Product::class);
+    }
+
+    /**
      * The services that belong to the seller.
      */
     public function services()

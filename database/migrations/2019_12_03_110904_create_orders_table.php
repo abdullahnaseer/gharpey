@@ -25,7 +25,6 @@ class CreateOrdersTable extends Migration
             $table->mediumText('note')->nullable();
 
             $table->timestamp('paid_at')->nullable();
-            $table->timestamp('completed_at')->nullable();
 
             $table->timestamps();
 

@@ -24,7 +24,7 @@ class CreateTransactionsTable extends Migration
 
             $table->enum('type', ['debit', 'credit'])->default('credit');
             $table->decimal('amount', 8, 2)->default(0.0);
-            $table->decimal('balance', 8, 2)->default(0.0);
+            $table->decimal('balance', 8, 2)->default(0.0)->nullable();
             $table->text("note")->nullable();
             $table->timestamps();
 

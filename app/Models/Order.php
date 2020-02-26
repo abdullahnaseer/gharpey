@@ -15,6 +15,24 @@ class Order extends Model
         'buyer_id', 'shipping_phone', 'shipping_address', 'shipping_location_id', 'charge_id', 'paid_at'
     ];
 
+
+    /**
+     * Get the products for the order.
+     */
+    public function items()
+    {
+        return $this->hasMany(ProductOrder::class, 'order_id', 'id');
+    }
+
+    /**
+     * Get the products for the order.
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_order')
+            ->withTimestamps();
+    }
+
     /**
      * Get the product that owns the order.
      */

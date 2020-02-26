@@ -44,7 +44,7 @@ class ProductOrderCompletedNotification extends Notification
     {
         return (new MailMessage)
             ->line('The order for product "'.$this->productOrder->product->name.'" is completed.')
-            ->action('Check Orders', url('/seller/orders'))
+            ->action('Check Orders', url('/orders'))
             ->line('Thank you for using our application!');
     }
 

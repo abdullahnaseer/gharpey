@@ -69,8 +69,10 @@ class ProductController extends Controller
      */
     public function show(Request $request, $slug)
     {
-        $product = Product::where('slug', $slug)->firstOrFail();
+        $product = Product::where('slug', $slug)->with([])->firstOrFail();
+
         $cartItem = Cart::session($request->session()->get('_token'))->get($product->id);
+
         return view('buyer.products.show', [
             'product' => $product,
             'cart_item' => $cartItem

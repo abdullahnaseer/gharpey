@@ -44,7 +44,7 @@ class ProductOrderCanceledNotification extends Notification
     {
         return (new MailMessage)
             ->line('The order for product "'.$this->productOrder->product->name.'" is canceled.')
-            ->action('Check Orders', url('/seller/orders'))
+            ->action('Check Orders', route('seller/orders.index'))
             ->line('Thank you for using our application!');
     }
 

@@ -145,6 +145,7 @@ class CheckoutController extends Controller
 
                 $seller = $item->model->seller;
 
+
                 \App\Models\Transaction::create([
                     'user_id' => $seller->id,
                     'user_type' => Seller::class,

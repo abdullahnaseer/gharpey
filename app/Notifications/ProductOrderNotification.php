@@ -44,7 +44,7 @@ class ProductOrderNotification extends Notification
     {
         return (new MailMessage)
                     ->line('You have received a new product order.')
-                    ->action('Check Now', url('/seller/orders'))
+                    ->action('Check Now', route('seller/orders.index'))
                     ->line('Thank you for using our application!');
     }
 

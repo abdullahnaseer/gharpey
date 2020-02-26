@@ -147,6 +147,18 @@ class OrderController extends Controller
                     'note' => '',
                 ]);
 
+                $buyer = $product_order->order->buyer;
+                \App\Models\Transaction::create([
+                    'user_id' => is_null($buyer) ? null : $buyer->id,
+                    'user_type' => Seller::class,
+                    'reference_id' => $product_order->id,
+                    'reference_type' => \App\Models\ProductOrder::class,
+                    'type' => \App\Models\Transaction::TYPE_CREDIT,
+                    'amount' => $product_order->price,
+                    'balance' => is_null($buyer) ? null : $buyer->transactions()->sum('amount') + $product_order->price,
+                    'note' => '',
+                ]);
+
                 $product_order->product->seller->notify(new ProductOrderCanceledNotification($product_order));
                 if(!is_null($buyer))
                     $buyer->notify(new BuyerProductOrderCanceledNotification($product_order));

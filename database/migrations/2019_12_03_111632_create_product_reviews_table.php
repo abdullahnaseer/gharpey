@@ -18,8 +18,11 @@ class CreateProductReviewsTable extends Migration
             $table->unsignedBigInteger('product_id')->index();
             $table->unsignedBigInteger('product_order_id')->index();
             $table->unsignedBigInteger('buyer_id')->index();
+            $table->string('summary');
             $table->text('review');
-            $table->unsignedSmallInteger('rating')->default(0);
+            $table->unsignedSmallInteger('quality_rating')->default(0);
+            $table->unsignedSmallInteger('value_rating')->default(0);
+            $table->unsignedSmallInteger('price_rating')->default(0);
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

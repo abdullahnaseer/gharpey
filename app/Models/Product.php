@@ -44,6 +44,9 @@ class Product extends Model
      */
     public function wishlist_buyers()
     {
-        return $this->belongsToMany(\App\Models\Buyer::class, 'wishlist')->using(Wishlist::class);
+        return $this->belongsToMany(\App\Models\Buyer::class, 'wishlist')
+            ->withTimestamps()
+            ->using(Wishlist::class);
     }
+
 }

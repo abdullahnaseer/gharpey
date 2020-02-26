@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Seller\Product;
 use App\Http\Controllers\Controller;
 use App\Models\ProductOrder;
 use App\Models\Seller;
+use App\Notifications\Seller\ProductOrder\ProductOrderNotification as BuyerProductOrderCanceledNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -116,6 +117,21 @@ class OrderController extends Controller
                     'balance' => $product_order->product->seller->transactions()->sum('amount') - $product_order->price,
                     'note' => '',
                 ]);
+
+                $buyer = $product_order->order->buyer;
+                \App\Models\Transaction::create([
+                    'user_id' => is_null($buyer) ? null : $buyer->id,
+                    'user_type' => Seller::class,
+                    'reference_id' => $product_order->id,
+                    'reference_type' => \App\Models\ProductOrder::class,
+                    'type' => \App\Models\Transaction::TYPE_CREDIT,
+                    'amount' => $product_order->price,
+                    'balance' => is_null($buyer) ? null : $buyer->transactions()->sum('amount') + $product_order->price,
+                    'note' => '',
+                ]);
+
+                if(!is_null($buyer))
+                    $buyer->notify(new BuyerProductOrderCanceledNotification($product_order));
             }
             else
                 flash()->error('Invalid Operation!!!');

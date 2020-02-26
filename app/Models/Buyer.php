@@ -35,6 +35,15 @@ class Buyer extends Authenticatable implements MustVerifyEmail
         'password', 'remember_token',
     ];
 
+    /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail('buyer'));
+    }
 
     /**
      * Get the access tokens that belong to the user.
@@ -45,6 +54,14 @@ class Buyer extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get the access tokens that belong to the user.
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'buyer_id');
+    }
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array
@@ -52,17 +69,6 @@ class Buyer extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-
-    /**
-     * Send the email verification notification.
-     *
-     * @return void
-     */
-    public function sendEmailVerificationNotification()
-    {
-        $this->notify(new VerifyEmail('buyer'));
-    }
 
     /**
      * Send the password reset notification.
@@ -115,6 +121,19 @@ class Buyer extends Authenticatable implements MustVerifyEmail
      */
     public function wishlist_products()
     {
-        return $this->belongsToMany(\App\Models\Product::class, 'wishlist')->using(Wishlist::class);
+        return $this->belongsToMany(\App\Models\Product::class, 'wishlist')
+            ->withTimestamps()
+            ->using(Wishlist::class);
+    }
+
+
+    /**
+     * The wishlist buyer that belong to the product.
+     */
+    public function hasWish($productId)
+    {
+        return $this->wishlist_products()
+            ->where('wishlist.product_id', $productId)
+            ->count() > 0;
     }
 }

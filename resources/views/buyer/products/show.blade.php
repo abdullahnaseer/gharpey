@@ -113,11 +113,14 @@
                                                 <span>Remove from Cart</span>
                                             </a>
                                         @endif
-                                        <a href="{{route('buyer.products.wishlist.create', [$product->id])}}" class="paction add-wishlist" title="Add to Wishlist"
-                                            style="background-color: #9a2693;color: white;"
-                                        >
-                                            <span>Add to Wishlist</span>
-                                        </a>
+                                        @if(auth()->check())
+                                            @php($condition = auth('buyer')->user()->hasWish($product->id))
+                                            <a href="{{route('buyer.products.wishlist.create', [$product->id])}}" class="paction add-wishlist" title="{{$condition ? "Remove from" : "Add to"}} Wishlist"
+                                                @if($condition) style="background-color: #9a2693;color: white;" @endif
+                                            >
+                                                <span>{{$condition ? "Remove from" : "Add to"}} Wishlist</span>
+                                            </a>
+                                        @endif
                                     </div><!-- End .product-action -->
 
                                     <div class="product-single-share">

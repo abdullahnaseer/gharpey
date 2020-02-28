@@ -14,7 +14,9 @@ class ProductOrderController extends Controller
      */
     public function index()
     {
-        return auth()->user()->orders()->with('items')->get();
+        return view('buyer.account.orders.index', [
+            'orders' => auth()->user()->orders()->with(['items', 'items.product'])->get()
+        ]);
     }
 
     /**

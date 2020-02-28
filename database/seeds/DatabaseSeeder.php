@@ -15,13 +15,13 @@ class DatabaseSeeder extends Seeder
 
         $this->call(AdminsTableSeeder::class);
         $this->call(ModeratorsTableSeeder::class);
-//        $this->call(SellersTableSeeder::class);
-//        $this->call(BuyersTableSeeder::class);
+        $this->call(SellersTableSeeder::class);
+        $this->call(BuyersTableSeeder::class);
 
         $this->call(CategoriesTableSeeder::class);
-//        $this->call(ProductsTableSeeder::class);
+        $this->call(ProductsTableSeeder::class);
         $this->call(ServiceQuestionsTableSeeder::class);
-//        $this->call(ServicesTableSeeder::class);
-//        $this->call(ServiceSellerTableSeeder::class);
+        $this->call(ServicesTableSeeder::class);
+        $this->call(ServiceSellerTableSeeder::class);
     }
 }

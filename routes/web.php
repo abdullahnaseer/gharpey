@@ -136,7 +136,15 @@ Route::namespace('Buyer')->name('buyer.')->group(function () {
 
 
     Route::name('account.')->prefix('account')->namespace('Account')->middleware('auth:buyer')->group(function () {
-        Route::get('/', 'AccountController@index')->name('account.index');
+        Route::get('/', 'AccountController@index')->name('index');
+
+        Route::get('/settings/info', 'AccountController@getInfo')->name('getInfo');
+        Route::get('/settings/address', 'AccountController@getAddress')->name('getAddress');
+        Route::get('/settings/password', 'AccountController@getPassword')->name('getPassword');
+
+        Route::post('/settings/info', 'AccountController@updateInfo')->name('updateInfo');
+        Route::post('/settings/address', 'AccountController@updateAddress')->name('updateAddress');
+        Route::post('/settings/password', 'AccountController@updatePassword')->name('updatePassword');
 
         Route::resource('orders', 'ProductOrderController')->only(['index']);
         Route::resource('service-requests', 'ServiceRequestController')->only(['index']);

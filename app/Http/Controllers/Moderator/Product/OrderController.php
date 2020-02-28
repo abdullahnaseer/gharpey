@@ -121,7 +121,7 @@ class OrderController extends Controller
             if($product_order->status == ProductOrder::STATUS_SENT) {
                 $product_order->update([
                     'status' => ProductOrder::STATUS_COMPLETED,
-                    'send_at' => Carbon::now()
+                    'completed_at' => Carbon::now()
                 ]);
 
                 if(!is_null($buyer))
@@ -169,7 +169,7 @@ class OrderController extends Controller
             flash()->error('Invalid Operation!!!');
         }
 
-        return redirect()->back();
+        return redirect()->route('moderator.orders.index');
     }
 
     /**

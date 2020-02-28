@@ -31,12 +31,18 @@ class ProductOrder extends Model
      */
     protected $fillable = [
         'order_id', 'product_id', 'price', 'quantity', 'status',
-        'seller_send_at', 'send_at', 'warehouse_received_at', 'completed_at', 'canceled_at'
+        'seller_send_at', 'send_at', 'warehouse_received_at', 'completed_at', 'canceled_at', 'reviewed_at'
     ];
 
     protected $casts = [
         'price' => 'float',
-        'quantity' => 'integer'
+        'quantity' => 'integer',
+        'seller_send_at' => 'datetime',
+        'send_at' => 'datetime',
+        'warehouse_received_at' => 'datetime',
+        'completed_at' => 'datetime',
+        'canceled_at' => 'datetime',
+        'reviewed_at' => 'datetime'
     ];
 
     /**

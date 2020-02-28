@@ -75,7 +75,7 @@ class ServiceController extends Controller
         $fields['seller_id'] = auth('seller')->id();
 
         $serviceSeller = ServiceSeller::create($fields);
-        $serviceSeller->states()->sync($request->input('cities'));
+        $serviceSeller->cities()->sync($request->input('cities'));
 
         flash('Successfully created the new record!')->success();
         return redirect()->route('seller.services.index');

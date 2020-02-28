@@ -28,6 +28,7 @@ class CreateProductOrdersTable extends Migration
             $table->timestamp('send_at')->nullable();
             $table->timestamp('completed_at')->nullable();
             $table->timestamp('canceled_at')->nullable();
+            $table->timestamp('reviewed_at')->nullable();
 
             $table->timestamps();
 

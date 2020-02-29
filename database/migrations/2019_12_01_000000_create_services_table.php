@@ -30,7 +30,7 @@ class CreateServicesTable extends Migration
             $table->mediumText('description')->nullable();
             $table->timestamps();
 
-            $table->foreign('category_id')->references('id')->on('service_categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('service_categories')->onDelete('set null');
         });
 
         Schema::create('service_seller', function (Blueprint $table) {

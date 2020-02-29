@@ -28,14 +28,16 @@
             </div>
         </div>
         <div class="kt-portlet__body">
-            {{ Form::model($user, ['route' => 'seller.account.updateShop', 'class' => 'kt-form kt-form--fit kt-form--label-right']) }}
-
-            <img id="shop_image" src="#" alt="your image" />
+            {{ Form::model($user, ['route' => 'seller.account.updateShop', 'files'=>true, 'class' => 'kt-form kt-form--fit kt-form--label-right']) }}
 
             <div class="form-group row">
                 {!! Form::label('shop_image', 'Shop Image', ['class' => "col-form-label col-lg-3 col-sm-12"]) !!}
                 <div class="col-lg-9 col-md-9 col-sm-12">
-                    {!! Form::file('shop_image', ['id', 'shop_image_input']) !!}
+                    {!! Form::file('shop_image', ['id' => 'shop_image_input']) !!}
+
+                    <div style="max-width: 600px" class="mt-2">
+                        <img id="shop_image" class="img-thumbnail" src="{{$user->shop_image ? str_replace('public', '/storage', $user->shop_image) : '' }}" alt="your image" />
+                    </div>
                 </div>
             </div>
 
@@ -56,7 +58,7 @@
             <div class="form-group row">
                 <label class="col-form-label col-lg-3 col-sm-12">Warehouse Location</label>
                 <div class="col-lg-9 col-md-9 col-sm-12">
-                    <select class="form-control kt-select2" id="warehouse_location_select2_edit" name="warehouse_location_id"
+                    <select class="form-control kt-select2" id="warehouse_location_select2_edit" name="warehouse_area"
                             style="width: 100%">
                         @foreach($cities as $city)
                             @if($city->areas->count())
@@ -85,7 +87,7 @@
             <div class="form-group row">
                 <label class="col-form-label col-lg-3 col-sm-12">Business Location</label>
                 <div class="col-lg-9 col-md-9 col-sm-12">
-                    <select class="form-control kt-select2" id="business_location_select2_edit" name="business_location_id"
+                    <select class="form-control kt-select2" id="business_location_select2_edit" name="business_area"
                             style="width: 100%">
                         @foreach($cities as $city)
                             @if($city->areas->count())
@@ -114,7 +116,7 @@
             <div class="form-group row">
                 <label class="col-form-label col-lg-3 col-sm-12">Return Location</label>
                 <div class="col-lg-9 col-md-9 col-sm-12">
-                    <select class="form-control kt-select2" id="return_location_select2_edit" name="return_location_id"
+                    <select class="form-control kt-select2" id="return_location_select2_edit" name="return_area"
                             style="width: 100%">
                         @foreach($cities as $city)
                             @if($city->areas->count())
@@ -132,14 +134,17 @@
                     </select>
                 </div>
             </div>
+
+            <hr>
+            <button class="btn btn-primary" type="submit">Submit</button>
         </div>
         {!! Form::close() !!}
     </div>
 @endsection
 
 
-@section('scripts')
-    <script>
+@push('scripts')
+    <script type="text/javascript">
         $(document).ready(function () {
             function readURL(input) {
                 if (input.files && input.files[0]) {
@@ -158,4 +163,4 @@
             });
         });
     </script>
-@endsection
+@endpush

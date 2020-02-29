@@ -26,8 +26,8 @@
                             class="kt-menu__link-icon flaticon2-architecture-and-city"></i><span
                             class="kt-menu__link-text">Dashboard</span></a></li>
 
-                <li class="kt-menu__item {{ (request()->is('seller/dashboard')) ? 'kt-menu__item--active' : '' }} "
-                    aria-haspopup="true"><a href="{{route('seller.dashboard')}}" class="kt-menu__link "><i
+                <li class="kt-menu__item {{ (request()->is('seller/account/settings/shop')) ? 'kt-menu__item--active' : '' }} "
+                    aria-haspopup="true"><a href="{{route('seller.account.getShop')}}" class="kt-menu__link "><i
                             class="kt-menu__link-icon flaticon2-architecture-and-city"></i><span
                             class="kt-menu__link-text">Shop Settings</span></a></li>
 

@@ -101,6 +101,20 @@ Route::name('seller.')->prefix('seller')->namespace('Seller')->group(function ()
 
     Route::post('services/json', 'Service\ServiceController@json')->name('services.json');
     Route::resource('services', 'Service\ServiceController')->only(['index', 'store', 'update', 'destroy']);
+
+    Route::name('account.')->prefix('account')->namespace('Account')->middleware('auth:seller')->group(function () {
+        Route::get('/', 'AccountController@index')->name('index');
+
+        Route::get('/settings/shop', 'AccountController@getShop')->name('getShop');
+        Route::get('/settings/info', 'AccountController@getInfo')->name('getInfo');
+        Route::get('/settings/address', 'AccountController@getAddress')->name('getAddress');
+        Route::get('/settings/password', 'AccountController@getPassword')->name('getPassword');
+
+        Route::post('/settings/shop', 'AccountController@updateShop')->name('updateShop');
+        Route::post('/settings/info', 'AccountController@updateInfo')->name('updateInfo');
+        Route::post('/settings/address', 'AccountController@updateAddress')->name('updateAddress');
+        Route::post('/settings/password', 'AccountController@updatePassword')->name('updatePassword');
+    });
 });
 
 Route::namespace('Buyer')->name('buyer.')->group(function () {

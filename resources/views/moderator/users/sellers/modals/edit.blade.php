@@ -11,6 +11,12 @@
             {{ Form::open(['method' => 'PUT', 'class' => 'kt-form kt-form--fit kt-form--label-right']) }}
             <div class="modal-body">
                 <div class="form-group row">
+                    {!! Form::label('shop_name', 'Shop Name', ['class' => "col-form-label col-lg-3 col-sm-12"]) !!}
+                    <div class="col-lg-9 col-md-9 col-sm-12">
+                        {!! Form::text('shop_name', null, ['class' => "form-control", "required" => "required"]) !!}
+                    </div>
+                </div>
+                <div class="form-group row">
                     {!! Form::label('name', 'Name', ['class' => "col-form-label col-lg-3 col-sm-12"]) !!}
                     <div class="col-lg-9 col-md-9 col-sm-12">
                         {!! Form::text('name', null, ['class' => "form-control", "required" => "required"]) !!}

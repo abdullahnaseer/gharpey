@@ -67,6 +67,8 @@ class BuyerController extends Controller
         $fields['password'] = Hash::make($password);
 
         $user = Buyer::create($fields);
+        $user->markEmailAsVerified();
+
         $user->notify(new NewBuyerNotification($fields['email'], $password));
 
         flash('Successfully created the new record!')->success();

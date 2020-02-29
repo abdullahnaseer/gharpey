@@ -16,7 +16,18 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return ProductCategory::with(['products', 'products.seller', 'products.reviews'])->get();
+        $product_categories = ProductCategory::with(['products', 'products.seller', 'products.reviews'])->get();
+
+        foreach ($product_categories as $product_category)
+        {
+            foreach ($product_category->products as $product)
+            {
+                $product->reviews_cnt = $product->reviews_count;
+                $product->reviews_avg = $product->reviews_average;
+            }
+        }
+
+        return $product_categories;
     }
 
     /**

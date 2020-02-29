@@ -80,7 +80,8 @@ class SellerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|min:3',
+            'shop_name' => 'required|min:3|max:40',
+            'name' => 'required|min:3|max:100',
             'email' => 'required|email|unique:sellers,email',
             'cnic' => ['required', 'string', 'regex:/\d{5}-\d{7}-\d{1}/'],
             'phone' => ['required', new Phone()],
@@ -92,14 +93,22 @@ class SellerController extends Controller
             'return_location_id' => 'exists:city_areas,id',
         ]);
 
+        $slug = \Str::slug($request->input('shop_name'));
+        $check = Seller::where('shop_slug', $slug)->count();
+
         $password = Str::random(8);
         $fields = $request->all();
+        $fields['shop_slug'] = $slug;
         $fields['password'] = Hash::make($password);
 
         $user = Seller::create($fields);
         $user->markPhoneAsVerified();
         $user->markEmailAsVerified();
         $user->approveAccount();
+
+        if($check)
+            $user->update(['shop_slug' => $slug . '-' . $user->id]);
+
         $user->notify(new NewSellerNotification($fields['email'], $password));
 
         flash('Successfully created the new record!')->success();
@@ -116,7 +125,8 @@ class SellerController extends Controller
     public function update(Request $request, int $record_id)
     {
         $request->validate([
-            'name' => 'required|min:3',
+            'shop_name' => 'required|min:3|max:40',
+            'name' => 'required|min:3|max:100',
             'email' => 'required|email|unique:sellers,email,' . $record_id,
             'cnic' => ['required', 'string', 'regex:/\d{5}-\d{7}-\d{1}/'],
             'phone' => ['required', new Phone()],
@@ -129,7 +139,14 @@ class SellerController extends Controller
         ]);
 
         $record = Seller::findOrFail($record_id);
+
+        $slug = \Str::slug($request->input('shop_name'));
+        $check = Seller::where('shop_slug', $slug)->where('id', '!=', $record_id)->count();
         $record->update($request->all());
+        if($check)
+            $record->update(['shop_slug' => $slug . '-' . $record->id]);
+        else
+            $record->update(['shop_slug' => $slug]);
 
         flash('Successfully modified the record!')->success();
         return redirect()->route('moderator.users.sellers.index');

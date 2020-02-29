@@ -6,7 +6,7 @@
     <div class="kt-aside__brand kt-grid__item" id="kt_aside_brand">
         <div class="kt-aside__brand-logo">
             <a href="{{route('seller.dashboard')}}" class="pr-4">
-                <img class="img-fluid" alt="Logo" src="{{url('/images/logo.png')}}">
+                <img class="img-fluid" alt="Logo" src="{{url('/assets1/images/logo.png')}}" style="height: 45px;">
             </a>
         </div>
         <div class="kt-aside__brand-tools">
@@ -25,6 +25,11 @@
                     aria-haspopup="true"><a href="{{route('seller.dashboard')}}" class="kt-menu__link "><i
                             class="kt-menu__link-icon flaticon2-architecture-and-city"></i><span
                             class="kt-menu__link-text">Dashboard</span></a></li>
+
+                <li class="kt-menu__item {{ (request()->is('seller/dashboard')) ? 'kt-menu__item--active' : '' }} "
+                    aria-haspopup="true"><a href="{{route('seller.dashboard')}}" class="kt-menu__link "><i
+                            class="kt-menu__link-icon flaticon2-architecture-and-city"></i><span
+                            class="kt-menu__link-text">Shop Settings</span></a></li>
 
                 <li class="kt-menu__section ">
                     <h4 class="kt-menu__section-text">Products</h4>

@@ -27,7 +27,7 @@
 											<i class="kt-font-brand flaticon2-line-chart"></i>
 										</span>
                 <h3 class="kt-portlet__head-title">
-                    Records
+                    Sellers
                 </h3>
             </div>
             <div class="kt-portlet__head-toolbar">
@@ -35,7 +35,7 @@
                     <div class="kt-portlet__head-actions">
                         <a class="btn btn-brand btn-elevate btn-icon-sm"  href="#createModal" data-toggle="modal" data-target="#createModal">
                             <i class="la la-plus"></i>
-                            New Record
+                            New Seller
                         </a>
                     </div>
                 </div>
@@ -85,6 +85,8 @@
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
             modal.find('form').attr('action', "{{url('moderator/users/sellers')}}/" + id);
+            modal.find('form input#shop_name').val(button.data('shop-name'));
+            modal.find('form input#cnic').val(button.data('cnic'));
             modal.find('form input#name').val(button.data('name'));
             modal.find('form input#email').val(button.data('email'));
             modal.find('form input#phone').val(button.data('phone'));
@@ -159,6 +161,17 @@
                                     return '<span class="kt-badge kt-badge--warning kt-badge--inline kt-badge--pill">Pending</span>';
                             },
                         }, {
+                            field: 'shop_image',
+                            title: 'Shop Image',
+                            template: function (row) {
+                                return '\
+                                <img class="img-thumbnail" src="' + (row.shop_image ? row.shop_image.replace('public', '/storage') : '') + '">\
+                                ';
+                            }
+                        }, {
+                            field: 'shop_name',
+                            title: 'Shop Name',
+                        }, {
                             field: 'name',
                             title: 'Name',
                         }, {
@@ -212,6 +225,8 @@
                                     return '\
                                         <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details" data-toggle="modal" data-target="#editModal" \
                                             data-id="' + row.id + '" ' +
+                                                        'data-shop-name="' + row.shop_name + '" ' +
+                                                        'data-cnic="' + row.cnic + '" ' +
                                                         'data-name="' + row.name + '" ' +
                                                         'data-email="' + row.email + '" ' +
                                                         'data-phone="' + row.phone + '" ' +

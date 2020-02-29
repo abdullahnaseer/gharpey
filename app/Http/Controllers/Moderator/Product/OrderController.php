@@ -95,7 +95,7 @@ class OrderController extends Controller
         $seller = $product_order->product->seller;
         $status = $request->input('status');
         if($status == 'received') {
-            if($product_order->status == ProductOrder::STATUS_PAID || $product_order->status == ProductOrder::STATUS_SELLET_SENT) {
+            if($product_order->status == ProductOrder::STATUS_PAID || $product_order->status == ProductOrder::STATUS_SELLET_SENT || $product_order->status == ProductOrder::STATUS_CONFIRMED) {
                 $product_order->update([
                     'status' => ProductOrder::STATUS_WAREHOUSE_RECEVIED,
                     'warehouse_received_at' => Carbon::now()
@@ -177,7 +177,7 @@ class OrderController extends Controller
             flash()->error('Invalid Operation!!!');
         }
 
-        return redirect()->back();
+        return redirect('/moderator/products/orders/');
     }
 
     /**

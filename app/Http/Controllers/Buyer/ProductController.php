@@ -27,10 +27,7 @@ class ProductController extends Controller
         if($request->has('price-max'))
             $products = $products->where('price', '<=', $request->input('price-max'));
 
-        $products = $products->paginate(15);
-
-
-
+        $products = $products->with([])->paginate(15);
 
         $cart = \Cart::session($request->session()->get('_token'));
 
@@ -74,7 +71,7 @@ class ProductController extends Controller
      */
     public function show(Request $request, $slug)
     {
-        $product = Product::where('slug', $slug)->with([])->firstOrFail();
+        $product = Product::where('slug', $slug)->with(['reviews'])->firstOrFail();
 
         $cookie = $request->cookie('cart');
         if(is_null($cookie))

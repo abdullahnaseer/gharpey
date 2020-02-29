@@ -17,14 +17,12 @@ class CreateProductReviewsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('product_id')->index();
             $table->unsignedBigInteger('product_order_id')->index();
-            $table->unsignedBigInteger('buyer_id')->index();
             $table->text('review')->nullable();
             $table->unsignedSmallInteger('rating')->default(1);
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('product_order_id')->references('id')->on('product_order')->onDelete('cascade');
-            $table->foreign('buyer_id')->references('id')->on('buyers')->onDelete('cascade');
         });
     }
 

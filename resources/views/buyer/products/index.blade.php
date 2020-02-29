@@ -64,10 +64,11 @@
                                 <div class="product-details">
                                     <div class="ratings-container">
                                         <div class="product-ratings">
-                                            <span class="ratings" style="width:80%"></span>
+                                            <span class="ratings" style="width:{{$product->reviews_average * 20}}%"></span>
                                             <!-- End .ratings -->
                                         </div>
                                         <!-- End .product-ratings -->
+                                        <a href="#" class="rating-link">( {{ $product->reviews_count }} Reviews )</a>
                                     </div>
                                     <!-- End .product-container -->
                                     <h2 class="product-title  m-b-5">

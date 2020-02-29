@@ -40,6 +40,30 @@ class Product extends Model
     }
 
     /**
+     * Get the orders for the product.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(ProductReview::class);
+    }
+
+    /**
+     * Get the orders for the product.
+     */
+    public function getReviewsCountAttribute()
+    {
+        return $this->reviews()->count();
+    }
+
+    /**
+     * Get the orders for the product.
+     */
+    public function getReviewsAverageAttribute()
+    {
+        return $this->reviews()->average('rating');
+    }
+
+    /**
      * The wishlist buyer that belong to the product.
      */
     public function wishlist_buyers()

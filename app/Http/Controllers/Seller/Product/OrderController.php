@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Seller\Product;
 use App\Http\Controllers\Controller;
 use App\Models\ProductOrder;
 use App\Models\Seller;
+use App\Notifications\Buyer\ProductOrder\ProductOrderConfirmedNotification;
 use App\Notifications\Seller\ProductOrder\ProductOrderNotification as BuyerProductOrderCanceledNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -92,14 +93,31 @@ class OrderController extends Controller
     {
         $product_order = ProductOrder::findOrFail($id);
         $status = $request->input('status');
-        if($status == 'delivered') {
+        if($status == 'confirmed') {
             if($product_order->status == ProductOrder::STATUS_PAID)
+            {
+                $product_order->update([
+                    'status' => ProductOrder::STATUS_CONFIRMED,
+                    'confirmed_at' => Carbon::now()
+                ]);
+
+                $buyer = $product_order->order->buyer;
+                if(!is_null($buyer))
+                    $buyer->notify(new ProductOrderConfirmedNotification($product_order));
+
+                flash()->success('Product Order Confirmed successfully.');
+            } else
+                flash()->error('Invalid Operation!!!');
+        } else if($status == 'delivered') {
+            if(($product_order->status == ProductOrder::STATUS_PAID) || ($product_order->status == ProductOrder::STATUS_CONFIRMED))
                 $product_order->update([
                     'status' => ProductOrder::STATUS_SELLET_SENT,
                     'seller_send_at' => Carbon::now()
                 ]);
             else
                 flash()->error('Invalid Operation!!!');
+
+            flash()->success('Product Order marked for delivery successfully.');
         } else if ($status == 'cancel') {
             if($product_order->status == ProductOrder::STATUS_PAID) {
                 $product_order->update([
@@ -132,6 +150,8 @@ class OrderController extends Controller
 
                 if(!is_null($buyer))
                     $buyer->notify(new BuyerProductOrderCanceledNotification($product_order));
+
+                flash()->success('Product Order Canceled successfully.');
             }
             else
                 flash()->error('Invalid Operation!!!');

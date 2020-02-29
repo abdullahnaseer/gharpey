@@ -12,8 +12,8 @@
     <div class="kt-input-icon kt-input-icon--left">
         <input type="text" class="form-control" placeholder="Search..." id="generalSearch">
         <span class="kt-input-icon__icon kt-input-icon__icon--left">
-                                            <span><i class="la la-search"></i></span>
-                                        </span>
+            <span><i class="la la-search"></i></span>
+        </span>
     </div>
 @endsection
 
@@ -115,7 +115,9 @@
                             autoHide: false,
                             template: function(row) {
                                 if(row.status == '{{\App\Models\ProductOrder::STATUS_PAID}}')
-                                    return "<p class='text-danger'>Waiting for delivery by seller.</p>";
+                                    return "<p class='text-danger'>Waiting for confirmation by seller.</p>";
+                                else if(row.status == '{{\App\Models\ProductOrder::STATUS_PAID}}')
+                                    return "<p class='text-danger'>Order Confirmed and Waiting for delivery by seller.</p>";
                                 else if(row.status == '{{\App\Models\ProductOrder::STATUS_SELLET_SENT}}')
                                     return "<p class='text-info'>Waiting for arrival of product at our warehouse.</p>";
                                 else if(row.status == '{{\App\Models\ProductOrder::STATUS_WAREHOUSE_RECEVIED}}')

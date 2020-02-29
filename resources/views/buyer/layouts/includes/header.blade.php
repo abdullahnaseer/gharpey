@@ -4,31 +4,9 @@
             <div class="header-left header-dropdowns">
 
                 <div class="dropdown compare-dropdown">
-                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                    <a href="{{url('/')}}" class="dropdown-toggle" role="button">
                         Welcome to Gharpey
                     </a>
-
-                    <div class="dropdown-menu">
-                        <div class="dropdownmenu-wrapper">
-                            <ul class="compare-products">
-                                <li class="product">
-                                    <a href="#" class="btn-remove" title="Remove Product"><i class="icon-cancel"></i></a>
-                                    <h4 class="product-title"><a href="product.html">Lady White Top</a></h4>
-                                </li>
-                                <li class="product">
-                                    <a href="#" class="btn-remove" title="Remove Product"><i class="icon-cancel"></i></a>
-                                    <h4 class="product-title"><a href="product.html">Blue Women Shirt</a></h4>
-                                </li>
-                            </ul>
-
-                            <div class="compare-actions">
-                                <a href="#" class="action-link">Clear All</a>
-                                <a href="#" class="btn btn-primary">Compare</a>
-                            </div>
-                        </div>
-                        <!-- End .dropdownmenu-wrapper -->
-                    </div>
-                    <!-- End .dropdown-menu -->
                 </div>
                 <!-- End .dropdown -->
             </div>
@@ -70,40 +48,40 @@
         <div class="container">
             <div class="header-left">
                 <a href="index.html" class="logo">
-                    <img src="assets1/images/logo.png" style="height: 60px;" alt="">
+                    <img src="/assets1/images/logo.png" style="height: 60px;" alt="">
                 </a>
             </div>
             <!-- End .header-left -->
 
-{{--            <div class="header-center">--}}
-{{--                <div class="header-search">--}}
-{{--                    <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>--}}
-{{--                    <form action="#" method="get">--}}
-{{--                        <div class="header-search-wrapper">--}}
-{{--                            <input type="search" class="form-control" name="q" id="q" placeholder="Search..." required="">--}}
-{{--                            <div class="select-custom">--}}
-{{--                                <select id="cat" name="cat">--}}
-{{--                                    <option value="" class="" style="font-weight:900;">Islamabad</option>--}}
-{{--                                    <option value="4" class="pl-5">Sector 1</option>--}}
-{{--                                    <option value="12">Sector 2</option>--}}
-{{--                                    <option value="13">Sector 3</option>--}}
-{{--                                    <option value="66">Sector 4</option>--}}
-{{--                                    <option value="" class="" style="font-weight:900;">Rawalpindi</option>--}}
-{{--                                    <option value="12">Gulurg</option>--}}
-{{--                                    <option value="13">DHA</option>--}}
-{{--                                    <option value="66">Behria</option>--}}
+            <div class="header-center">
+                <div class="header-search">
+                    <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
+                    <form action="#" method="get">
+                        <div class="header-search-wrapper">
+                            <input type="search" class="form-control" name="q" id="q" placeholder="Search..." required="">
+                            <div class="select-custom">
+                                <select id="cat" name="cat">
+                                    <option value="" class="" style="font-weight:900;">Islamabad</option>
+                                    <option value="4" class="pl-5">Sector 1</option>
+                                    <option value="12">Sector 2</option>
+                                    <option value="13">Sector 3</option>
+                                    <option value="66">Sector 4</option>
+                                    <option value="" class="" style="font-weight:900;">Rawalpindi</option>
+                                    <option value="12">Gulurg</option>
+                                    <option value="13">DHA</option>
+                                    <option value="66">Behria</option>
 
-{{--                                </select>--}}
-{{--                            </div>--}}
-{{--                            <!-- End .select-custom -->--}}
-{{--                            <button class="btn" type="submit"><i class="icon-magnifier"></i></button>--}}
-{{--                        </div>--}}
-{{--                        <!-- End .header-search-wrapper -->--}}
-{{--                    </form>--}}
-{{--                </div>--}}
-{{--                <!-- End .header-search -->--}}
-{{--            </div>--}}
-{{--            <!-- End .headeer-center -->--}}
+                                </select>
+                            </div>
+                            <!-- End .select-custom -->
+                            <button class="btn" type="submit"><i class="icon-magnifier"></i></button>
+                        </div>
+                        <!-- End .header-search-wrapper -->
+                    </form>
+                </div>
+                <!-- End .header-search -->
+            </div>
+            <!-- End .headeer-center -->
 
             <div class="header-right">
                 <button class="mobile-menu-toggler" type="button">
@@ -173,7 +151,7 @@
             <div class="header-bottom sticky-header">
                 <div class="container">
                     <a href="index.html" class="logo">
-                        <img src="assets1/images/logo.png" alt="Porto Logo" width="101" height="41">
+                        <img src="/assets1/images/logo.png" alt="GharPey Logo" width="101" height="41">
                     </a>
                     <div class="dropdown cart-dropdown">
                         <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">

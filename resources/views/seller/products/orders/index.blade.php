@@ -153,7 +153,9 @@
                             autoHide: false,
                             template: function(row) {
                                 if(row.status == '{{\App\Models\ProductOrder::STATUS_PAID}}')
-                                    return "<p class='text-danger'>Waiting for delivery by seller.</p>";
+                                    return "<p class='text-danger'>Waiting for confirmation.</p>";
+                                else if(row.status == '{{\App\Models\ProductOrder::STATUS_CONFIRMED}}')
+                                    return "<p class='text-info'>Order Confirmed and Waiting for delivery of product to our warehouse.</p>";
                                 else if(row.status == '{{\App\Models\ProductOrder::STATUS_SELLET_SENT}}')
                                     return "<p class='text-info'>Waiting for arrival of product at our warehouse.</p>";
                                 else if(row.status == '{{\App\Models\ProductOrder::STATUS_WAREHOUSE_RECEVIED}}')
@@ -176,8 +178,11 @@
                             overflow: 'visible',
                             template: function(row) {
                                 if(row.status == '{{\App\Models\ProductOrder::STATUS_PAID}}')
-                                    return "<a href='{{url('/seller/products/orders')}}/"+row.id+"/edit?status=delivered' class='btn btn-outline-primary mr-2'>Mark Delivered</a>" +
+                                    return "<a href='{{url('/seller/products/orders')}}/"+row.id+"/edit?status=confirmed' class='btn btn-outline-primary mr-2'>Confirm Order</a>" +
                                            "<a href='{{url('/seller/products/orders')}}/"+row.id+"/edit?status=cancel' class='btn btn-outline-danger'>Cancel</a>";
+                                else if(row.status == '{{\App\Models\ProductOrder::STATUS_CONFIRMED}}')
+                                    return "<a href='{{url('/seller/products/orders')}}/"+row.id+"/edit?status=delivered' class='btn btn-outline-primary mr-2'>Mark Delivered</a>" +
+                                        "<a href='{{url('/seller/products/orders')}}/"+row.id+"/edit?status=cancel' class='btn btn-outline-danger'>Cancel</a>";
                                 else
                                     return "No Action Available";
                             },

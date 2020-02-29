@@ -22,6 +22,7 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
      */
     protected $fillable = [
         'name', 'email', 'phone', 'cnic', 'password',
+        'shop_name', 'shop_slug', 'shop_image',
         'warehouse_location_id', 'warehouse_address',
         'business_location_id', 'business_address',
         'return_location_id', 'return_address',

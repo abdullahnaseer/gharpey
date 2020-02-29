@@ -26,7 +26,6 @@ class ProductOrderReviewController extends Controller
 
     }
 
-
     public function store(Request $request, $product_order_id)
     {
         $data = $request->validate([
@@ -38,10 +37,11 @@ class ProductOrderReviewController extends Controller
             $query->where('buyer_id', auth()->id());
         })->findOrFail($product_order_id);
 
-        $review = ProductReview::create($data);
+        $data['product_id'] = $product_order->product_id;
+        $review = $product_order->review()->create($data);
         $product_order->update(['reviewed_at' => Carbon::now()]);
 
-        flash()->success(['Product reviewed successfully.']);
+        flash()->success('Product reviewed successfully.');
         return redirect()->back();
     }
 }

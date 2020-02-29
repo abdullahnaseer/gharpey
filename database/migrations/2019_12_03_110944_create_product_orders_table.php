@@ -23,6 +23,7 @@ class CreateProductOrdersTable extends Migration
             $table->enum('status', \App\Models\ProductOrder::STATUSES)
                 ->default(\App\Models\ProductOrder::STATUS_PAID);
 
+            $table->timestamp('confirmed_at')->nullable();
             $table->timestamp('seller_send_at')->nullable();
             $table->timestamp('warehouse_received_at')->nullable();
             $table->timestamp('send_at')->nullable();

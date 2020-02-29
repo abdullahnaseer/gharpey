@@ -44,7 +44,7 @@ class ProductOrderDeliveryNotification extends Notification
     {
         return (new MailMessage)
             ->line('The order for product "'.$this->productOrder->product->name.'" is delivered from warehouse.')
-            ->action('Check Orders', url('/orders'))
+            ->action('Check Orders', url('/account/orders'))
             ->line('Thank you for using our application!');
     }
 

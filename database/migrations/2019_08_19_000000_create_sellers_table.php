@@ -26,6 +26,10 @@ class CreateSellersTable extends Migration
 
             $table->string('cnic')->nullable();
 
+            $table->string('shop_name');
+            $table->string('shop_slug');
+            $table->string('shop_image')->nullable();
+
             $table->string('warehouse_address')->nullable();
             $table->unsignedBigInteger('warehouse_location_id')->nullable();
 

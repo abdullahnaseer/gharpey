@@ -62,7 +62,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'shop_name' => ['required', 'string', 'max:40', 'min:5'],
+            'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:sellers'],
             'cnic' => ['required', 'string', 'regex:/\d{5}-\d{7}-\d{1}/'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -77,14 +78,23 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return Seller::create([
+        $slug = \Str::slug($data['shop_name']);
+        $check = Seller::where('shop_slug', $slug)->count();
+
+        $seller = Seller::create([
+            'shop_name' => $data['shop_name'],
+            'shop_slug' => $slug,
             'name' => $data['name'],
             'email' => $data['email'],
             'cnic' => $data['cnic'],
             'password' => Hash::make($data['password']),
         ]);
-    }
 
+        if($check)
+            $seller->update(['slug' => $slug . '-' . $seller->id]);
+
+        return $seller;
+    }
 
     /**
      * Get the guard to be used during registration.

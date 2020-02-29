@@ -9,6 +9,7 @@ class ProductOrder extends Model
     protected $table = 'product_order';
 
     const STATUS_PAID = 'paid';
+    const STATUS_CONFIRMED = 'confirmed';
     const STATUS_SELLET_SENT ='seller_sent';
     const STATUS_WAREHOUSE_RECEVIED ='warehouse_received';
     const STATUS_SENT ='sent';
@@ -17,6 +18,7 @@ class ProductOrder extends Model
 
     const STATUSES = [
         self::STATUS_PAID,
+        self::STATUS_CONFIRMED,
         self::STATUS_SELLET_SENT,
         self::STATUS_WAREHOUSE_RECEVIED,
         self::STATUS_SENT,
@@ -31,7 +33,7 @@ class ProductOrder extends Model
      */
     protected $fillable = [
         'order_id', 'product_id', 'price', 'quantity', 'status',
-        'seller_send_at', 'send_at', 'warehouse_received_at', 'completed_at', 'canceled_at', 'reviewed_at'
+        'seller_send_at', 'send_at', 'warehouse_received_at', 'completed_at', 'canceled_at', 'reviewed_at', 'confirmed_at'
     ];
 
     protected $casts = [
@@ -42,7 +44,8 @@ class ProductOrder extends Model
         'warehouse_received_at' => 'datetime',
         'completed_at' => 'datetime',
         'canceled_at' => 'datetime',
-        'reviewed_at' => 'datetime'
+        'reviewed_at' => 'datetime',
+        'confirmed_at' => 'datetime',
     ];
 
     /**
@@ -59,6 +62,15 @@ class ProductOrder extends Model
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+
+
+    /**
+     * Get the review for the order.
+     */
+    public function review()
+    {
+        return $this->hasOne(ProductReview::class, 'product_order_id', 'id');
     }
 
 }

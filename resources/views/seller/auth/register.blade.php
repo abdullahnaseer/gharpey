@@ -10,6 +10,18 @@
             @csrf
 
             <div class="form-group">
+                <input placeholder="Shop Name" id="shop_name" type="text" class="form-control @error('shop_name') is-invalid @enderror" name="name" value="{{ old('shop_name') }}" required autocomplete="shop_name" autofocus>
+
+                @error('shop_name')
+                <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
+            <hr>
+
+            <div class="form-group">
                 <input placeholder="Name" id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                 @error('name')

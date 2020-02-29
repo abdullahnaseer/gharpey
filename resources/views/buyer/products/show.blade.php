@@ -59,11 +59,12 @@
 
                                     <div class="ratings-container">
                                         <div class="product-ratings">
-                                            <span class="ratings" style="width:60%"></span><!-- End .ratings -->
-                                        </div><!-- End .product-ratings -->
-
-                                        <a href="#" class="rating-link">( 6 Reviews )</a>
-                                    </div><!-- End .product-container -->
+                                            <span class="ratings" style="width:{{$product->reviews_average * 20}}%"></span>
+                                            <!-- End .ratings -->
+                                        </div>
+                                        <!-- End .product-ratings -->
+                                        <a href="#" class="rating-link">( {{ $product->reviews_count }} Reviews )</a>
+                                    </div>
 
                                     <div class="price-box">
 {{--                                        <span class="old-price">$81.00</span>--}}
@@ -71,7 +72,7 @@
                                     </div><!-- End .price-box -->
 
                                     <div class="product-desc">
-                                        <p>{{$product->description}}</p>
+                                        <p>{{\Str::limit($product->description, 100)}}</p>
                                     </div><!-- End .product-desc -->
 
 {{--                                    <div class="product-filters-container">--}}
@@ -138,9 +139,12 @@
                             <li class="nav-item">
                                 <a class="nav-link active" id="product-tab-desc" data-toggle="tab" href="#product-desc-content" role="tab" aria-controls="product-desc-content" aria-selected="true">Description</a>
                             </li>
-{{--                            <li class="nav-item">--}}
-{{--                                <a class="nav-link" id="product-tab-tags" data-toggle="tab" href="#product-tags-content" role="tab" aria-controls="product-tags-content" aria-selected="false">Tags</a>--}}
-{{--                            </li>--}}
+                            <li class="nav-item">
+                                <a class="nav-link" id="product-tab-tags" data-toggle="tab" href="#product-tags-content" role="tab" aria-controls="product-tags-content" aria-selected="false">Tags</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="product-tab-qas" data-toggle="tab" href="#product-qas-content" role="tab" aria-controls="product-qas-content" aria-selected="false">Q&As</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="product-tab-reviews" data-toggle="tab" href="#product-reviews-content" role="tab" aria-controls="product-reviews-content" aria-selected="false">Reviews</a>
                             </li>
@@ -152,101 +156,31 @@
                                 </div><!-- End .product-desc-content -->
                             </div><!-- End .tab-pane -->
 
-{{--                            <div class="tab-pane fade" id="product-tags-content" role="tabpanel" aria-labelledby="product-tab-tags">--}}
-{{--                                <div class="product-tags-content">--}}
-{{--                                    <form action="#">--}}
-{{--                                        <h4>Add Your Tags:</h4>--}}
-{{--                                        <div class="form-group">--}}
-{{--                                            <input type="text" class="form-control form-control-sm" required>--}}
-{{--                                            <input type="submit" class="btn btn-primary" value="Add Tags">--}}
-{{--                                        </div><!-- End .form-group -->--}}
-{{--                                    </form>--}}
-{{--                                    <p class="note">Use spaces to separate tags. Use single quotes (') for phrases.</p>--}}
-{{--                                </div><!-- End .product-tags-content -->--}}
-{{--                            </div><!-- End .tab-pane -->--}}
+                            <div class="tab-pane fade" id="product-tags-content" role="tabpanel" aria-labelledby="product-tab-tags">
+                                <div class="product-tags-content">
+                                    <form action="#">
+                                        <h4>Add Your Tags:</h4>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-sm" required>
+                                            <input type="submit" class="btn btn-primary" value="Add Tags">
+                                        </div><!-- End .form-group -->
+                                    </form>
+                                    <p class="note">Use spaces to separate tags. Use single quotes (') for phrases.</p>
+                                </div><!-- End .product-tags-content -->
+                            </div><!-- End .tab-pane -->
 
-                            <div class="tab-pane fade" id="product-reviews-content" role="tabpanel" aria-labelledby="product-tab-reviews">
-                                <div class="product-reviews-content">
+                            <div class="tab-pane fade" id="product-qas-content" role="tabpanel" aria-labelledby="product-tab-qas">
+                                <div class="product-qas-content">
                                     <div class="collateral-box">
                                         <ul>
                                             <li>Be the first to review this product</li>
                                         </ul>
                                     </div><!-- End .collateral-box -->
-
                                     <div class="add-product-review">
                                         <h3 class="text-uppercase heading-text-color font-weight-semibold">WRITE YOUR OWN REVIEW</h3>
                                         <p>How do you rate this product? *</p>
 
                                         <form action="#">
-                                            <table class="ratings-table">
-                                                <thead>
-                                                <tr>
-                                                    <th>&nbsp;</th>
-                                                    <th>1 star</th>
-                                                    <th>2 stars</th>
-                                                    <th>3 stars</th>
-                                                    <th>4 stars</th>
-                                                    <th>5 stars</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>Quality</td>
-                                                    <td>
-                                                        <input type="radio" name="ratings[1]" id="Quality_1" value="1" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="ratings[1]" id="Quality_2" value="2" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="ratings[1]" id="Quality_3" value="3" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="ratings[1]" id="Quality_4" value="4" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="ratings[1]" id="Quality_5" value="5" class="radio">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Value</td>
-                                                    <td>
-                                                        <input type="radio" name="value[1]" id="Value_1" value="1" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="value[1]" id="Value_2" value="2" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="value[1]" id="Value_3" value="3" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="value[1]" id="Value_4" value="4" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="value[1]" id="Value_5" value="5" class="radio">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Price</td>
-                                                    <td>
-                                                        <input type="radio" name="price[1]" id="Price_1" value="1" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="price[1]" id="Price_2" value="2" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="price[1]" id="Price_3" value="3" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="price[1]" id="Price_4" value="4" class="radio">
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" name="price[1]" id="Price_5" value="5" class="radio">
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-
                                             <div class="form-group">
                                                 <label>Nickname <span class="required">*</span></label>
                                                 <input type="text" class="form-control form-control-sm" required>
@@ -263,6 +197,22 @@
                                             <input type="submit" class="btn btn-primary" value="Submit Review">
                                         </form>
                                     </div><!-- End .add-product-review -->
+                                </div><!-- End .product-tags-content -->
+                            </div><!-- End .tab-pane -->
+
+                            <div class="tab-pane fade" id="product-reviews-content" role="tabpanel" aria-labelledby="product-tab-reviews">
+                                <div class="product-reviews-content">
+                                    <div>
+                                        @foreach($product->reviews as $review)
+                                            <div class="ratings-container mb-0">
+                                                <div class="product-ratings">
+                                                    <span class="ratings" style="width:{{$review->rating * 20}}%"></span>
+                                                </div>
+                                            </div>
+                                            <p class="text-muted mb-0"><small>By Admin ({{$review->created_at->diffForHumans()}})</small></p>
+                                            <p>{{$review->review}}</p>
+                                        @endforeach
+                                    </div>
                                 </div><!-- End .product-reviews-content -->
                             </div><!-- End .tab-pane -->
                         </div><!-- End .tab-content -->

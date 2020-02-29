@@ -132,7 +132,7 @@ class CheckoutController extends Controller
                 'shipping_phone' => $shipping['phone'],
                 'shipping_address' => $shipping['address'],
                 'shipping_location_id' => $shipping['area'],
-                'receipt_email' => $shipping['receipt_email'],
+                'receipt_email' => is_null($buyer) ? $shipping['receipt_email'] : $buyer->email,
                 'charge_id' => $charge->id,
                 'paid_at' => Carbon::now()
             ]);

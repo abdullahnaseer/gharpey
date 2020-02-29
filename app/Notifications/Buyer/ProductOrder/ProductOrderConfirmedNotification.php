@@ -7,9 +7,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ProductOrderCanceledNotification extends Notification
+class ProductOrderConfirmedNotification extends Notification
 {
-    use Queueable;
 
     private $productOrder;
 
@@ -43,7 +42,7 @@ class ProductOrderCanceledNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('The order for product "'.$this->productOrder->product->name.'" is canceled.')
+            ->line('The order for product "'.$this->productOrder->product->name.'" is confirmed by buyer.')
             ->action('Check Orders', url('/account/orders'))
             ->line('Thank you for using our application!');
     }
@@ -57,7 +56,7 @@ class ProductOrderCanceledNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'The order for product "'.$this->productOrder->product->name.'" is canceled.',
+            'message' => 'The order for product "'.$this->productOrder->product->name.'" is confirmed by buyer.',
             'product_order_id' => $this->productOrder->id
         ];
     }

@@ -102,6 +102,8 @@ class OrderController extends Controller
                 ]);
 
                 $product_order->product->seller->notify(new ProductOrderReceivedNotification($product_order));
+
+                flash()->success('Status Updated!');
             }
             else
                 flash()->error('Invalid Operation!!!');
@@ -114,6 +116,8 @@ class OrderController extends Controller
 
                 if(!is_null($buyer))
                     $buyer->notify(new ProductOrderDeliveryNotification($product_order));
+
+                flash()->success('Status Updated!');
             }
             else
                 flash()->error('Invalid Operation!!!');
@@ -126,6 +130,8 @@ class OrderController extends Controller
 
                 if(!is_null($buyer))
                     $buyer->notify(new ProductOrderCompletedNotification($product_order));
+
+                flash()->success('Status Updated!');
             }
             else
                 flash()->error('Invalid Operation!!!');
@@ -162,6 +168,8 @@ class OrderController extends Controller
                 $product_order->product->seller->notify(new ProductOrderCanceledNotification($product_order));
                 if(!is_null($buyer))
                     $buyer->notify(new BuyerProductOrderCanceledNotification($product_order));
+
+                flash()->success('Status Updated!');
             }
             else
                 flash()->error('Invalid Operation!!!');
@@ -169,7 +177,7 @@ class OrderController extends Controller
             flash()->error('Invalid Operation!!!');
         }
 
-        return redirect()->route('moderator.orders.index');
+        return redirect()->back();
     }
 
     /**

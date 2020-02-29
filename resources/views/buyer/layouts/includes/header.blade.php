@@ -41,7 +41,7 @@
                     <div class="header-menu">
                         <ul>
                             @auth('buyer')
-                                <li><a href="my-account.html">MY ACCOUNT </a></li>
+                                <li><a href="{{route('buyer.account.index')}}">MY ACCOUNT </a></li>
                                 <li><a href="#">MY WISHLIST </a></li>
                                 <li><a href="{{ route('buyer.logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">LOGOUT </a></li>
@@ -110,7 +110,8 @@
                     <i class="icon-menu"></i>
                 </button>
 
-                @php($cart_items = \Cart::session(request()->session()->get('_token'))->getContent())
+                @php($cart = \Cart::session(request()->session()->get('_token')))
+                @php($cart_items = $cart->getContent())
                 <div class="dropdown cart-dropdown">
                     <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                         <span class="cart-count">{{$cart_items->count()}}</span>

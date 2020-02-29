@@ -29,8 +29,13 @@ class ProductController extends Controller
 
         $products = $products->paginate(15);
 
-        $products->each(function ($product) use ($request) {
-            $product->cart_item = Cart::session($request->session()->get('_token'))->get($product->id);
+
+
+
+        $cart = \Cart::session($request->session()->get('_token'));
+
+        $products->each(function ($product) use ($request, $cart) {
+            $product->cart_item = $cart->get($product->id);
         });
 
         return view('buyer.products.index', [
@@ -71,7 +76,15 @@ class ProductController extends Controller
     {
         $product = Product::where('slug', $slug)->with([])->firstOrFail();
 
-        $cartItem = Cart::session($request->session()->get('_token'))->get($product->id);
+        $cookie = $request->cookie('cart');
+        if(is_null($cookie))
+        {
+            $cookie = \Str::random(32);
+            cookie('cart', $cookie, 60*24*365);
+        }
+
+        $cart = \Cart::session($request->session()->get('_token'));
+        $cartItem = $cart->get($product->id);
 
         return view('buyer.products.show', [
             'product' => $product,

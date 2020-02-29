@@ -77,7 +77,6 @@ Route::name('moderator.')->prefix('moderator')->namespace('Moderator')->group(fu
 
     Route::post('products/json', 'Product\ProductController@json')->name('products.json');
     Route::resource('products', 'Product\ProductController')->only(['index', 'store', 'update', 'destroy']);
-
 });
 
 Route::name('seller.')->prefix('seller')->namespace('Seller')->group(function () {
@@ -128,13 +127,6 @@ Route::namespace('Buyer')->name('buyer.')->group(function () {
     Route::resource('services', 'ServiceController')->only(['index', 'show', 'store']);
     Route::resource('services.sellers', 'ServiceSellerController')->only(['show']);
 
-//    Route::post('/services/{service}', 'ServiceController@serviceRequest');
-//    Route::get('/service-categories/{id}', 'ServiceCategoryController@show');
-//    Route::get('/services/location/{state_code}', 'LocationController@state');
-//    Route::get('/services/location/{state_code}/{city_id}', 'LocationController@city');
-//    Route::get('/services/location/{state_code}/{city_slug}/{service_slug}', 'LocationController@service');
-
-
     Route::name('account.')->prefix('account')->namespace('Account')->middleware('auth:buyer')->group(function () {
         Route::get('/', 'AccountController@index')->name('index');
 
@@ -147,10 +139,12 @@ Route::namespace('Buyer')->name('buyer.')->group(function () {
         Route::post('/settings/password', 'AccountController@updatePassword')->name('updatePassword');
 
         Route::resource('orders', 'ProductOrderController')->only(['index']);
+
+        Route::resource('orders.reviews', 'ProductOrderReviewController')->only(['index', 'create', 'store']);
+
         Route::resource('service-requests', 'ServiceRequestController')->only(['index']);
         Route::resource('wishlist', 'WishlistController')->only(['index']);
     });
-
 });
 
 

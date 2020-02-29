@@ -16,6 +16,8 @@ class CartController extends Controller
      */
     public function index(Request $request)
     {
+
+
         $cart = \Cart::session($request->session()->get('_token'));
 
         if($request->has('clear'))
@@ -41,8 +43,8 @@ class CartController extends Controller
         $is_add_action = ! $request->has('remove');
 
         $rowId = $product->id; // generate a unique() row ID
-//        $userID = auth('buyer')->check() ? auth('buyer')->id() : $request->session()->get('_token'); // the user ID to bind the cart contents
-        $userID = $request->session()->get('_token'); // the user ID to bind the cart contents
+
+        $cart = \Cart::session($request->session()->get('_token'));
 
         if($is_add_action)
         {
@@ -52,7 +54,7 @@ class CartController extends Controller
                 return redirect()->back();
             }
             // add the product to cart
-            Cart::session($userID)->add(array(
+            $cart->add(array(
                 'id' => $product->id,
                 'name' => $product->name,
                 'price' => $product->price,
@@ -64,7 +66,7 @@ class CartController extends Controller
             flash()->success('Product added to cart successfully.');
         } else {
             // remove the product from cart
-            Cart::session($userID)->remove($product->id);
+            $cart->remove($product->id);
             flash()->success('Product removed from cart successfully.');
         }
 

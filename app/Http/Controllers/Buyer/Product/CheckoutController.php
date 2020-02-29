@@ -23,6 +23,8 @@ class CheckoutController extends Controller
      */
     public function getShipping(Request $request)
     {
+
+
         $cart = \Cart::session($request->session()->get('_token'));
 
         return view('buyer.products.checkout.shipping', [
@@ -59,7 +61,10 @@ class CheckoutController extends Controller
      */
     public function getPayment(Request $request)
     {
+
+
         $cart = \Cart::session($request->session()->get('_token'));
+
         $shipping = $request->session()->get('shipping');
 
         if (is_null($shipping))
@@ -103,6 +108,8 @@ class CheckoutController extends Controller
      */
     public function charge(Request $request)
     {
+
+
         $cart = \Cart::session($request->session()->get('_token'));
         $shipping = $request->session()->get('shipping');
         $amount = $cart->getTotal();

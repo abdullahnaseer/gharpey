@@ -45,7 +45,8 @@ class CheckoutController extends Controller
             'name' => ['required', 'string', 'min:8'],
             'address' => ['required', 'string', 'min:8'],
             'area' => ['required', 'integer', 'exists:city_areas,id'],
-            'phone' => ['required', new Phone()]
+            'phone' => ['required', new Phone()],
+            'receipt_email' => auth('buyer')->check() ? '' : 'required|email'
         ]);
 
         $request->session()->put('shipping', $validatedData);
@@ -61,8 +62,6 @@ class CheckoutController extends Controller
      */
     public function getPayment(Request $request)
     {
-
-
         $cart = \Cart::session($request->session()->get('_token'));
 
         $shipping = $request->session()->get('shipping');
@@ -108,8 +107,6 @@ class CheckoutController extends Controller
      */
     public function charge(Request $request)
     {
-
-
         $cart = \Cart::session($request->session()->get('_token'));
         $shipping = $request->session()->get('shipping');
         $amount = $cart->getTotal();
@@ -135,6 +132,7 @@ class CheckoutController extends Controller
                 'shipping_phone' => $shipping['phone'],
                 'shipping_address' => $shipping['address'],
                 'shipping_location_id' => $shipping['area'],
+                'receipt_email' => $shipping['receipt_email'],
                 'charge_id' => $charge->id,
                 'paid_at' => Carbon::now()
             ]);

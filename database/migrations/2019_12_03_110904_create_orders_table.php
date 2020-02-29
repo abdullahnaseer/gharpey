@@ -21,6 +21,8 @@ class CreateOrdersTable extends Migration
             $table->string('shipping_address')->nullable();
             $table->unsignedBigInteger('shipping_location_id')->index()->nullable();
 
+            $table->string('receipt_email')->nullable();
+
             $table->string('charge_id')->nullable(); // stripe transaction id or other
             $table->mediumText('note')->nullable();
 

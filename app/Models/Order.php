@@ -12,9 +12,8 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'buyer_id', 'shipping_phone', 'shipping_address', 'shipping_location_id', 'charge_id', 'paid_at'
+        'buyer_id', 'shipping_phone', 'shipping_address', 'shipping_location_id', 'charge_id', 'paid_at', 'receipt_email'
     ];
-
 
     /**
      * Get the products for the order.

@@ -87,6 +87,19 @@
                                 @enderror
                             </div>
 
+                            @if(auth()->guest())
+                                <div class="form-group required-field">
+                                    <label>Receipt Email</label>
+                                    <input name="receipt_email" type="text" class="form-control  @error('receipt_email') is-invalid @enderror" required value="{{old('receipt_email', auth('buyer')->check() ? auth('buyer')->user()->email : null)}}">
+
+                                    @error('receipt_email')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            @endif
+
                             <div class="form-group required-field">
                                 <label>Address </label>
                                 <input name="address" type="text" class="form-control  @error('address') is-invalid @enderror" required value="{{old('address', auth('buyer')->check() ? auth('buyer')->user()->address : null)}}">

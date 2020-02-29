@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Buyer\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Buyer;
 use App\Models\City;
+use App\Rules\Phone;
 use App\User;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -68,6 +69,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:buyers'],
+            'phone' => ['required', new Phone()],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'address' => ['required', 'string', 'min:8'],
             'area' => ['required', 'integer', 'exists:city_areas,id'],
@@ -85,6 +87,7 @@ class RegisterController extends Controller
         return Buyer::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
             'address' => $data['address'],
             'location_id' => $data['area'],

@@ -124,7 +124,7 @@ class ServiceController extends Controller
      */
     public function update(Request $request, int $record_id)
     {
-        $request->validate(Service::getRules($request));
+        $request->validate(Service::getRules($request, true));
 
         $record = Service::findOrFail($record_id);
 

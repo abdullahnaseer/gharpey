@@ -15,12 +15,12 @@ class Service extends Model
         'name', 'description', 'featured_image', 'slug', 'category_id',
     ];
 
-    public static function getRules($request)
+    public static function getRules($request, $isEdit = false)
     {
         $rules = [
             'name' => 'required|min:3|max:255',
             'description' => 'required|min:10|max:1000',
-            'featured_image' => 'required|image',
+            'featured_image' => $isEdit ? 'image' : 'required|image',
             'category_id' => 'required|numeric|exists:service_categories,id',
 
             'title' => 'required|array',

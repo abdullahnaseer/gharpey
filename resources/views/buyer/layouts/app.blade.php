@@ -10,13 +10,12 @@
     <meta name="keywords" content="HTML5 Template" />
     <meta name="description" content="GharPey Website">
 
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{url('assets1/images/icons/favicon.ico')}}">
 
-    <!-- Plugins CSS File -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="{{url('assets1/css/bootstrap.min.css')}}">
 
     <!-- Main CSS File -->

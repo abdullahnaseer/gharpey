@@ -112,14 +112,14 @@
                     @foreach($service_sellers as $service_seller)
                         <div class="product product-list-wrapper">
                             <figure class="product-image-container">
-                                <a href="product.html" class="product-image">
+                                <a href="#" class="product-image">
                                     <img src="{{ str_replace('public', '/storage', $service_seller->featured_image) }}" alt="product">
                                 </a>
                                 {{--                        <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
                             </figure>
                             <div class="product-details">
                                 <h2 class="product-title">
-                                    <a href="product.html">{{$service_seller->seller->name}}</a>
+                                    <a href="#">{{$service_seller->seller->name}}</a>
                                 </h2>
                                 <div class="ratings-container">
                                     <div class="product-ratings">
@@ -147,7 +147,7 @@
 {{--                                    </a>--}}
                                 </div><!-- End .product-action -->
                             </div><!-- End .product-details -->
-                        </div><!-- End .product -->
+                        </div>
                     @endforeach
 
                     <nav class="toolbox toolbox-pagination">
@@ -377,7 +377,6 @@
             </div>
         </div>
     @endif
-
 @endsection
 
 

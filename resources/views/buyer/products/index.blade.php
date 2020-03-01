@@ -72,23 +72,27 @@
                                             <a href="#" class="rating-link">( {{ $product->reviews_count }} Reviews )</a>
                                         </div>
                                         <!-- End .product-container -->
-                                        <h2 class="product-title  m-b-5">
+                                        <h2 class="product-title ">
                                             <a href="{{route('buyer.products.show', [$product->slug])}}">
                                                 {{$product->name}} </a>
                                         </h2>
+
                                         <div class="price-box  m-b-5">
                                             <span class="product-price">Rs. {{$product->price}}</span>
                                         </div>
-                                        <!-- End .price-box -->
-    {{--                                    <p class="product-location float-left d-flex ml-5  m-b-5">--}}
-    {{--                                        <img src="assets/images/svg/shop/shop.svg" class="mr-2 d-inline-block" width="15" alt="">--}}
+                                        <p class="product-location text-center m-b-5">
+                                            <img src="/assets1/images/svg/shop/shop.svg" class="mr-2 d-inline-block" width="15" alt="">
 
-    {{--                                        <a href="{{route('buyer.products.show', [$product->id])}}">{{$product->seller->name}}</a>--}}
-    {{--                                    </p>--}}
-    {{--                                    <p class="product-location mr-5 text-right">--}}
-    {{--                                        <img src="assets/images/svg/shop/map-pin.svg" width="15" alt="">--}}
-    {{--                                        <a href="#">Islamabad</a>--}}
-    {{--                                    </p>--}}
+                                            <a href="{{route('buyer.products.show', [$product->id])}}">{{$product->seller->name}}</a>
+                                        </p>
+
+                                        <!-- End .price-box -->
+
+{{--                                        <p class="product-location mr-5 text-right">--}}
+{{--                                            <img src="assets/images/svg/shop/map-pin.svg" width="15" alt="">--}}
+{{--                                            <a href="#">Islamabad</a>--}}
+{{--                                        </p>--}}
+
                                         <div class="product-action ml-5">
 
                                             @if(is_null($product->cart_item))
@@ -121,9 +125,7 @@
                 @else
                     <div class="alert alert-info">No Products found!!!</div>
                 @endif
-
             </div>
-            <!-- End .col-lg-9 -->
 
             <aside class="sidebar-shop col-lg-3 order-lg-first">
                 <div class="sidebar-wrapper">

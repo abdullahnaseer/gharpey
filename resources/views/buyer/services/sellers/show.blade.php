@@ -86,14 +86,10 @@
                     {{ session('status') }}
                 </div>
             @endif
-
-        </div><!-- End .container -->
-
-        <div class="mb-5"></div><!-- margin -->
+        </div>
+        <div class="mb-5"></div>
     @endif
-
 @endsection
-
 
 @section('scripts')
 

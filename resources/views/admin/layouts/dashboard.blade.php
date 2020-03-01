@@ -28,13 +28,10 @@
     class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent kt-aside--enabled kt-aside--fixed kt-page--loading">
 
 
-<!-- begin:: Page -->
-
-<!-- begin:: Header Mobile -->
 <div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
     <div class="kt-header-mobile__logo">
         <a href="index.html">
-            <img class="img-fluid" alt="Logo" src="{{url('/images/logo.png')}}">
+            <img class="img-fluid" alt="Logo" src="{{url('/assets1/images/logo.png')}}" style="height: 45px;">
         </a>
     </div>
     <div class="kt-header-mobile__toolbar">

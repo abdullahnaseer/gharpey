@@ -47,32 +47,31 @@
                 <!-- margin -->
 
                 @foreach($categories as $category)
-                    <h2 class="carousel-title">{{$category->name}}</h2>
+                    @if($category->services->count())
+                        <h2 class="carousel-title">{{$category->name}}</h2>
+                        <div class="home-featured-products owl-carousel owl-theme owl-dots-top">
+                            @foreach($category->services as $service)
+                                <div class="product">
+                                    <figure class="product-image-container">
+                                        <a href="{{route('buyer.services.show', $service->slug)}}" class="product-image">
+                                            <img src="{{ str_replace('public', '/storage', $service->featured_image) }}" alt="product">
+                                        </a>
+    {{--                                    <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
+                                    </figure>
+                                    <div class="product-details">
+                                        <!-- End .product-container -->
+                                        <h2 class="product-title">
+                                            <a href="#">{{ $service->name }}</a>
+                                        </h2>
 
-                    <div class="home-featured-products owl-carousel owl-theme owl-dots-top">
-                        @foreach($category->services as $service)
-                            <div class="product">
-                                <figure class="product-image-container">
-                                    <a href="{{route('buyer.services.show', $service->slug)}}" class="product-image">
-                                        <img src="{{ str_replace('public', '/storage', $service->featured_image) }}" alt="product">
-                                    </a>
-{{--                                    <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
-                                </figure>
-                                <div class="product-details">
-                                    <!-- End .product-container -->
-                                    <h2 class="product-title">
-                                        <a href="product.html">{{ $service->name }}</a>
-                                    </h2>
-
-                                    <!-- End .product-action -->
+                                        <!-- End .product-action -->
+                                    </div>
+                                    <!-- End .product-details -->
                                 </div>
-                                <!-- End .product-details -->
-                            </div>
-                        @endforeach
-                    </div>
-                    <!-- End .featured-proucts -->
-
-                    <div class="mb-3"></div>
+                            @endforeach
+                        </div>
+                        <div class="mb-3"></div>
+                    @endif
                 @endforeach
 
                 <div class="mb-6"></div>

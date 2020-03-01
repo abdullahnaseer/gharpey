@@ -13,23 +13,12 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Roboto:300,400,500,600,700">
 
-    <!--end::Fonts -->
-
-    <!--begin::Page Custom Styles(used by this page) -->
     <link href="/assets/css/pages/login/login-1.css" rel="stylesheet" type="text/css"/>
 
-    <!--end::Page Custom Styles -->
-
-    <!--begin::Global Theme Styles(used by all pages) -->
     <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="{{mix('css/metronic.css')}}">
     <link rel="stylesheet" href="{{mix('css/admin.css')}}">
 
-    <!--end::Global Theme Styles -->
-
-    <!--begin::Layout Skins(used by all pages) -->
-
-    <!--end::Layout Skins -->
     <link rel="shortcut icon" href="assets/media/logos/favicon.ico"/>
 </head>
 

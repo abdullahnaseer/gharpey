@@ -6,7 +6,7 @@
     <div class="kt-aside__brand kt-grid__item" id="kt_aside_brand">
         <div class="kt-aside__brand-logo">
             <a href="{{route('admin.dashboard')}}" class="pr-4">
-                <img class="img-fluid" alt="Logo" src="{{url('/images/logo.png')}}">
+                <img class="img-fluid" alt="Logo" src="{{url('/assets1/images/logo.png')}}" style="height: 45px;">
             </a>
         </div>
         <div class="kt-aside__brand-tools">

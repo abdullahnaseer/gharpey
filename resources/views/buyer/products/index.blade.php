@@ -14,114 +14,114 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-9">
-                <nav class="toolbox">
-                    <div class="toolbox-left">
-                        <div class="toolbox-item toolbox-sort">
-                            <div class="select-custom">
-                                <select name="orderby" class="form-control">
-                                    <option value="menu_order" selected="selected">Default sorting</option>
-                                    <option value="popularity">Sort by popularity</option>
-                                    <option value="rating">Sort by average rating</option>
-                                    <option value="date">Sort by newness</option>
-                                    <option value="price">Sort by price: low to high</option>
-                                    <option value="price-desc">Sort by price: high to low</option>
-                                </select>
-                            </div>
-                            <!-- End .select-custom -->
+{{--                <nav class="toolbox">--}}
+{{--                    <div class="toolbox-left">--}}
+{{--                        <div class="toolbox-item toolbox-sort">--}}
+{{--                            <div class="select-custom">--}}
+{{--                                <select name="orderby" class="form-control">--}}
+{{--                                    <option value="menu_order" selected="selected">Default sorting</option>--}}
+{{--                                    <option value="popularity">Sort by popularity</option>--}}
+{{--                                    <option value="rating">Sort by average rating</option>--}}
+{{--                                    <option value="date">Sort by newness</option>--}}
+{{--                                    <option value="price">Sort by price: low to high</option>--}}
+{{--                                    <option value="price-desc">Sort by price: high to low</option>--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                            <!-- End .select-custom -->--}}
 
-                            <a href="#" class="sorter-btn" title="Set Ascending Direction"><span class="sr-only">Set Ascending Direction</span></a>
-                        </div>
-                        <!-- End .toolbox-item -->
-                    </div>
-                    <!-- End .toolbox-left -->
+{{--                            <a href="#" class="sorter-btn" title="Set Ascending Direction"><span class="sr-only">Set Ascending Direction</span></a>--}}
+{{--                        </div>--}}
+{{--                        <!-- End .toolbox-item -->--}}
+{{--                    </div>--}}
+{{--                    <!-- End .toolbox-left -->--}}
 
-                    <div class="toolbox-item toolbox-show">
-                        <label>Showing {{$products->firstItem()}}–{{$products->lastItem()}} of {{$products->total()}} results</label>
-                    </div>
-                    <!-- End .toolbox-item -->
+{{--                    <div class="toolbox-item toolbox-show">--}}
+{{--                        <label>Showing {{$products->firstItem()}}–{{$products->lastItem()}} of {{$products->total()}} results</label>--}}
+{{--                    </div>--}}
+{{--                    <!-- End .toolbox-item -->--}}
 
-                    <div class="layout-modes">
-                        <a href="#" class="layout-btn btn-grid active" title="Grid">
-                            <i class="icon-mode-grid"></i>
-                        </a>
+{{--                    <div class="layout-modes">--}}
+{{--                        <a href="#" class="layout-btn btn-grid active" title="Grid">--}}
+{{--                            <i class="icon-mode-grid"></i>--}}
+{{--                        </a>--}}
 {{--                        <a href="category-list.html" class="layout-btn btn-list" title="List">--}}
 {{--                            <i class="icon-mode-list"></i>--}}
 {{--                        </a>--}}
-                    </div>
-                    <!-- End .layout-modes -->
-                </nav>
+{{--                    </div>--}}
+{{--                    <!-- End .layout-modes -->--}}
+{{--                </nav>--}}
 
-                <div class="row row-sm">
-                    @foreach($products as $product)
-                        <div class="col-6 col-md-4">
-                            <div class="product">
-                                <figure class="product-image-container">
-                                    <a href="{{route('buyer.products.show', [$product->slug])}}" class="product-image">
-                                        <img src="{{str_replace("public","/storage",$product->featured_image)}}" alt="product">
-                                    </a>
-                                    {{--                                    <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
-                                </figure>
-                                <div class="product-details">
-                                    <div class="ratings-container">
-                                        <div class="product-ratings">
-                                            <span class="ratings" style="width:{{$product->reviews_average * 20}}%"></span>
-                                            <!-- End .ratings -->
+                @if($products->count())
+                    <div class="row row-sm">
+                        @foreach($products as $product)
+                            <div class="col-6 col-md-4">
+                                <div class="product">
+                                    <figure class="product-image-container">
+                                        <a href="{{route('buyer.products.show', [$product->slug])}}" class="product-image">
+                                            <img src="{{str_replace("public","/storage",$product->featured_image)}}" alt="product">
+                                        </a>
+                                        {{--                                    <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
+                                    </figure>
+                                    <div class="product-details">
+                                        <div class="ratings-container">
+                                            <div class="product-ratings">
+                                                <span class="ratings" style="width:{{$product->reviews_average * 20}}%"></span>
+                                                <!-- End .ratings -->
+                                            </div>
+                                            <!-- End .product-ratings -->
+                                            <a href="#" class="rating-link">( {{ $product->reviews_count }} Reviews )</a>
                                         </div>
-                                        <!-- End .product-ratings -->
-                                        <a href="#" class="rating-link">( {{ $product->reviews_count }} Reviews )</a>
-                                    </div>
-                                    <!-- End .product-container -->
-                                    <h2 class="product-title  m-b-5">
-                                        <a href="{{route('buyer.products.show', [$product->slug])}}">
-                                            {{$product->name}} </a>
-                                    </h2>
-                                    <div class="price-box  m-b-5">
-                                        <span class="product-price">Rs. {{$product->price}}</span>
-                                    </div>
-                                    <!-- End .price-box -->
-{{--                                    <p class="product-location float-left d-flex ml-5  m-b-5">--}}
-{{--                                        <img src="assets/images/svg/shop/shop.svg" class="mr-2 d-inline-block" width="15" alt="">--}}
+                                        <!-- End .product-container -->
+                                        <h2 class="product-title  m-b-5">
+                                            <a href="{{route('buyer.products.show', [$product->slug])}}">
+                                                {{$product->name}} </a>
+                                        </h2>
+                                        <div class="price-box  m-b-5">
+                                            <span class="product-price">Rs. {{$product->price}}</span>
+                                        </div>
+                                        <!-- End .price-box -->
+    {{--                                    <p class="product-location float-left d-flex ml-5  m-b-5">--}}
+    {{--                                        <img src="assets/images/svg/shop/shop.svg" class="mr-2 d-inline-block" width="15" alt="">--}}
 
-{{--                                        <a href="{{route('buyer.products.show', [$product->id])}}">{{$product->seller->name}}</a>--}}
-{{--                                    </p>--}}
-{{--                                    <p class="product-location mr-5 text-right">--}}
-{{--                                        <img src="assets/images/svg/shop/map-pin.svg" width="15" alt="">--}}
-{{--                                        <a href="#">Islamabad</a>--}}
-{{--                                    </p>--}}
-                                    <div class="product-action ml-5">
+    {{--                                        <a href="{{route('buyer.products.show', [$product->id])}}">{{$product->seller->name}}</a>--}}
+    {{--                                    </p>--}}
+    {{--                                    <p class="product-location mr-5 text-right">--}}
+    {{--                                        <img src="assets/images/svg/shop/map-pin.svg" width="15" alt="">--}}
+    {{--                                        <a href="#">Islamabad</a>--}}
+    {{--                                    </p>--}}
+                                        <div class="product-action ml-5">
 
-                                        @if(is_null($product->cart_item))
-                                            <a href="{{route('buyer.products.cart.create', [$product->id])}}" class="paction add-cart" title="Add to Cart">
-                                                <span>Add to Cart</span>
-                                            </a>
-                                        @else
-                                            <a href="{{route('buyer.products.cart.create', [$product->id, 'remove'])}}" class="paction add-cart" title="Add to Cart">
-                                                <span>Remove from Cart</span>
-                                            </a>
-                                        @endif
+                                            @if(is_null($product->cart_item))
+                                                <a href="{{route('buyer.products.cart.create', [$product->id])}}" class="paction add-cart" title="Add to Cart">
+                                                    <span>Add to Cart</span>
+                                                </a>
+                                            @else
+                                                <a href="{{route('buyer.products.cart.create', [$product->id, 'remove'])}}" class="paction add-cart" title="Add to Cart">
+                                                    <span>Remove from Cart</span>
+                                                </a>
+                                            @endif
 
-                                        @if(auth()->check())
-                                            @php($condition = auth('buyer')->user()->hasWish($product->id))
-                                            <a href="{{route('buyer.products.wishlist.create', [$product->id])}}" class="paction add-wishlist" title="{{$condition ? "Remove from" : "Add to"}} Wishlist"
-                                               @if($condition) style="background-color: #9a2693;color: white;" @endif
-                                            >
-                                                <span>{{$condition ? "Remove from" : "Add to"}} Wishlist</span>
-                                            </a>
-                                        @endif
+                                            @if(auth()->check())
+                                                @php($condition = auth('buyer')->user()->hasWish($product->id))
+                                                <a href="{{route('buyer.products.wishlist.create', [$product->id])}}" class="paction add-wishlist" title="{{$condition ? "Remove from" : "Add to"}} Wishlist"
+                                                   @if($condition) style="background-color: #9a2693;color: white;" @endif
+                                                >
+                                                    <span>{{$condition ? "Remove from" : "Add to"}} Wishlist</span>
+                                                </a>
+                                            @endif
+                                        </div>
+                                        <!-- End .product-action -->
                                     </div>
-                                    <!-- End .product-action -->
+                                    <!-- End .product-details -->
                                 </div>
-                                <!-- End .product-details -->
                             </div>
-                        </div>
-                @endforeach
-                <!-- End .product -->
+                    @endforeach
+                    </div>
+                    {{ $products->links() }}
+                @else
+                    <div class="alert alert-info">No Products found!!!</div>
+                @endif
 
-                    <!-- End .col-md-4 -->
-                </div>
-                <!-- End .row -->
-
-                {{ $products->links() }}
             </div>
             <!-- End .col-lg-9 -->
 
@@ -136,7 +136,12 @@
                             <div class="widget-body">
                                 <ul class="cat-list">
                                     @foreach($categories as $category)
-                                        <li><a href="{{route('buyer.products.index', ['category' => $category->id])}}">{{$category->name}}</a></li>
+                                        <li><a href="{{route('buyer.products.index', [
+                                            'category' => $category->id,
+                                            'price-min' => request()->input('price-min', 100),
+                                            'price-max' => request()->input('price-max', 10000),
+                                            'q' => request()->input('q'),
+                                        ])}}">{{$category->name}}</a></li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -158,8 +163,12 @@
                                         <input type="hidden" name="category" value="{{request()->input('category')}}">
                                     @endif
 
-                                        <input type="hidden" name="price-min" id="input-price-min" value="{{request()->input('price-min', 100)}}" />
-                                        <input type="hidden" name="price-max" id="input-price-max" value="{{request()->input('price-max', 1000)}}" />
+                                    @if(request()->has('q'))
+                                        <input type="hidden" name="q" value="{{request()->input('q')}}" />
+                                    @endif
+
+                                    <input type="hidden" name="price-min" id="input-price-min" value="{{request()->input('price-min', 100)}}" />
+                                    <input type="hidden" name="price-max" id="input-price-max" value="{{request()->input('price-max', 10000)}}" />
 
                                     <div class="price-slider-wrapper">
                                         <div id="price-slider"></div>

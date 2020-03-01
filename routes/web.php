@@ -123,6 +123,9 @@ Route::namespace('Buyer')->name('buyer.')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('products', 'ProductController');
 
+    Route::resource('shop.product', 'Shop\ProductController');
+    Route::resource('shop', 'Shop\ShopController');
+
     Route::get('checkout', 'Product\CheckoutController@getShipping')->name('checkout.shipping.get');
     Route::post('checkout', 'Product\CheckoutController@postShipping')->name('checkout.shipping.post');
 

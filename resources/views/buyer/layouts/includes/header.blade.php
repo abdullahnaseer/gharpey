@@ -56,28 +56,45 @@
             <div class="header-center">
                 <div class="header-search">
                     <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
-                    <form action="#" method="get">
-                        <div class="header-search-wrapper">
-                            <input type="search" class="form-control" name="q" id="q" placeholder="Search..." required="">
-                            <div class="select-custom">
-                                <select id="cat" name="cat">
-                                    <option value="" class="" style="font-weight:900;">Islamabad</option>
-                                    <option value="4" class="pl-5">Sector 1</option>
-                                    <option value="12">Sector 2</option>
-                                    <option value="13">Sector 3</option>
-                                    <option value="66">Sector 4</option>
-                                    <option value="" class="" style="font-weight:900;">Rawalpindi</option>
-                                    <option value="12">Gulurg</option>
-                                    <option value="13">DHA</option>
-                                    <option value="66">Behria</option>
+{{--                    @if(request()->is('services*'))--}}
+{{--                        <form action="{{route('buyer.services.index')}}" method="get">--}}
+{{--                            <div class="header-search-wrapper">--}}
+{{--                                <input type="search" class="form-control" name="q" id="q" placeholder="Search..." required="">--}}
+{{--                                <div class="select-custom">--}}
+{{--                                    <select id="city" name="city">--}}
+{{--                                        @foreach(\App\Models\City::get() as $city)--}}
+{{--                                            <option value="{{$city->id}}"--}}
+{{--                                            @if(request()->input('city') == $city->id)--}}
+{{--                                                selected--}}
+{{--                                            @endif--}}
+{{--                                            >{{$city->name}}</option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                                <button class="btn" type="submit"><i class="icon-magnifier"></i></button>--}}
+{{--                            </div>--}}
+{{--                        </form>--}}
+{{--                    @else--}}
+                        <form action="{{route('buyer.products.index')}}" method="get">
+                            @if(request()->has('category'))
+                                <input type="hidden" name="category" value="{{request()->input('category')}}">
+                            @endif
 
-                                </select>
+                            @if(request()->has('price-min'))
+                                <input type="hidden" name="price-min" id="input-price-min" value="{{request()->input('price-min', 100)}}" />
+                            @endif
+
+                            @if(request()->has('price-max'))
+                                <input type="hidden" name="price-max" id="input-price-max" value="{{request()->input('price-max', 1000)}}" />
+                            @endif
+
+                            <div class="header-search-wrapper">
+                                <input type="search" class="form-control" name="q" id="q" placeholder="Search Products..." required="" value="{{request()->input('q')}}">
+
+                                <button class="btn" type="submit"><i class="icon-magnifier"></i></button>
                             </div>
-                            <!-- End .select-custom -->
-                            <button class="btn" type="submit"><i class="icon-magnifier"></i></button>
-                        </div>
-                        <!-- End .header-search-wrapper -->
-                    </form>
+                        </form>
+{{--                    @endif--}}
                 </div>
                 <!-- End .header-search -->
             </div>

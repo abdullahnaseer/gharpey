@@ -578,7 +578,7 @@
 
                 <!--begin: Navigation -->
                 <div class="kt-notification">
-                    <a href="custom/apps/user/profile-1/personal-information.html" class="kt-notification__item">
+                    <a href="#" class="kt-notification__item">
                         <div class="kt-notification__item-icon">
                             <i class="flaticon2-calendar-3 kt-font-success"></i>
                         </div>
@@ -591,20 +591,7 @@
                             </div>
                         </div>
                     </a>
-                    <a href="custom/apps/user/profile-3.html" class="kt-notification__item">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon2-mail kt-font-warning"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title kt-font-bold">
-                                My Messages
-                            </div>
-                            <div class="kt-notification__item-time">
-                                Inbox and tasks
-                            </div>
-                        </div>
-                    </a>
-                    <a href="custom/apps/user/profile-2.html" class="kt-notification__item">
+                    <a href="#" class="kt-notification__item">
                         <div class="kt-notification__item-icon">
                             <i class="flaticon2-rocket-1 kt-font-danger"></i>
                         </div>
@@ -617,41 +604,14 @@
                             </div>
                         </div>
                     </a>
-                    <a href="custom/apps/user/profile-3.html" class="kt-notification__item">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon2-hourglass kt-font-brand"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title kt-font-bold">
-                                My Tasks
-                            </div>
-                            <div class="kt-notification__item-time">
-                                latest tasks and projects
-                            </div>
-                        </div>
-                    </a>
-                    <a href="custom/apps/user/profile-1/overview.html" class="kt-notification__item">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon2-cardiogram kt-font-warning"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title kt-font-bold">
-                                Billing
-                            </div>
-                            <div class="kt-notification__item-time">
-                                billing & statements <span
-                                    class="kt-badge kt-badge--danger kt-badge--inline kt-badge--pill kt-badge--rounded">2 pending</span>
-                            </div>
-                        </div>
-                    </a>
                     <div class="kt-notification__custom kt-space-between">
                         <a class="btn btn-label btn-label-brand btn-sm btn-bold" href="{{ route('admin.logout') }}"
                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                             {{ __('Sign Out') }}
                         </a>
-                        <a href="custom/user/login-v2.html" target="_blank" class="btn btn-clean btn-sm btn-bold">Upgrade
-                            Plan</a>
+{{--                        <a href="custom/user/login-v2.html" target="_blank" class="btn btn-clean btn-sm btn-bold">Upgrade--}}
+{{--                            Plan</a>--}}
 
                         <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
                               style="display: none;">

@@ -83,7 +83,7 @@
                                         <p class="product-location text-center m-b-5">
                                             <img src="/assets1/images/svg/shop/shop.svg" class="mr-2 d-inline-block" width="15" alt="">
 
-                                            <a href="{{route('buyer.products.show', [$product->id])}}">{{$product->seller->name}}</a>
+                                            <a href="{{route('buyer.shop.show', [$product->seller->shop_slug])}}">{{$product->seller->name}}</a>
                                         </p>
 
                                         <!-- End .price-box -->
@@ -94,7 +94,6 @@
 {{--                                        </p>--}}
 
                                         <div class="product-action ml-5">
-
                                             @if(is_null($product->cart_item))
                                                 <a href="{{route('buyer.products.cart.create', [$product->id])}}" class="paction add-cart" title="Add to Cart">
                                                     <span>Add to Cart</span>

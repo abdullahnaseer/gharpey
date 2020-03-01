@@ -55,7 +55,7 @@
 
                             <div class="col-lg-5 col-md-6">
                                 <div class="product-single-details">
-                                    <h1 class="product-title m-0" style="line-height: normal;">{{$product->name}}</h1>
+                                    <h1 class="product-title m-0 mb-1" style="line-height: normal;">{{$product->name}}</h1>
 
                                     <div class="ratings-container">
                                         <div class="product-ratings">
@@ -70,6 +70,12 @@
 {{--                                        <span class="old-price">$81.00</span>--}}
                                         <span class="product-price">Rs. {{$product->price}}</span>
                                     </div><!-- End .price-box -->
+
+                                    <p class="product-location text-left m-b-5">
+                                        <img src="/assets1/images/svg/shop/shop.svg" class="mr-2 d-inline-block" width="15" alt="">
+
+                                        <a href="{{route('buyer.shop.show', [$product->seller->shop_slug])}}">{{$product->seller->name}}</a>
+                                    </p>
 
                                     <div class="product-desc">
                                         <p>{{\Str::limit($product->description, 100)}}</p>

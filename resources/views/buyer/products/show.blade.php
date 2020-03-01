@@ -146,9 +146,6 @@
                                 <a class="nav-link active" id="product-tab-desc" data-toggle="tab" href="#product-desc-content" role="tab" aria-controls="product-desc-content" aria-selected="true">Description</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="product-tab-tags" data-toggle="tab" href="#product-tags-content" role="tab" aria-controls="product-tags-content" aria-selected="false">Tags</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" id="product-tab-qas" data-toggle="tab" href="#product-qas-content" role="tab" aria-controls="product-qas-content" aria-selected="false">Q&As</a>
                             </li>
                             <li class="nav-item">
@@ -162,62 +159,28 @@
                                 </div><!-- End .product-desc-content -->
                             </div><!-- End .tab-pane -->
 
-                            <div class="tab-pane fade" id="product-tags-content" role="tabpanel" aria-labelledby="product-tab-tags">
-                                <div class="product-tags-content">
-                                    <form action="#">
-                                        <h4>Add Your Tags:</h4>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-sm" required>
-                                            <input type="submit" class="btn btn-primary" value="Add Tags">
-                                        </div><!-- End .form-group -->
-                                    </form>
-                                    <p class="note">Use spaces to separate tags. Use single quotes (') for phrases.</p>
-                                </div><!-- End .product-tags-content -->
-                            </div><!-- End .tab-pane -->
-
                             <div class="tab-pane fade" id="product-qas-content" role="tabpanel" aria-labelledby="product-tab-qas">
                                 <div class="product-qas-content">
-                                    <div class="collateral-box">
-                                        <ul>
-                                            <li>Be the first to review this product</li>
-                                        </ul>
-                                    </div><!-- End .collateral-box -->
-                                    <div class="add-product-review">
-                                        <h3 class="text-uppercase heading-text-color font-weight-semibold">WRITE YOUR OWN REVIEW</h3>
-                                        <p>How do you rate this product? *</p>
-
-                                        <form action="#">
-                                            <div class="form-group">
-                                                <label>Nickname <span class="required">*</span></label>
-                                                <input type="text" class="form-control form-control-sm" required>
-                                            </div><!-- End .form-group -->
-                                            <div class="form-group">
-                                                <label>Summary of Your Review <span class="required">*</span></label>
-                                                <input type="text" class="form-control form-control-sm" required>
-                                            </div><!-- End .form-group -->
-                                            <div class="form-group mb-2">
-                                                <label>Review <span class="required">*</span></label>
-                                                <textarea cols="5" rows="6" class="form-control form-control-sm"></textarea>
-                                            </div><!-- End .form-group -->
-
-                                            <input type="submit" class="btn btn-primary" value="Submit Review">
-                                        </form>
-                                    </div><!-- End .add-product-review -->
+                                    <div class="alert alert-info">Under Construction!!!</div>
                                 </div><!-- End .product-tags-content -->
                             </div><!-- End .tab-pane -->
 
                             <div class="tab-pane fade" id="product-reviews-content" role="tabpanel" aria-labelledby="product-tab-reviews">
                                 <div class="product-reviews-content">
                                     <div>
-                                        @foreach($product->reviews as $review)
-                                            <div class="ratings-container mb-0">
-                                                <div class="product-ratings">
-                                                    <span class="ratings" style="width:{{$review->rating * 20}}%"></span>
+                                        @if(count($product->reviews))
+                                            @foreach($product->reviews as $review)
+                                                <div class="ratings-container mb-0">
+                                                    <div class="product-ratings">
+                                                        <span class="ratings" style="width:{{$review->rating * 20}}%"></span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <p class="text-muted mb-0"><small>By Admin ({{$review->created_at->diffForHumans()}})</small></p>
-                                            <p>{{$review->review}}</p>
-                                        @endforeach
+                                                <p class="text-muted mb-0"><small>By Admin ({{$review->created_at->diffForHumans()}})</small></p>
+                                                <p>{{$review->review}}</p>
+                                            @endforeach
+                                        @else
+                                            <div class="alert alert-info">No reviews found for this product.</div>
+                                        @endif
                                     </div>
                                 </div><!-- End .product-reviews-content -->
                             </div><!-- End .tab-pane -->

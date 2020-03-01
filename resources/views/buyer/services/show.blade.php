@@ -77,37 +77,37 @@
 
             <div class="row">
                 <div class="col-lg-9">
-                    <nav class="toolbox">
-                        <div class="toolbox-left">
-                            <div class="toolbox-item toolbox-sort">
-                                <div class="select-custom">
-                                    <select name="orderby" class="form-control">
-                                        <option value="menu_order" selected="selected">Default sorting</option>
-                                        <option value="popularity">Sort by popularity</option>
-                                        <option value="rating">Sort by average rating</option>
-                                        <option value="date">Sort by newness</option>
-                                        <option value="price">Sort by price: low to high</option>
-                                        <option value="price-desc">Sort by price: high to low</option>
-                                    </select>
-                                </div><!-- End .select-custom -->
+{{--                    <nav class="toolbox">--}}
+{{--                        <div class="toolbox-left">--}}
+{{--                            <div class="toolbox-item toolbox-sort">--}}
+{{--                                <div class="select-custom">--}}
+{{--                                    <select name="orderby" class="form-control">--}}
+{{--                                        <option value="menu_order" selected="selected">Default sorting</option>--}}
+{{--                                        <option value="popularity">Sort by popularity</option>--}}
+{{--                                        <option value="rating">Sort by average rating</option>--}}
+{{--                                        <option value="date">Sort by newness</option>--}}
+{{--                                        <option value="price">Sort by price: low to high</option>--}}
+{{--                                        <option value="price-desc">Sort by price: high to low</option>--}}
+{{--                                    </select>--}}
+{{--                                </div><!-- End .select-custom -->--}}
 
-                                <a href="#" class="sorter-btn" title="Set Ascending Direction"><span class="sr-only">Set Ascending Direction</span></a>
-                            </div><!-- End .toolbox-item -->
-                        </div><!-- End .toolbox-left -->
+{{--                                <a href="#" class="sorter-btn" title="Set Ascending Direction"><span class="sr-only">Set Ascending Direction</span></a>--}}
+{{--                            </div><!-- End .toolbox-item -->--}}
+{{--                        </div><!-- End .toolbox-left -->--}}
 
-                        <div class="toolbox-item toolbox-show">
-                            <label>Showing 1–9 of 60 results</label>
-                        </div><!-- End .toolbox-item -->
+{{--                        <div class="toolbox-item toolbox-show">--}}
+{{--                            <label>Showing 1–9 of 60 results</label>--}}
+{{--                        </div><!-- End .toolbox-item -->--}}
 
-    {{--                    <div class="layout-modes">--}}
-    {{--                        <a href="category.html" class="layout-btn btn-grid" title="Grid">--}}
-    {{--                            <i class="icon-mode-grid"></i>--}}
-    {{--                        </a>--}}
-    {{--                        <a href="category-list.html" class="layout-btn btn-list active" title="List">--}}
-    {{--                            <i class="icon-mode-list"></i>--}}
-    {{--                        </a>--}}
-    {{--                    </div><!-- End .layout-modes -->--}}
-                    </nav>
+{{--    --}}{{--                    <div class="layout-modes">--}}
+{{--    --}}{{--                        <a href="category.html" class="layout-btn btn-grid" title="Grid">--}}
+{{--    --}}{{--                            <i class="icon-mode-grid"></i>--}}
+{{--    --}}{{--                        </a>--}}
+{{--    --}}{{--                        <a href="category-list.html" class="layout-btn btn-list active" title="List">--}}
+{{--    --}}{{--                            <i class="icon-mode-list"></i>--}}
+{{--    --}}{{--                        </a>--}}
+{{--    --}}{{--                    </div><!-- End .layout-modes -->--}}
+{{--                    </nav>--}}
 
                     @foreach($service_sellers as $service_seller)
                         <div class="product product-list-wrapper">
@@ -214,12 +214,6 @@
                                     </form>
                                 </div><!-- End .widget-body -->
                             </div><!-- End .collapse -->
-                        </div><!-- End .widget -->
-
-                        <div class="widget widget-block">
-                            <h3 class="widget-title">Custom HTML Block</h3>
-                            <h5>This is a custom sub-title.</h5>
-                            <p>Lorem ipsum dolor sit amet, consectetur elitad adipiscing Cras non placerat mi. </p>
                         </div><!-- End .widget -->
                     </div><!-- End .sidebar-wrapper -->
                 </aside><!-- End .col-lg-3 -->

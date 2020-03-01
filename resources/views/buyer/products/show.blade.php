@@ -245,344 +245,196 @@
                                 </li>
                             </ul>
                         </div><!-- End .widget -->
-
-                        <div class="widget widget-banner">
-                            <div class="banner banner-image">
-                                <a href="#">
-                                    <img src="assets/images/banners/banner-sidebar.jpg" alt="Banner Desc">
-                                </a>
-                            </div><!-- End .banner -->
-                        </div><!-- End .widget -->
-
-                        <div class="widget widget-featured">
-                            <h3 class="widget-title">Featured Products</h3>
-
-                            <div class="widget-body">
-                                <div class="owl-carousel widget-featured-products">
-                                    <div class="featured-col">
-                                        <div class="product product-sm">
-                                            <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-                                                    <img src="assets/images/products/small/product-1.jpg" alt="product">
-                                                </a>
-                                            </figure>
-                                            <div class="product-details">
-                                                <h2 class="product-title">
-                                                    <a href="product.html">Mouse</a>
-                                                </h2>
-                                                <div class="ratings-container">
-                                                    <div class="product-ratings">
-                                                        <span class="ratings" style="width:80%"></span><!-- End .ratings -->
-                                                    </div><!-- End .product-ratings -->
-                                                </div><!-- End .product-container -->
-                                                <div class="price-box">
-                                                    <span class="product-price">$45.00</span>
-                                                </div><!-- End .price-box -->
-                                            </div><!-- End .product-details -->
-                                        </div><!-- End .product -->
-
-                                        <div class="product product-sm">
-                                            <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-                                                    <img src="assets/images/products/home-featured-1.jpg" alt="product">
-                                                </a>
-                                            </figure>
-                                            <div class="product-details">
-                                                <h2 class="product-title">
-                                                    <a href="product.html">Headset</a>
-                                                </h2>
-                                                <div class="ratings-container">
-                                                    <div class="product-ratings">
-                                                        <span class="ratings" style="width:20%"></span><!-- End .ratings -->
-                                                    </div><!-- End .product-ratings -->
-                                                </div><!-- End .product-container -->
-                                                <div class="price-box">
-                                                    <span class="old-price">$60.00</span>
-                                                    <span class="product-price">$45.00</span>
-                                                </div><!-- End .price-box -->
-                                            </div><!-- End .product-details -->
-                                        </div><!-- End .product -->
-
-                                        <div class="product product-sm">
-                                            <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-                                                    <img src="assets/images/products/home-featured-2.jpg" alt="product">
-                                                </a>
-                                            </figure>
-                                            <div class="product-details">
-                                                <h2 class="product-title">
-                                                    <a href="product.html">Technicca</a>
-                                                </h2>
-                                                <div class="ratings-container">
-                                                    <div class="product-ratings">
-                                                        <span class="ratings" style="width:100%"></span><!-- End .ratings -->
-                                                    </div><!-- End .product-ratings -->
-                                                </div><!-- End .product-container -->
-                                                <div class="price-box">
-                                                    <span class="product-price">$50.00</span>
-                                                </div><!-- End .price-box -->
-                                            </div><!-- End .product-details -->
-                                        </div><!-- End .product -->
-                                    </div><!-- End .featured-col -->
-
-                                    <div class="featured-col">
-                                        <div class="product product-sm">
-                                            <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-                                                    <img src="assets/images/products/home-featured-3.jpg" alt="product">
-                                                </a>
-                                            </figure>
-                                            <div class="product-details">
-                                                <h2 class="product-title">
-                                                    <a href="product.html">Skullcanddy</a>
-                                                </h2>
-                                                <div class="ratings-container">
-                                                    <div class="product-ratings">
-                                                        <span class="ratings" style="width:100%"></span><!-- End .ratings -->
-                                                    </div><!-- End .product-ratings -->
-                                                </div><!-- End .product-container -->
-                                                <div class="price-box">
-                                                    <span class="old-price">$50.00</span>
-                                                    <span class="product-price">$35.00</span>
-                                                </div><!-- End .price-box -->
-                                            </div><!-- End .product-details -->
-                                        </div><!-- End .product -->
-
-                                        <div class="product product-sm">
-                                            <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-                                                    <img src="assets/images/products/home-featured-4.jpg" alt="product">
-                                                </a>
-                                            </figure>
-                                            <div class="product-details">
-                                                <h2 class="product-title">
-                                                    <a href="product.html">Phillips</a>
-                                                </h2>
-                                                <div class="ratings-container">
-                                                    <div class="product-ratings">
-                                                        <span class="ratings" style="width:60%"></span><!-- End .ratings -->
-                                                    </div><!-- End .product-ratings -->
-                                                </div><!-- End .product-container -->
-                                                <div class="price-box">
-                                                    <span class="product-price">$29.00</span>
-                                                </div><!-- End .price-box -->
-                                            </div><!-- End .product-details -->
-                                        </div><!-- End .product -->
-
-                                        <div class="product product-sm">
-                                            <figure class="product-image-container">
-                                                <a href="product.html" class="product-image">
-                                                    <img src="assets/images/products/home-featured-5.jpg" alt="product">
-                                                </a>
-                                            </figure>
-                                            <div class="product-details">
-                                                <h2 class="product-title">
-                                                    <a href="product.html">Senheisser</a>
-                                                </h2>
-                                                <div class="ratings-container">
-                                                    <div class="product-ratings">
-                                                        <span class="ratings" style="width:20%"></span><!-- End .ratings -->
-                                                    </div><!-- End .product-ratings -->
-                                                </div><!-- End .product-container -->
-                                                <div class="price-box">
-                                                    <span class="product-price">$40.00</span>
-                                                </div><!-- End .price-box -->
-                                            </div><!-- End .product-details -->
-                                        </div><!-- End .product -->
-                                    </div><!-- End .featured-col -->
-                                </div><!-- End .widget-featured-slider -->
-                            </div><!-- End .widget-body -->
-                        </div><!-- End .widget -->
                     </div>
                 </aside><!-- End .col-md-3 -->
             </div><!-- End .row -->
         </div><!-- End .container -->
 
-        <div class="featured-section">
-            <div class="container">
-                <h2 class="carousel-title">Featured Products</h2>
+{{--        <div class="featured-section">--}}
+{{--            <div class="container">--}}
+{{--                <h2 class="carousel-title">Featured Products</h2>--}}
 
-                <div class="featured-products owl-carousel owl-theme owl-dots-top">
-                    <div class="product">
-                        <figure class="product-image-container">
-                            <a href="product.html" class="product-image">
-                                <img src="assets/images/products/product-1.jpg" alt="product">
-                            </a>
-                            <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                        </figure>
-                        <div class="product-details">
-                            <div class="ratings-container">
-                                <div class="product-ratings">
-                                    <span class="ratings" style="width:80%"></span><!-- End .ratings -->
-                                </div><!-- End .product-ratings -->
-                            </div><!-- End .product-container -->
-                            <h2 class="product-title">
-                                <a href="product.html">Pen drive</a>
-                            </h2>
-                            <div class="price-box">
-                                <span class="product-price">$189.00</span>
-                            </div><!-- End .price-box -->
+{{--                <div class="featured-products owl-carousel owl-theme owl-dots-top">--}}
+{{--                    <div class="product">--}}
+{{--                        <figure class="product-image-container">--}}
+{{--                            <a href="product.html" class="product-image">--}}
+{{--                                <img src="assets/images/products/product-1.jpg" alt="product">--}}
+{{--                            </a>--}}
+{{--                            <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
+{{--                        </figure>--}}
+{{--                        <div class="product-details">--}}
+{{--                            <div class="ratings-container">--}}
+{{--                                <div class="product-ratings">--}}
+{{--                                    <span class="ratings" style="width:80%"></span><!-- End .ratings -->--}}
+{{--                                </div><!-- End .product-ratings -->--}}
+{{--                            </div><!-- End .product-container -->--}}
+{{--                            <h2 class="product-title">--}}
+{{--                                <a href="product.html">Pen drive</a>--}}
+{{--                            </h2>--}}
+{{--                            <div class="price-box">--}}
+{{--                                <span class="product-price">$189.00</span>--}}
+{{--                            </div><!-- End .price-box -->--}}
 
-                            <div class="product-action">
-                                <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                    <span>Add to Wishlist</span>
-                                </a>
+{{--                            <div class="product-action">--}}
+{{--                                <a href="#" class="paction add-wishlist" title="Add to Wishlist">--}}
+{{--                                    <span>Add to Wishlist</span>--}}
+{{--                                </a>--}}
 
-                                <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                    <span>Add to Cart</span>
-                                </a>
+{{--                                <a href="product.html" class="paction add-cart" title="Add to Cart">--}}
+{{--                                    <span>Add to Cart</span>--}}
+{{--                                </a>--}}
 
-                                <a href="#" class="paction add-compare" title="Add to Compare">
-                                    <span>Add to Compare</span>
-                                </a>
-                            </div><!-- End .product-action -->
-                        </div><!-- End .product-details -->
-                    </div><!-- End .product -->
+{{--                                <a href="#" class="paction add-compare" title="Add to Compare">--}}
+{{--                                    <span>Add to Compare</span>--}}
+{{--                                </a>--}}
+{{--                            </div><!-- End .product-action -->--}}
+{{--                        </div><!-- End .product-details -->--}}
+{{--                    </div><!-- End .product -->--}}
 
-                    <div class="product">
-                        <figure class="product-image-container">
-                            <a href="product.html" class="product-image">
-                                <img src="assets/images/products/product-2.jpg" alt="product">
-                            </a>
-                            <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                        </figure>
-                        <div class="product-details">
-                            <div class="ratings-container">
-                                <div class="product-ratings">
-                                    <span class="ratings" style="width:100%"></span><!-- End .ratings -->
-                                </div><!-- End .product-ratings -->
-                            </div><!-- End .product-container -->
-                            <h2 class="product-title">
-                                <a href="product.html">Headphone</a>
-                            </h2>
-                            <div class="price-box">
-                                <span class="product-price">$55.00</span>
-                            </div><!-- End .price-box -->
+{{--                    <div class="product">--}}
+{{--                        <figure class="product-image-container">--}}
+{{--                            <a href="product.html" class="product-image">--}}
+{{--                                <img src="assets/images/products/product-2.jpg" alt="product">--}}
+{{--                            </a>--}}
+{{--                            <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
+{{--                        </figure>--}}
+{{--                        <div class="product-details">--}}
+{{--                            <div class="ratings-container">--}}
+{{--                                <div class="product-ratings">--}}
+{{--                                    <span class="ratings" style="width:100%"></span><!-- End .ratings -->--}}
+{{--                                </div><!-- End .product-ratings -->--}}
+{{--                            </div><!-- End .product-container -->--}}
+{{--                            <h2 class="product-title">--}}
+{{--                                <a href="product.html">Headphone</a>--}}
+{{--                            </h2>--}}
+{{--                            <div class="price-box">--}}
+{{--                                <span class="product-price">$55.00</span>--}}
+{{--                            </div><!-- End .price-box -->--}}
 
-                            <div class="product-action">
-                                <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                    <span>Add to Wishlist</span>
-                                </a>
+{{--                            <div class="product-action">--}}
+{{--                                <a href="#" class="paction add-wishlist" title="Add to Wishlist">--}}
+{{--                                    <span>Add to Wishlist</span>--}}
+{{--                                </a>--}}
 
-                                <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                    <span>Add to Cart</span>
-                                </a>
+{{--                                <a href="product.html" class="paction add-cart" title="Add to Cart">--}}
+{{--                                    <span>Add to Cart</span>--}}
+{{--                                </a>--}}
 
-                                <a href="#" class="paction add-compare" title="Add to Compare">
-                                    <span>Add to Compare</span>
-                                </a>
-                            </div><!-- End .product-action -->
-                        </div><!-- End .product-details -->
-                    </div><!-- End .product -->
+{{--                                <a href="#" class="paction add-compare" title="Add to Compare">--}}
+{{--                                    <span>Add to Compare</span>--}}
+{{--                                </a>--}}
+{{--                            </div><!-- End .product-action -->--}}
+{{--                        </div><!-- End .product-details -->--}}
+{{--                    </div><!-- End .product -->--}}
 
-                    <div class="product">
-                        <figure class="product-image-container">
-                            <a href="product.html" class="product-image">
-                                <img src="assets/images/products/product-3.jpg" alt="product">
-                            </a>
-                            <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                        </figure>
-                        <div class="product-details">
-                            <div class="ratings-container">
-                                <div class="product-ratings">
-                                    <span class="ratings" style="width:40%"></span><!-- End .ratings -->
-                                </div><!-- End .product-ratings -->
-                            </div><!-- End .product-container -->
-                            <h2 class="product-title">
-                                <a href="product.html">Computer Mouse</a>
-                            </h2>
-                            <div class="price-box">
-                                <span class="product-price">$31.00</span>
-                            </div><!-- End .price-box -->
+{{--                    <div class="product">--}}
+{{--                        <figure class="product-image-container">--}}
+{{--                            <a href="product.html" class="product-image">--}}
+{{--                                <img src="assets/images/products/product-3.jpg" alt="product">--}}
+{{--                            </a>--}}
+{{--                            <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
+{{--                        </figure>--}}
+{{--                        <div class="product-details">--}}
+{{--                            <div class="ratings-container">--}}
+{{--                                <div class="product-ratings">--}}
+{{--                                    <span class="ratings" style="width:40%"></span><!-- End .ratings -->--}}
+{{--                                </div><!-- End .product-ratings -->--}}
+{{--                            </div><!-- End .product-container -->--}}
+{{--                            <h2 class="product-title">--}}
+{{--                                <a href="product.html">Computer Mouse</a>--}}
+{{--                            </h2>--}}
+{{--                            <div class="price-box">--}}
+{{--                                <span class="product-price">$31.00</span>--}}
+{{--                            </div><!-- End .price-box -->--}}
 
-                            <div class="product-action">
-                                <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                    <span>Add to Wishlist</span>
-                                </a>
+{{--                            <div class="product-action">--}}
+{{--                                <a href="#" class="paction add-wishlist" title="Add to Wishlist">--}}
+{{--                                    <span>Add to Wishlist</span>--}}
+{{--                                </a>--}}
 
-                                <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                    <span>Add to Cart</span>
-                                </a>
+{{--                                <a href="product.html" class="paction add-cart" title="Add to Cart">--}}
+{{--                                    <span>Add to Cart</span>--}}
+{{--                                </a>--}}
 
-                                <a href="#" class="paction add-compare" title="Add to Compare">
-                                    <span>Add to Compare</span>
-                                </a>
-                            </div><!-- End .product-action -->
-                        </div><!-- End .product-details -->
-                    </div><!-- End .product -->
+{{--                                <a href="#" class="paction add-compare" title="Add to Compare">--}}
+{{--                                    <span>Add to Compare</span>--}}
+{{--                                </a>--}}
+{{--                            </div><!-- End .product-action -->--}}
+{{--                        </div><!-- End .product-details -->--}}
+{{--                    </div><!-- End .product -->--}}
 
-                    <div class="product">
-                        <figure class="product-image-container">
-                            <a href="product.html" class="product-image">
-                                <img src="assets/images/products/product-4.jpg" alt="product">
-                            </a>
-                            <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                        </figure>
-                        <div class="product-details">
-                            <div class="ratings-container">
-                                <div class="product-ratings">
-                                    <span class="ratings" style="width:0%"></span><!-- End .ratings -->
-                                </div><!-- End .product-ratings -->
-                            </div><!-- End .product-container -->
-                            <h2 class="product-title">
-                                <a href="product.html">Camera</a>
-                            </h2>
-                            <div class="price-box">
-                                <span class="product-price">$335.00</span>
-                            </div><!-- End .price-box -->
+{{--                    <div class="product">--}}
+{{--                        <figure class="product-image-container">--}}
+{{--                            <a href="product.html" class="product-image">--}}
+{{--                                <img src="assets/images/products/product-4.jpg" alt="product">--}}
+{{--                            </a>--}}
+{{--                            <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
+{{--                        </figure>--}}
+{{--                        <div class="product-details">--}}
+{{--                            <div class="ratings-container">--}}
+{{--                                <div class="product-ratings">--}}
+{{--                                    <span class="ratings" style="width:0%"></span><!-- End .ratings -->--}}
+{{--                                </div><!-- End .product-ratings -->--}}
+{{--                            </div><!-- End .product-container -->--}}
+{{--                            <h2 class="product-title">--}}
+{{--                                <a href="product.html">Camera</a>--}}
+{{--                            </h2>--}}
+{{--                            <div class="price-box">--}}
+{{--                                <span class="product-price">$335.00</span>--}}
+{{--                            </div><!-- End .price-box -->--}}
 
-                            <div class="product-action">
-                                <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                    <span>Add to Wishlist</span>
-                                </a>
+{{--                            <div class="product-action">--}}
+{{--                                <a href="#" class="paction add-wishlist" title="Add to Wishlist">--}}
+{{--                                    <span>Add to Wishlist</span>--}}
+{{--                                </a>--}}
 
-                                <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                    <span>Add to Cart</span>
-                                </a>
+{{--                                <a href="product.html" class="paction add-cart" title="Add to Cart">--}}
+{{--                                    <span>Add to Cart</span>--}}
+{{--                                </a>--}}
 
-                                <a href="#" class="paction add-compare" title="Add to Compare">
-                                    <span>Add to Compare</span>
-                                </a>
-                            </div><!-- End .product-action -->
-                        </div><!-- End .product-details -->
-                    </div><!-- End .product -->
+{{--                                <a href="#" class="paction add-compare" title="Add to Compare">--}}
+{{--                                    <span>Add to Compare</span>--}}
+{{--                                </a>--}}
+{{--                            </div><!-- End .product-action -->--}}
+{{--                        </div><!-- End .product-details -->--}}
+{{--                    </div><!-- End .product -->--}}
 
-                    <div class="product">
-                        <figure class="product-image-container">
-                            <a href="product.html" class="product-image">
-                                <img src="assets/images/products/product-5.jpg" alt="product">
-                            </a>
-                            <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>
-                        </figure>
-                        <div class="product-details">
-                            <div class="ratings-container">
-                                <div class="product-ratings">
-                                    <span class="ratings" style="width:50%"></span><!-- End .ratings -->
-                                </div><!-- End .product-ratings -->
-                            </div><!-- End .product-container -->
-                            <h2 class="product-title">
-                                <a href="product.html">Leather Boots</a>
-                            </h2>
-                            <div class="price-box">
-                                <span class="product-price">$60.00</span>
-                            </div><!-- End .price-box -->
+{{--                    <div class="product">--}}
+{{--                        <figure class="product-image-container">--}}
+{{--                            <a href="product.html" class="product-image">--}}
+{{--                                <img src="assets/images/products/product-5.jpg" alt="product">--}}
+{{--                            </a>--}}
+{{--                            <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
+{{--                        </figure>--}}
+{{--                        <div class="product-details">--}}
+{{--                            <div class="ratings-container">--}}
+{{--                                <div class="product-ratings">--}}
+{{--                                    <span class="ratings" style="width:50%"></span><!-- End .ratings -->--}}
+{{--                                </div><!-- End .product-ratings -->--}}
+{{--                            </div><!-- End .product-container -->--}}
+{{--                            <h2 class="product-title">--}}
+{{--                                <a href="product.html">Leather Boots</a>--}}
+{{--                            </h2>--}}
+{{--                            <div class="price-box">--}}
+{{--                                <span class="product-price">$60.00</span>--}}
+{{--                            </div><!-- End .price-box -->--}}
 
-                            <div class="product-action">
-                                <a href="#" class="paction add-wishlist" title="Add to Wishlist">
-                                    <span>Add to Wishlist</span>
-                                </a>
+{{--                            <div class="product-action">--}}
+{{--                                <a href="#" class="paction add-wishlist" title="Add to Wishlist">--}}
+{{--                                    <span>Add to Wishlist</span>--}}
+{{--                                </a>--}}
 
-                                <a href="product.html" class="paction add-cart" title="Add to Cart">
-                                    <span>Add to Cart</span>
-                                </a>
+{{--                                <a href="product.html" class="paction add-cart" title="Add to Cart">--}}
+{{--                                    <span>Add to Cart</span>--}}
+{{--                                </a>--}}
 
-                                <a href="#" class="paction add-compare" title="Add to Compare">
-                                    <span>Add to Compare</span>
-                                </a>
-                            </div><!-- End .product-action -->
-                        </div><!-- End .product-details -->
-                    </div><!-- End .product -->
-                </div><!-- End .featured-proucts -->
-            </div><!-- End .container -->
-        </div><!-- End .featured-section -->
+{{--                                <a href="#" class="paction add-compare" title="Add to Compare">--}}
+{{--                                    <span>Add to Compare</span>--}}
+{{--                                </a>--}}
+{{--                            </div><!-- End .product-action -->--}}
+{{--                        </div><!-- End .product-details -->--}}
+{{--                    </div><!-- End .product -->--}}
+{{--                </div><!-- End .featured-proucts -->--}}
+{{--            </div><!-- End .container -->--}}
+{{--        </div><!-- End .featured-section -->--}}
 @endsection

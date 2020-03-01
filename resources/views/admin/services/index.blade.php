@@ -35,7 +35,7 @@
                     <div class="kt-portlet__head-actions">
                         <a class="btn btn-brand btn-elevate btn-icon-sm"  href="{{route('admin.services.create')}}">
                             <i class="la la-plus"></i>
-                            New Record
+                            New Service
                         </a>
                     </div>
                 </div>

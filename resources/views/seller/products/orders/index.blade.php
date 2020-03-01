@@ -38,16 +38,6 @@
                         Product Orders
                     </h3>
                 </div>
-                <div class="kt-portlet__head-toolbar">
-                    <div class="kt-portlet__head-wrapper">
-                        <div class="kt-portlet__head-actions">
-                            <a class="btn btn-brand btn-elevate btn-icon-sm"  href="#createModal" data-toggle="modal" data-target="#createModal">
-                                <i class="la la-plus"></i>
-                                New Record
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="kt-portlet__body kt-portlet__body--fit">
                 <!--begin: Datatable -->

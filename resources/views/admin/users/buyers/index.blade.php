@@ -27,7 +27,7 @@
 											<i class="kt-font-brand flaticon2-line-chart"></i>
 										</span>
                 <h3 class="kt-portlet__head-title">
-                    Records
+                    Buyers
                 </h3>
             </div>
             <div class="kt-portlet__head-toolbar">
@@ -36,7 +36,7 @@
                         <a class="btn btn-brand btn-elevate btn-icon-sm" href="#createModal" data-toggle="modal"
                            data-target="#createModal">
                             <i class="la la-plus"></i>
-                            New Record
+                            New Buyer
                         </a>
                     </div>
                 </div>

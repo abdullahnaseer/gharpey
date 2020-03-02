@@ -175,7 +175,7 @@
                                                         <span class="ratings" style="width:{{$review->rating * 20}}%"></span>
                                                     </div>
                                                 </div>
-                                                <p class="text-muted mb-0"><small>By {{ !is_null($review->product_order) ? $review->product_order->order->buyer->name : '' }} ({{$review->created_at->diffForHumans()}})</small></p>
+                                                <p class="text-muted mb-0"><small>By {{ !is_null($review->product_order) && !is_null($review->product_order->order) && !is_null($review->product_order->order->buyer) ? $review->product_order->order->buyer->name : 'GharPey Customer' }} ({{$review->created_at->diffForHumans()}})</small></p>
                                                 <p>{{$review->review}}</p>
                                             @endforeach
                                         @else

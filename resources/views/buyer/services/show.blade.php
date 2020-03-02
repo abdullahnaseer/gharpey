@@ -246,6 +246,10 @@
                             @php($i = 1)
                             @php($question_ids = [])
                             @foreach($service->questions as $question)
+                                {{$question}}
+                                <br>
+                                @continue(true)
+                            
                                 @php($required = false)
                                 @php($continue = false)
                                 @if(($question->auth_rule == \App\Models\ServiceQuestion::AUTH_REQUIRED))

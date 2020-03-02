@@ -161,6 +161,7 @@ Route::namespace('Buyer')->name('buyer.')->group(function () {
 
         Route::resource('service-requests', 'ServiceRequestController')->only(['index']);
         Route::resource('wishlist', 'WishlistController')->only(['index']);
+        Route::resource('notifications', 'NotificationController')->only(['index']);
     });
 });
 

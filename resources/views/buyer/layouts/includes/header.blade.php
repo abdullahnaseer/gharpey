@@ -25,6 +25,7 @@
                                                      document.getElementById('logout-form').submit();">LOGOUT </a></li>
                             @endauth
                             @guest('buyer')
+                                    <li><a href="{{route('seller.home')}}">Become a Seller</a></li>
                                 <li><a href="{{route('buyer.register')}}">REGISTER</a></li>
                                 <li><a href="{{route('buyer.login')}}">LOG IN</a></li>
                             @endguest

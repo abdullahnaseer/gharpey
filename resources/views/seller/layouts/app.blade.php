@@ -61,9 +61,10 @@
                             &copy 2018 GharPey
                         </div>
                         <div class="kt-login__menu">
-                            <a href="#" class="kt-link">Privacy</a>
-                            <a href="#" class="kt-link">Legal</a>
-                            <a href="#" class="kt-link">Contact</a>
+{{--                            <a href="#" class="kt-link">Privacy</a>--}}
+{{--                            <a href="#" class="kt-link">Legal</a>--}}
+{{--                            <a href="#" class="kt-link">Contact</a>--}}
+                            <a href="{{url('/')}}" class="kt-link">Go to Buyer Homepage</a>
                         </div>
                     </div>
                 </div>

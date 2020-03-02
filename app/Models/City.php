@@ -48,7 +48,7 @@ class City extends Model
      */
     public function areas()
     {
-        return $this->hasMany('App\Models\CityArea');
+        return $this->hasMany('App\Models\CityArea', 'city_id');
     }
 
     /**

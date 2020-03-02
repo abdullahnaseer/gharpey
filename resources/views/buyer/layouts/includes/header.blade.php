@@ -20,7 +20,8 @@
                         <ul>
                             @auth('buyer')
                                 <li><a href="{{route('buyer.account.index')}}">MY ACCOUNT </a></li>
-                                <li><a href="#">MY WISHLIST </a></li>
+                                <li><a href="{{route('buyer.account.wishlist.index')}}">MY WISHLIST </a></li>
+                                <li><a href="{{route('buyer.account.notifications.index')}}">Notifications </a></li>
                                 <li><a href="{{ route('buyer.logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">LOGOUT </a></li>
                             @endauth

@@ -40,7 +40,7 @@
                     <br>
                     <small>{{$notification->created_at->diffForHumans()}}</small>
                 </p>
-                <hr>
+                <hr class="my-1">
             </div>
         @endforeach
     @else

@@ -11,7 +11,7 @@
                             <h3>Get up to <span>60%</span> off</h3>
                             <h1>Summer Sale</h1>
                             <p>Limited items available at this price.</p>
-                            <a href="category.html" class="btn btn-dark">Book A Service</a>
+{{--                            <a href="category.html" class="btn btn-dark">Book A Service</a>--}}
                         </div>
                         <!-- End .home-slide-content -->
                     </div>
@@ -23,7 +23,7 @@
                             <h3>OVER <span>200+</span></h3>
                             <h1>GREAT DEALS</h1>
                             <p>While they last!</p>
-                            <a href="category.html" class="btn btn-dark">Book A Service</a>
+{{--                            <a href="category.html" class="btn btn-dark">Book A Service</a>--}}
                         </div>
                         <!-- End .home-slide-content -->
                     </div>
@@ -35,7 +35,7 @@
                             <h3>up to <span>40%</span> off</h3>
                             <h1>NEW ARRIVALS</h1>
                             <p>Starting at $9</p>
-                            <a href="category.html" class="btn btn-dark">Book A Service</a>
+{{--                            <a href="category.html" class="btn btn-dark">Book A Service</a>--}}
                         </div>
                         <!-- End .home-slide-content -->
                     </div>

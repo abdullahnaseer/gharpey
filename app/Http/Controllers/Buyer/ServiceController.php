@@ -81,6 +81,8 @@ class ServiceController extends Controller
                 ->get();
         }
 
+        return $service->questions;
+
         return view('buyer.services.show', [
             'service' => $service,
             'cities' => $cities,

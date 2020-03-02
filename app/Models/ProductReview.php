@@ -12,4 +12,10 @@ class ProductReview extends Model
         'review',
         'rating'
     ];
+
+    public function product_order()
+    {
+        return $this->hasMany(ProductOrder::class);
+    }
+
 }

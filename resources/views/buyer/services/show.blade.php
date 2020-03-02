@@ -119,7 +119,7 @@
                             </figure>
                             <div class="product-details">
                                 <h2 class="product-title">
-                                    <a href="#">{{$service_seller->seller->name}}</a>
+                                    <a href="#">{{$service_seller->seller->shop_name}}</a>
                                 </h2>
                                 <div class="ratings-container">
                                     <div class="product-ratings">

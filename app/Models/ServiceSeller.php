@@ -23,6 +23,14 @@ class ServiceSeller extends Pivot
     }
 
     /**
+     * Get the owning service_seller_able model.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(\App\Models\ServiceSellerReview::class, 'service_seller_id');
+    }
+
+    /**
      * Get all of the states that are assigned this service.
      */
     public function states()

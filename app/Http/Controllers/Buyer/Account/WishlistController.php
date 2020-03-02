@@ -14,7 +14,8 @@ class WishlistController extends Controller
      */
     public function index()
     {
-        //
+        $data['products'] = auth('buyer')->user()->wishlist_products;
+        return view('buyer.account.wishlist');
     }
 
     /**

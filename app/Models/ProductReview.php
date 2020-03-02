@@ -15,6 +15,6 @@ class ProductReview extends Model
 
     public function product_order()
     {
-        return $this->hasMany(ProductOrder::class, 'order_id');
+        return $this->hasOne(ProductOrder::class, 'order_id');
     }
 }

@@ -1,4 +1,4 @@
-@extends('buyer.layouts.app')
+@extends('buyer.layouts.app', ['remove_top_margin' => true])
 
 @section('styles')
 

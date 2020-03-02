@@ -30,7 +30,7 @@
         @include('buyer.layouts.includes.header')
 
         <main class="main">
-            <div class="container mt-5">
+            <div class="container @if((isset($remove_top_margin) && $remove_top_margin))  @else  mt-5 @endif">
                 @include('flash::message')
             </div>
 

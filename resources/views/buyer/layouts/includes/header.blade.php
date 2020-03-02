@@ -47,7 +47,7 @@
     <div class="header-middle">
         <div class="container">
             <div class="header-left">
-                <a href="index.html" class="logo">
+                <a href="{{url('/')}}" class="logo">
                     <img src="/assets1/images/logo.png" style="height: 60px;" alt="">
                 </a>
             </div>
@@ -167,7 +167,7 @@
         <div class="sticky-wrapper">
             <div class="header-bottom sticky-header">
                 <div class="container">
-                    <a href="index.html" class="logo">
+                    <a href="{{url('/')}}" class="logo">
                         <img src="/assets1/images/logo.png" alt="GharPey Logo" width="101" height="41">
                     </a>
                     <div class="dropdown cart-dropdown">

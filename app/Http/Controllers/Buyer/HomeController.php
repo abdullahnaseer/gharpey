@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Buyer;
 
+use App\Models\Product;
+use App\Models\Service;
 use Illuminate\Contracts\Support\Renderable;
 use App\Http\Controllers\Controller;
 
@@ -24,6 +26,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('buyer.home');
+        $data['popular_services'] = Service::with(['category'])->take(10)->get();
+        $data['popular_products'] = Product::with(['category', 'seller'])->take(10)->get();
+
+        return view('buyer.home', $data);
     }
 }

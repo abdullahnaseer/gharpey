@@ -32,6 +32,14 @@ class Product extends Model
     }
 
     /**
+     * Get the seller that owns the product.
+     */
+    public function category()
+    {
+        return $this->belongsTo(ProductCategory::class, 'category_id', 'id');
+    }
+
+    /**
      * Get the orders for the product.
      */
     public function orders()

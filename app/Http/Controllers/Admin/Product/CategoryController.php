@@ -49,13 +49,16 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|min:3|max:255',
+            'name' => 'required|min:3|max:25',
             'featured_image' => 'required|file|image',
         ]);
 
         $record = ProductCategory::create([
             'name' => $request->input('name'),
-            'featured_image' => ($request->hasFile('featured_image') ? $request->file('featured_image')->store('public/productcategories') : null)
+            'featured_image' => (
+                $request->hasFile('featured_image')
+                    ? $request->file('featured_image')->store('public/productcategories')
+                    : null)
         ]);
         $record->update(['slug' => \Illuminate\Support\Str::slug($record->name . ' ' . $record->id)]);
 

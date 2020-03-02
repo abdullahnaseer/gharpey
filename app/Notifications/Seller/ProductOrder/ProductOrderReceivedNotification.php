@@ -44,7 +44,7 @@ class ProductOrderReceivedNotification extends Notification
     {
         return (new MailMessage)
                     ->line('Product "'.$this->productOrder->product->name.'" received at our warehouse.')
-                    ->action('Check Orders', route('seller/orders.index'))
+                    ->action('Check Orders', route('seller.orders.index'))
                     ->line('Thank you for using our application!');
     }
 

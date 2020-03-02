@@ -116,7 +116,7 @@
                             template: function(row) {
                                 if(row.status == '{{\App\Models\ProductOrder::STATUS_PAID}}')
                                     return "<p class='text-danger'>Waiting for confirmation by seller.</p>";
-                                else if(row.status == '{{\App\Models\ProductOrder::STATUS_PAID}}')
+                                else if(row.status == '{{\App\Models\ProductOrder::STATUS_CONFIRMED}}')
                                     return "<p class='text-danger'>Order Confirmed and Waiting for delivery by seller.</p>";
                                 else if(row.status == '{{\App\Models\ProductOrder::STATUS_SELLET_SENT}}')
                                     return "<p class='text-info'>Waiting for arrival of product at our warehouse.</p>";

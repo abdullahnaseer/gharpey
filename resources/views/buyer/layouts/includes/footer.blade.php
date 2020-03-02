@@ -11,13 +11,13 @@
                         <h4 class="widget-title">Contact Us</h4>
                         <ul class="contact-info">
                             <li>
-                                <span class="contact-info-label">Address:</span>123 Street Name, City, England
+                                <span class="contact-info-label">Address:</span>Royal Avenue, Islamabad, Pakistan
                             </li>
                             <li>
                                 <span class="contact-info-label">Phone:</span>Toll Free <a href="tel:">(123) 456-7890</a>
                             </li>
                             <li>
-                                <span class="contact-info-label">Email:</span> <a href="mailto:mail@example.com">mail@example.com</a>
+                                <span class="contact-info-label">Email:</span> <a href="mailto:mail@example.com">mail@gharpey.com</a>
                             </li>
                             <li>
                                 <span class="contact-info-label">Working Days/Hours:</span> Mon - Sun / 9:00AM - 8:00PM
@@ -57,6 +57,7 @@
                     <!-- End .widget -->
 
                     <div class="row">
+                        @auth('buyer')
                         <div class="col-md-5">
                             <div class="widget">
                                 <h4 class="widget-title">My Account</h4>
@@ -66,15 +67,14 @@
                                         <ul class="links">
                                             <li><a href="about.html">About Us</a></li>
                                             <li><a href="contact.html">Contact Us</a></li>
-                                            <li><a href="my-account.html">My Account</a></li>
+                                            <li><a href="{{route('buyer.login')}}">Login</a></li>
                                         </ul>
                                     </div>
                                     <!-- End .col-sm-6 -->
                                     <div class="col-sm-6 col-md-5">
                                         <ul class="links">
-                                            <li><a href="#">Orders History</a></li>
-                                            <li><a href="">Advanced Search</a></li>
-                                            <li><a href="login.html">Login</a></li>
+                                            <li><a href="{{route('buyer.account.index')}}">My Account</a></li>
+                                            <li><a href="{{route('buyer.account.orders.index')}}">Orders History</a></li>
                                         </ul>
                                     </div>
                                     <!-- End .col-sm-6 -->
@@ -83,6 +83,7 @@
                             </div>
                             <!-- End .widget -->
                         </div>
+                        @endauth
                         <!-- End .col-md-5 -->
 
                         <div class="col-md-7">
@@ -92,16 +93,16 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <ul class="links">
-                                            <li><a href="#">Super Fast Magento Theme</a></li>
-                                            <li><a href="#">1st Fully working Ajax Theme</a></li>
-                                            <li><a href="#">20 Unique Homepage Layouts</a></li>
+                                            <li><a href="#">Pakistan Top Selling Sites for Women Sellers</a></li>
+                                            <li><a href="#">Unique Services</a></li>
+                                            <li><a href="#">Unique Products</a></li>
                                         </ul>
                                     </div>
                                     <!-- End .col-sm-6 -->
                                     <div class="col-sm-6">
                                         <ul class="links">
-                                            <li><a href="#">Powerful Admin Panel</a></li>
-                                            <li><a href="#">Mobile & Retina Optimized</a></li>
+                                            <li><a href="#">Cash On Delivery</a></li>
+                                            <li><a href="#">24x7 Support</a></li>
                                         </ul>
                                     </div>
                                     <!-- End .col-sm-6 -->

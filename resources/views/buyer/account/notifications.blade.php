@@ -34,7 +34,14 @@
 
     @if($notifications->count())
         @foreach($notifications as $notification)
-            <div>{{$notification->data}}</div>
+            <div>
+                <p>
+                    {{$notification->data['message']}}
+                    <br>
+                    <small>{{$notification->created_at->diffForHumans()}}</small>
+                </p>
+                <hr>
+            </div>
         @endforeach
     @else
         <div class="alert alert-info">

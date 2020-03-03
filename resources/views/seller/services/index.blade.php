@@ -77,6 +77,13 @@
             modal.find('form input#price').val(button.data('price'));
             modal.find('form textarea#description').val(button.data('description'));
             modal.find('form select#category_id').val(button.data('category'));
+
+            console.log(button.data('cities'));
+
+            var values="" + button.data('cities');
+            $.each(values.split(","), function(i,e){
+                modal.find("form select#cities option[value='" + e + "']").prop("selected", true);
+            });
         });
 
         var KTDatatableJsonRemote = function () {
@@ -137,7 +144,7 @@
                             field: 'slug',
                             title: 'Slug',
                         },{
-                            field: 'price',
+                            field: 'pivot.price',
                             title: 'Price',
                         },{
                             field: 'Actions',
@@ -148,7 +155,7 @@
                             overflow: 'visible',
                             template: function(row) {
                                 return '\
-						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details" data-toggle="modal" data-target="#editModal" data-id="' + row.id + '" data-name="' + row.name + '" data-description="' + row.description + '" data-category="' + row.category_id + '" data-price="' + row.price + '">\
+						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details" data-toggle="modal" data-target="#editModal" data-id="' + row.id + '" data-name="' + row.name + '" data-description="' + row.description + '" data-category="' + row.category_id + '" data-price="' + row.pivot.price + '" data-cities="' + row.cities + '">\
 							<i class="la la-edit"></i>\
 						</a>\
 						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Delete" data-toggle="modal" data-target="#deleteModal" data-id="' + row.id + '">\

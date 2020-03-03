@@ -38,6 +38,8 @@ class ServiceController extends Controller
     public function json()
     {
         $records = auth('seller')->user()->services()->with([])->get();
+        foreach ($records as $record)
+            $record->cities = ServiceSeller::find($record->pivot->id)->cities->implode("id", ",");
         return $records;
     }
 
@@ -49,7 +51,11 @@ class ServiceController extends Controller
     public function index()
     {
         return view('seller.services.index', [
-            'services' => Service::whereNotIn('id', ServiceSeller::where('seller_id', auth('seller')->id())->get()->pluck('service_id'))->get(),
+            'services' => Service::whereNotIn('id',
+                ServiceSeller::where('seller_id',
+                    auth('seller')->id()
+                )->get()->pluck('service_id')
+            )->get(),
             'cities' => City::all()
         ]);
     }
@@ -91,14 +97,16 @@ class ServiceController extends Controller
     public function update(Request $request, int $record_id)
     {
         $request->validate([
-            'service_id' => 'required|exists:services,id|unique:service_seller,service_id,'.$record_id.',id,seller_id,'.auth()->id(),
+            'service_id' => 'required|exists:services,id|unique:service_seller,service_id,'.$record_id.',service_id,seller_id,'.auth()->id(),
             'price' => 'required|numeric|min:100|max:20000',
             'description' => 'required|min:10|max:1000',
             'cities' => 'required|exists:cities,id',
             'featured_image' => 'required|file|image',
         ]);
 
-        $record = ServiceSeller::where('seller_id', auth('seller')->id())->findOrFail($record_id);
+        $record = ServiceSeller::where('seller_id', auth('seller')->id())
+            ->where('service_id', $record_id)
+            ->firstOrFail();
 
         $fields = $request->only(['service_id', 'name', 'description', 'price']);
         $fields['seller_id'] = auth('seller')->id();
@@ -120,7 +128,9 @@ class ServiceController extends Controller
      */
     public function destroy(Request $request, int $record_id)
     {
-        $record = ServiceSeller::where('seller_id', auth('seller')->id())->findOrFail($record_id);
+        $record = ServiceSeller::where('seller_id', auth('seller')->id())
+            ->where('service_id', $record_id)
+            ->firstOrFail();
         $record->delete();
         flash('Successfully deleted the record!')->success();
 

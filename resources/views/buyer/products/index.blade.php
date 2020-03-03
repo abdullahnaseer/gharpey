@@ -178,7 +178,7 @@
                                     <!-- End .price-slider-wrapper -->
 
                                     <div class="filter-price-action">
-                                        <button type="submit" class="btn btn-primary">Filter</button>
+                                        <button type="submit" class="btn btn-primary" onclick="return handlePriceFilterForm();">Filter</button>
 
                                         <div class="filter-price-text">
                                             <span id="filter-price-range"></span>
@@ -219,16 +219,17 @@
 
         function handlePriceFilterForm()
         {
-            var inputPriceMin = document.getElementById('input-price-min');
-            var inputPriceMax = document.getElementById('input-price-max');
+            var inputPriceMin = $('input#input-price-min');
+            var inputPriceMax = $('input#input-price-max');
 
             var prices = document.getElementById("price-slider").noUiSlider.get();
 
-            inputPriceMin.value = prices[0];
-            inputPriceMax.value = prices[1];
+            inputPriceMin.val(prices[0]);
+            inputPriceMax.val(prices[1]);
 
+            // return false;
             document.getElementById("price-form").submit();
-
+            return;
         }
     </script>
 @endsection

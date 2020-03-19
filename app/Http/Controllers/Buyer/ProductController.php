@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Buyer;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Cart;
 
@@ -22,7 +23,19 @@ class ProductController extends Controller
             $products = $products->where('name', 'like', '%' . $request->input('q') . '%');
 
         if($request->has('category'))
-            $products = $products->where('category_id', $request->input('category'));
+        {
+            $category_id = $request->input('category');
+            $products = $products
+                    ->whereHas('category', function (Builder $query) use ($category_id) {
+                        $query->where('category_id', $category_id) // Depth 0
+                            ->orWhereHas('parent_category', function (Builder $query) use ($category_id) {
+                                $query->where('id', $category_id)  // Depth 1
+                                    ->orWhereHas('parent_category', function (Builder $query) use ($category_id) {
+                                        $query->where('id', $category_id);  // Depth 2
+                                    });
+                            });
+                    });
+        }
 
         if($request->has('price-min'))
             $products = $products->where('price', '>=', $request->input('price-min'));

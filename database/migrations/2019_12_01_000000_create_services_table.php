@@ -15,10 +15,16 @@ class CreateServicesTable extends Migration
     {
         Schema::create('service_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->unsignedInteger('depth')->default(0);
             $table->string('name');
             $table->string('slug')->nullable();
             $table->string('featured_image')->nullable();
             $table->timestamps();
+        });
+
+        Schema::table('service_categories', function (Blueprint $table) {
+            $table->foreign('parent_id')->references('id')->on('service_categories')->onDelete('cascade');
         });
 
         Schema::create('services', function (Blueprint $table) {

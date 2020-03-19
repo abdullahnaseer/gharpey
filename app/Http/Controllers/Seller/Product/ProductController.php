@@ -43,7 +43,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $categories = ProductCategory::all();
+        $categories = ProductCategory::whereNull('parent_id')->with('child_categories', 'child_categories.child_categories', 'child_categories.child_categories.child_categories')->get();
+
         return view('seller.products.index', ['categories' => $categories]);
     }
 

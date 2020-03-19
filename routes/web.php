@@ -25,11 +25,15 @@ Route::name('admin.')->prefix('admin')->namespace('Admin')->group(function () {
         Route::namespace('Service')->prefix('services')->name('services.')->middleware([])->group(function () {
             Route::post('categories/json', 'CategoryController@json')->name('categories.json');
             Route::resource('categories', 'CategoryController')->only(['index', 'store', 'update', 'destroy']);
+            Route::post('categories/{category_id}/subcategories/json', 'SubCategoryController@json')->name('categories.subcategories.json');
+            Route::resource('categories.subcategories', 'SubCategoryController')->only(['index', 'store', 'update', 'destroy']);
         });
 
         Route::namespace('Product')->prefix('products')->name('products.')->middleware([])->group(function () {
             Route::post('categories/json', 'CategoryController@json')->name('categories.json');
             Route::resource('categories', 'CategoryController')->only(['index', 'store', 'update', 'destroy']);
+            Route::post('categories/{category_id}/subcategories/json', 'SubCategoryController@json')->name('categories.subcategories.json');
+            Route::resource('categories.subcategories', 'SubCategoryController')->only(['index', 'store', 'update', 'destroy']);
             Route::post('tags/json', 'TagController@json')->name('tags.json');
             Route::resource('tags', 'TagController')->only(['index', 'store', 'update', 'destroy']);
         });

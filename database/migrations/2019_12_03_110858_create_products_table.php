@@ -15,10 +15,16 @@ class CreateProductsTable extends Migration
     {
         Schema::create('product_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->unsignedInteger('depth')->default(0);
             $table->string('name');
             $table->string('slug')->nullable();
             $table->string('featured_image')->nullable();
             $table->timestamps();
+        });
+
+        Schema::table('product_categories', function (Blueprint $table) {
+            $table->foreign('parent_id')->references('id')->on('product_categories')->onDelete('cascade');
         });
 
         Schema::create('product_tags', function (Blueprint $table) {

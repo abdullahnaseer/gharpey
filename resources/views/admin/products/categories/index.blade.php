@@ -3,7 +3,7 @@
 @section('breadcrumb')
     <a href="{{ route('admin.dashboard') }}" class="kt-subheader__breadcrumbs-link">Dashboard</a>
     <span class="kt-subheader__breadcrumbs-separator"></span>
-{{--    <a href="{{ route('admin.products.index') }}" class="kt-subheader__breadcrumbs-link">Products</a>--}}
+    <span class="kt-subheader__breadcrumbs-link active">Products</span>
     <span class="kt-subheader__breadcrumbs-separator"></span>
     <span class="kt-subheader__breadcrumbs-link active">Categories</span>
 @endsection
@@ -139,11 +139,14 @@
                             field: 'Actions',
                             title: 'Actions',
                             sortable: false,
-                            width: 150,
+                            width: 200,
                             autoHide: false,
                             overflow: 'visible',
                             template: function(row) {
                                 return '\
+                        <a href="{{url('/admin/products/categories/')}}/'+row.id+'/subcategories" class="btn btn-sm btn-outline-primary" title="SubCategories">\
+                            SubCategories\
+						</a>\
 						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details" data-toggle="modal" data-target="#editModal" data-id="' + row.id + '" data-name="' + row.name + '" data-description="' + row.description + '"data-category="' + row.category_id + '">\
 							<i class="la la-edit"></i>\
 						</a>\

@@ -26,7 +26,7 @@ class CategoryController extends Controller
      */
     public function json()
     {
-        $records = ProductCategory::get();
+        $records = ProductCategory::whereNull('parent_id')->get();
         return $records;
     }
 
@@ -53,7 +53,7 @@ class CategoryController extends Controller
             'featured_image' => 'required|file|image',
         ]);
 
-        $record = ProductCategory::create([
+        $record = ProductCategory::whereNull('parent_id')->create([
             'name' => $request->input('name'),
             'featured_image' => (
                 $request->hasFile('featured_image')
@@ -80,7 +80,7 @@ class CategoryController extends Controller
             'featured_image' => 'nullable|file|image',
         ]);
 
-        $record = ProductCategory::findOrFail($record_id);
+        $record = ProductCategory::whereNull('parent_id')->findOrFail($record_id);
         $fields = [
             'name' => $request->input('name'),
             'slug' => \Illuminate\Support\Str::slug($request->input('name') . ' ' . $record->id)
@@ -101,7 +101,7 @@ class CategoryController extends Controller
      */
     public function destroy(Request $request, $record_id)
     {
-        ProductCategory::findOrFail($record_id)->delete();
+        ProductCategory::whereNull('parent_id')->findOrFail($record_id)->delete();
         flash('Successfully deleted the record!')->success();
 
         return redirect()->route('admin.products.categories.index');

@@ -53,7 +53,7 @@ class ProductController extends Controller
 
         return view('buyer.products.index', [
             'products' => $products,
-            'categories' => ProductCategory::all()
+            'categories' => ProductCategory::whereNull('parent_id')->get()
         ]);
     }
 

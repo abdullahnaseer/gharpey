@@ -6,6 +6,9 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{url('/')}}"><i class="icon-home"></i></a></li>
                 <li class="breadcrumb-item"><a href="{{route('buyer.products.index')}}">Products</a></li>
+                @unless(is_null($category))
+                    <li class="breadcrumb-item">{{$category->name}}</li>
+                @endunless
             </ol>
         </div>
         <!-- End .container -->

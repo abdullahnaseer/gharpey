@@ -18,6 +18,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        $category = null;
         $products = Product::where('inventory', '>', 0);
         if($request->has('q'))
             $products = $products->where('name', 'like', '%' . $request->input('q') . '%');
@@ -25,6 +26,7 @@ class ProductController extends Controller
         if($request->has('category'))
         {
             $category_id = $request->input('category');
+            $category = ProductCategory::findOrFail($category_id);
             $products = $products
                     ->whereHas('category', function (Builder $query) use ($category_id) {
                         $query->where('category_id', $category_id) // Depth 0
@@ -53,7 +55,8 @@ class ProductController extends Controller
 
         return view('buyer.products.index', [
             'products' => $products,
-            'categories' => ProductCategory::whereNull('parent_id')->get()
+            'categories' => ProductCategory::whereNull('parent_id')->get(),
+            'category' => $category
         ]);
     }
 

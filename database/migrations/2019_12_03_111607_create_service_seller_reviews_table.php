@@ -14,7 +14,7 @@ class CreateServiceSellerReviewsTable extends Migration
     public function up()
     {
         Schema::create('service_seller_reviews', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('service_seller_id')->index();
             $table->unsignedBigInteger('service_request_id')->index();
             $table->unsignedBigInteger('buyer_id')->index();

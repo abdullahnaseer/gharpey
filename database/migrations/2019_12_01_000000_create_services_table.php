@@ -14,7 +14,7 @@ class CreateServicesTable extends Migration
     public function up()
     {
         Schema::create('service_categories', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->unsignedInteger('depth')->default(0);
             $table->string('name');
@@ -28,7 +28,7 @@ class CreateServicesTable extends Migration
         });
 
         Schema::create('services', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->string('name');
             $table->string('slug')->nullable();
@@ -40,7 +40,7 @@ class CreateServicesTable extends Migration
         });
 
         Schema::create('service_seller', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('service_id')->index();
             $table->unsignedBigInteger('seller_id')->index();
             $table->unsignedDecimal('price', 16, 4);
@@ -53,7 +53,7 @@ class CreateServicesTable extends Migration
         });
 
         Schema::create('service_seller_location', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('service_seller_id')->index();
             $table->unsignedBigInteger('location_id')->index();
             $table->string('location_type');

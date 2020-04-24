@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ServiceCategory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 
 class SubCategoryController extends Controller
 {
@@ -64,7 +65,7 @@ class SubCategoryController extends Controller
             'featured_image' => 'required|file|image',
         ]);
 
-        if($category->depth <= 1) {
+        if ($category->depth <= 1) {
             $record = $category->child_categories()->create([
                 'name' => $request->input('name'),
                 'featured_image' => (
@@ -73,7 +74,7 @@ class SubCategoryController extends Controller
                     : null),
                 'depth' => $category->depth + 1
             ]);
-            $record->update(['slug' => \Illuminate\Support\Str::slug($record->name . ' ' . $record->id)]);
+            $record->update(['slug' => Str::slug($record->name . ' ' . $record->id)]);
 
             flash('Successfully created the new record!')->success();
         } else {
@@ -103,10 +104,10 @@ class SubCategoryController extends Controller
         $record = $category->child_categories()->findOrFail($record_id);
         $fields = [
             'name' => $request->input('name'),
-            'slug' => \Illuminate\Support\Str::slug($request->input('name') . ' ' . $record->id),
+            'slug' => Str::slug($request->input('name') . ' ' . $record->id),
             'depth' => $category->depth + 1
         ];
-        if($request->hasFile('featured_image'))
+        if ($request->hasFile('featured_image'))
             $fields['featured_image'] = $request->file('featured_image')->store('public/servicecategories');
         $record->update($fields);
 

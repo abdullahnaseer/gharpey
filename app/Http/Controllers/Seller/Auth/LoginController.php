@@ -64,6 +64,19 @@ class LoginController extends Controller
     }
 
     /**
+     * The user has been authenticated.
+     *
+     * @param Request $request
+     * @param mixed $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        $user->setApiToken();
+        return;
+    }
+
+    /**
      * The user has logged out of the application.
      *
      * @param Request $request

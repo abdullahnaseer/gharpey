@@ -4,16 +4,16 @@ namespace App\Http\Controllers\Seller\Service;
 
 use App\Http\Controllers\Controller;
 use App\Models\City;
-use App\Models\Moderator;
 use App\Models\Service;
 use App\Models\ServiceCategory;
+use App\Models\ServiceQuestion;
+use App\Models\ServiceQuestionChoices;
 use App\Models\ServiceSeller;
-use App\Rules\Phone;
+use App\Models\State;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Str;
 
@@ -61,20 +61,28 @@ class ServiceController extends Controller
     }
 
     /**
+     * Display create page of the resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        $categories = ServiceCategory::has('services')->with(['services'])->get();
+        $states = State::with(['cities'])->get();
+
+        return view('seller.services.create', ['categories' => $categories, 'states' => $states]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return RedirectResponse
+     * @return Response
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'service_id' => 'required|exists:services,id|unique:service_seller,service_id,NULL,id,seller_id,'.auth()->id(),
-            'price' => 'required|numeric|min:100|max:20000',
-            'description' => 'required|min:10|max:1000',
-            'cities' => 'required|exists:cities,id',
-            'featured_image' => 'required|file|image',
-        ]);
+//        dd($request->all());
+        $request->validate(Service::getRules($request));
 
         $fields = $request->only(['service_id', 'name', 'description', 'price']);
         $fields['featured_image'] = $request->file('featured_image')->store('public/services');
@@ -82,6 +90,28 @@ class ServiceController extends Controller
 
         $serviceSeller = ServiceSeller::create($fields);
         $serviceSeller->cities()->sync($request->input('cities'));
+
+        for ($i = 0, $iMax = count($request->input('title', [])); $i < $iMax; $i++) {
+            $question = $serviceSeller->questions()->create([
+                'order_priority' => $i + 1,
+                'title' => $request->input('title')[$i],
+                'question' => $request->input('question')[$i],
+                'type' => $request->input('type')[$i],
+                'is_required' => $request->input('is_required', [])[$i] === '1',
+                'auth_rule' => $request->input('auth_type', [])[$i]
+            ]);
+
+            if ($request->input('type')[$i] === ServiceQuestion::TYPE_SELECT || $request->input('type')[$i] === ServiceQuestion::TYPE_SELECT_MULTIPLE) {
+                $k = 1;
+                foreach ($request->input('choices.' . $i) as $choice) {
+                    $choice = ServiceQuestionChoices::create([
+                        'order_priority' => $k++,
+                        'question_id' => $question->id,
+                        'choice' => $choice,
+                    ]);
+                }
+            }
+        }
 
         flash('Successfully created the new record!')->success();
         return redirect()->route('seller.services.index');
@@ -97,7 +127,7 @@ class ServiceController extends Controller
     public function update(Request $request, int $record_id)
     {
         $request->validate([
-            'service_id' => 'required|exists:services,id|unique:service_seller,service_id,'.$record_id.',service_id,seller_id,'.auth()->id(),
+            'service_id' => 'required|exists:services,id|unique:service_seller,service_id,' . $record_id . ',service_id,seller_id,' . auth()->id(),
             'price' => 'required|numeric|min:100|max:20000',
             'description' => 'required|min:10|max:1000',
             'cities' => 'required|exists:cities,id',
@@ -110,7 +140,7 @@ class ServiceController extends Controller
 
         $fields = $request->only(['service_id', 'name', 'description', 'price']);
         $fields['seller_id'] = auth('seller')->id();
-        if($request->hasFile('featured_image'))
+        if ($request->hasFile('featured_image'))
             $fields['featured_image'] = $request->file('featured_image')->store('public/services');
 
         $record->update($fields);

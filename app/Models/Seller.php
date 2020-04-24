@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
-use App\Models\Interfaces\MustVerifyPhone as MustVerifyPhoneContract;
-use App\Models\Traits\MustVerifyPhone;
+use App\Models\Interfaces\MustVerifyPhoneInterface as MustVerifyPhoneContract;
+use App\Models\Traits\MustVerifyPhoneTrait;
+use App\Models\Traits\UserApiTokenTrait;
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
+use Laravel\Sanctum\HasApiTokens;
 
 class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneContract
 {
-    use Notifiable, MustVerifyPhone;
+    use HasApiTokens, Notifiable, MustVerifyPhoneTrait, UserApiTokenTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +28,8 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
         'warehouse_location_id', 'warehouse_address',
         'business_location_id', 'business_address',
         'return_location_id', 'return_address',
-        'approved_at'
+        'approved_at',
+        'api_token'
     ];
 
     /**
@@ -35,7 +38,7 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'api_token'
     ];
 
     /**
@@ -49,36 +52,36 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
         'approved_at' => 'datetime'
     ];
 
-    public function hasWarehouseAddress()
+    public function hasAddress()
     {
-        return ! is_null($this->warehouse_location_id) && ! is_null($this->warehouse_address);
+        return ($this->hasWarehouseAddress() &&
+            $this->hasReturnAddress() &&
+            $this->hasBusinessAddress());
     }
 
-    public function hasBusinessAddress()
+    public function hasWarehouseAddress()
     {
-        return ! is_null($this->business_location_id) && ! is_null($this->business_address);
+        return !is_null($this->warehouse_location_id) && !is_null($this->warehouse_address);
     }
 
     public function hasReturnAddress()
     {
-        return ! is_null($this->return_location_id) && ! is_null($this->return_address);
+        return !is_null($this->return_location_id) && !is_null($this->return_address);
     }
 
-    public function hasAddress()
+    public function hasBusinessAddress()
     {
-        return ($this->hasWarehouseAddress() &&
-                $this->hasReturnAddress() &&
-                $this->hasBusinessAddress());
+        return !is_null($this->business_location_id) && !is_null($this->business_address);
     }
 
     public function hasPhone()
     {
-        return ! is_null($this->phone);
+        return !is_null($this->phone);
     }
 
     public function isApproved()
     {
-        return ! is_null($this->approved_at);
+        return !is_null($this->approved_at);
     }
 
     /**
@@ -117,7 +120,7 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
     /**
      * Route notifications for the Nexmo channel.
      *
-     * @param  \Illuminate\Notifications\Notification  $notification
+     * @param Notification $notification
      * @return string
      */
     public function routeNotificationForNexmo($notification)
@@ -128,7 +131,7 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
     /**
      * Send the password reset notification.
      *
-     * @param  string  $token
+     * @param string $token
      * @return void
      */
     public function sendPasswordResetNotification($token)
@@ -194,7 +197,7 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
      */
     public function transactions()
     {
-        return $this->hasMany(\App\Models\Transaction::class, 'user_id', 'id')
+        return $this->hasMany(Transaction::class, 'user_id', 'id')
             ->where('user_type', Seller::class);
     }
 
@@ -204,7 +207,7 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
     public function last_transaction()
     {
         return $this
-            ->hasOne(\App\Models\Transaction::class, 'user_id', 'id')
+            ->hasOne(Transaction::class, 'user_id', 'id')
             ->where('user_type', Seller::class)
             ->orderByDesc('id');
     }

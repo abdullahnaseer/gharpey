@@ -3,19 +3,20 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 
 class EnsureSellerPhoneIsVerified
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param Request $request
+     * @param Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if (! $request->user('seller')->hasVerifiedPhone()) {
+        if (!$request->user('seller')->hasVerifiedPhone()) {
             return redirect()->route('seller.phone_verification.notice');
         }
 

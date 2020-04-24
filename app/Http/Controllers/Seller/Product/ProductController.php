@@ -3,13 +3,9 @@
 namespace App\Http\Controllers\Seller\Product;
 
 use App\Http\Controllers\Controller;
-use App\Models\Moderator;
-use App\Models\Product;
 use App\Models\ProductCategory;
-use App\Rules\Phone;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
 use Str;
 
 class ProductController extends Controller
@@ -97,7 +93,7 @@ class ProductController extends Controller
 
         $fields = $request->only(['name', 'description', 'category_id', 'price', 'inventory']);
         $fields['slug'] = \Illuminate\Support\Str::slug($record->name . ' ' . $record->id);
-        if($request->hasFile('featured_image'))
+        if ($request->hasFile('featured_image'))
             $fields['featured_image'] = $request->file('featured_image')->store('public/products');
 
         $record->update($fields);

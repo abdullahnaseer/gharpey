@@ -14,7 +14,7 @@ class CreateSupportTicketMessagesTable extends Migration
     public function up()
     {
         Schema::create('support_ticket_messages', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('support_ticket_id');
             $table->string('title');
             $table->mediumText('message')->nullable();
@@ -24,7 +24,7 @@ class CreateSupportTicketMessagesTable extends Migration
         });
 
         Schema::create('support_ticket_message_files', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('support_ticket_message_id');
             $table->string('title');
             $table->mediumText('message')->nullable();

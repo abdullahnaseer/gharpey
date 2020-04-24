@@ -14,7 +14,7 @@ class CreateServiceRequestsTable extends Migration
     public function up()
     {
         Schema::create('service_requests', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('service_seller_id')->index()->nullable();
             $table->unsignedBigInteger('buyer_id')->index()->nullable();
             $table->unsignedBigInteger('location_id')->index()->nullable();

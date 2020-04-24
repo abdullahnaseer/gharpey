@@ -6,16 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductOrder extends Model
 {
-    protected $table = 'product_order';
-
     const STATUS_PAID = 'paid';
     const STATUS_CONFIRMED = 'confirmed';
-    const STATUS_SELLET_SENT ='seller_sent';
-    const STATUS_WAREHOUSE_RECEVIED ='warehouse_received';
-    const STATUS_SENT ='sent';
-    const STATUS_COMPLETED ='completed';
-    const STATUS_CANCELED ='canceled';
-
+    const STATUS_SELLET_SENT = 'seller_sent';
+    const STATUS_WAREHOUSE_RECEVIED = 'warehouse_received';
+    const STATUS_SENT = 'sent';
+    const STATUS_COMPLETED = 'completed';
+    const STATUS_CANCELED = 'canceled';
     const STATUSES = [
         self::STATUS_PAID,
         self::STATUS_CONFIRMED,
@@ -25,7 +22,7 @@ class ProductOrder extends Model
         self::STATUS_COMPLETED,
         self::STATUS_CANCELED,
     ];
-
+    protected $table = 'product_order';
     /**
      * The attributes that are mass assignable.
      *

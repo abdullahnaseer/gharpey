@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Seller\Product;
 use App\Http\Controllers\Controller;
 use App\Models\ProductOrder;
 use App\Models\Seller;
+use App\Models\Transaction;
 use App\Notifications\Buyer\ProductOrder\ProductOrderConfirmedNotification;
 use App\Notifications\Seller\ProductOrder\ProductOrderNotification as BuyerProductOrderCanceledNotification;
 use Carbon\Carbon;
@@ -43,7 +44,7 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -53,7 +54,7 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -63,8 +64,8 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -74,8 +75,8 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function show($id)
     {
@@ -93,23 +94,22 @@ class OrderController extends Controller
     {
         $product_order = ProductOrder::findOrFail($id);
         $status = $request->input('status');
-        if($status == 'confirmed') {
-            if($product_order->status == ProductOrder::STATUS_PAID)
-            {
+        if ($status == 'confirmed') {
+            if ($product_order->status == ProductOrder::STATUS_PAID) {
                 $product_order->update([
                     'status' => ProductOrder::STATUS_CONFIRMED,
                     'confirmed_at' => Carbon::now()
                 ]);
 
                 $buyer = $product_order->order->buyer;
-                if(!is_null($buyer))
+                if (!is_null($buyer))
                     $buyer->notify(new ProductOrderConfirmedNotification($product_order));
 
                 flash()->success('Product Order Confirmed successfully.');
             } else
                 flash()->error('Invalid Operation!!!');
-        } else if($status == 'delivered') {
-            if(($product_order->status == ProductOrder::STATUS_PAID) || ($product_order->status == ProductOrder::STATUS_CONFIRMED))
+        } else if ($status == 'delivered') {
+            if (($product_order->status == ProductOrder::STATUS_PAID) || ($product_order->status == ProductOrder::STATUS_CONFIRMED))
                 $product_order->update([
                     'status' => ProductOrder::STATUS_SELLET_SENT,
                     'seller_send_at' => Carbon::now()
@@ -119,41 +119,40 @@ class OrderController extends Controller
 
             flash()->success('Product Order marked for delivery successfully.');
         } else if ($status == 'cancel') {
-            if($product_order->status == ProductOrder::STATUS_PAID) {
+            if ($product_order->status == ProductOrder::STATUS_PAID) {
                 $product_order->update([
                     'status' => ProductOrder::STATUS_CANCELED,
                     'canceled_at' => Carbon::now()
                 ]);
 
-                \App\Models\Transaction::create([
+                Transaction::create([
                     'user_id' => $product_order->product->seller->id,
                     'user_type' => Seller::class,
                     'reference_id' => $product_order->id,
-                    'reference_type' => \App\Models\ProductOrder::class,
-                    'type' => \App\Models\Transaction::TYPE_DEBIT,
+                    'reference_type' => ProductOrder::class,
+                    'type' => Transaction::TYPE_DEBIT,
                     'amount' => -$product_order->price,
                     'balance' => $product_order->product->seller->transactions()->sum('amount') - $product_order->price,
                     'note' => '',
                 ]);
 
                 $buyer = $product_order->order->buyer;
-                \App\Models\Transaction::create([
+                Transaction::create([
                     'user_id' => is_null($buyer) ? null : $buyer->id,
                     'user_type' => Seller::class,
                     'reference_id' => $product_order->id,
-                    'reference_type' => \App\Models\ProductOrder::class,
-                    'type' => \App\Models\Transaction::TYPE_CREDIT,
+                    'reference_type' => ProductOrder::class,
+                    'type' => Transaction::TYPE_CREDIT,
                     'amount' => $product_order->price,
                     'balance' => is_null($buyer) ? null : $buyer->transactions()->sum('amount') + $product_order->price,
                     'note' => '',
                 ]);
 
-                if(!is_null($buyer))
+                if (!is_null($buyer))
                     $buyer->notify(new BuyerProductOrderCanceledNotification($product_order));
 
                 flash()->success('Product Order Canceled successfully.');
-            }
-            else
+            } else
                 flash()->error('Invalid Operation!!!');
         } else {
             flash()->error('Invalid Operation!!!');
@@ -165,9 +164,9 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -177,8 +176,8 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function destroy($id)
     {

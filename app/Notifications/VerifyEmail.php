@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use Closure;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
@@ -14,7 +15,7 @@ class VerifyEmail extends Notification
     /**
      * The callback that should be used to build the mail message.
      *
-     * @var \Closure|null
+     * @var Closure|null
      */
     public static $toMailCallback;
 
@@ -31,9 +32,20 @@ class VerifyEmail extends Notification
     }
 
     /**
+     * Set a callback that should be used when building the notification mail message.
+     *
+     * @param Closure $callback
+     * @return void
+     */
+    public static function toMailUsing($callback)
+    {
+        static::$toMailCallback = $callback;
+    }
+
+    /**
      * Get the notification's channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array|string
      */
     public function via($notifiable)
@@ -44,8 +56,8 @@ class VerifyEmail extends Notification
     /**
      * Build the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @param mixed $notifiable
+     * @return MailMessage
      */
     public function toMail($notifiable)
     {
@@ -65,7 +77,7 @@ class VerifyEmail extends Notification
     /**
      * Get the verification URL for the given notifiable.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return string
      */
     protected function verificationUrl($notifiable, $guard)
@@ -78,16 +90,5 @@ class VerifyEmail extends Notification
                 'hash' => sha1($notifiable->getEmailForVerification()),
             ]
         );
-    }
-
-    /**
-     * Set a callback that should be used when building the notification mail message.
-     *
-     * @param  \Closure  $callback
-     * @return void
-     */
-    public static function toMailUsing($callback)
-    {
-        static::$toMailCallback = $callback;
     }
 }

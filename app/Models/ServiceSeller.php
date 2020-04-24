@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class ServiceSeller extends Pivot
@@ -15,11 +14,59 @@ class ServiceSeller extends Pivot
     public $incrementing = true;
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'price' => 'integer'
+    ];
+
+    public static function getRules($request, $isEdit = false)
+    {
+        $rules = [
+            'name' => 'required|min:3|max:255',
+            'description' => 'required|min:10|max:1000',
+            'featured_image' => $isEdit ? 'image' : 'required|image',
+            'category_id' => 'required|numeric|exists:service_categories,id',
+
+            'title' => 'required|array',
+            'title.*' => 'required|min:3|max:255',
+            'question' => 'required|array',
+            'question.*' => 'required|min:3|max:255',
+            'type' => 'required|array',
+            'type.*' => 'required|string|in:' .
+                ServiceQuestion::TYPE_BOOLEAN . ',' . ServiceQuestion::TYPE_TEXT . ',' . ServiceQuestion::TYPE_TEXT_MULTILINE . ',' . ServiceQuestion::TYPE_SELECT . ',' . ServiceQuestion::TYPE_SELECT_MULTIPLE . ',' . ServiceQuestion::TYPE_FILE . ',' . ServiceQuestion::TYPE_FILE_MULTIPLE . ',' . ServiceQuestion::TYPE_TIME . ',' . ServiceQuestion::TYPE_DATE . ',' . ServiceQuestion::TYPE_DATE_TIME,
+
+            'auth_type' => 'required|array',
+            'auth_type.*' => 'required|string|in:' .
+                ServiceQuestion::AUTH_ANY . ',' . ServiceQuestion::AUTH_GUEST . ',' . ServiceQuestion::AUTH_REQUIRED,
+
+            'is_required' => 'required|array',
+            'is_required.*' => 'required|string|in:0,1'
+        ];
+
+//        if(!is_null($request->input('type', null)) && ($request->input('type', null) === ServiceQuestion::TYPE_SELECT || $request->input('type', null) === ServiceQuestion::TYPE_SELECT_MULTIPLE ))
+//            $rules['choices'] = 'required|array';
+
+        $i = 0;
+        foreach ($request->input('type', []) as $input) {
+            if ($input === ServiceQuestion::TYPE_SELECT || $input === ServiceQuestion::TYPE_SELECT_MULTIPLE) {
+                $rules['choices.' . $i] = 'required|array';
+                $rules['choices.' . $i . '.*'] = 'required|string|min:3|max:50';
+            }
+            $i++;
+        }
+
+        return $rules;
+    }
+
+    /**
      * Get the owning service_seller_able model.
      */
     public function seller()
     {
-        return $this->belongsTo(\App\Models\Seller::class, 'seller_id');
+        return $this->belongsTo(Seller::class, 'seller_id');
     }
 
     /**
@@ -27,7 +74,7 @@ class ServiceSeller extends Pivot
      */
     public function reviews()
     {
-        return $this->hasMany(\App\Models\ServiceSellerReview::class, 'service_seller_id');
+        return $this->hasMany(ServiceSellerReview::class, 'service_seller_id');
     }
 
     /**

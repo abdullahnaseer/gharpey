@@ -19281,7 +19281,9 @@ try {
 
   __webpack_require__(/*! ../metronic/global/layout/quick-panel */ "./resources/js/metronic/global/layout/quick-panel.js");
 
-  __webpack_require__(/*! ../metronic/global/layout/quick-search */ "./resources/js/metronic/global/layout/quick-search.js");
+  __webpack_require__(/*! ../metronic/global/layout/quick-search */ "./resources/js/metronic/global/layout/quick-search.js"); // Custom Code
+  //..
+
 } catch (e) {}
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

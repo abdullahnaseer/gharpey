@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Support\Renderable;
+use App\Models\Country;
+use Illuminate\Database\Eloquent\Collection;
 
 class LocationController extends Controller
 {
@@ -18,12 +19,12 @@ class LocationController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Return all countries.
      *
-     * @return Renderable
+     * @return Country[]|Collection
      */
     public function countries()
     {
-        return view('home');
+        return Country::all();
     }
 }

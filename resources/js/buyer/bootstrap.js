@@ -11,6 +11,9 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
+
+    // Custom Code
+    //..
 } catch (e) {}
 
 /**

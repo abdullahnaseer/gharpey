@@ -40,7 +40,7 @@ class City extends Model
      */
     public function state()
     {
-        return $this->belongsTo(\App\Models\State::class);
+        return $this->belongsTo(State::class);
     }
 
     /**
@@ -56,8 +56,8 @@ class City extends Model
      */
     public function service_sellers()
     {
-        return $this->belongsToMany(\App\Models\ServiceSeller::class, 'service_seller_location', 'location_id', 'service_seller_id')
-                    ->where('location_type', \App\Models\City::class)
-                    ->withPivot([]);
+        return $this->belongsToMany(ServiceSeller::class, 'service_seller_location', 'location_id', 'service_seller_id')
+            ->where('location_type', City::class)
+            ->withPivot([]);
     }
 }

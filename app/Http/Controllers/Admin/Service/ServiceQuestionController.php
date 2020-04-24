@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreServiceQuestionRequest;
 use App\Http\Requests\Admin\UpdateServiceQuestionRequest;
 use App\Http\Requests\Admin\UpdateServiceRequest;
+use App\Models\Seo;
 use App\Models\ServiceQuestion;
 use App\Models\ServiceQuestionChoices;
 use App\Models\ServiceQuestionValidationRule;
 use App\Models\User;
-use App\Models\Seo;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 
 class ServiceQuestionController extends Controller
 {
@@ -29,22 +30,22 @@ class ServiceQuestionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
         $questions = ServiceQuestion::with('services')->paginate();
-        $baseUrl=url('/');
-        $currentUrl=url()->current();
-        $currentUrl=str_replace($baseUrl,"",$currentUrl); 
-        $seo = Seo::where('url', '=', 'https://servicedbyone.com'.$currentUrl)->first();
-        return view('admin.services.questions.index', ['questions' => $questions,'seo'=>$seo]);
+        $baseUrl = url('/');
+        $currentUrl = url()->current();
+        $currentUrl = str_replace($baseUrl, "", $currentUrl);
+        $seo = Seo::where('url', '=', 'https://servicedbyone.com' . $currentUrl)->first();
+        return view('admin.services.questions.index', ['questions' => $questions, 'seo' => $seo]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -54,8 +55,8 @@ class ServiceQuestionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(StoreServiceQuestionRequest $request)
     {
@@ -80,11 +81,27 @@ class ServiceQuestionController extends Controller
         return redirect('/admin/service-questions')->with('status', 'Service Question is created successfully!!!');
     }
 
+    private function syncRoles($request, ServiceQuestion $question)
+    {
+        $rules = [];
+        if ($request->input('is_required', false))
+            array_push($rules, (int)ServiceQuestionValidationRule::where('rule', ServiceQuestionValidationRule::REQUIRED)->first()->id);
+        if ($request->input('is_only_for_guest', false))
+            array_push($rules, (int)ServiceQuestionValidationRule::where('rule', ServiceQuestionValidationRule::AUTH_GUEST)->first()->id);
+        if ($request->input('is_only_for_authenticated', false))
+            array_push($rules, (int)ServiceQuestionValidationRule::where('rule', ServiceQuestionValidationRule::AUTH_REQUIRED)->first()->id);
+        if (!$request->input('is_only_for_guest', false) && !$request->input('is_only_for_authenticated', false))
+            array_push($rules, (int)ServiceQuestionValidationRule::where('rule', ServiceQuestionValidationRule::AUTH_ANY)->first()->id);
+        $question->rules()->sync($rules);
+
+        return true;
+    }
+
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ServiceQuestion $serviceQuestion
-     * @return \Illuminate\Http\Response
+     * @param ServiceQuestion $serviceQuestion
+     * @return Response
      */
     public function show(ServiceQuestion $serviceQuestion)
     {
@@ -94,8 +111,8 @@ class ServiceQuestionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ServiceQuestion $serviceQuestion
-     * @return \Illuminate\Http\Response
+     * @param ServiceQuestion $serviceQuestion
+     * @return Response
      */
     public function edit(ServiceQuestion $serviceQuestion)
     {
@@ -105,9 +122,9 @@ class ServiceQuestionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Models\ServiceQuestion $serviceQuestion
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param ServiceQuestion $serviceQuestion
+     * @return Response
      */
     public function update(UpdateServiceQuestionRequest $request, ServiceQuestion $serviceQuestion)
     {
@@ -145,8 +162,8 @@ class ServiceQuestionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ServiceQuestion $serviceQuestion
-     * @return \Illuminate\Http\Response
+     * @param ServiceQuestion $serviceQuestion
+     * @return Response
      */
     public function destroy(ServiceQuestion $serviceQuestion)
     {
@@ -157,31 +174,14 @@ class ServiceQuestionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ServiceQuestion $serviceQuestion
-     * @param  \App\Models\ServiceQuestionChoices $serviceQuestionChoice
-     * @return \Illuminate\Http\Response
+     * @param ServiceQuestion $serviceQuestion
+     * @param ServiceQuestionChoices $serviceQuestionChoice
+     * @return Response
      */
     public function destroyChoice($question_id, $question_choice_id)
     {
         ServiceQuestionChoices::findOrFail($question_choice_id)->delete();
         return redirect('/admin/service-questions/' . $question_id)->with('status', 'Service Question Choice is deleted successfully!!!');
-    }
-
-
-    private function syncRoles($request, ServiceQuestion $question)
-    {
-        $rules = [];
-        if($request->input('is_required', false))
-            array_push($rules, (int) ServiceQuestionValidationRule::where('rule', ServiceQuestionValidationRule::REQUIRED)->first()->id);
-        if($request->input('is_only_for_guest', false))
-            array_push($rules, (int) ServiceQuestionValidationRule::where('rule', ServiceQuestionValidationRule::AUTH_GUEST)->first()->id);
-        if($request->input('is_only_for_authenticated', false))
-            array_push($rules, (int) ServiceQuestionValidationRule::where('rule', ServiceQuestionValidationRule::AUTH_REQUIRED)->first()->id);
-        if(!$request->input('is_only_for_guest', false) && !$request->input('is_only_for_authenticated', false))
-            array_push($rules, (int) ServiceQuestionValidationRule::where('rule', ServiceQuestionValidationRule::AUTH_ANY)->first()->id);
-        $question->rules()->sync($rules);
-
-        return true;
     }
 
 }

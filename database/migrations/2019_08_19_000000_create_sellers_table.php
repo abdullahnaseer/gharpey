@@ -14,7 +14,7 @@ class CreateSellersTable extends Migration
     public function up()
     {
         Schema::create('sellers', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -40,6 +40,7 @@ class CreateSellersTable extends Migration
             $table->unsignedBigInteger('return_location_id')->nullable();
 
             $table->string('password');
+            $table->string('api_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
 

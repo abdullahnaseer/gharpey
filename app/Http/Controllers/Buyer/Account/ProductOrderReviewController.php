@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Buyer\Account;
 
 use App\Http\Controllers\Controller;
 use App\Models\ProductOrder;
-use App\Models\ProductReview;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -13,7 +12,7 @@ class ProductOrderReviewController extends Controller
 {
     public function index(Request $request, $product_order_id)
     {
-        $porduct_order = ProductOrder::whereHas('order', function (Builder $query){
+        $porduct_order = ProductOrder::whereHas('order', function (Builder $query) {
             $query->where('buyer_id', auth()->id());
         })->findOrFail($product_order_id);
 
@@ -33,7 +32,7 @@ class ProductOrderReviewController extends Controller
             'rating' => ['required', 'min:1', 'max:5']
         ]);
 
-        $product_order = ProductOrder::whereHas('order', function (Builder $query){
+        $product_order = ProductOrder::whereHas('order', function (Builder $query) {
             $query->where('buyer_id', auth()->id());
         })->findOrFail($product_order_id);
 

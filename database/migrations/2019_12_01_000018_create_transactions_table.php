@@ -14,7 +14,7 @@ class CreateTransactionsTable extends Migration
     public function up()
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
 
             $table->unsignedBigInteger('user_id')->index()->nullable();
             $table->string('user_type')->nullable();

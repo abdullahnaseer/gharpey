@@ -6,22 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Cart;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CartController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index(Request $request)
     {
 
 
-        $cart = \Cart::session($request->session()->get('_token'));
+        $cart = Cart::session($request->session()->get('_token'));
 
-        if($request->has('clear'))
-        {
+        if ($request->has('clear')) {
             flash()->info("Cart Cleared...");
             $cart->clear();
         }
@@ -35,21 +35,19 @@ class CartController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create(Request $request, $product_id)
     {
         $product = Product::findOrFail($product_id);
-        $is_add_action = ! $request->has('remove');
+        $is_add_action = !$request->has('remove');
 
         $rowId = $product->id; // generate a unique() row ID
 
-        $cart = \Cart::session($request->session()->get('_token'));
+        $cart = Cart::session($request->session()->get('_token'));
 
-        if($is_add_action)
-        {
-            if($product->inventory <= 0)
-            {
+        if ($is_add_action) {
+            if ($product->inventory <= 0) {
                 flash()->error('Product is out of stock!');
                 return redirect()->back();
             }
@@ -77,8 +75,8 @@ class CartController extends Controller
      * Store a newly created resource in storage.
      * Update the cart.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -89,15 +87,13 @@ class CartController extends Controller
             'quantity.*' => 'integer|min:1,max:1000',
         ]);
 
-        $cart = \Cart::session($request->session()->get('_token'));
+        $cart = Cart::session($request->session()->get('_token'));
 
         $products = $request->input('product_id', []);
         $quantities = $request->input('quantity', []);
-        for ($i = 0, $iMax = count($products); $i < $iMax; $i++)
-        {
+        for ($i = 0, $iMax = count($products); $i < $iMax; $i++) {
             $product = Product::findOrFail($products[$i]);
-            if($quantities[$i] <= $product->inventory)
-            {
+            if ($quantities[$i] <= $product->inventory) {
                 $cart->update($products[$i], array(
                     'quantity' => array(
                         'relative' => false,

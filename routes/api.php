@@ -17,8 +17,11 @@ Route::namespace('Auth')->prefix('auth')->group(function () {
     Route::post('logout', 'LogoutController@logout')->middleware('auth:airlock');
 });
 
-Route::middleware('auth:airlock')->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', 'UserController@user');
+
+    Route::post('ckeditor/upload', 'CKEditorController@upload');
 });
 
 Route::resource('products', 'ProductController');
+

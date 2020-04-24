@@ -14,7 +14,7 @@ class CreateServiceRequestAnswersTable extends Migration
     public function up()
     {
         Schema::create('service_request_answers', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('request_id')->index();
             $table->unsignedBigInteger('question_id')->index();
             $table->unsignedBigInteger('answer_id')->index();
@@ -26,44 +26,44 @@ class CreateServiceRequestAnswersTable extends Migration
         });
 
         Schema::create('service_request_answer_texts', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('answer');
         });
 
         Schema::create('service_request_answer_booleans', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->boolean('answer');
         });
 
         Schema::create('service_request_answer_choices', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('choice_id')->index();
 
             $table->foreign('choice_id')->references('id')->on('service_question_choices')->onDelete('cascade');
         });
 
         Schema::create('service_request_answer_text_multilines', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->text('answer');
         });
 
         Schema::create('service_request_answer_dates', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->date('answer');
         });
 
         Schema::create('service_request_answer_times', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->time('answer');
         });
 
         Schema::create('service_request_answer_date_times', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->dateTime('answer');
         });
 
         Schema::create('service_request_answer_files', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('file_path');
             $table->string('file_type')->nullable();
         });

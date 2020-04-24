@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Buyer\Shop;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
-use App\Models\ProductCategory;
 use App\Models\Seller;
-use Illuminate\Http\Request;
 use Cart;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ProductController extends Controller
 {
@@ -17,7 +16,7 @@ class ProductController extends Controller
      * @param Request $request
      * @param string $shop_slug
      * @param string $product_slug
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(Request $request, $shop_slug, $product_slug)
     {
@@ -27,7 +26,7 @@ class ProductController extends Controller
             ->with(['reviews'])
             ->firstOrFail();
 
-        $cart = \Cart::session($request->session()->get('_token'));
+        $cart = Cart::session($request->session()->get('_token'));
         $cartItem = $cart->get($product->id);
 
         return view('buyer.products.show', [

@@ -25,8 +25,8 @@ Route::name('admin.')->prefix('admin')->namespace('Admin')->group(function () {
         Route::namespace('Service')->prefix('services')->name('services.')->middleware([])->group(function () {
             Route::post('categories/json', 'CategoryController@json')->name('categories.json');
             Route::resource('categories', 'CategoryController')->only(['index', 'store', 'update', 'destroy']);
-            Route::post('categories/{category_id}/subcategories/json', 'SubCategoryController@json')->name('categories.subcategories.json');
-            Route::resource('categories.subcategories', 'SubCategoryController')->only(['index', 'store', 'update', 'destroy']);
+//            Route::post('categories/{category_id}/subcategories/json', 'SubCategoryController@json')->name('categories.subcategories.json');
+//            Route::resource('categories.subcategories', 'SubCategoryController')->only(['index', 'store', 'update', 'destroy']);
         });
 
         Route::namespace('Product')->prefix('products')->name('products.')->middleware([])->group(function () {
@@ -104,7 +104,7 @@ Route::name('seller.')->prefix('seller')->namespace('Seller')->group(function ()
     Route::resource('products', 'Product\ProductController')->only(['index', 'store', 'update', 'destroy']);
 
     Route::post('services/json', 'Service\ServiceController@json')->name('services.json');
-    Route::resource('services', 'Service\ServiceController')->only(['index', 'store', 'update', 'destroy']);
+    Route::resource('services', 'Service\ServiceController');
 
     Route::name('account.')->prefix('account')->namespace('Account')->middleware('auth:seller')->group(function () {
         Route::get('/', 'AccountController@index')->name('index');

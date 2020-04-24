@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Buyer\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Auth\Events\Verified;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Http\Request;

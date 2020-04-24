@@ -14,7 +14,7 @@ class CreateModeratorsTable extends Migration
     public function up()
     {
         Schema::create('moderators', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone')->nullable();
@@ -22,6 +22,7 @@ class CreateModeratorsTable extends Migration
             $table->unsignedBigInteger('location_id')->index()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('api_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
 

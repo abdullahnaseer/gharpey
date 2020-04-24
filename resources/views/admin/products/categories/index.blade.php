@@ -138,7 +138,7 @@
                         },{
                             field: 'Actions',
                             title: 'Actions',
-                            sortable: false,
+                            sortable: false,we
                             width: 200,
                             autoHide: false,
                             overflow: 'visible',

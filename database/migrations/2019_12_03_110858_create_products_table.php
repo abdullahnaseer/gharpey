@@ -14,7 +14,7 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('product_categories', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->unsignedInteger('depth')->default(0);
             $table->string('name');
@@ -28,13 +28,13 @@ class CreateProductsTable extends Migration
         });
 
         Schema::create('product_tags', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->timestamps();
         });
 
         Schema::create('products', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('seller_id')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->string('name');
@@ -56,7 +56,7 @@ class CreateProductsTable extends Migration
         });
 
         Schema::create('product_tag', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('product_id')->index();
             $table->unsignedBigInteger('tag_id')->index();
             $table->timestamps();

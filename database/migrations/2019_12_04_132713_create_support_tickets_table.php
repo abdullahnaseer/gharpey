@@ -14,7 +14,7 @@ class CreateSupportTicketsTable extends Migration
     public function up()
     {
         Schema::create('support_tickets', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('user_type')->default("App\\\Models\\\Buyer");
 

@@ -1,4 +1,5 @@
 /node_modules
+/ckeditor/node_modules
 /public/hot
 /public/storage
 /storage/*.key
@@ -9,5 +10,6 @@
 Homestead.json
 Homestead.yaml
 npm-debug.log
+/ckeditor/npm-debug.log
 yarn-error.log
 /.idea

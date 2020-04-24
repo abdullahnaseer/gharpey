@@ -28,12 +28,11 @@ class AccountController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:50'],
-            'email' => ['required', 'email', 'unique:buyers,email,'.auth()->id()],
+            'email' => ['required', 'email', 'unique:buyers,email,' . auth()->id()],
             'phone' => ['required', new Phone()],
         ]);
 
-        if(auth()->user()->email != $request->input('email'))
-        {
+        if (auth()->user()->email != $request->input('email')) {
             $data['email_verified_at'] = null;
             auth()->user()->sendEmailVerificationNotification();
 
@@ -81,7 +80,7 @@ class AccountController extends Controller
 
     public function updatePassword(Request $request)
     {
-         $request->validate([
+        $request->validate([
             'password' => ['required', 'confirmed', 'min:8']
         ]);
 

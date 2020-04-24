@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 
 class ServiceRequestInvoice extends Model
 {
@@ -45,6 +44,6 @@ class ServiceRequestInvoice extends Model
      */
     public function transaction()
     {
-        return $this->morphMany(\App\Models\Transaction::class, 'reference');
+        return $this->morphMany(Transaction::class, 'reference');
     }
 }

@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
-use App\Notifications\VerifyEmail;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Traits\UserApiTokenTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Moderator extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable, UserApiTokenTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +17,7 @@ class Moderator extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone', 'address', 'location_id', 'password',
+        'name', 'email', 'phone', 'address', 'location_id', 'password', 'api_token'
     ];
 
     /**
@@ -27,7 +26,7 @@ class Moderator extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'api_token'
     ];
 
     /**

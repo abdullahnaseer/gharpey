@@ -42,7 +42,7 @@ class AccountController extends Controller
         $data['business_location_id'] = $data['business_area'];
         $data['return_location_id'] = $data['return_area'];
 
-        if($request->hasFile('shop_image'))
+        if ($request->hasFile('shop_image'))
             $data['shop_image'] = $request->file('shop_image')->store('public/sellers');
 
         auth()->user()->update($data);
@@ -61,12 +61,11 @@ class AccountController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:50'],
-            'email' => ['required', 'email', 'unique:sellers,email,'.auth()->id()],
+            'email' => ['required', 'email', 'unique:sellers,email,' . auth()->id()],
             'phone' => ['required', new Phone()],
         ]);
 
-        if(auth()->user()->email != $request->input('email'))
-        {
+        if (auth()->user()->email != $request->input('email')) {
             $data['email_verified_at'] = null;
             auth()->user()->sendEmailVerificationNotification();
 
@@ -114,7 +113,7 @@ class AccountController extends Controller
 
     public function updatePassword(Request $request)
     {
-         $request->validate([
+        $request->validate([
             'password' => ['required', 'confirmed', 'min:8']
         ]);
 

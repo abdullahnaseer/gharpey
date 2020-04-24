@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Admin\Service;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\ServiceQuestion;
 use App\Models\ServiceQuestionChoices;
-use App\Rules\Phone;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\View\View;
 use Str;
 
 class ServiceController extends Controller
@@ -75,8 +74,7 @@ class ServiceController extends Controller
         $service = Service::create($fields);
         $service->update(['slug' => \Illuminate\Support\Str::slug($service->name . ' ' . $service->id)]);
 
-        for ($i = 0, $iMax = count($request->input('title', [])); $i < $iMax; $i++)
-        {
+        for ($i = 0, $iMax = count($request->input('title', [])); $i < $iMax; $i++) {
             $question = $service->questions()->create([
                 'order_priority' => $i + 1,
                 'title' => $request->input('title')[$i],
@@ -86,10 +84,9 @@ class ServiceController extends Controller
                 'auth_rule' => $request->input('auth_type', [])[$i]
             ]);
 
-            if($request->input('type')[$i] === ServiceQuestion::TYPE_SELECT || $request->input('type')[$i] === ServiceQuestion::TYPE_SELECT_MULTIPLE)
-            {
+            if ($request->input('type')[$i] === ServiceQuestion::TYPE_SELECT || $request->input('type')[$i] === ServiceQuestion::TYPE_SELECT_MULTIPLE) {
                 $k = 1;
-                foreach ($request->input('choices.'.$i) as $choice) {
+                foreach ($request->input('choices.' . $i) as $choice) {
                     $choice = ServiceQuestionChoices::create([
                         'order_priority' => $k++,
                         'question_id' => $question->id,
@@ -106,7 +103,7 @@ class ServiceController extends Controller
     /**
      * Display edit page of the resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function edit($service_id)
     {
@@ -130,21 +127,18 @@ class ServiceController extends Controller
 
         $fields = $request->only(['name', 'description', 'category_id']);
         $fields['slug'] = \Illuminate\Support\Str::slug($record->name . ' ' . $record->id);
-        if($request->hasFile('featured_image'))
+        if ($request->hasFile('featured_image'))
             $fields['featured_image'] = $request->file('featured_image')->store('public/services');
 
         $record->update($fields);
 
         ServiceQuestion::whereNotIn('id', $request->input('question_id'))->delete();
 
-        for ($i = 0, $iMax = count($request->input('title', [])); $i < $iMax; $i++)
-        {
+        for ($i = 0, $iMax = count($request->input('title', [])); $i < $iMax; $i++) {
             $question = null;
-            if(!is_null($request->input('question_id')[$i]))
-            {
+            if (!is_null($request->input('question_id')[$i])) {
                 $question = ServiceQuestion::find($request->input('question_id')[$i]);
-                if($request->input('type')[$i] == $question->type)
-                {
+                if ($request->input('type')[$i] == $question->type) {
                     $question->update([
                         'order_priority' => $i + 1,
                         'title' => $request->input('title')[$i],
@@ -153,7 +147,7 @@ class ServiceController extends Controller
                         'auth_rule' => $request->input('auth_type', [])[$i]
                     ]);
 
-                    if($request->input('type')[$i] === ServiceQuestion::TYPE_SELECT || $request->input('type')[$i] === ServiceQuestion::TYPE_SELECT_MULTIPLE)
+                    if ($request->input('type')[$i] === ServiceQuestion::TYPE_SELECT || $request->input('type')[$i] === ServiceQuestion::TYPE_SELECT_MULTIPLE)
                         $question->choices()->delete();
                 }
             } else {
@@ -167,10 +161,9 @@ class ServiceController extends Controller
                 ]);
             }
 
-            if($request->input('type')[$i] === ServiceQuestion::TYPE_SELECT || $request->input('type')[$i] === ServiceQuestion::TYPE_SELECT_MULTIPLE)
-            {
+            if ($request->input('type')[$i] === ServiceQuestion::TYPE_SELECT || $request->input('type')[$i] === ServiceQuestion::TYPE_SELECT_MULTIPLE) {
                 $k = 1;
-                foreach ($request->input('choices.'.$i) as $choice) {
+                foreach ($request->input('choices.' . $i) as $choice) {
                     $choice = ServiceQuestionChoices::create([
                         'order_priority' => $k++,
                         'question_id' => $question->id,

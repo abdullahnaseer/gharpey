@@ -9,23 +9,29 @@ use App\Models\CityArea;
 use App\Models\Order;
 use App\Models\ProductOrder;
 use App\Models\Seller;
+use App\Models\Transaction;
 use App\Notifications\Seller\ProductOrder\ProductOrderNotification;
 use App\Rules\Phone;
 use Carbon\Carbon;
+use Cart;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Stripe\Charge;
+use Stripe\Stripe;
 
 class CheckoutController extends Controller
 {
     /**
      * Display a form for shipping location.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function getShipping(Request $request)
     {
 
 
-        $cart = \Cart::session($request->session()->get('_token'));
+        $cart = Cart::session($request->session()->get('_token'));
 
         return view('buyer.products.checkout.shipping', [
             'user' => auth()->user(),
@@ -37,7 +43,7 @@ class CheckoutController extends Controller
     /**
      * Save shipping information and proceed to payment.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function postShipping(Request $request)
     {
@@ -58,16 +64,15 @@ class CheckoutController extends Controller
     /**
      * Display a form for payment.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function getPayment(Request $request)
     {
-        $cart = \Cart::session($request->session()->get('_token'));
+        $cart = Cart::session($request->session()->get('_token'));
 
         $shipping = $request->session()->get('shipping');
 
-        if (is_null($shipping))
-        {
+        if (is_null($shipping)) {
             flash()->error('Enter Shipping Information before proceeding to payment.');
             return redirect()->route('buyer.checkout.payment.get');
         }
@@ -84,7 +89,7 @@ class CheckoutController extends Controller
     /**
      * Save shipping information and proceed to payment.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function postPayment(Request $request)
     {
@@ -107,7 +112,7 @@ class CheckoutController extends Controller
      */
     public function charge(Request $request)
     {
-        $cart = \Cart::session($request->session()->get('_token'));
+        $cart = Cart::session($request->session()->get('_token'));
         $shipping = $request->session()->get('shipping');
         $amount = $cart->getTotal();
         $buyer = auth('buyer')->check() ? auth()->user() : null;
@@ -115,12 +120,12 @@ class CheckoutController extends Controller
         try {
             // Set your secret key: remember to change this to your live secret key in production
             // See your keys here: https://dashboard.stripe.com/account/apikeys
-            \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+            Stripe::setApiKey(config('services.stripe.secret'));
 
             // Token is created using Checkout or Elements!
             // Get the payment token ID submitted by the form:
-            $charge = \Stripe\Charge::create([
-                'amount' => (int) ($amount * 100),
+            $charge = Charge::create([
+                'amount' => (int)($amount * 100),
                 'currency' => 'pkr',
                 'description' => 'Charge for Product Order',
                 'source' => $request->input('stripeToken'),
@@ -137,8 +142,7 @@ class CheckoutController extends Controller
                 'paid_at' => Carbon::now()
             ]);
 
-            foreach ($cart->getContent() as $item)
-            {
+            foreach ($cart->getContent() as $item) {
                 $productOrder = ProductOrder::create([
                     'order_id' => $order->id,
                     'product_id' => $item->model->id,
@@ -151,12 +155,12 @@ class CheckoutController extends Controller
                 $seller = $item->model->seller;
 
 
-                \App\Models\Transaction::create([
+                Transaction::create([
                     'user_id' => $seller->id,
                     'user_type' => Seller::class,
                     'reference_id' => $productOrder->id,
-                    'reference_type' => \App\Models\ProductOrder::class,
-                    'type' => \App\Models\Transaction::TYPE_CREDIT,
+                    'reference_type' => ProductOrder::class,
+                    'type' => Transaction::TYPE_CREDIT,
                     'amount' => $item->getPriceSum(),
                     'balance' => $seller->transactions()->sum('amount') + $item->getPriceSum(),
                     'note' => '',
@@ -165,23 +169,23 @@ class CheckoutController extends Controller
                 $seller->notify(new ProductOrderNotification($productOrder));
             }
 
-            \App\Models\Transaction::create([
+            Transaction::create([
                 'user_id' => is_null($buyer) ? null : $buyer->id,
                 'user_type' => Buyer::class,
                 'reference_id' => $order->id,
-                'reference_type' => \App\Models\Order::class,
-                'type' => \App\Models\Transaction::TYPE_CREDIT,
+                'reference_type' => Order::class,
+                'type' => Transaction::TYPE_CREDIT,
                 'amount' => $amount,
                 'balance' => is_null($buyer) ? null : $buyer->transactions()->sum('amount') + $amount,
                 'note' => '',
             ]);
 
-            \App\Models\Transaction::create([
+            Transaction::create([
                 'user_id' => is_null($buyer) ? null : $buyer->id,
                 'user_type' => Buyer::class,
                 'reference_id' => $order->id,
-                'reference_type' => \App\Models\Order::class,
-                'type' => \App\Models\Transaction::TYPE_DEBIT,
+                'reference_type' => Order::class,
+                'type' => Transaction::TYPE_DEBIT,
                 'amount' => -$amount,
                 'balance' => is_null($buyer) ? null : $buyer->transactions()->sum('amount') - $amount,
                 'note' => '',
@@ -190,7 +194,7 @@ class CheckoutController extends Controller
             $cart->clear();
 
             return response()->json(['success' => 'Payment was successful']);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
 //            return $ex->getMessage();
             return response()->json(['error' => $ex->getMessage()]);
 //            return response()->json(['error' => 'Payment was declined']);

@@ -14,7 +14,7 @@ class CreateProductOrdersTable extends Migration
     public function up()
     {
         Schema::create('product_order', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('order_id')->index();
             $table->unsignedBigInteger('product_id')->index()->nullable();
             $table->unsignedDecimal('price', 12,4);

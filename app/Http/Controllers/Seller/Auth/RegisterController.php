@@ -10,6 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Str;
 
 class RegisterController extends Controller
 {
@@ -78,7 +79,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $slug = \Str::slug($data['shop_name']);
+        $slug = Str::slug($data['shop_name']);
         $check = Seller::where('shop_slug', $slug)->count();
 
         $seller = Seller::create([
@@ -90,8 +91,10 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
-        if($check)
+        if ($check)
             $seller->update(['slug' => $slug . '-' . $seller->id]);
+
+        $seller->setApiToken();
 
         return $seller;
     }

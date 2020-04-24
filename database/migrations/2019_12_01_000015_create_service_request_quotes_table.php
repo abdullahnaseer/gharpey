@@ -14,7 +14,7 @@ class CreateServiceRequestQuotesTable extends Migration
     public function up()
     {
         Schema::create('service_request_quotes', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('request_id')->index();
             $table->decimal('quote');
             $table->enum('type', ['flat', 'hourly'])->default('flat');

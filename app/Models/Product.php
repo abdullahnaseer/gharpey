@@ -24,6 +24,15 @@ class Product extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'price' => 'integer'
+    ];
+
+    /**
      * Get the seller that owns the product.
      */
     public function seller()
@@ -50,17 +59,17 @@ class Product extends Model
     /**
      * Get the orders for the product.
      */
-    public function reviews()
+    public function getReviewsCountAttribute()
     {
-        return $this->hasMany(ProductReview::class);
+        return $this->reviews()->count();
     }
 
     /**
      * Get the orders for the product.
      */
-    public function getReviewsCountAttribute()
+    public function reviews()
     {
-        return $this->reviews()->count();
+        return $this->hasMany(ProductReview::class);
     }
 
     /**
@@ -76,7 +85,7 @@ class Product extends Model
      */
     public function wishlist_buyers()
     {
-        return $this->belongsToMany(\App\Models\Buyer::class, 'wishlist')
+        return $this->belongsToMany(Buyer::class, 'wishlist')
             ->withTimestamps()
             ->using(Wishlist::class);
     }

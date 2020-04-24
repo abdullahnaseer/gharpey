@@ -14,7 +14,7 @@ class CreateServiceRequestInvoicesTable extends Migration
     public function up()
     {
         Schema::create('service_request_invoices', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('request_id')->index();
             $table->string('charge_id')->nullable();
             $table->mediumText('description')->nullable();

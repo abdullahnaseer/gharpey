@@ -20,6 +20,6 @@ class Country extends Model
      */
     public function states()
     {
-        return $this->hasMany(\App\Models\State::class);
+        return $this->hasMany(State::class);
     }
 }

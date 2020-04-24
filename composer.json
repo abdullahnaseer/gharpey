@@ -11,31 +11,31 @@
         "php": "^7.2",
         "darryldecode/cart": "^4.1",
         "fideloper/proxy": "^4.0",
-        "guzzlehttp/guzzle": "^6.4",
-        "laracasts/flash": "^3.0",
-        "laravel/airlock": "^0.1.0",
-        "laravel/framework": "^6.0",
-        "laravel/nexmo-notification-channel": "^2.2",
-        "laravel/tinker": "^1.0",
-        "laravelcollective/html": "^6.0",
+        "guzzlehttp/guzzle": "^6.5",
+        "laravel/sanctum": "^2.1",
+        "fruitcake/laravel-cors": "^1.0",
+        "laracasts/flash": "^3.1",
+        "laravel/nexmo-notification-channel": "^2.3",
+        "laravel/tinker": "^2.3",
+        "laravel/ui": "^2.0",
+        "laravelcollective/html": "^6.1",
         "nexmo/client": "^2.0",
-        "nexmo/laravel": "^2.1",
-        "stripe/stripe-php": "^7.25",
-        "twilio/sdk": "^5.37"
+        "nexmo/laravel": "^2.2",
+        "stripe/stripe-php": "^7.27",
+        "twilio/sdk": "^5.42",
+        "laravel/framework": "^7.3"
     },
     "require-dev": {
-        "facade/ignition": "^1.4",
-        "fzaninotto/faker": "^1.4",
-        "laravel/ui": "^1.0",
-        "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^3.0",
-        "phpunit/phpunit": "^8.0"
+        "facade/ignition": "^2.0",
+        "fzaninotto/faker": "^1.9",
+        "mockery/mockery": "^1.3",
+        "nunomaduro/collision": "^4.1",
+        "phpunit/phpunit": "^8.5"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
-    },
+        "sort-packages": true    },
     "extra": {
         "laravel": {
             "dont-discover": []

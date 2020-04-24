@@ -11,7 +11,8 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.sass('resources/sass/metronic/style.scss', 'public/css/metronic.css')
+mix
+    .sass('resources/sass/metronic/style.scss', 'public/css/metronic.css')
     .sass('resources/sass/admin/app.scss', 'public/css/admin.css')
     .js('resources/js/admin/app.js', 'public/js/admin.js')
     .sass('resources/sass/seller/app.scss', 'public/css/seller.css')

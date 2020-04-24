@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Buyer\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use Cart;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -53,23 +57,12 @@ class LoginController extends Controller
     }
 
     /**
-     * Get the guard to be used during registration.
-     *
-     * @return StatefulGuard
-     */
-    protected function guard()
-    {
-        return Auth::guard('buyer');
-    }
-
-
-    /**
      * Handle a login request to the application.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @return RedirectResponse|Response|JsonResponse
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function login(Request $request)
     {
@@ -97,24 +90,21 @@ class LoginController extends Controller
         return $this->sendFailedLoginResponse($request);
     }
 
-
     /**
      * Send the response after the user was authenticated.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     protected function sendLoginResponse(Request $request)
     {
-        $cart_old = \Cart::session($request->session()->get('_token'))->getContent();
+        $cart_old = Cart::session($request->session()->get('_token'))->getContent();
 
         $request->session()->regenerate();
 
-        $cart = \Cart::session($request->session()->get('_token'));
-        if($cart_old->count())
-        {
-            foreach ($cart_old as $item)
-            {
+        $cart = Cart::session($request->session()->get('_token'));
+        if ($cart_old->count()) {
+            foreach ($cart_old as $item) {
                 $cart->add([
                     'id' => $item['id'],
                     'name' => $item['name'],
@@ -132,28 +122,35 @@ class LoginController extends Controller
             ?: redirect()->intended($this->redirectPath());
     }
 
+    /**
+     * Get the guard to be used during registration.
+     *
+     * @return StatefulGuard
+     */
+    protected function guard()
+    {
+        return Auth::guard('buyer');
+    }
 
     /**
      * Log the user out of the application.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function logout(Request $request)
     {
         $this->guard()->logout();
 
-        $cart_old = \Cart::session($request->session()->get('_token'))->getContent();
+        $cart_old = Cart::session($request->session()->get('_token'))->getContent();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        $cart = \Cart::session($request->session()->get('_token'));
-        if($cart_old->count())
-        {
-            foreach ($cart_old as $item)
-            {
+        $cart = Cart::session($request->session()->get('_token'));
+        if ($cart_old->count()) {
+            foreach ($cart_old as $item) {
                 $cart->add([
                     'id' => $item['id'],
                     'name' => $item['name'],
@@ -170,8 +167,7 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
-        if(\request()->has('return_url'))
-        {
+        if (\request()->has('return_url')) {
             return \request()->input('return_url');
         } else {
             return $this->redirectTo;

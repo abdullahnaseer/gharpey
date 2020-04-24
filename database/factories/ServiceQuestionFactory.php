@@ -2,15 +2,18 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Model;
+use App\Helpers\ServiceQuestionType\ServiceQuestionType;
 use Faker\Generator as Faker;
 
 $factory->define(\App\Models\ServiceQuestion::class, function (Faker $faker) {
+    $types = \App\Helpers\ServiceQuestionAuthRule::getAllTypes();
+    $types[] = null;
+
     return [
-        'title' => $faker->word,
+        'name' => $faker->word,
         'question' => $faker->sentence . '?',
-        'type' => $faker->randomElement(\App\Models\ServiceQuestion::TYPES),
-        'is_required' => $faker->boolean,
-        'auth_rule' => $faker->randomElement(\App\Models\ServiceQuestion::AUTH_RULES)
+        'placeholder' => $faker->sentence,
+        'auth_rule' => $faker->randomElement($types),
+        'type' => $faker->randomElement(ServiceQuestionType::getAllTypes()),
     ];
 });

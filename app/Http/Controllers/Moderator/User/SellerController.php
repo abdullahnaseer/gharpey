@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Moderator\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Seller;
 use App\Models\City;
+use App\Models\Seller;
 use App\Notifications\NewUser\NewSellerNotification;
 use App\Notifications\SellerApproveNotification;
 use App\Rules\Phone;
@@ -93,7 +93,7 @@ class SellerController extends Controller
             'return_location_id' => 'exists:city_areas,id',
         ]);
 
-        $slug = \Str::slug($request->input('shop_name'));
+        $slug = Str::slug($request->input('shop_name'));
         $check = Seller::where('shop_slug', $slug)->count();
 
         $password = Str::random(8);
@@ -106,7 +106,7 @@ class SellerController extends Controller
         $user->markEmailAsVerified();
         $user->approveAccount();
 
-        if($check)
+        if ($check)
             $user->update(['shop_slug' => $slug . '-' . $user->id]);
 
         $user->notify(new NewSellerNotification($fields['email'], $password));
@@ -140,10 +140,10 @@ class SellerController extends Controller
 
         $record = Seller::findOrFail($record_id);
 
-        $slug = \Str::slug($request->input('shop_name'));
+        $slug = Str::slug($request->input('shop_name'));
         $check = Seller::where('shop_slug', $slug)->where('id', '!=', $record_id)->count();
         $record->update($request->all());
-        if($check)
+        if ($check)
             $record->update(['shop_slug' => $slug . '-' . $record->id]);
         else
             $record->update(['shop_slug' => $slug]);

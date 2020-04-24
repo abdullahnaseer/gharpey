@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Seller\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Country;
-use App\Rules\Phone;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -80,11 +79,11 @@ class AddressController extends Controller
 
         $data = array();
         $data['warehouse_address'] = $request->input('warehouse_address');
-        $data['warehouse_location_id'] = (int) $request->input('warehouse_area');
-        $data['business_address'] = $request->has('business_is_same') ? $data['warehouse_address'] : (int) $request->input('business_address');
-        $data['business_location_id'] = $request->has('business_is_same') ? $data['warehouse_location_id'] : (int) $request->input('business_area');
+        $data['warehouse_location_id'] = (int)$request->input('warehouse_area');
+        $data['business_address'] = $request->has('business_is_same') ? $data['warehouse_address'] : (int)$request->input('business_address');
+        $data['business_location_id'] = $request->has('business_is_same') ? $data['warehouse_location_id'] : (int)$request->input('business_area');
         $data['return_address'] = $request->has('return_is_same') ? $data['warehouse_address'] : $request->input('return_address');
-        $data['return_location_id'] = $request->has('return_is_same') ? $data['warehouse_location_id'] : (int) $request->input('return_area');
+        $data['return_location_id'] = $request->has('return_is_same') ? $data['warehouse_location_id'] : (int)$request->input('return_area');
 
         $user = $request->user('seller');
         $user->update($data);

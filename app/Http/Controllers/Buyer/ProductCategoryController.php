@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\ProductCategory;
 use App\Models\ServiceCategory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ProductCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -22,7 +23,7 @@ class ProductCategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -32,8 +33,8 @@ class ProductCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -43,8 +44,8 @@ class ProductCategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ServiceCategory  $serviceCategory
-     * @return \Illuminate\Http\Response
+     * @param ServiceCategory $serviceCategory
+     * @return Response
      */
     public function show($slug)
     {
@@ -56,25 +57,26 @@ class ProductCategoryController extends Controller
     /**
      * Display our services.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ServiceCategory  $serviceCategory
-     * @return \Illuminate\Http\Response
+     * @param ServiceCategory $serviceCategory
+     * @return Response
      */
     public function edit(ServiceCategory $serviceCategory)
     {
         //
     }
+
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ServiceCategory  $serviceCategory
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param ServiceCategory $serviceCategory
+     * @return Response
      */
     public function update(Request $request, ServiceCategory $serviceCategory)
     {
@@ -84,8 +86,8 @@ class ProductCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ServiceCategory  $serviceCategory
-     * @return \Illuminate\Http\Response
+     * @param ServiceCategory $serviceCategory
+     * @return Response
      */
     public function destroy(ServiceCategory $serviceCategory)
     {

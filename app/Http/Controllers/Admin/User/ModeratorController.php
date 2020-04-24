@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Moderator;
-use App\Models\Buyer;
 use App\Models\City;
+use App\Models\Moderator;
 use App\Notifications\NewUser\NewModeratorNotification;
 use App\Rules\Phone;
 use Illuminate\Http\Request;

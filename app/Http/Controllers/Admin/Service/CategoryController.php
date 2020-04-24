@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ServiceCategory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -57,7 +58,7 @@ class CategoryController extends Controller
             'name' => $request->input('name'),
             'featured_image' => ($request->hasFile('featured_image') ? $request->file('featured_image')->store('public/servicecategories') : null)
         ]);
-        $record->update(['slug' => \Illuminate\Support\Str::slug($record->name . ' ' . $record->id)]);
+        $record->update(['slug' => Str::slug($record->name . ' ' . $record->id)]);
 
         flash('Successfully created the new record!')->success();
         return redirect()->route('admin.services.categories.index');
@@ -80,9 +81,9 @@ class CategoryController extends Controller
         $record = ServiceCategory::findOrFail($record_id);
         $fields = [
             'name' => $request->input('name'),
-            'slug' => \Illuminate\Support\Str::slug($request->input('name') . ' ' . $record->id)
+            'slug' => Str::slug($request->input('name') . ' ' . $record->id)
         ];
-        if($request->hasFile('featured_image'))
+        if ($request->hasFile('featured_image'))
             $fields['featured_image'] = $request->file('featured_image')->store('public/servicecategories');
         $record->update($fields);
 

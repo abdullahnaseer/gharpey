@@ -3,7 +3,6 @@
 namespace App\Notifications\Seller\ProductOrder;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -26,7 +25,7 @@ class ProductOrderNotification extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -37,8 +36,8 @@ class ProductOrderNotification extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
+     * @param mixed $notifiable
+     * @return MailMessage
      */
     public function toMail($notifiable)
     {
@@ -51,13 +50,13 @@ class ProductOrderNotification extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function toArray($notifiable)
     {
         return [
-            'message' => 'New Order Received for product "'.$this->productOrder->product->name.'"',
+            'message' => 'New Order Received for product "' . $this->productOrder->product->name . '"',
             'product_order_id' => $this->productOrder->id
         ];
     }

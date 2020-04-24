@@ -2,43 +2,23 @@
 
 namespace App\Models;
 
+use App\Casts\ServiceQuestionAuthRuleCast;
+use App\Helpers\DefaultServiceQuestionsTrait as DefaultServiceQuestions;
+use App\Casts\ServiceQuestionTypeCast;
 use Illuminate\Database\Eloquent\Model;
 
 class ServiceQuestion extends Model
 {
-    const REQUIRED = 'required';
-    const AUTH_REQUIRED = 'auth.required';
-    const AUTH_GUEST = 'auth.guest';
-    const AUTH_ANY = 'auth.any';
+    use DefaultServiceQuestions;
 
-    const AUTH_RULES = [
-        self::AUTH_ANY,
-        self::AUTH_GUEST,
-        self::AUTH_REQUIRED,
-    ];
-
-    const TYPE_TEXT = 'text';
-    const TYPE_TEXT_MULTILINE = 'text.multiline';
-    const TYPE_BOOLEAN = 'boolean';
-    const TYPE_SELECT = 'select.single';
-    const TYPE_SELECT_MULTIPLE = 'select.multiple';
-    const TYPE_DATE = 'date';
-    const TYPE_TIME = 'time';
-    const TYPE_DATE_TIME = 'datetime';
-    const TYPE_FILE = 'file';
-    const TYPE_FILE_MULTIPLE = 'file.multiple';
-
-    const TYPES = [
-        self::TYPE_TEXT,
-        self::TYPE_TEXT_MULTILINE,
-        self::TYPE_BOOLEAN,
-        self::TYPE_SELECT,
-        self::TYPE_SELECT_MULTIPLE,
-        self::TYPE_DATE,
-        self::TYPE_TIME,
-        self::TYPE_DATE_TIME,
-        self::TYPE_FILE,
-        self::TYPE_FILE_MULTIPLE,
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'auth_rule' => ServiceQuestionAuthRuleCast::class,
+        'type' => ServiceQuestionTypeCast::class,
     ];
 
     /**
@@ -47,7 +27,7 @@ class ServiceQuestion extends Model
      * @var array
      */
     protected $fillable = [
-        'order_priority', 'title', 'name', 'question', 'type', 'is_locked', 'is_required', 'auth_rule'
+        'order_priority', 'name', 'question', 'placeholder', 'type', 'auth_rule'
     ];
 
     /**

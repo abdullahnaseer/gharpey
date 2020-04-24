@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Seller\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Country;
-use App\Rules\Phone;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 

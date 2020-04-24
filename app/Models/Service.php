@@ -15,40 +15,48 @@ class Service extends Model
         'name', 'description', 'featured_image', 'slug', 'category_id',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+
+    ];
+
     public static function getRules($request, $isEdit = false)
     {
         $rules = [
-            'name' => 'required|min:3|max:255',
-            'description' => 'required|min:10|max:1000',
-            'featured_image' => $isEdit ? 'image' : 'required|image',
-            'category_id' => 'required|numeric|exists:service_categories,id',
+            'service_id' => 'required|exists:services,id|unique:service_seller,service_id,NULL,id,seller_id,' . $request->user()->id,
+            'price' => 'required|numeric|min:100|max:20000',
+            'short_description' => 'required|min:10|max:1000',
+            'long_description' => 'max:25000',
+            'cities' => 'required|exists:cities,id',
+            'featured_image' => 'required|file|image',
 
             'title' => 'required|array',
             'title.*' => 'required|min:3|max:255',
             'question' => 'required|array',
             'question.*' => 'required|min:3|max:255',
             'type' => 'required|array',
-            'type.*' => 'required|string|in:'.
-                ServiceQuestion::TYPE_BOOLEAN.','.ServiceQuestion::TYPE_TEXT.','.ServiceQuestion::TYPE_TEXT_MULTILINE.','.ServiceQuestion::TYPE_SELECT.','.ServiceQuestion::TYPE_SELECT_MULTIPLE . ','.ServiceQuestion::TYPE_FILE . ','.ServiceQuestion::TYPE_FILE_MULTIPLE . ','.ServiceQuestion::TYPE_TIME . ','.ServiceQuestion::TYPE_DATE . ','.ServiceQuestion::TYPE_DATE_TIME,
-
-            'auth_type' => 'required|array',
-            'auth_type.*' => 'required|string|in:'.
-                ServiceQuestion::AUTH_ANY.','.ServiceQuestion::AUTH_GUEST.','.ServiceQuestion::AUTH_REQUIRED,
+            'type.*' => 'required|string|in:' .
+                ServiceQuestion::TYPE_BOOLEAN . ',' . ServiceQuestion::TYPE_TEXT . ',' . ServiceQuestion::TYPE_TEXT_MULTILINE . ',' . ServiceQuestion::TYPE_SELECT . ',' . ServiceQuestion::TYPE_SELECT_MULTIPLE . ',' . ServiceQuestion::TYPE_FILE . ',' . ServiceQuestion::TYPE_FILE_MULTIPLE . ',' . ServiceQuestion::TYPE_TIME . ',' . ServiceQuestion::TYPE_DATE . ',' . ServiceQuestion::TYPE_DATE_TIME,
 
             'is_required' => 'required|array',
             'is_required.*' => 'required|string|in:0,1'
         ];
 
-//        if(!is_null($request->input('type', null)) && ($request->input('type', null) === ServiceQuestion::TYPE_SELECT || $request->input('type', null) === ServiceQuestion::TYPE_SELECT_MULTIPLE ))
-//            $rules['choices'] = 'required|array';
-
         $i = 0;
-        foreach ($request->input('type', []) as $input)
-        {
-            if($input === ServiceQuestion::TYPE_SELECT || $input === ServiceQuestion::TYPE_SELECT_MULTIPLE)
-            {
-                $rules['choices.'.$i] = 'required|array';
-                $rules['choices.'.$i.'.*'] = 'required|string|min:3|max:50';
+        foreach ($request->input('type', []) as $input) {
+            if ($input === ServiceQuestion::TYPE_SELECT || $input === ServiceQuestion::TYPE_SELECT_MULTIPLE) {
+                $rules['choice_text.' . $i] = 'required|array';
+                $rules['choice_text.' . $i . '.*'] = 'required|string|min:3|max:50';
+
+                $rules['choice_price_effect.' . $i] = 'required|array';
+                $rules['choice_price_effect.' . $i . '.*'] = 'required|digits_between:-10000,10000';
+            } else if ($input === ServiceQuestion::TYPE_BOOLEAN) {
+                $rules['price_effect_yes.' . $i] = 'required|digits_between:-10000,10000';
+                $rules['price_effect_no.' . $i] = 'required|digits_between:-10000,10000';
             }
             $i++;
         }
@@ -78,7 +86,7 @@ class Service extends Model
      */
     public function service_sellers()
     {
-        return $this->hasMany(ServiceSeller::class,'service_id');
+        return $this->hasMany(ServiceSeller::class, 'service_id');
     }
 
     /**

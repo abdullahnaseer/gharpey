@@ -30,6 +30,9 @@ try {
     require("../metronic/global/layout/offcanvas-panel");
     require("../metronic/global/layout/quick-panel");
     require("../metronic/global/layout/quick-search");
+
+    // Custom Code
+    //..
 } catch (e) {}
 
 /**

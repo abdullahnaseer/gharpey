@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Classes\ServiceQuestionType;
 
 class ServicesTableSeeder extends Seeder
 {
@@ -23,7 +24,7 @@ class ServicesTableSeeder extends Seeder
             for ($i = 0, $iMax = rand(4, 8); $i <= $iMax; $i++)
             {
                 $question = ($service->questions()->save(factory(App\Models\ServiceQuestion::class)->make([])));
-                if($question->type == \App\Models\ServiceQuestion::TYPE_SELECT || $question->type == \App\Models\ServiceQuestion::TYPE_SELECT_MULTIPLE)
+                if($question->type->isSelect())
                     factory(App\Models\ServiceQuestionChoices::class, rand(3,7))->create(['question_id' => $question->id]);
             }
         });

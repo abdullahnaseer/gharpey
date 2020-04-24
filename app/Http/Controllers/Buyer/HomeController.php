@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Buyer;
 
+use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Service;
 use Illuminate\Contracts\Support\Renderable;
-use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-//        $this->middleware('auth');
+        //
     }
 
     /**

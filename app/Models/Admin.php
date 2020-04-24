@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Traits\UserApiTokenTrait;
 use App\Notifications\ResetPassword;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Admin extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable, UserApiTokenTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +18,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone', 'address', 'location_id', 'password',
+        'name', 'email', 'phone', 'address', 'location_id', 'password', 'api_token',
     ];
 
     /**
@@ -27,7 +27,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'api_token'
     ];
 
     /**

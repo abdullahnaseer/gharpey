@@ -76,7 +76,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address Line 1') }}</label>
+                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address Line') }}</label>
 
                             <div class="col-md-6">
                                 <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" required autocomplete="address" value="{{old('address')}}">

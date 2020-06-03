@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\ServiceQuestionType\ServiceQuestionType;
 use Illuminate\Database\Eloquent\Model;
 
 class Service extends Model
@@ -34,29 +35,26 @@ class Service extends Model
             'cities' => 'required|exists:cities,id',
             'featured_image' => 'required|file|image',
 
-            'title' => 'required|array',
-            'title.*' => 'required|min:3|max:255',
+            'name' => 'required|array',
+            'name.*' => 'required|min:3|max:255',
             'question' => 'required|array',
             'question.*' => 'required|min:3|max:255',
             'type' => 'required|array',
             'type.*' => 'required|string|in:' .
-                ServiceQuestion::TYPE_BOOLEAN . ',' . ServiceQuestion::TYPE_TEXT . ',' . ServiceQuestion::TYPE_TEXT_MULTILINE . ',' . ServiceQuestion::TYPE_SELECT . ',' . ServiceQuestion::TYPE_SELECT_MULTIPLE . ',' . ServiceQuestion::TYPE_FILE . ',' . ServiceQuestion::TYPE_FILE_MULTIPLE . ',' . ServiceQuestion::TYPE_TIME . ',' . ServiceQuestion::TYPE_DATE . ',' . ServiceQuestion::TYPE_DATE_TIME,
+                implode(",", ServiceQuestionType::getAllTypes()),
 
-            'is_required' => 'required|array',
-            'is_required.*' => 'required|string|in:0,1'
+//            'is_required' => 'required|array',
+//            'is_required.*' => 'required|string|in:0,1'
         ];
 
         $i = 0;
         foreach ($request->input('type', []) as $input) {
-            if ($input === ServiceQuestion::TYPE_SELECT || $input === ServiceQuestion::TYPE_SELECT_MULTIPLE) {
+            if ($input === ServiceQuestionType::SELECT || $input === ServiceQuestionType::SELECT_MULTIPLE) {
                 $rules['choice_text.' . $i] = 'required|array';
-                $rules['choice_text.' . $i . '.*'] = 'required|string|min:3|max:50';
+                $rules['choice_text.' . $i . '.*'] = 'required|string|min:3|max:80';
 
                 $rules['choice_price_effect.' . $i] = 'required|array';
-                $rules['choice_price_effect.' . $i . '.*'] = 'required|digits_between:-10000,10000';
-            } else if ($input === ServiceQuestion::TYPE_BOOLEAN) {
-                $rules['price_effect_yes.' . $i] = 'required|digits_between:-10000,10000';
-                $rules['price_effect_no.' . $i] = 'required|digits_between:-10000,10000';
+                $rules['choice_price_effect.' . $i . '.*'] = 'required|digits_between:-100000,100000';
             }
             $i++;
         }

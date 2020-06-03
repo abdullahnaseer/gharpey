@@ -70,6 +70,23 @@ class ServiceSeller extends Pivot
     }
 
     /**
+     * Get the owning service_able model.
+     */
+    public function service()
+    {
+        return $this->belongsTo(Service::class, 'service_id');
+    }
+
+
+    /**
+     * The questions owns by the service.
+     */
+    public function questions()
+    {
+        return $this->hasMany(ServiceQuestion::class, 'service_seller_id', 'id');
+    }
+
+    /**
      * Get the owning service_seller_able model.
      */
     public function reviews()

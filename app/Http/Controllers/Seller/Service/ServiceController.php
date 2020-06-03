@@ -11,6 +11,7 @@ use App\Models\ServiceQuestionChoices;
 use App\Models\ServiceSeller;
 use App\Models\State;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -67,10 +68,17 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        $categories = ServiceCategory::has('services')->with(['services'])->get();
-        $states = State::with(['cities'])->get();
+        // Only Retrieve services which are not already offered by authenticated seller
+        $services = auth()->user()->services()->get()->pluck('id');
 
-        return view('seller.services.create', ['categories' => $categories, 'states' => $states]);
+        $categories = ServiceCategory::has('services')->with(['services' => function ($query) use ($services) {
+            $query->whereNotIn('id', $services);
+        }])->get();
+
+        return view('seller.services.create', [
+            'categories' => $categories,
+            'states' => State::with(['cities'])->get()
+        ]);
     }
 
     /**
@@ -84,31 +92,33 @@ class ServiceController extends Controller
 //        dd($request->all());
         $request->validate(Service::getRules($request));
 
-        $fields = $request->only(['service_id', 'name', 'description', 'price']);
+        $fields = $request->only(['service_id', 'short_description', 'long_description', 'price']);
         $fields['featured_image'] = $request->file('featured_image')->store('public/services');
         $fields['seller_id'] = auth('seller')->id();
 
         $serviceSeller = ServiceSeller::create($fields);
         $serviceSeller->cities()->sync($request->input('cities'));
 
-        for ($i = 0, $iMax = count($request->input('title', [])); $i < $iMax; $i++) {
+        for ($i = 0, $iMax = count($request->input('name', [])); $i < $iMax; $i++) {
             $question = $serviceSeller->questions()->create([
                 'order_priority' => $i + 1,
-                'title' => $request->input('title')[$i],
+                'name' => $request->input('name')[$i],
                 'question' => $request->input('question')[$i],
                 'type' => $request->input('type')[$i],
-                'is_required' => $request->input('is_required', [])[$i] === '1',
-                'auth_rule' => $request->input('auth_type', [])[$i]
+//                'is_required' => $request->input('is_required', [])[$i] === '1',
+//                'auth_rule' => $request->input('auth_type', [])[$i]
             ]);
 
-            if ($request->input('type')[$i] === ServiceQuestion::TYPE_SELECT || $request->input('type')[$i] === ServiceQuestion::TYPE_SELECT_MULTIPLE) {
+            if ($question->type->isSelect()) {
                 $k = 1;
                 foreach ($request->input('choices.' . $i) as $choice) {
                     $choice = ServiceQuestionChoices::create([
                         'order_priority' => $k++,
                         'question_id' => $question->id,
                         'choice' => $choice,
+                        'price_change' => $request->input('choices.' . $i . '.' . $k)
                     ]);
+                    $k++;
                 }
             }
         }
@@ -116,6 +126,33 @@ class ServiceController extends Controller
         flash('Successfully created the new record!')->success();
         return redirect()->route('seller.services.index');
     }
+
+    /**
+     * Display edit page of the resource.
+     *
+     * @return mixed
+     */
+    public function edit($record_id)
+    {
+        $record = ServiceSeller::where('seller_id', auth('seller')->id())
+            ->where('service_id', $record_id)
+            ->with(['seller', 'service'])
+            ->firstOrFail();
+
+        // Only Retrieve services which are not already offered by authenticated seller
+        $services = auth()->user()->services()->get()->pluck('id');
+
+        $categories = ServiceCategory::has('services')->with(['services' => function ($query) use ($services) {
+            $query->whereNotIn('id', $services);
+        }])->get();
+
+        return view('seller.services.create', [
+            'service_seller' => $record,
+            'categories' => $categories,
+            'states' => State::with(['cities'])->get()
+        ]);
+    }
+
 
     /**
      * Update the specified resource in storage.

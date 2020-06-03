@@ -16,6 +16,6 @@ class ServiceQuestionChoices extends Model
      * @var array
      */
     protected $fillable = [
-        'order_priority', 'question_id', 'choice'
+        'order_priority', 'question_id', 'choice', 'price_change'
     ];
 }

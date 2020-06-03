@@ -10,20 +10,19 @@
     "require": {
         "php": "^7.2",
         "darryldecode/cart": "^4.1",
-        "fideloper/proxy": "^4.0",
+        "fideloper/proxy": "^4.3",
         "guzzlehttp/guzzle": "^6.5",
-        "laravel/sanctum": "^2.1",
+        "laravel/sanctum": "^2.3",
         "fruitcake/laravel-cors": "^1.0",
         "laracasts/flash": "^3.1",
         "laravel/nexmo-notification-channel": "^2.3",
-        "laravel/tinker": "^2.3",
+        "laravel/tinker": "^2.4",
         "laravel/ui": "^2.0",
         "laravelcollective/html": "^6.1",
         "nexmo/client": "^2.0",
         "nexmo/laravel": "^2.2",
-        "stripe/stripe-php": "^7.27",
-        "twilio/sdk": "^5.42",
-        "laravel/framework": "^7.3"
+        "stripe/stripe-php": "^7.31",
+        "laravel/framework": "^7.10"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

@@ -188,7 +188,7 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
             'service_seller',
             'seller_id',
             'service_id')
-            ->withPivot('id', 'description', 'price', 'featured_image')
+            ->withPivot('id', 'short_description', 'long_description', 'price', 'featured_image')
             ->using(ServiceSeller::class);
     }
 

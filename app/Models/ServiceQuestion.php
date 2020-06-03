@@ -47,6 +47,14 @@ class ServiceQuestion extends Model
     }
 
     /**
+     * The questions owns by the service seller.
+     */
+    public function questions()
+    {
+        return $this->hasMany(ServiceQuestion::class, 'service_id', 'id');
+    }
+
+    /**
      * Get the answers for the question.
      */
     public function answers()

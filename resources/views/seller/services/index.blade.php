@@ -54,8 +54,6 @@
 @stop
 
 @push('modals')
-    @include('seller.services.modals.create', ['services' => $services])
-    @include('seller.services.modals.edit', ['services' => $services])
     @include('seller.services.modals.delete')
 @endpush
 
@@ -159,7 +157,7 @@
                             overflow: 'visible',
                             template: function(row) {
                                 return '\
-						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details" data-toggle="modal" data-target="#editModal" data-id="' + row.id + '" data-name="' + row.name + '" data-description="' + row.description + '" data-category="' + row.category_id + '" data-price="' + row.pivot.price + '" data-cities="' + row.cities + '">\
+						<a href="/seller/services/'+row.id+'/edit" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">\
 							<i class="la la-edit"></i>\
 						</a>\
 						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Delete" data-toggle="modal" data-target="#deleteModal" data-id="' + row.id + '">\

@@ -1,11 +1,11 @@
-@extends('seller.layouts.dashboard', ['page_title' => 'Create Service'])
+@extends('seller.layouts.dashboard', ['page_title' => 'Edit Service'])
 
 @section('breadcrumb')
     <a href="{{ route('seller.dashboard') }}" class="kt-subheader__breadcrumbs-link">Dashboard</a>
     <span class="kt-subheader__breadcrumbs-separator"></span>
     <a href="{{ route('seller.services.index') }}" class="kt-subheader__breadcrumbs-link">Services</a>
     <span class="kt-subheader__breadcrumbs-separator"></span>
-    <span class="kt-subheader__breadcrumbs-link active">Create New</span>
+    <span class="kt-subheader__breadcrumbs-link active">Edit</span>
 @endsection
 
 @section('breadcrumb-elements')
@@ -21,7 +21,7 @@
 
 @section('content')
     @php($i = 0)
-    {{ Form::model($service_seller, ['route' => 'seller.services.store', 'method' => 'POST', 'files' => true, 'id' => 'service-form' ,'novalidate']) }}
+    {{ Form::open(['route' => 'seller.services.store', 'method' => 'POST', 'files' => true, 'id' => 'service-form' ,'novalidate']) }}
         @include('seller.services.includes.form')
     {{ Form::close() }}
 @stop
@@ -45,7 +45,7 @@
 
     <script src="{{url('js/editor.js')}}"></script>
 
-{{--    <script src="{{url('js/seller-services.js')}}"></script>--}}
+    {{--    <script src="{{url('js/seller-services.js')}}"></script>--}}
     <script type="text/javascript">
         function fixInputsIndexes()
         {

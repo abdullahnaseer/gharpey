@@ -20,11 +20,13 @@
             {!! Form::label('service_id', 'Service', ['class' => "col-form-label"]) !!}
             <select name="service_id" id="service_id" class="form-control select2-js" required="required">
                 @foreach($categories as $category)
-                    <optgroup label="{{$category->name}}">
-                        @foreach($category->services as $service)
-                            <option value="{{$service->id}}"  @if(old('service_id') == $service->id) selected @endif >{{$service->name}}</option>
-                        @endforeach
-                    </optgroup>
+                    @if(count($category->services) > 0)
+                        <optgroup label="{{$category->name}}">
+                            @foreach($category->services as $service)
+                                <option value="{{$service->id}}"  @if(old('service_id') == $service->id) selected @endif >{{$service->name}}</option>
+                            @endforeach
+                        </optgroup>
+                    @endif
                 @endforeach
             </select>
 
@@ -32,7 +34,7 @@
         </div>
         <div class="form-group">
             {!! Form::label('price', 'Price', ['class' => "col-form-label"]) !!}
-            {!! Form::number('price', null, ['class' => "form-control", "required" => "required"]) !!}
+            {!! Form::number('price', null, ['class' => "form-control", "required" => "required", "min" => 0]) !!}
         </div>
         <div class="form-group">
             {!! Form::label('short_description', 'Short Description', ['class' => "col-form-label"]) !!}
@@ -49,7 +51,7 @@
                 @foreach($states as $state)
                     <optgroup label="{{$state->name}}">
                         @foreach($state->cities as $city)
-                            <option value="{{$city->id}}"  @if(collect(old('cities', []))->contains($service->id)) selected @endif >{{$city->name}}</option>
+                            <option value="{{$city->id}}"  @if(collect(old('cities', isset($service_seller) ? $service_seller->cities->pluck('id') : []))->contains($service->id)) selected @endif >{{$city->name}}</option>
                         @endforeach
                     </optgroup>
                 @endforeach

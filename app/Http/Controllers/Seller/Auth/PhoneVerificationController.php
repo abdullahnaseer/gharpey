@@ -28,7 +28,7 @@ class PhoneVerificationController extends Controller
      * Show the phone form.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function input(Request $request)
     {
@@ -62,7 +62,7 @@ class PhoneVerificationController extends Controller
      * Mark the authenticated user's phone as verified.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      * @throws AuthorizationException
      */
     public function verify(Request $request)
@@ -86,7 +86,7 @@ class PhoneVerificationController extends Controller
      * Resend the phone verification notification.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function resend(Request $request)
     {

@@ -36,7 +36,7 @@ abstract class ServiceQuestionType
         self::FILE_MULTIPLE => "Multiple Files",
     ];
 
-    protected $text;
+    public $text;
     protected $rules;
 
     /**
@@ -48,6 +48,7 @@ abstract class ServiceQuestionType
     public function __construct($text, $rules = [])
     {
         $this->text = $text;
+        $this->rules = $rules;
     }
 
     /*
@@ -136,4 +137,56 @@ abstract class ServiceQuestionType
     {
         return get_class($this) === ServiceQuestionTypeSelectMultiple::class;
     }
+
+    /**
+     * Check if type is file Single or Multiple.
+     *
+     * @return bool
+     */
+    public function isFile(): bool
+    {
+        return $this->isFileSingle() || $this->isFileMultiple();
+    }
+
+    /**
+     * Check if type is file Single.
+     *
+     * @return bool
+     */
+    public function isFileSingle(): bool
+    {
+        return get_class($this) === ServiceQuestionTypeFile::class;
+    }
+
+    /**
+     * Check if type is file Multiple.
+     *
+     * @return bool
+     */
+    public function isFileMultiple(): bool
+    {
+        return get_class($this) === ServiceQuestionTypeFileMultiple::class;
+    }
+
+    public function getTypeClass()
+    {
+        return get_class($this);
+    }
+
+    /**
+     * @return array
+     */
+    public function getRules($is_required = true, $name): array
+    {
+        $this->rules[$name] = [];
+
+        // Handle Required Field
+        if(!in_array("required", $this->rules[$name])){
+            array_push($this->rules[$name], "required");
+        }
+
+        return $this->rules;
+    }
+
+    public abstract function saveAnswer($answer, $options = []) : array;
 }

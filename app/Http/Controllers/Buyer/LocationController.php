@@ -26,7 +26,7 @@ class LocationController extends Controller
     /**
      * Show the state page.
      *
-     * @return Response
+     * @return mixed
      */
     public function state($state_code)
     {
@@ -40,7 +40,7 @@ class LocationController extends Controller
     /**
      * Show the state page.
      *
-     * @return Response
+     * @return mixed
      */
     public function city($state_code, $city)
     {
@@ -59,7 +59,7 @@ class LocationController extends Controller
     /**
      * Show the service page.
      *
-     * @return Response
+     * @return mixed
      */
     public function service($state_code, $city_slug, $service_slug)
     {
@@ -81,7 +81,7 @@ class LocationController extends Controller
     /**
      * Show the Sellers of service for specified city.
      *
-     * @return Response
+     * @return mixed
      */
     public function show($service_slug, $city_id)
     {

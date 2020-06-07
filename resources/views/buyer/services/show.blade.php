@@ -7,12 +7,12 @@
 @section('content')
     <div class="jumbotron jumbotron-fluid"
          style="background: linear-gradient(rgba(0, 0, 0, 0.65) 35%, rgba(0, 0, 0, 0.8) 80%), url('{{ asset(str_replace("public","storage", $service->featured_image)) }}');
-                 background-repeat: no-repeat;
-                 background-size: cover;
-                 background-color: #f5f8fa;
-                 color: #fff;
-                 padding-top: 70px;
-                 padding-bottom: 70px;">
+             background-repeat: no-repeat;
+             background-size: cover;
+             background-color: #f5f8fa;
+             color: #fff;
+             padding-top: 70px;
+             padding-bottom: 70px;">
 
         <div class="container margin-top-50">
             @unless(is_null($city))
@@ -59,9 +59,9 @@
             @if ($errors->any())
                 <div class="alert alert-danger mb-5" id="errorsDiv">
                     <ul>
-{{--                        @if ($errors->has('city_id'))--}}
-{{--                            <li>The selected location is invalid or this service is not available for your location.</li>--}}
-{{--                        @endif--}}
+                        {{--                        @if ($errors->has('city_id'))--}}
+                        {{--                            <li>The selected location is invalid or this service is not available for your location.</li>--}}
+                        {{--                        @endif--}}
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
@@ -77,37 +77,37 @@
 
             <div class="row">
                 <div class="col-lg-9">
-{{--                    <nav class="toolbox">--}}
-{{--                        <div class="toolbox-left">--}}
-{{--                            <div class="toolbox-item toolbox-sort">--}}
-{{--                                <div class="select-custom">--}}
-{{--                                    <select name="orderby" class="form-control">--}}
-{{--                                        <option value="menu_order" selected="selected">Default sorting</option>--}}
-{{--                                        <option value="popularity">Sort by popularity</option>--}}
-{{--                                        <option value="rating">Sort by average rating</option>--}}
-{{--                                        <option value="date">Sort by newness</option>--}}
-{{--                                        <option value="price">Sort by price: low to high</option>--}}
-{{--                                        <option value="price-desc">Sort by price: high to low</option>--}}
-{{--                                    </select>--}}
-{{--                                </div><!-- End .select-custom -->--}}
+                    {{--                    <nav class="toolbox">--}}
+                    {{--                        <div class="toolbox-left">--}}
+                    {{--                            <div class="toolbox-item toolbox-sort">--}}
+                    {{--                                <div class="select-custom">--}}
+                    {{--                                    <select name="orderby" class="form-control">--}}
+                    {{--                                        <option value="menu_order" selected="selected">Default sorting</option>--}}
+                    {{--                                        <option value="popularity">Sort by popularity</option>--}}
+                    {{--                                        <option value="rating">Sort by average rating</option>--}}
+                    {{--                                        <option value="date">Sort by newness</option>--}}
+                    {{--                                        <option value="price">Sort by price: low to high</option>--}}
+                    {{--                                        <option value="price-desc">Sort by price: high to low</option>--}}
+                    {{--                                    </select>--}}
+                    {{--                                </div><!-- End .select-custom -->--}}
 
-{{--                                <a href="#" class="sorter-btn" title="Set Ascending Direction"><span class="sr-only">Set Ascending Direction</span></a>--}}
-{{--                            </div><!-- End .toolbox-item -->--}}
-{{--                        </div><!-- End .toolbox-left -->--}}
+                    {{--                                <a href="#" class="sorter-btn" title="Set Ascending Direction"><span class="sr-only">Set Ascending Direction</span></a>--}}
+                    {{--                            </div><!-- End .toolbox-item -->--}}
+                    {{--                        </div><!-- End .toolbox-left -->--}}
 
-{{--                        <div class="toolbox-item toolbox-show">--}}
-{{--                            <label>Showing 1–9 of 60 results</label>--}}
-{{--                        </div><!-- End .toolbox-item -->--}}
+                    {{--                        <div class="toolbox-item toolbox-show">--}}
+                    {{--                            <label>Showing 1–9 of 60 results</label>--}}
+                    {{--                        </div><!-- End .toolbox-item -->--}}
 
-{{--    --}}{{--                    <div class="layout-modes">--}}
-{{--    --}}{{--                        <a href="category.html" class="layout-btn btn-grid" title="Grid">--}}
-{{--    --}}{{--                            <i class="icon-mode-grid"></i>--}}
-{{--    --}}{{--                        </a>--}}
-{{--    --}}{{--                        <a href="category-list.html" class="layout-btn btn-list active" title="List">--}}
-{{--    --}}{{--                            <i class="icon-mode-list"></i>--}}
-{{--    --}}{{--                        </a>--}}
-{{--    --}}{{--                    </div><!-- End .layout-modes -->--}}
-{{--                    </nav>--}}
+                    {{--    --}}{{--                    <div class="layout-modes">--}}
+                    {{--    --}}{{--                        <a href="category.html" class="layout-btn btn-grid" title="Grid">--}}
+                    {{--    --}}{{--                            <i class="icon-mode-grid"></i>--}}
+                    {{--    --}}{{--                        </a>--}}
+                    {{--    --}}{{--                        <a href="category-list.html" class="layout-btn btn-list active" title="List">--}}
+                    {{--    --}}{{--                            <i class="icon-mode-list"></i>--}}
+                    {{--    --}}{{--                        </a>--}}
+                    {{--    --}}{{--                    </div><!-- End .layout-modes -->--}}
+                    {{--                    </nav>--}}
 
                     @foreach($service_sellers as $service_seller)
                         <div class="product product-list-wrapper">
@@ -134,17 +134,17 @@
                                 </div><!-- End .price-box -->
 
                                 <div class="product-action">
-{{--                                    <a href="#" class="paction add-wishlist" title="Add to Wishlist">--}}
-{{--                                        <span>Add to Wishlist</span>--}}
-{{--                                    </a>--}}
+                                    {{--                                    <a href="#" class="paction add-wishlist" title="Add to Wishlist">--}}
+                                    {{--                                        <span>Add to Wishlist</span>--}}
+                                    {{--                                    </a>--}}
 
                                     <a href="#questionsModal" class="paction add-cart" title="Order Now" data-toggle="modal" data-target="#questionsModal" data-id="{{$service_seller->id}}">
                                         <span>Order Now</span>
                                     </a>
 
-{{--                                    <a href="#" class="paction add-compare" title="Add to Compare">--}}
-{{--                                        <span>Add to Compare</span>--}}
-{{--                                    </a>--}}
+                                    {{--                                    <a href="#" class="paction add-compare" title="Add to Compare">--}}
+                                    {{--                                        <span>Add to Compare</span>--}}
+                                    {{--                                    </a>--}}
                                 </div><!-- End .product-action -->
                             </div><!-- End .product-details -->
                         </div>
@@ -248,109 +248,30 @@
                             @foreach($service->questions as $question)
                                 @php($required = false)
                                 @php($continue = false)
-                                @if(($question->auth_rule == \App\Models\ServiceQuestion::AUTH_REQUIRED))
+                                @if(($question->auth_rule->isOnlyForAuthenticatedUser()))
                                     @unless(auth()->check())
                                         @php($continue = true)
                                     @endunless
                                 @endif
-                                @if(($question->auth_rule == \App\Models\ServiceQuestion::AUTH_GUEST))
+                                @if(($question->auth_rule->isOnlyForGuestUser()))
                                     @unless(auth()->guest())
                                         @php($continue = true)
                                     @endunless
                                 @endif
-                                @if($question->is_required)
-                                    @php($required = $question->required = true)
+                                @if($question->is_required || true)  {{-- Forced True--}}
+                                    @php($required = $question->is_required = true)
                                 @endif
                                 @continue($continue)
-                                <div class="service-question service-question-{{$question->type}}"
-                                     id="service-question-{{ $question->id }}"
-                                     @if($i != 1) style="display: none;" @endif data-required="{{$required}}"
-                                     data-type="{{$question->type}}">
+                                <div class="service-question service-question-{{$question->type->text}}"
+                                     id="service-question-{{ (empty($question->id) ? $question->name : $question->id) }}"
+                                     @if($i != 1) style="display: none;" @endif
+                                     data-required="{{$required}}"
+                                     data-type="{{$question->type->getTypeClass()}}">
+
                                     <h3>{{$question->question}}{{ $required ? '*' : '' }} </h3>
-                                    @if($question->type == \App\Models\ServiceQuestion::TYPE_BOOLEAN)
-                                        <div class="form-check">
-                                            <input name="answer-{{$question->id}}" class="form-check-input"
-                                                   type="radio" id="answer-boolean-{{$question->id}}-yes" value="1"
-                                                   @if($required) required
-                                                   @endif @if(old('answer-'.$question->id, false)) checked @endif>
-                                            <label class="form-check-label"
-                                                   for="answer-boolean-{{$question->id}}-yes">
-                                                Yes
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input name="answer-{{$question->id}}" class="form-check-input"
-                                                   type="radio" id="answer-boolean-{{$question->id}}-no" value="0"
-                                                   @if($required) required
-                                                   @endif @unless(old('answer-'.$question->id, false)) checked @endunless>
-                                            <label class="form-check-label"
-                                                   for="answer-boolean-{{$question->id}}-no">
-                                                No
-                                            </label>
-                                        </div>
-                                    @elseif($question->type == \App\Models\ServiceQuestion::TYPE_TEXT)
-                                        @if($question->name == 'guest.email')
-                                            <input type="email" name="answer-{{$question->id}}" class="form-control"
-                                                   @if($required) required
-                                                   @endif value="{{old('answer-'.$question->id)}}"/>
-                                        @elseif($question->name == 'guest.phone')
-                                            <input type="tel" name="answer-{{$question->id}}" class="form-control"
-                                                   @if($required) required
-                                                   @endif value="{{old('answer-'.$question->id)}}"/>
-                                        @else
-                                            <input type="text" name="answer-{{$question->id}}" class="form-control"
-                                                   @if($required) required
-                                                   @endif value="{{old('answer-'.$question->id)}}"/>
-                                        @endif
-                                    @elseif($question->type == \App\Models\ServiceQuestion::TYPE_TEXT_MULTILINE)
-                                        <textarea name="answer-{{$question->id}}" class="form-control"
-                                                  @if($required) required @endif>{{old('answer-'.$question->id)}}</textarea>
-                                    @elseif($question->type == \App\Models\ServiceQuestion::TYPE_DATE)
-                                        <input type="text" name="answer-{{$question->id}}"
-                                               class="form-control datepicker" autocomplete="off"
-                                               @if($required) required
-                                               @endif value="{{old('answer-'.$question->id, \Carbon\Carbon::today()->toDateString())}}"/>
-                                    @elseif($question->type == \App\Models\ServiceQuestion::TYPE_TIME)
-                                        <input type="time" name="answer-{{$question->id}}" class="form-control"
-                                               @if($required) required
-                                               @endif value="{{old('answer-'.$question->id)}}"/>
-                                    @elseif($question->type == \App\Models\ServiceQuestion::TYPE_DATE_TIME)
-                                        <input type="datetime-local" name="answer-{{$question->id}}"
-                                               class="form-control" @if($required) required
-                                               @endif value="{{old('answer-'.$question->id)}}"/>
-                                    @elseif($question->type == \App\Models\ServiceQuestion::TYPE_FILE)
-                                        <input type="file" name="answer-{{$question->id}}" @if($required) required
-                                               @endif accept="image/*"/>
-                                    @elseif($question->type == \App\Models\ServiceQuestion::TYPE_FILE_MULTIPLE)
-                                        <input type="file" name="answer-{{$question->id}}[]" @if($required) required
-                                               @endif accept="image/*" multiple/>
-                                    @elseif($question->type == \App\Models\ServiceQuestion::TYPE_SELECT)
-                                        @foreach($question->choices as $choice)
-                                            <div class="form-check">
-                                                <input name="answer-{{$question->id}}" class="form-check-input"
-                                                       type="radio" id="answer-choice-{{$choice->id}}"
-                                                       value="{{$choice->id}}" @if($required) required
-                                                       @endif @if(old('answer-'.$question->id, false) == $choice->id) checked @endif>
-                                                <label class="form-check-label" for="answer-choice-{{$choice->id}}">
-                                                    {{$choice->choice}}
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                    @elseif($question->type == \App\Models\ServiceQuestion::TYPE_SELECT_MULTIPLE)
-                                        @foreach($question->choices as $choice)
-                                            <div class="form-check">
-                                                <input name="answer-{{$question->id}}[]" class="form-check-input"
-                                                       type="checkbox" id="answer-choice-{{$choice->id}}"
-                                                       value="{{$choice->id}}" @if($required) required
-                                                       @endif @if( in_array($choice->id, old('answer-'.$question->id, [])) ) checked @endif>
-                                                <label class="form-check-label" for="answer-choice-{{$choice->id}}">
-                                                    {{$choice->choice}}
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                    @endif
+                                    {!! $question->type->getHtml("answer-" . (empty($question->id) ? $question->name : $question->id), null, true) !!}
                                 </div>
-                                @php(array_push($question_ids, $question->id))
+                                @php(array_push($question_ids, (empty($question->id) ? $question->name : ((int) $question->id)) ))
                                 @php($i++)
                             @endforeach
                             <div class="alert alert-success" style="display: none;" id="loading">Submiting
@@ -359,7 +280,12 @@
                         </div>
                         <div class="modal-footer">
                             {{--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
-                            @unless(isset($question_ids[0]) && $service->questions->where('id', $question_ids[0])->first()->required)
+                            @unless(isset($question_ids[0]) && (
+                                            $service->questions
+                                            ->where(is_string($question_ids[0]) ? 'name' : 'id', $question_ids[0])
+                                            ->first()->is_required
+                                            )
+                                        )
                                 <button type="button" class="btn btn-outline-danger" id="skip">Skip</button>
                             @endunless
                             <button type="button" class="btn btn-primary" id="back" style="display: none;">Back
@@ -410,10 +336,11 @@
                     // Check Validity
                     var error = $('#error');
                     var loading = $('#loading');
-                    var type = $("#service-question-" + questions[currentQuestionIndex]).data("type");
-                    var required = $("#service-question-" + questions[currentQuestionIndex]).data("required");
+                    var question = $("#service-question-" + questions[currentQuestionIndex]);
+                    var type = question.data("type");
+                    var required = question.data("required");
 
-                    if (type == '{!! \App\Models\ServiceQuestion::TYPE_SELECT_MULTIPLE !!}') {
+                    if (type == '{!! str_replace( "\\", "\\\\", \App\Helpers\ServiceQuestionType\ServiceQuestionTypeSelectMultiple::class ) !!}') {
                         var inpObj = $("input[name='answer-" + questions[currentQuestionIndex] + "[]']:checked");
                         if (required == 1) {
                             if (!inpObj.length) {
@@ -422,14 +349,14 @@
                                 return false;
                             }
                         }
-                    } else if (type == '{!! \App\Models\ServiceQuestion::TYPE_FILE_MULTIPLE!!}') {
+                    } else if (type == '{!! str_replace( "\\", "\\\\", \App\Helpers\ServiceQuestionType\ServiceQuestionTypeFileMultiple::class) !!}') {
                         var inpObj = document.getElementsByName("answer-" + questions[currentQuestionIndex] + "[]");
                         if (!inpObj[0].checkValidity()) {
                             error.html(inpObj[0].validationMessage);
                             error.slideDown();
                             return false;
                         }
-                    } else if (type == '{!! \App\Models\ServiceQuestion::TYPE_TEXT_MULTILINE!!}') {
+                    } else if (type == '{!! str_replace( "\\", "\\\\", \App\Helpers\ServiceQuestionType\ServiceQuestionTypeTextMultiline::class) !!}') {
                         var inpObj = $("textarea[name='answer-" + questions[currentQuestionIndex] + "']");
                         if (!inpObj[0].checkValidity()) {
                             error.html(inpObj[0].validationMessage);

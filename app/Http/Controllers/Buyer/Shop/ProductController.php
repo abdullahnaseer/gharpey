@@ -16,7 +16,7 @@ class ProductController extends Controller
      * @param Request $request
      * @param string $shop_slug
      * @param string $product_slug
-     * @return Response
+     * @return mixed
      */
     public function show(Request $request, $shop_slug, $product_slug)
     {

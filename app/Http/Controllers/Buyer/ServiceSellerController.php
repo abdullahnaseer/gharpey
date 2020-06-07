@@ -30,7 +30,7 @@ class ServiceSellerController extends Controller
     /**
      * Show the service page.
      *
-     * @return Response
+     * @return mixed
      */
     public function show(Request $request, $service_slug, $service_seller_id)
     {

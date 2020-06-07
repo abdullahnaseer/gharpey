@@ -23,7 +23,7 @@ class SubCategoryController extends Controller
     /**
      * Return a listing of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function json($category_id)
     {
@@ -36,7 +36,7 @@ class SubCategoryController extends Controller
      * Display a listing of the resource.
      *
      * @param $category_id
-     * @return Response
+     * @return mixed
      */
     public function index($category_id)
     {
@@ -54,7 +54,7 @@ class SubCategoryController extends Controller
      *
      * @param Request $request
      * @param $category_id
-     * @return Response
+     * @return mixed
      */
     public function store(Request $request, $category_id)
     {
@@ -90,7 +90,7 @@ class SubCategoryController extends Controller
      * @param Request $request
      * @param $category_id
      * @param $record_id
-     * @return Response
+     * @return mixed
      */
     public function update(Request $request, $category_id, $record_id)
     {
@@ -121,7 +121,7 @@ class SubCategoryController extends Controller
      * @param Request $request
      * @param $category_id
      * @param $record_id
-     * @return Response
+     * @return mixed
      */
     public function destroy(Request $request, $category_id, $record_id)
     {

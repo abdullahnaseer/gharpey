@@ -25,7 +25,7 @@ class AddressController extends Controller
      * Show the address form.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function input(Request $request)
     {

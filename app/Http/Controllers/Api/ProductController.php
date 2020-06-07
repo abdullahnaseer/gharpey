@@ -25,6 +25,7 @@ class ProductController extends Controller
             foreach ($product_category->products as $product) {
                 $product->reviews_cnt = $product->reviews_count;
                 $product->reviews_avg = $product->reviews_average;
+                $product->quantity = 0;
             }
         }
 
@@ -34,7 +35,7 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function create()
     {
@@ -45,7 +46,7 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function store(Request $request)
     {
@@ -56,7 +57,7 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return mixed
      */
     public function show($id)
     {
@@ -67,7 +68,7 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return mixed
      */
     public function edit($id)
     {
@@ -79,7 +80,7 @@ class ProductController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return Response
+     * @return mixed
      */
     public function update(Request $request, $id)
     {
@@ -90,7 +91,7 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return Response
+     * @return mixed
      */
     public function destroy($id)
     {

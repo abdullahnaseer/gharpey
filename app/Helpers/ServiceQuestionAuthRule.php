@@ -9,8 +9,8 @@ class ServiceQuestionAuthRule
 {
     use HasTypes;
 
-    private const AUTHENTICATED = 'authenticated';
-    private const GUEST = 'guest';
+    public const AUTHENTICATED = 'authenticated';
+    public const GUEST = 'guest';
 
     public const TYPES = [
         self::AUTHENTICATED => 'Authenticated User',

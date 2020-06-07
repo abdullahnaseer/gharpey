@@ -45,7 +45,7 @@ class Handler extends ExceptionHandler
      *
      * @param Request $request
      * @param Exception $exception
-     * @return Response
+     * @return mixed
      */
     public function render($request, Throwable $exception)
     {

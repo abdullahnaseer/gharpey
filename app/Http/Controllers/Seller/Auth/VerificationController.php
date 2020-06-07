@@ -45,7 +45,7 @@ class VerificationController extends Controller
      * Show the email verification notice.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function show(Request $request)
     {
@@ -68,7 +68,7 @@ class VerificationController extends Controller
      * Mark the authenticated user's email address as verified.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      * @throws AuthorizationException
      */
     public function verify(Request $request)
@@ -96,7 +96,7 @@ class VerificationController extends Controller
      * Resend the email verification notification.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function resend(Request $request)
     {

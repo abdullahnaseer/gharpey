@@ -22,7 +22,7 @@ class TagController extends Controller
     /**
      * Return a listing of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function json()
     {
@@ -33,7 +33,7 @@ class TagController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
@@ -45,7 +45,7 @@ class TagController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function store(Request $request)
     {
@@ -64,7 +64,7 @@ class TagController extends Controller
      *
      * @param Request $request
      * @param \Spatie\Permission\Models\ProductTag $record
-     * @return Response
+     * @return mixed
      */
     public function update(Request $request, $record_id)
     {
@@ -83,7 +83,7 @@ class TagController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \Spatie\Permission\Models\ProductTag $record
-     * @return Response
+     * @return mixed
      */
     public function destroy(Request $request, $record_id)
     {

@@ -28,7 +28,7 @@ class ServiceRequestController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
@@ -39,7 +39,7 @@ class ServiceRequestController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function create()
     {
@@ -50,7 +50,7 @@ class ServiceRequestController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function store(Request $request)
     {
@@ -61,7 +61,7 @@ class ServiceRequestController extends Controller
      * Display the specified resource.
      *
      * @param ServiceRequest $serviceRequest
-     * @return Response
+     * @return mixed
      */
     public function show($id)
     {
@@ -75,7 +75,7 @@ class ServiceRequestController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param ServiceRequest $serviceRequest
-     * @return Response
+     * @return mixed
      */
     public function edit(ServiceRequest $serviceRequest)
     {
@@ -87,7 +87,7 @@ class ServiceRequestController extends Controller
      *
      * @param Request $request
      * @param ServiceRequest $serviceRequest
-     * @return Response
+     * @return mixed
      */
     public function update(Request $request, ServiceRequest $serviceRequest)
     {
@@ -98,7 +98,7 @@ class ServiceRequestController extends Controller
      * Remove the specified resource from storage.
      *
      * @param ServiceRequest $serviceRequest
-     * @return Response
+     * @return mixed
      */
     public function destroy(ServiceRequest $serviceRequest)
     {
@@ -115,7 +115,7 @@ class ServiceRequestController extends Controller
      * Show the invoice list.
      *
      * @param user_id
-     * @return Response
+     * @return mixed
      */
     public function showInvoice($id)
     {
@@ -131,7 +131,7 @@ class ServiceRequestController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return Response
+     * @return mixed
      */
     public function confirm(Request $request, $id)
     {

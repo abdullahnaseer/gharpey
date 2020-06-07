@@ -25,7 +25,7 @@ class StateController extends Controller
      * Return a listing of the resource.
      *
      * @param int $country_id
-     * @return Response
+     * @return mixed
      */
     public function json($country_id)
     {
@@ -37,7 +37,7 @@ class StateController extends Controller
      * Display a listing of the resource.
      *
      * @param Country $country
-     * @return Response
+     * @return mixed
      */
     public function index(Country $country)
     {
@@ -50,7 +50,7 @@ class StateController extends Controller
      *
      * @param Request $request
      * @param Country $country
-     * @return Response
+     * @return mixed
      */
     public function store(Request $request, Country $country)
     {
@@ -70,7 +70,7 @@ class StateController extends Controller
      * @param Request $request
      * @param Country $country
      * @param State $state
-     * @return Response
+     * @return mixed
      */
     public function update(Request $request, Country $country, State $state)
     {
@@ -90,7 +90,7 @@ class StateController extends Controller
      *
      * @param Country $country
      * @param State $state
-     * @return Response
+     * @return mixed
      */
     public function destroy(Request $request, Country $country, State $state)
     {

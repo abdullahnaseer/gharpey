@@ -23,7 +23,7 @@ class CountryController extends Controller
     /**
      * Return a listing of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function json()
     {
@@ -34,7 +34,7 @@ class CountryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
@@ -46,7 +46,7 @@ class CountryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function store(Request $request)
     {
@@ -65,7 +65,7 @@ class CountryController extends Controller
      *
      * @param Request $request
      * @param \Spatie\Permission\Models\Country $country
-     * @return Response
+     * @return mixed
      */
     public function update(Request $request, Country $country)
     {
@@ -84,7 +84,7 @@ class CountryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \Spatie\Permission\Models\Country $country
-     * @return Response
+     * @return mixed
      */
     public function destroy(Request $request, Country $country)
     {

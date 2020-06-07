@@ -25,7 +25,7 @@ class CheckoutController extends Controller
     /**
      * Display a form for shipping location.
      *
-     * @return Response
+     * @return mixed
      */
     public function getShipping(Request $request)
     {
@@ -43,7 +43,7 @@ class CheckoutController extends Controller
     /**
      * Save shipping information and proceed to payment.
      *
-     * @return Response
+     * @return mixed
      */
     public function postShipping(Request $request)
     {
@@ -64,7 +64,7 @@ class CheckoutController extends Controller
     /**
      * Display a form for payment.
      *
-     * @return Response
+     * @return mixed
      */
     public function getPayment(Request $request)
     {
@@ -89,7 +89,7 @@ class CheckoutController extends Controller
     /**
      * Save shipping information and proceed to payment.
      *
-     * @return Response
+     * @return mixed
      */
     public function postPayment(Request $request)
     {

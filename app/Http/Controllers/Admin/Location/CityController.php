@@ -26,7 +26,7 @@ class CityController extends Controller
      *
      * @param int $country_id
      * @param int $state_id
-     * @return Response
+     * @return mixed
      */
     public function json($country_id, $state_id)
     {
@@ -39,7 +39,7 @@ class CityController extends Controller
      *
      * @param Country $country
      * @param State $state
-     * @return Response
+     * @return mixed
      */
     public function index(Country $country, State $state)
     {
@@ -53,7 +53,7 @@ class CityController extends Controller
      * @param Request $request
      * @param Country $country
      * @param State $state
-     * @return Response
+     * @return mixed
      */
     public function store(Request $request, Country $country, State $state)
     {
@@ -74,7 +74,7 @@ class CityController extends Controller
      * @param Country $country
      * @param State $state
      * @param City $city
-     * @return Response
+     * @return mixed
      */
     public function update(Request $request, Country $country, State $state, City $city)
     {
@@ -95,7 +95,7 @@ class CityController extends Controller
      * @param Country $country
      * @param State $state
      * @param City $city
-     * @return Response
+     * @return mixed
      */
     public function destroy(Request $request, Country $country, State $state, City $city)
     {

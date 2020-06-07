@@ -34,7 +34,7 @@ class ServiceController extends Controller
     /**
      * Return a listing of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function json()
     {
@@ -64,7 +64,7 @@ class ServiceController extends Controller
     /**
      * Display create page of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function create()
     {
@@ -85,7 +85,7 @@ class ServiceController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function store(Request $request)
     {

@@ -42,7 +42,7 @@ trait DefaultServiceQuestionsTrait
             'type' => ServiceQuestionTypeText::class,
             'is_locked' => true,
             'is_required' => true,
-            'auth_rule' => "auth.guest",
+            'auth_rule' => ServiceQuestionAuthRule::GUEST,
         ]);
     }
 
@@ -60,7 +60,7 @@ trait DefaultServiceQuestionsTrait
             'type' => ServiceQuestionTypeEmail::class,
             'is_locked' => true,
             'is_required' => true,
-            'auth_rule' => "auth.guest",
+            'auth_rule' => ServiceQuestionAuthRule::GUEST,
         ]);
     }
 
@@ -78,7 +78,7 @@ trait DefaultServiceQuestionsTrait
             'type' => ServiceQuestionTypePhone::class,
             'is_locked' => true,
             'is_required' => true,
-            'auth_rule' => "auth.guest",
+            'auth_rule' => ServiceQuestionAuthRule::GUEST,
         ]);
     }
 }

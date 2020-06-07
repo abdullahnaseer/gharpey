@@ -28,7 +28,7 @@ class ServiceController extends Controller
     /**
      * Return a listing of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function json()
     {
@@ -39,7 +39,7 @@ class ServiceController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
@@ -50,7 +50,7 @@ class ServiceController extends Controller
     /**
      * Display create page of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function create()
     {
@@ -62,7 +62,7 @@ class ServiceController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function store(Request $request)
     {
@@ -100,7 +100,7 @@ class ServiceController extends Controller
      *
      * @param Request $request
      * @param int $record_id
-     * @return Response
+     * @return mixed
      */
     public function update(Request $request, int $record_id)
     {
@@ -128,7 +128,7 @@ class ServiceController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $record_id
-     * @return Response
+     * @return mixed
      */
     public function destroy(Request $request, int $record_id)
     {

@@ -26,7 +26,7 @@ class PaymentController extends Controller
     /**
      * Display a listing of the users who are eligible for withdraws.
      *
-     * @return Response
+     * @return mixed
      */
     public function get()
     {
@@ -37,7 +37,7 @@ class PaymentController extends Controller
     /**
      * Withdraws amount for selected users.
      *
-     * @return Response
+     * @return mixed
      */
     public function post(Request $request)
     {

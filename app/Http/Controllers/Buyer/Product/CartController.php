@@ -13,7 +13,7 @@ class CartController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function index(Request $request)
     {
@@ -35,7 +35,7 @@ class CartController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function create(Request $request, $product_id)
     {
@@ -76,7 +76,7 @@ class CartController extends Controller
      * Update the cart.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function store(Request $request)
     {

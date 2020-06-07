@@ -23,7 +23,7 @@ class CategoryController extends Controller
     /**
      * Return a listing of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function json()
     {
@@ -34,7 +34,7 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
@@ -45,7 +45,7 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function store(Request $request)
     {
@@ -72,7 +72,7 @@ class CategoryController extends Controller
      *
      * @param Request $request
      * @param App\Models\ProductCategory $record
-     * @return Response
+     * @return mixed
      */
     public function update(Request $request, $record_id)
     {
@@ -98,7 +98,7 @@ class CategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \Spatie\Permission\Models\ProductCategory $record
-     * @return Response
+     * @return mixed
      */
     public function destroy(Request $request, $record_id)
     {

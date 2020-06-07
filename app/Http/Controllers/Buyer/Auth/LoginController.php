@@ -49,7 +49,7 @@ class LoginController extends Controller
     /**
      * Show the application's login form.
      *
-     * @return Response
+     * @return mixed
      */
     public function showLoginForm()
     {
@@ -94,7 +94,7 @@ class LoginController extends Controller
      * Send the response after the user was authenticated.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     protected function sendLoginResponse(Request $request)
     {
@@ -136,7 +136,7 @@ class LoginController extends Controller
      * Log the user out of the application.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function logout(Request $request)
     {

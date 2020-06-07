@@ -47,7 +47,7 @@ class VerificationController extends Controller
      * Show the email verification notice.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function show(Request $request)
     {

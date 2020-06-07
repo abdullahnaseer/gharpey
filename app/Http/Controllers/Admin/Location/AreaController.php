@@ -28,7 +28,7 @@ class AreaController extends Controller
      * @param int $country_id
      * @param int $state_id
      * @param int $city_id
-     * @return Response
+     * @return mixed
      */
     public function json($country_id, $state_id, $city_id)
     {
@@ -42,7 +42,7 @@ class AreaController extends Controller
      * @param Country $country
      * @param State $state
      * @param City $city
-     * @return Response
+     * @return mixed
      */
     public function index(Country $country, State $state, City $city)
     {
@@ -57,7 +57,7 @@ class AreaController extends Controller
      * @param Country $country
      * @param State $state
      * @param City $city
-     * @return Response
+     * @return mixed
      */
     public function store(Request $request, Country $country, State $state, City $city)
     {
@@ -79,7 +79,7 @@ class AreaController extends Controller
      * @param State $state
      * @param City $city
      * @param CityArea $area
-     * @return Response
+     * @return mixed
      */
     public function update(Request $request, Country $country, State $state, City $city, CityArea $area)
     {
@@ -101,7 +101,7 @@ class AreaController extends Controller
      * @param State $state
      * @param City $city
      * @param CityArea $area
-     * @return Response
+     * @return mixed
      */
     public function destroy(Request $request, Country $country, State $state, City $city, CityArea $area)
     {

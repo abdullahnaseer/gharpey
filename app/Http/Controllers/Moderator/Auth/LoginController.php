@@ -43,7 +43,7 @@ class LoginController extends Controller
     /**
      * Show the application's login form.
      *
-     * @return Response
+     * @return mixed
      */
     public function showLoginForm()
     {

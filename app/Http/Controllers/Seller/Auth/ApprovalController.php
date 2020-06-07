@@ -23,7 +23,7 @@ class ApprovalController extends Controller
      * Show the approval status.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function index(Request $request)
     {

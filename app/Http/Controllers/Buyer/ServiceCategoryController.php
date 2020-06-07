@@ -12,7 +12,7 @@ class ServiceCategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
@@ -22,7 +22,7 @@ class ServiceCategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function create()
     {
@@ -33,7 +33,7 @@ class ServiceCategoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function store(Request $request)
     {
@@ -44,7 +44,7 @@ class ServiceCategoryController extends Controller
      * Display the specified resource.
      *
      * @param ServiceCategory $serviceCategory
-     * @return Response
+     * @return mixed
      */
     public function show($slug)
     {
@@ -56,14 +56,14 @@ class ServiceCategoryController extends Controller
     /**
      * Display our services.
      *
-     * @return Response
+     * @return mixed
      */
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param ServiceCategory $serviceCategory
-     * @return Response
+     * @return mixed
      */
     public function edit(ServiceCategory $serviceCategory)
     {
@@ -75,7 +75,7 @@ class ServiceCategoryController extends Controller
      *
      * @param Request $request
      * @param ServiceCategory $serviceCategory
-     * @return Response
+     * @return mixed
      */
     public function update(Request $request, ServiceCategory $serviceCategory)
     {
@@ -86,7 +86,7 @@ class ServiceCategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param ServiceCategory $serviceCategory
-     * @return Response
+     * @return mixed
      */
     public function destroy(ServiceCategory $serviceCategory)
     {

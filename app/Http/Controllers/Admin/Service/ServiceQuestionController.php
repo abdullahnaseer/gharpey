@@ -30,7 +30,7 @@ class ServiceQuestionController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
@@ -45,7 +45,7 @@ class ServiceQuestionController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function create()
     {
@@ -56,7 +56,7 @@ class ServiceQuestionController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function store(StoreServiceQuestionRequest $request)
     {
@@ -101,7 +101,7 @@ class ServiceQuestionController extends Controller
      * Display the specified resource.
      *
      * @param ServiceQuestion $serviceQuestion
-     * @return Response
+     * @return mixed
      */
     public function show(ServiceQuestion $serviceQuestion)
     {
@@ -112,7 +112,7 @@ class ServiceQuestionController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param ServiceQuestion $serviceQuestion
-     * @return Response
+     * @return mixed
      */
     public function edit(ServiceQuestion $serviceQuestion)
     {
@@ -124,7 +124,7 @@ class ServiceQuestionController extends Controller
      *
      * @param Request $request
      * @param ServiceQuestion $serviceQuestion
-     * @return Response
+     * @return mixed
      */
     public function update(UpdateServiceQuestionRequest $request, ServiceQuestion $serviceQuestion)
     {
@@ -163,7 +163,7 @@ class ServiceQuestionController extends Controller
      * Remove the specified resource from storage.
      *
      * @param ServiceQuestion $serviceQuestion
-     * @return Response
+     * @return mixed
      */
     public function destroy(ServiceQuestion $serviceQuestion)
     {
@@ -176,7 +176,7 @@ class ServiceQuestionController extends Controller
      *
      * @param ServiceQuestion $serviceQuestion
      * @param ServiceQuestionChoices $serviceQuestionChoice
-     * @return Response
+     * @return mixed
      */
     public function destroyChoice($question_id, $question_choice_id)
     {

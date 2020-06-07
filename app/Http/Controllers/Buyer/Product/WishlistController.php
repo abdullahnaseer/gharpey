@@ -12,7 +12,7 @@ class WishlistController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function create(Request $request, $product_id)
     {

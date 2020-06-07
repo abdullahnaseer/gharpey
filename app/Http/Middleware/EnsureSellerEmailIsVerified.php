@@ -17,7 +17,7 @@ class EnsureSellerEmailIsVerified
      * @param Request $request
      * @param Closure $next
      * @param string|null $redirectToRoute
-     * @return Response|RedirectResponse
+     * @return mixed|RedirectResponse
      */
     public function handle($request, Closure $next, $redirectToRoute = null)
     {

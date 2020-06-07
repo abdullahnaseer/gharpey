@@ -22,7 +22,7 @@ class ServiceRequestInvoiceController extends Controller
      *
      * @param ServiceRequest $serviceRequest
      * @param StoreAndUpdateServiceRequestInvoiceRequest $request
-     * @return Response
+     * @return mixed
      */
     public function store(StoreAndUpdateServiceRequestInvoiceRequest $request, ServiceRequest $serviceRequest)
     {
@@ -53,7 +53,7 @@ class ServiceRequestInvoiceController extends Controller
      * Display the specified resource.
      *
      * @param ServiceRequestInvoice $serviceRequestInvoice
-     * @return Response
+     * @return mixed
      */
     public function show(ServiceRequestInvoice $serviceRequestInvoice)
     {
@@ -64,7 +64,7 @@ class ServiceRequestInvoiceController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param ServiceRequestInvoice $serviceRequestInvoice
-     * @return Response
+     * @return mixed
      */
     public function edit(ServiceRequestInvoice $serviceRequestInvoice)
     {
@@ -77,7 +77,7 @@ class ServiceRequestInvoiceController extends Controller
      * @param StoreAndUpdateServiceRequestInvoiceRequest $request
      * @param ServiceRequest $serviceRequest
      * @param ServiceRequestInvoice $invoice
-     * @return Response
+     * @return mixed
      */
     public function update(StoreAndUpdateServiceRequestInvoiceRequest $request, ServiceRequest $serviceRequest, ServiceRequestInvoice $invoice)
     {
@@ -105,7 +105,7 @@ class ServiceRequestInvoiceController extends Controller
      * Remove the specified resource from storage.
      *
      * @param ServiceRequestInvoice $serviceRequestInvoice
-     * @return Response
+     * @return mixed
      */
     public function destroy(ServiceRequestInvoice $serviceRequestInvoice)
     {
@@ -116,7 +116,7 @@ class ServiceRequestInvoiceController extends Controller
      * Change the commission.
      *
      * @param ServiceRequestInvoice $serviceRequestInvoice
-     * @return Response
+     * @return mixed
      */
     public function invoicePaid($id)
     {

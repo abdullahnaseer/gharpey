@@ -49,7 +49,7 @@ class RegisterController extends Controller
     /**
      * Show the application registration form.
      *
-     * @return Response
+     * @return mixed
      */
     public function showRegistrationForm()
     {

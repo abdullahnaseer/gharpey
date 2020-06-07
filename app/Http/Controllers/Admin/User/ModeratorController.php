@@ -27,7 +27,7 @@ class ModeratorController extends Controller
     /**
      * Return a listing of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function json()
     {
@@ -38,7 +38,7 @@ class ModeratorController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return mixed
      */
     public function index()
     {
@@ -50,7 +50,7 @@ class ModeratorController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return mixed
      */
     public function store(Request $request)
     {
@@ -78,7 +78,7 @@ class ModeratorController extends Controller
      *
      * @param Request $request
      * @param int $record_id
-     * @return Response
+     * @return mixed
      */
     public function update(Request $request, int $record_id)
     {
@@ -101,7 +101,7 @@ class ModeratorController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $record_id
-     * @return Response
+     * @return mixed
      */
     public function destroy(Request $request, int $record_id)
     {

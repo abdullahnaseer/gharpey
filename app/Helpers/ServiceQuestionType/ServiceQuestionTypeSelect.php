@@ -15,9 +15,14 @@ class ServiceQuestionTypeSelect extends ServiceQuestionType
         parent::__construct(ServiceQuestionType::TYPES[self::class]);
     }
 
-    public static function getHtml($name, $value = null, $is_required = false, $options = ['class' => 'form-control'], $selectList = []): HtmlString
+    public static function getHtml($name, $value = null, $is_required = false, $options = ['class' => 'form-control'], $selectList = null): HtmlString
     {
         parent::handleIsRequired($options, $is_required);
+        if(!empty($selectList))
+        {
+            $selectList = $selectList->pluck('choice', 'id');
+        }
+
         return Form::select($name, $selectList, $value, $options);
     }
 

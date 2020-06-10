@@ -50,13 +50,29 @@ class ProductCategory extends Model
         return $categories;
     }
 
+    public function super_parent()
+    {
+        $categories = self::parent_categories($this);
+        return ($categories && $categories->first()->id != $this->id) ? $categories->first() : null;
+    }
+
     /**
      * Get the products for the product category.
      */
     public function products()
     {
-        return $this->hasMany(Product::class, 'category_id');
+        return $this->hasMany(Product::class, 'category_id')
+            ->where('inventory', '>', 0);
     }
+
+//    /**
+//     * Get the products for the product category.
+//     */
+//    public function productsInInventory()
+//    {
+//        return $this->hasMany(Product::class, 'category_id')
+//            ->where('inventory', '>', 0);
+//    }
 
     /**
      * Get the sub categories for the product category.

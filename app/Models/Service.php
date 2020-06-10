@@ -54,7 +54,7 @@ class Service extends Model
                 $rules['choice_text.' . $i . '.*'] = 'required|string|min:3|max:80';
 
                 $rules['choice_price_effect.' . $i] = 'required|array';
-                $rules['choice_price_effect.' . $i . '.*'] = 'required|digits_between:-100000,100000';
+                $rules['choice_price_effect.' . $i . '.*'] = 'required|integer|between:-100000,100000';
             }
             $i++;
         }

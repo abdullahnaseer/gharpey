@@ -17,7 +17,7 @@ class ProductController extends Controller
      *
      * @return Builder[]|Collection
      */
-    public function index()
+    public function index(Request $request)
     {
         $product_categories = ProductCategory::with(['products', 'products.seller', 'products.reviews'])->get();
 
@@ -30,6 +30,47 @@ class ProductController extends Controller
         }
 
         return $product_categories;
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Builder[]|Collection
+     */
+    public function search(Request $request)
+    {
+        $category = null;
+        $products = Product::where('inventory', '>', 0);
+        if ($request->has('q'))
+            $products = $products->where('name', 'like', '%' . $request->input('q') . '%');
+
+        if ($request->has('category')) {
+            $category_id = $request->input('category');
+            $category = ProductCategory::findOrFail($category_id);
+            $products = $products
+                ->whereHas('category', function (Builder $query) use ($category_id) {
+                    $query->where('category_id', $category_id) // Depth 0
+                    ->orWhereHas('parent_category', function (Builder $query) use ($category_id) {
+                        $query->where('id', $category_id)  // Depth 1
+                        ->orWhereHas('parent_category', function (Builder $query) use ($category_id) {
+                            $query->where('id', $category_id);  // Depth 2
+                        });
+                    });
+                });
+        }
+
+        if ($request->has('price-min'))
+            $products = $products->where('price', '>=', $request->input('price-min'));
+
+        if ($request->has('price-max'))
+            $products = $products->where('price', '<=', $request->input('price-max'));
+
+        $products = $products->with([
+            'seller',
+            'reviews',
+        ])->get();
+
+        return $products;
     }
 
     /**

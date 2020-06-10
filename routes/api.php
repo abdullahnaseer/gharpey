@@ -24,4 +24,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 Route::resource('products', 'ProductController');
+Route::get('search', 'ProductController@search');
 

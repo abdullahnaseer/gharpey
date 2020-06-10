@@ -269,7 +269,7 @@
                                      data-type="{{$question->type->getTypeClass()}}">
 
                                     <h3>{{$question->question}}{{ $required ? '*' : '' }} </h3>
-                                    {!! $question->type->getHtml("answer-" . (empty($question->id) ? $question->name : $question->id), null, true) !!}
+                                    {!! $question->type->getHtml("answer-" . (empty($question->id) ? $question->name : $question->id), null, true, ['class' => 'form-control'], $question->choices) !!}
                                 </div>
                                 @php(array_push($question_ids, (empty($question->id) ? $question->name : ((int) $question->id)) ))
                                 @php($i++)

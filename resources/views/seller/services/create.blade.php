@@ -21,7 +21,7 @@
 
 @section('content')
     @php($i = 0)
-    {{ Form::model($service_seller, ['route' => 'seller.services.store', 'method' => 'POST', 'files' => true, 'id' => 'service-form' ,'novalidate']) }}
+    {{ Form::open(['route' => 'seller.services.store', 'method' => 'POST', 'files' => true, 'id' => 'service-form' ,'novalidate']) }}
         @include('seller.services.includes.form')
     {{ Form::close() }}
 @stop

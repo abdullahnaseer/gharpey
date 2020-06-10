@@ -89,7 +89,6 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
         $request->validate(Service::getRules($request));
 
         $fields = $request->only(['service_id', 'short_description', 'long_description', 'price']);

@@ -27,7 +27,10 @@
             </div>
         </div>
 
-        <div class="choices-container " style=" {{ (isset($type) && ($type === 'select.single' || $type === 'select.multiple')) ? '' : 'display: none;'}}">
+        <div class="choices-container " style=" {{ (isset($type) &&
+                                                    ($type === \App\Helpers\ServiceQuestionType\ServiceQuestionTypeSelect::class ||
+                                                     $type === \App\Helpers\ServiceQuestionType\ServiceQuestionTypeSelectMultiple::class)
+                                                     ) ? '' : 'display: none;'}}">
             <h5>Select Choices</h5>
             <hr>
             <div class="kt_sortable_portlets choice-portlets">
@@ -43,22 +46,5 @@
 
             <button class="btn btn-outline-success btn-add-choice" type="button">Add Choice</button>
         </div>
-
-{{--        <div class="boolean-price-effect" style="{{ (isset($type) && ($type === \App\Helpers\ServiceQuestionType\ServiceQuestionType::SELECT)) ? '' : 'display: none;'}}">--}}
-{{--            <h5>Price Effect</h5>--}}
-{{--            <hr>--}}
-{{--            <div class="kt_sortable_portlets">--}}
-{{--                <div class="row">--}}
-{{--                    <div class="form-group col-sm-6">--}}
-{{--                        {!! Form::label('price_effect_yes', 'Price Effect (Yes)', ['class' => "col-form-label"]) !!}--}}
-{{--                        {!! Form::number('price_effect_yes[]', $price_effect_yes ?? 0, ['class' => "form-control input-price-effect-yes", "required" => "required"]) !!}--}}
-{{--                    </div>--}}
-{{--                    <div class="form-group col-sm-6">--}}
-{{--                        {!! Form::label('price_effect_no', 'Price Effect (No)', ['class' => "col-form-label"]) !!}--}}
-{{--                        {!! Form::number('price_effect_no[]', $price_effect_no ?? 0, ['class' => "form-control input-price-effect-no", "required" => "required"]) !!}--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
     </div>
 </div>

@@ -70,6 +70,12 @@ class ProductController extends Controller
             'reviews',
         ])->get();
 
+        foreach ($products as $product) {
+            $product->reviews_cnt = $product->reviews_count;
+            $product->reviews_avg = $product->reviews_average;
+            $product->quantity = 0;
+        }
+
         return $products;
     }
 

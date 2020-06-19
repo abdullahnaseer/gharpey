@@ -130,14 +130,12 @@ Route::namespace('Buyer')->name('buyer.')->group(function () {
     Route::resource('shop.product', 'Shop\ProductController');
     Route::resource('shop', 'Shop\ShopController');
 
+    // Product Cart Order Checkout
     Route::get('checkout', 'Product\CheckoutController@getShipping')->name('checkout.shipping.get');
     Route::post('checkout', 'Product\CheckoutController@postShipping')->name('checkout.shipping.post');
-
     Route::get('checkout/payment', 'Product\CheckoutController@getPayment')->name('checkout.payment.get');
     Route::post('checkout/payment', 'Product\CheckoutController@postPayment')->name('checkout.payment.post');
-
     Route::post('checkout/charge', 'Product\CheckoutController@charge')->name('checkout.charge');
-
     Route::get('checkout/success', 'Product\CheckoutController@success')->name('checkout.success');
 
     Route::resource('cart', 'Product\CartController')->only(['index', 'store']);
@@ -145,8 +143,17 @@ Route::namespace('Buyer')->name('buyer.')->group(function () {
     Route::resource('products.wishlist', 'Product\WishlistController')->only(['index', 'create', 'store']);
 
     // Service Routes
-    Route::resource('services', 'ServiceController')->only(['index', 'show', 'store']);
-    Route::resource('services.sellers', 'ServiceSellerController')->only(['show']);
+    Route::resource('services', 'Service\ServiceController')->only(['index', 'show']);
+    Route::resource('services.sellers', 'Service\ServiceSellerController')->only(['show', 'store']);
+    Route::resource('service_requests', 'Service\ServiceRequestController')->only(['show']);
+
+    // Service Request Checkout Routes
+    Route::get('service_request/{service_request_id}/checkout', 'Service\CheckoutController@getShipping')->name('service.checkout.shipping.get');
+    Route::post('service_request/{service_request_id}/checkout', 'Service\CheckoutController@postShipping')->name('service.checkout.shipping.post');
+    Route::get('service_request/{service_request_id}/checkout/payment', 'Service\CheckoutController@getPayment')->name('service.checkout.payment.get');
+    Route::post('service_request/{service_request_id}/checkout/payment', 'Service\CheckoutController@postPayment')->name('service.checkout.payment.post');
+    Route::post('service_request/{service_request_id}/checkout/charge', 'Service\CheckoutController@charge')->name('service.checkout.charge');
+    Route::get('service_request/{service_request_id}/checkout/success', 'Service\CheckoutController@success')->name('service.checkout.success');
 
     Route::name('account.')->prefix('account')->namespace('Account')->middleware('auth:buyer')->group(function () {
         Route::get('/', 'AccountController@index')->name('index');

@@ -11,7 +11,10 @@ class ServiceRequest extends Model
      *
      * @var array
      */
-    protected $dates = ['completed_at'];
+    protected $dates = [
+        'completed_at',
+        'paid_at'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +22,19 @@ class ServiceRequest extends Model
      * @var array
      */
     protected $fillable = [
-        'service_seller_id', 'buyer_id', 'location_id', 'description', 'completed_at'
+        'service_seller_id',
+        'buyer_id',
+        'location_id',
+        'description',
+        'completed_at',
+        'total_amount',
+
+        'shipping_phone',
+        'shipping_address',
+        'shipping_location_id',
+        'charge_id',
+        'paid_at',
+        'receipt_email'
     ];
 
     /**
@@ -33,9 +48,9 @@ class ServiceRequest extends Model
     /**
      * Get the service for the service request.
      */
-    public function service()
+    public function service_seller()
     {
-        return $this->belongsTo('App\Models\Service');
+        return $this->belongsTo('App\Models\ServiceSeller');
     }
 
     /**
@@ -69,5 +84,17 @@ class ServiceRequest extends Model
     public function invoices()
     {
         return $this->hasMany('App\Models\ServiceRequestInvoice', 'request_id', 'id');
+    }
+
+
+    /**
+     * Scope a query to only include active users.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeUnpaid($query)
+    {
+        return $query->whereNull('paid_at');
     }
 }

@@ -25,15 +25,15 @@ class Service extends Model
 
     ];
 
-    public static function getRules($request, $isEdit = false)
+    public static function getRules($request, $editId = false)
     {
         $rules = [
-            'service_id' => 'required|exists:services,id|unique:service_seller,service_id,NULL,id,seller_id,' . $request->user()->id,
             'price' => 'required|numeric|min:100|max:20000',
             'short_description' => 'required|min:10|max:1000',
             'long_description' => 'max:25000',
-            'cities' => 'required|exists:cities,id',
-            'featured_image' => 'required|file|image',
+            'cities' => 'required|array',
+            'cities.*' => 'required|exists:cities,id',
+            'featured_image' => ($editId ? 'file|image' : 'required|file|image'),
 
             'name' => 'required|array',
             'name.*' => 'required|min:3|max:255',
@@ -46,6 +46,9 @@ class Service extends Model
 //            'is_required' => 'required|array',
 //            'is_required.*' => 'required|string|in:0,1'
         ];
+
+        if(!isset($editId))
+            $rules['service_id'] = 'required|exists:services,id|unique:service_seller,service_id,NULL,id,seller_id,' . $request->user()->id;
 
         $i = 0;
         foreach ($request->input('type', []) as $input) {

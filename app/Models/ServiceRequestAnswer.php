@@ -12,7 +12,7 @@ class ServiceRequestAnswer extends Model
      * @var array
      */
     protected $fillable = [
-        'request_id', 'question_id', 'answer_id', 'answer_type'
+        'request_id', 'question_id', 'answer_id', 'answer_type', 'name', 'question', 'type'
     ];
 
     /**
@@ -27,7 +27,7 @@ class ServiceRequestAnswer extends Model
     /**
      * Get the question for the answer.
      */
-    public function question()
+    public function service_question()
     {
         return $this->belongsTo('App\Models\ServiceQuestion');
     }

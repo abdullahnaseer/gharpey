@@ -13,7 +13,7 @@ class ServiceRequestAnswerChoice extends Model
      * @var array
      */
     protected $fillable = [
-        'choice_id'
+        'choice_id', 'choice', 'price_change'
     ];
 
     /**

@@ -13,7 +13,7 @@ $factory->define(\App\Models\ServiceQuestion::class, function (Faker $faker) {
         'name' => $faker->word,
         'question' => $faker->sentence . '?',
         'placeholder' => $faker->sentence,
-        'auth_rule' => $faker->randomElement($types),
+//        'auth_rule' => $faker->randomElement($types),
         'type' => $faker->randomElement(ServiceQuestionType::getAllTypes()),
     ];
 });

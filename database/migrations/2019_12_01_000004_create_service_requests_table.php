@@ -19,7 +19,18 @@ class CreateServiceRequestsTable extends Migration
             $table->unsignedBigInteger('buyer_id')->index()->nullable();
             $table->unsignedBigInteger('location_id')->index()->nullable();
             $table->string('location_type')->default("App\\\Models\\\City");
+
+            $table->integer('total_amount')->nullable();
+            $table->string('shipping_phone')->nullable();
+            $table->string('shipping_address')->nullable();
+            $table->unsignedBigInteger('shipping_location_id')->index()->nullable();
+
+            $table->string('receipt_email')->nullable();
+            $table->string('charge_id')->nullable(); // stripe transaction id or other
+            $table->mediumText('note')->nullable();
+            $table->timestamp('paid_at')->nullable();
             $table->timestamp('completed_at')->nullable();
+
             $table->timestamps();
 
             $table->foreign('service_seller_id')->references('id')->on('service_seller')->onDelete('set null');

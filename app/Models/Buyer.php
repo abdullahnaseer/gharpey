@@ -143,4 +143,13 @@ class Buyer extends Authenticatable implements MustVerifyEmail
             ->withTimestamps()
             ->using(Wishlist::class);
     }
+
+
+    /**
+     * Get the service_requests for the buyer.
+     */
+    public function service_requests()
+    {
+        return $this->hasMany(ServiceRequest::class);
+    }
 }

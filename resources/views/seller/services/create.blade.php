@@ -21,8 +21,13 @@
 
 @section('content')
     @php($i = 0)
-    {{ Form::open(['route' => 'seller.services.store', 'method' => 'POST', 'files' => true, 'id' => 'service-form' ,'novalidate']) }}
-        @include('seller.services.includes.form')
+    @if(isset($service_seller))
+        {{ Form::open(['route' => ['seller.services.update', $service_seller->service_id], 'method' => 'PUT', 'files' => true, 'id' => 'service-form' ,'novalidate']) }}
+    @else
+        {{ Form::open(['route' => 'seller.services.store', 'method' => 'POST', 'files' => true, 'id' => 'service-form' ,'novalidate']) }}
+    @endif
+
+    @include('seller.services.includes.form')
     {{ Form::close() }}
 @stop
 

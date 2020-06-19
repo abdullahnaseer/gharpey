@@ -3,6 +3,7 @@
 
 namespace App\Helpers\ServiceQuestionType;
 
+use App\Models\ServiceQuestionChoices;
 use App\Models\ServiceRequestAnswerChoice;
 use Form;
 use Illuminate\Support\HtmlString;
@@ -18,7 +19,23 @@ class ServiceQuestionTypeSelectMultiple extends ServiceQuestionType
     {
         parent::handleIsRequired($options, $is_required);
         parent::handleMultiple($options);
-        return Form::select($name . '[]', $selectList, $value, $options);
+//        return Form::select($name . '[]', $selectList, $value, $options);
+
+        $html = "";
+        if(!empty($selectList))
+        {
+            foreach ($selectList as $choice)
+            {
+                $html .= "<div class=\"checkbox\">";
+                $html .= "<label for=\"".$name."\">";
+                $html .= Form::checkbox($name. '[]', $choice->id, null, ['class' => '']);
+//                $html .= "<input class=\"form-check-input\" type=\"radio\" name=\"exampleRadios\" id=\"exampleRadios1\" value=\"option1\" checked>";
+                $html .= "&nbsp;" . $choice->choice . (empty($choice->price_change) ? '' : ( '  <span class="'. ($choice->price_change > 0 ? 'text-danger' : 'text-success') .'">[' . 'RS.' . $choice->price_change . ']</span>' ) );
+                $html .= "</label>";
+                $html .= "</div>";
+            }
+        }
+        return new HtmlString($html);
     }
 
     /**
@@ -51,7 +68,15 @@ class ServiceQuestionTypeSelectMultiple extends ServiceQuestionType
         $answers = [];
 
         foreach ($answer as $vd)
-            $answers[] = ServiceRequestAnswerChoice::create(['choice_id' => $vd]);
+        {
+            $choice = ServiceQuestionChoices::find($vd);
+            if(!is_null($choice))
+                $answers[] = ServiceRequestAnswerChoice::create([
+                    'choice_id' => $choice->id,
+                    'choice' => $choice->choice,
+                    'price_change' => $choice->price_change,
+                ]);
+        }
 
         return $answers;
     }

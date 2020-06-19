@@ -27,8 +27,8 @@
                         <div class="input-group">
                             <select class="form-control custom-select" name="city_id" id="city_id_input" aria-label="Select City" required="required">
                                 <option selected disabled value="">Select City...</option>
-                                @foreach($cities as $city)
-                                    <option value="{{$city->id}}" @if(app('request')->input('city_id') == $city->id) selected @endif>{{$city->name}}</option>
+                                @foreach($cities as $city_i)
+                                    <option value="{{$city_i->id}}" @if(app('request')->input('city_id') == $city_i->id) selected @endif>{{$city_i->name}}</option>
                                 @endforeach
                             </select>
                             <div class="input-group-append">
@@ -138,13 +138,13 @@
                                     {{--                                        <span>Add to Wishlist</span>--}}
                                     {{--                                    </a>--}}
 
-                                    <a href="#questionsModal" class="paction add-cart" title="Order Now" data-toggle="modal" data-target="#questionsModal" data-id="{{$service_seller->id}}">
+{{--                                    <a href="#questionsModal" class="paction add-cart" title="Order Now" data-toggle="modal" data-target="#questionsModal" data-id="{{$service_seller->id}}">--}}
+{{--                                        <span>Order Now</span>--}}
+{{--                                    </a>--}}
+
+                                    <a href="{{route('buyer.services.sellers.show', [$service->slug, $service_seller->id, 'city_id' => $city ? $city->id : null])}}" class="paction add-cart" title="Order Now">
                                         <span>Order Now</span>
                                     </a>
-
-                                    {{--                                    <a href="#" class="paction add-compare" title="Add to Compare">--}}
-                                    {{--                                        <span>Add to Compare</span>--}}
-                                    {{--                                    </a>--}}
                                 </div><!-- End .product-action -->
                             </div><!-- End .product-details -->
                         </div>
@@ -221,238 +221,5 @@
         </div><!-- End .container -->
 
         <div class="mb-5"></div><!-- margin -->
-
-        <div class="modal fade service-question-modal questions-modal" id="questionsModal" tabindex="-1" role="dialog"
-             aria-labelledby="questionsModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form action="{{route('buyer.services.store', [$service->id])}}" method="POST" enctype="multipart/form-data"
-                          id="questionsForm">
-                        @csrf
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="questionsModalLabel">Answer these questions for quotation</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <input id="service_id" type="hidden" name="service_id"
-                                   value="{{$service->id}}"/>
-                            <input id="service_seller_id" type="hidden" name="service_seller_id"
-                                   value=""/>
-                            <input id="city_id" type="hidden" name="city_id"
-                                   value="{{$city->id}}"/>
-                            <div class="alert alert-danger" id="error" style="display: none;"></div>
-                            @php($i = 1)
-                            @php($question_ids = [])
-                            @foreach($service->questions as $question)
-                                @php($required = false)
-                                @php($continue = false)
-                                @if(($question->auth_rule->isOnlyForAuthenticatedUser()))
-                                    @unless(auth()->check())
-                                        @php($continue = true)
-                                    @endunless
-                                @endif
-                                @if(($question->auth_rule->isOnlyForGuestUser()))
-                                    @unless(auth()->guest())
-                                        @php($continue = true)
-                                    @endunless
-                                @endif
-                                @if($question->is_required || true)  {{-- Forced True--}}
-                                    @php($required = $question->is_required = true)
-                                @endif
-                                @continue($continue)
-                                <div class="service-question service-question-{{$question->type->text}}"
-                                     id="service-question-{{ (empty($question->id) ? $question->name : $question->id) }}"
-                                     @if($i != 1) style="display: none;" @endif
-                                     data-required="{{$required}}"
-                                     data-type="{{$question->type->getTypeClass()}}">
-
-                                    <h3>{{$question->question}}{{ $required ? '*' : '' }} </h3>
-                                    {!! $question->type->getHtml("answer-" . (empty($question->id) ? $question->name : $question->id), null, true, ['class' => 'form-control'], $question->choices) !!}
-                                </div>
-                                @php(array_push($question_ids, (empty($question->id) ? $question->name : ((int) $question->id)) ))
-                                @php($i++)
-                            @endforeach
-                            <div class="alert alert-success" style="display: none;" id="loading">Submiting
-                                Request...
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            {{--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
-                            @unless(isset($question_ids[0]) && (
-                                            $service->questions
-                                            ->where(is_string($question_ids[0]) ? 'name' : 'id', $question_ids[0])
-                                            ->first()->is_required
-                                            )
-                                        )
-                                <button type="button" class="btn btn-outline-danger" id="skip">Skip</button>
-                            @endunless
-                            <button type="button" class="btn btn-primary" id="back" style="display: none;">Back
-                            </button>
-                            <button type="button" class="btn btn-primary" id="next">Next</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    @endif
-@endsection
-
-
-@section('scripts')
-    @if(isset($service_sellers))
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-        <script type="text/javascript">
-            $(document).ready(function () {
-
-                $('#questionsModal').on('show.bs.modal', function (event) {
-                    var button = $(event.relatedTarget) // Button that triggered the modal
-                    var service_seller_id = button.data('id') // Extract info from data-* attributes
-                    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-                    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-                    var modal = $(this);
-                    modal.find('#service_seller_id').val(service_seller_id)
-                    console.log('service_seller_id: ' + service_seller_id)
-                })
-
-                $(".datepicker").datepicker({minDate: "+1D", maxDate: "+2M", defaultDate: new Date()});
-                $(".datepicker").datepicker("setDate", "+1d");
-
-                var city = $('#city_id');
-                var city_input = $('#city_id_input');
-
-                city.val(parseInt(city_input.val()));
-                city_input.on('change', function () {
-                    city.val(parseInt(city_input.val()));
-                });
-
-                var questions = {!! json_encode($question_ids) !!};
-                var currentQuestionIndex = 0;
-                var countQuestions = {{ count($question_ids) }};
-
-                $("#next").click(function () {
-                    // Check Validity
-                    var error = $('#error');
-                    var loading = $('#loading');
-                    var question = $("#service-question-" + questions[currentQuestionIndex]);
-                    var type = question.data("type");
-                    var required = question.data("required");
-
-                    if (type == '{!! str_replace( "\\", "\\\\", \App\Helpers\ServiceQuestionType\ServiceQuestionTypeSelectMultiple::class ) !!}') {
-                        var inpObj = $("input[name='answer-" + questions[currentQuestionIndex] + "[]']:checked");
-                        if (required == 1) {
-                            if (!inpObj.length) {
-                                error.html("Please select one of these options.");
-                                error.slideDown();
-                                return false;
-                            }
-                        }
-                    } else if (type == '{!! str_replace( "\\", "\\\\", \App\Helpers\ServiceQuestionType\ServiceQuestionTypeFileMultiple::class) !!}') {
-                        var inpObj = document.getElementsByName("answer-" + questions[currentQuestionIndex] + "[]");
-                        if (!inpObj[0].checkValidity()) {
-                            error.html(inpObj[0].validationMessage);
-                            error.slideDown();
-                            return false;
-                        }
-                    } else if (type == '{!! str_replace( "\\", "\\\\", \App\Helpers\ServiceQuestionType\ServiceQuestionTypeTextMultiline::class) !!}') {
-                        var inpObj = $("textarea[name='answer-" + questions[currentQuestionIndex] + "']");
-                        if (!inpObj[0].checkValidity()) {
-                            error.html(inpObj[0].validationMessage);
-                            error.slideDown();
-                            return false;
-                        }
-                    } else {
-                        var inpObj = $("input[name='answer-" + questions[currentQuestionIndex] + "']");
-                        if (!inpObj[0].checkValidity()) {
-                            error.html(inpObj[0].validationMessage);
-                            error.slideDown();
-                            return false;
-                        }
-                    }
-                    error.slideUp();
-
-
-                    $("#service-question-" + questions[currentQuestionIndex]).slideUp(400, function () {
-                        // Animation complete.
-                        if (currentQuestionIndex >= countQuestions - 1) // Check if last question
-                        {
-                            loading.slideDown();
-                            $('#back').hide();
-                            $('#questionsForm').submit();
-                            console.log('Last question');
-                        } else {
-                            currentQuestionIndex++;
-                            if ($("#service-question-" + questions[currentQuestionIndex]).data("required") == 1)
-                                $('#skip').hide();
-                            else
-                            {
-                                if (currentQuestionIndex < countQuestions - 1) // Check if not last question
-                                    $('#skip').show();
-                            }
-
-                            $('#back').show();
-                            $("#service-question-" + questions[currentQuestionIndex]).slideDown(400);
-                        }
-                    });
-                });
-
-
-                $("#back").click(function () {
-                    if (currentQuestionIndex > 0) // Check if first question
-                    {
-                        $("#service-question-" + questions[currentQuestionIndex]).slideUp(400, function () {
-                            // Animation complete.
-                            currentQuestionIndex--;
-                            if (currentQuestionIndex <= 0) {
-                                $('#back').hide();
-                            }
-                            if ($("#service-question-" + questions[currentQuestionIndex]).data("required") == 1)
-                                $('#skip').hide();
-                            else
-                            {
-                                if (currentQuestionIndex < countQuestions - 1) // Check if not last question
-                                    $('#skip').show();
-                            }
-
-                            $("#service-question-" + questions[currentQuestionIndex]).slideDown(400);
-
-                        });
-                    }
-                });
-
-                $("#skip").click(function () {
-                    $("#service-question-" + questions[currentQuestionIndex]).slideUp(400, function () {
-                        // Animation complete.
-                        if (currentQuestionIndex >= countQuestions - 1) // Check if last question
-                        {
-                            loading.slideDown();
-                            $('#back').hide();
-                            $('#questionsForm').submit();
-                            console.log('Last question');
-                        } else {
-                            currentQuestionIndex++;
-                            if ($("#service-question-" + questions[currentQuestionIndex]).data("required") == 1)
-                                $('#skip').hide();
-                            else
-                            {
-                                if (currentQuestionIndex < countQuestions - 1) // Check if not last question
-                                    $('#skip').show();
-                            }
-
-                            $('#back').show();
-                            $("#service-question-" + questions[currentQuestionIndex]).slideDown(400);
-                        }
-                    });
-                });
-
-                $('.input-service-name').text($(".service-name").val());
-            });
-
-
-        </script>
-
-        <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js"></script>
     @endif
 @endsection

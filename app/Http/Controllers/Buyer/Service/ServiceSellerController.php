@@ -1,38 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Buyer;
+namespace App\Http\Controllers\Buyer\Service;
 
 use App\Http\Controllers\Controller;
 use App\Models\Buyer;
 use App\Models\City;
 use App\Models\Referral;
 use App\Models\Service;
-use App\Models\ServiceCategory;
 use App\Models\ServiceQuestion;
+use App\Models\ServiceQuestionChoices;
 use App\Models\ServiceRequest;
 use App\Models\ServiceRequestAnswer;
-use App\Models\ServiceRequestAnswerBoolean;
-use App\Models\ServiceRequestAnswerChoice;
-use App\Models\ServiceRequestAnswerDate;
-use App\Models\ServiceRequestAnswerDateTime;
-use App\Models\ServiceRequestAnswerFile;
-use App\Models\ServiceRequestAnswerText;
-use App\Models\ServiceRequestAnswerTextMultiline;
-use App\Models\ServiceRequestAnswerTime;
 use App\Models\ServiceSeller;
 use App\Models\User;
 use App\Rules\Phone;
 use App\Rules\ServiceRequestLocation;
-use Carbon\Carbon;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
-use Illuminate\View\View;
 
 
-class ServiceController extends Controller
+class ServiceSellerController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -45,49 +34,38 @@ class ServiceController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return Factory|View
-     */
-    public function index()
-    {
-        return view('buyer.services.index', [
-            'categories' => ServiceCategory::with(['services'])->get()
-        ]);
-    }
-
-    /**
      * Show the service page.
      *
      * @return mixed
      */
-    public function show(Request $request, $service_slug)
+    public function show(Request $request, $service_slug, $service_seller_id)
     {
-        $service = Service::where('slug', $service_slug)->with(['category', 'category.services', 'questions'])->firstOrFail();
         $cities = City::all();
+        $city = City::find($request->input('city_id'));
+
+        $service_seller = ServiceSeller::with(['seller', 'reviews', 'questions'])
+            ->whereHas('cities', function (Builder $query) use ($request) {
+                if ($request->has('city_id'))
+                    $query->where('location_id', $request->input('city_id'));
+            })
+            ->findOrFail($service_seller_id);
+        $service = Service::where('slug', $service_slug)
+            ->with(['category'])
+            ->findOrFail($service_seller->service_id);
 
         if(auth()->guest())
-            foreach (collect(ServiceQuestion::getGuestUserQuestions())->reverse() as $q)
-               $service->questions->prepend($q);
-
-        if ($request->has('city_id')) {
-            $city = City::with(['state'])->findOrFail($request->input('city_id'));
-
-            $service_sellers = ServiceSeller::whereHas('cities', function (Builder $query) use ($request) {
-                $query->where('location_id', $request->input('city_id'));
-            })->where('service_id', $service->id)
-                ->with(['seller'])
-                ->get();
+        {
+            foreach (ServiceQuestion::getGuestUserQuestions()->reverse() as $question)
+                $service_seller->questions->prepend ($question);
         }
 
-        return view('buyer.services.show', [
+        return view('buyer.services.sellers.show', [
             'service' => $service,
+            'service_seller' => $service_seller,
             'cities' => $cities,
-            'city' => isset($city) ? $city : null,
-            'service_sellers' => isset($service_sellers) ? $service_sellers : null
+            'city' => $city
         ]);
     }
-
 
     /**
      * Store request data.
@@ -95,10 +73,10 @@ class ServiceController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function store(Request $request)
+    public function store(Request $request, $service_id)
     {
-        $service = Service::with(['questions'])->findOrFail((int)$request->input('service_id'));
-        $service_seller = ServiceSeller::with([])->findOrFail((int)$request->input('service_seller_id'));
+        $service = Service::with([])->findOrFail((int) $service_id);
+        $service_seller = ServiceSeller::with(['questions'])->findOrFail((int)$request->input('service_seller_id'));
 
         $validatedData = $this->validateAnswers($service, $service_seller, $request);
 
@@ -111,13 +89,15 @@ class ServiceController extends Controller
             unset($validatedData['answer-phone']);
         }
 
+        $amount = (double) $service_seller->price;
+
         $serviceRequest = ServiceRequest::create([
             'service_seller_id' => $service_seller->id,
             'buyer_id' => auth('buyer')->id(),
             'location_id' => City::find($validatedData['city_id'])->id
         ]);
 
-        foreach ($service->questions as $q) {
+        foreach ($service_seller->questions as $q) {
             $name = 'answer-' . $q->id;
 
             if (isset($validatedData[$name])) {
@@ -130,20 +110,35 @@ class ServiceController extends Controller
                         continue;
                 }
 
-                $answers = $q->type->saveAnswer($validatedData[$name], ['path' => 'public/service-requests/' . $serviceRequest->id]);
+                $answers = $q->type->saveAnswer(
+                    $validatedData[$name],
+                    [
+                        'path' => 'public/service-requests/' . $serviceRequest->id
+                    ]
+                );
 
                 foreach ($answers as $answer) {
+                    if(isset($answer->price_change) && !empty($answer->price_change))
+                        $amount += (double) $answer->price_change;
+
                     $serviceRequestAnswer = ServiceRequestAnswer::create([
                         'request_id' => $serviceRequest->id,
                         'question_id' => $q->id,
                         'answer_id' => $answer->id,
-                        'answer_type' => get_class($answer)
+                        'answer_type' => get_class($answer),
+
+                        'name' => $q->name,
+                        'question' => $q->question,
+                        'type' => get_class($q->type),
                     ]);
                 }
             }
         }
 
-        return view("buyer.services.success");
+        $serviceRequest->update(['total_amount' => $amount]);
+
+        return redirect(route("buyer.service.checkout.shipping.get", [$serviceRequest->id]));
+//        return view("buyer.services.success");
     }
 
     /**
@@ -169,11 +164,11 @@ class ServiceController extends Controller
         if(auth()->guest())
         {
             $rules['answer-name'] = 'required|string|max:100';
-            $rules['answer-email'] = 'required|email|unique:users,email';
+            $rules['answer-email'] = 'required|email|unique:buyers,email';
             $rules['answer-phone'] = ['required', new Phone()];
         }
 
-        foreach ($service->questions as $q) {
+        foreach ($service_seller->questions as $q) {
             $name = 'answer-' . $q->id;
             $rules[$name] = [];
 

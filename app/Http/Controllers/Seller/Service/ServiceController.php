@@ -109,13 +109,13 @@ class ServiceController extends Controller
             ]);
 
             if ($question->type->isSelect()) {
-                $k = 1;
-                foreach ($request->input('choices.' . $i) as $choice) {
+                $k = 0;
+                foreach ($request->input('choice_text.' . $i, []) as $choice) {
                     $choice = ServiceQuestionChoices::create([
-                        'order_priority' => $k++,
+                        'order_priority' => $k,
                         'question_id' => $question->id,
                         'choice' => $choice,
-                        'price_change' => $request->input('choices.' . $i . '.' . $k)
+                        'price_change' => $request->input('choice_price_effect.' . $i . '.' . $k)
                     ]);
                     $k++;
                 }
@@ -135,15 +135,13 @@ class ServiceController extends Controller
     {
         $record = ServiceSeller::where('seller_id', auth('seller')->id())
             ->where('service_id', $record_id)
-            ->with(['seller', 'service'])
+            ->with(['seller', 'service', 'cities', 'questions', 'questions.choices'])
             ->firstOrFail();
 
         // Only Retrieve services which are not already offered by authenticated seller
         $services = auth()->user()->services()->get()->pluck('id');
 
-        $categories = ServiceCategory::has('services')->with(['services' => function ($query) use ($services) {
-            $query->whereNotIn('id', $services);
-        }])->get();
+        $categories = ServiceCategory::has('services')->with(['services'])->get();
 
         return view('seller.services.create', [
             'service_seller' => $record,
@@ -162,25 +160,45 @@ class ServiceController extends Controller
      */
     public function update(Request $request, int $record_id)
     {
-        $request->validate([
-            'service_id' => 'required|exists:services,id|unique:service_seller,service_id,' . $record_id . ',service_id,seller_id,' . auth()->id(),
-            'price' => 'required|numeric|min:100|max:20000',
-            'description' => 'required|min:10|max:1000',
-            'cities' => 'required|exists:cities,id',
-            'featured_image' => 'required|file|image',
-        ]);
+        $request->validate(Service::getRules($request, $record_id));
 
         $record = ServiceSeller::where('seller_id', auth('seller')->id())
             ->where('service_id', $record_id)
             ->firstOrFail();
 
-        $fields = $request->only(['service_id', 'name', 'description', 'price']);
+        $fields = $request->only(['service_id', 'short_description', 'long_description', 'price']);
         $fields['seller_id'] = auth('seller')->id();
         if ($request->hasFile('featured_image'))
             $fields['featured_image'] = $request->file('featured_image')->store('public/services');
 
         $record->update($fields);
-        $record->states()->sync($request->input('cities'));
+        $record->cities()->sync($request->input('cities'));
+
+        $record->questions()->delete();
+
+        for ($i = 0, $iMax = count($request->input('name', [])); $i < $iMax; $i++) {
+            $question = $record->questions()->create([
+                'order_priority' => $i + 1,
+                'name' => $request->input('name')[$i],
+                'question' => $request->input('question')[$i],
+                'type' => $request->input('type')[$i],
+//                'is_required' => $request->input('is_required', [])[$i] === '1',
+//                'auth_rule' => $request->input('auth_type', [])[$i]
+            ]);
+
+            if ($question->type->isSelect()) {
+                $k = 0;
+                foreach ($request->input('choice_text.' . $i, []) as $choice) {
+                    $choice = ServiceQuestionChoices::create([
+                        'order_priority' => $k + 1,
+                        'question_id' => $question->id,
+                        'choice' => $choice,
+                        'price_change' => $request->input('choice_price_effect.' . $i . '.' . $k)
+                    ]);
+                    $k++;
+                }
+            }
+        }
 
         flash('Successfully modified the record!')->success();
         return redirect()->route('seller.services.index');

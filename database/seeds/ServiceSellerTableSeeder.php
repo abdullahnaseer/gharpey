@@ -29,6 +29,13 @@ class ServiceSellerTableSeeder extends Seeder
                     {
                         $serviceSeller->save();
                         $serviceSeller->cities()->sync($cities->random(7)->pluck('id'));
+
+                        for ($i = 0, $iMax = rand(4, 8); $i <= $iMax; $i++)
+                        {
+                            $question = ($serviceSeller->questions()->save(factory(App\Models\ServiceQuestion::class)->make([])));
+                            if($question->type->isSelect())
+                                factory(App\Models\ServiceQuestionChoices::class, rand(3,7))->create(['question_id' => $question->id]);
+                        }
                     }
                 });
 

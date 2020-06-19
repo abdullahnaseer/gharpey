@@ -10,6 +10,7 @@ namespace App\Helpers;
 use App\Helpers\ServiceQuestionType\ServiceQuestionTypeEmail;
 use App\Helpers\ServiceQuestionType\ServiceQuestionTypePhone;
 use App\Helpers\ServiceQuestionType\ServiceQuestionTypeText;
+use Illuminate\Support\Collection;
 
 trait DefaultServiceQuestionsTrait
 {
@@ -17,15 +18,15 @@ trait DefaultServiceQuestionsTrait
     /**
      * Get default questions for uGuest User.
      *
-     * @return array
+     * @return Collection
      */
-    public static function getGuestUserQuestions(): array
+    public static function getGuestUserQuestions(): Collection
     {
-        return [
+        return collect([
             self::getGuestNameQuestion(),
             self::getGuestEmailQuestion(),
             self::getGuestPhoneQuestion(),
-        ];
+        ]);
     }
 
     /**

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Helpers\ServiceQuestionType\ServiceQuestionType;
 
 class CreateServiceRequestAnswersTable extends Migration
 {
@@ -16,13 +17,18 @@ class CreateServiceRequestAnswersTable extends Migration
         Schema::create('service_request_answers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('request_id')->index();
-            $table->unsignedBigInteger('question_id')->index();
+            $table->unsignedBigInteger('question_id')->index()->nullable();
             $table->unsignedBigInteger('answer_id')->index();
             $table->string('answer_type');
+
+            $table->string('name')->nullable();
+            $table->text('question')->nullable();
+            $table->enum('type', ServiceQuestionType::getAllTypesWithStringSafe())->default(str_replace("\\", "\\\\\\", ServiceQuestionType::TEXT));
+
             $table->timestamps();
 
             $table->foreign('request_id')->references('id')->on('service_requests')->onDelete('cascade');
-            $table->foreign('question_id')->references('id')->on('service_questions')->onDelete('cascade');
+            $table->foreign('question_id')->references('id')->on('service_questions')->onDelete('set null');
         });
 
         Schema::create('service_request_answer_texts', function (Blueprint $table) {
@@ -37,9 +43,12 @@ class CreateServiceRequestAnswersTable extends Migration
 
         Schema::create('service_request_answer_choices', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('choice_id')->index();
+            $table->unsignedBigInteger('choice_id')->index()->nullable();
 
-            $table->foreign('choice_id')->references('id')->on('service_question_choices')->onDelete('cascade');
+            $table->string('choice')->nullable();
+            $table->integer('price_change')->nullable();
+
+            $table->foreign('choice_id')->references('id')->on('service_question_choices')->onDelete('set null');
         });
 
         Schema::create('service_request_answer_text_multilines', function (Blueprint $table) {

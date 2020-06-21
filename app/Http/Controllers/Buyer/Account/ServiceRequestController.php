@@ -15,7 +15,9 @@ class ServiceRequestController extends Controller
      */
     public function index()
     {
-        //
+        return view('buyer.account.service_requests.index', [
+            'service_requests' => auth()->user()->service_requests()->with(['service_seller', 'service_seller.service'])->get()
+        ]);
     }
 
     /**

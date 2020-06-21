@@ -30,7 +30,7 @@
                         @guest('buyer')
                             <form method="POST" action="{{ route('buyer.login') }}">
                                 @csrf
-                                <input type="hidden" name="return_url" value="{{route('buyer.checkout.shipping.get')}}">
+                                <input type="hidden" name="return_url" value="{{route('buyer.service.checkout.shipping.get', [$service_request->id])}}">
 
                                 <div class="form-group required-field">
                                     <label>Email Address </label>
@@ -74,8 +74,17 @@
                             </form>
                         @endguest
 
-                        <form action="{{route('buyer.service.checkout.shipping.post', [$service_request->id])}}" method="POST">
+                        <form
+                        @if(auth()->check())
+                            action="{{route('buyer.service.checkout.shipping.post', [$service_request->id])}}"
+                        @else
+                            action="{{route('buyer.register')}}"
+                        @endif
+                            method="POST">
+
                             @csrf
+                            <input type="hidden" name="return_url" value="{{route('buyer.service.checkout.shipping.get', [$service_request->id])}}">
+
                             <div class="form-group required-field">
                                 <label>Name</label>
                                 <input name="name" type="text" class="form-control  @error('name') is-invalid @enderror" required value="{{old('name', auth('buyer')->check() ? auth('buyer')->user()->name : null)}}">
@@ -87,16 +96,49 @@
                                 @enderror
                             </div>
 
+                            <div class="form-group required-field">
+                                <label>Phone Number </label>
+                                <div class="form-control-tooltip">
+                                    <input name="phone" type="tel" class="form-control  @error('phone') is-invalid @enderror" required value="{{old('phone', auth('buyer')->check() ? auth('buyer')->user()->phone : null)}}">
+                                    <span class="input-tooltip" data-toggle="tooltip" title="For delivery questions." data-placement="right"><i class="icon-question-circle"></i></span>
+
+                                    @error('phone')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <!-- End .form-control-tooltip -->
+                            </div>
+                            <!-- End .form-group -->
+
                             @if(auth()->guest())
                                 <div class="form-group required-field">
-                                    <label>Receipt Email</label>
-                                    <input name="receipt_email" type="text" class="form-control  @error('receipt_email') is-invalid @enderror" required value="{{old('receipt_email', auth('buyer')->check() ? auth('buyer')->user()->email : null)}}">
+                                    <label>Email</label>
+                                    <input name="email" type="text" class="form-control  @error('email') is-invalid @enderror" required value="{{old('email', auth('buyer')->check() ? auth('buyer')->user()->email : null)}}">
 
-                                    @error('receipt_email')
+                                    @error('email')
                                     <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                </div>
+
+                                <div class="form-group required-field">
+                                    <label>Password</label>
+                                    <input name="password" type="password" class="form-control  @error('password') is-invalid @enderror" required>
+
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group required-field">
+                                    <label for="password-confirm">{{ __('Confirm Password') }}</label>
+
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             @endif
 
@@ -135,22 +177,6 @@
                                     @enderror
                                 </div>
                             </div>
-
-                            <div class="form-group required-field">
-                                <label>Phone Number </label>
-                                <div class="form-control-tooltip">
-                                    <input name="phone" type="tel" class="form-control  @error('phone') is-invalid @enderror" required value="{{old('phone', auth('buyer')->check() ? auth('buyer')->user()->phone : null)}}">
-                                    <span class="input-tooltip" data-toggle="tooltip" title="For delivery questions." data-placement="right"><i class="icon-question-circle"></i></span>
-
-                                    @error('phone')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                                <!-- End .form-control-tooltip -->
-                            </div>
-                            <!-- End .form-group -->
 
                             <div class="checkout-steps-action">
                                 <button class="btn btn-primary" type="submit">NEXT</button>

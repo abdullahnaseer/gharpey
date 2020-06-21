@@ -79,6 +79,10 @@
 
                                 <div class="product-desc">
                                     <p>{{\Str::limit($service_seller->short_description, 100)}}</p>
+                                    
+                                    <p>
+                                        <strong>Available:</strong> {{$service_seller->cities->pluck('name')->implode(", ")}}
+                                    </p>
                                 </div><!-- End .product-desc -->
 
                                 <div class="">
@@ -95,6 +99,7 @@
                                         </div>
                                     @endif
                                 </div>
+
 
                                 <div class="product-action product-all-icons">
                                     {{--                                        <div class="product-single-qty">--}}

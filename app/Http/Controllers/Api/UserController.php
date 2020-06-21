@@ -24,4 +24,21 @@ class UserController extends Controller
                 'data' => ['user' => $request->user()]
             ], 200);
     }
+
+    /**
+     * Return the product order history for logged in user.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function orderHistory(Request $request): JsonResponse
+    {
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Successfully Fetched Product Orders History for Buyer.',
+                'data' => ['user' => $request->user()->orders()->with(['items', 'items.product'])->get()]
+            ], 200);
+    }
+
 }

@@ -16,6 +16,15 @@ class Order extends Model
     ];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'charge_id'
+    ];
+
+    /**
      * Get the products for the order.
      */
     public function items()

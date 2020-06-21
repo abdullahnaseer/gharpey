@@ -32,13 +32,9 @@ class CheckoutController extends Controller
     public function getShipping(Request $request, $service_request_id)
     {
         $cart = Cart::session($request->session()->get('_token'));
-        $service_request = auth()->user()
-            ->service_requests()
-            ->unpaid()
+        $service_request = ServiceRequest::unpaid()
             ->with(['service_seller', 'service_seller.service'])
             ->findOrFail($service_request_id);
-
-//        dd($service_request);
 
         return view('buyer.services.checkout.shipping', [
             'user' => auth()->user(),
@@ -54,25 +50,29 @@ class CheckoutController extends Controller
      */
     public function postShipping(Request $request, $service_request_id)
     {
-        $service_request = auth()->user()
-            ->service_requests()
-            ->unpaid()
+        $service_request = ServiceRequest::unpaid()
             ->with(['service_seller', 'service_seller.service'])
             ->findOrFail($service_request_id);
 
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'min:8'],
+            'email' => auth('buyer')->check() ? '' : 'required|email',
+            'phone' => ['required', new Phone()],
+            'password' => auth('buyer')->check() ? '' : 'required|min:8',
             'address' => ['required', 'string', 'min:8'],
             'area' => ['required', 'integer', 'exists:city_areas,id'],
-            'phone' => ['required', new Phone()],
-            'receipt_email' => auth('buyer')->check() ? '' : 'required|email'
         ]);
+
+        // Register User here And Login them
+
+        $service_request->update(['location_id' => CityArea::findOrFail((int) $request->input('area'))->city_id]);
+        if(auth()->check())
+            $service_request->update(['buyer_id' => auth()->id()]);
 
         $request->session()->put('shipping', $validatedData);
 
         return redirect()->route('buyer.service.checkout.payment.get', [$service_request->id]);
     }
-
 
     /**
      * Display a form for payment.
@@ -81,9 +81,7 @@ class CheckoutController extends Controller
      */
     public function getPayment(Request $request, $service_request_id)
     {
-        $service_request = auth()->user()
-            ->service_requests()
-            ->unpaid()
+        $service_request = ServiceRequest::unpaid()
             ->with(['service_seller', 'service_seller.service'])
             ->findOrFail($service_request_id);
 
@@ -97,7 +95,7 @@ class CheckoutController extends Controller
         $shipping['area'] = CityArea::with(['city', 'city.state', 'city.state.country'])->findOrfail($shipping['area']);
 
         return view('buyer.services.checkout.payment', [
-            'user' => auth()->user(),
+            'user' => auth('buyer')->user(),
             'service_request' => $service_request,
             'shipping' => $shipping
         ]);
@@ -110,9 +108,7 @@ class CheckoutController extends Controller
      */
     public function postPayment(Request $request, $service_request_id)
     {
-        $service_request = auth()->user()
-            ->service_requests()
-            ->unpaid()
+        $service_request = ServiceRequest::unpaid()
             ->with(['service_seller', 'service_seller.service'])
             ->findOrFail($service_request_id);
 
@@ -135,16 +131,14 @@ class CheckoutController extends Controller
      */
     public function charge(Request $request, $service_request_id)
     {
-        $service_request = auth()->user()
-            ->service_requests()
-            ->unpaid()
-            ->with(['service_seller', 'service_seller.service', 'service_seller.seller'])
+        $service_request = ServiceRequest::unpaid()
+            ->with(['service_seller', 'service', 'seller'])
             ->findOrFail($service_request_id);
 
         $shipping = $request->session()->get('shipping');
         $amount = $service_request->total_amount;
         $buyer = auth('buyer')->check() ? auth()->user() : null;
-        $seller = $service_request->service_seller->seller;
+        $seller = $service_request->seller;
 
         try {
             // Set your secret key: remember to change this to your live secret key in production
@@ -165,7 +159,7 @@ class CheckoutController extends Controller
                 'shipping_phone' => $shipping['phone'],
                 'shipping_address' => $shipping['address'],
                 'shipping_location_id' => $shipping['area'],
-                'receipt_email' => is_null($buyer) ? $shipping['receipt_email'] : $buyer->email,
+                'receipt_email' => is_null($buyer) ? $shipping['email'] : $buyer->email,
                 'charge_id' => $charge->id,
                 'paid_at' => Carbon::now()
             ]);

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Notifications\Seller\ServiceRequest;
+namespace App\Notifications\Buyer\ServiceRequest;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ServiceRequestNotification extends Notification
+class ServiceRequestConfirmNotification extends Notification
 {
     use Queueable;
 
@@ -42,8 +42,8 @@ class ServiceRequestNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('You have received a new service request.')
-            ->action('Check Now', route('seller.orders.index'))
+            ->line('The service request order for service "' . $this->serviceRequest->service->name . '" is confirmed.')
+            ->action('Check Orders', route('buyer.account.service-requests.index'))
             ->line('Thank you for using our application!');
     }
 
@@ -56,8 +56,8 @@ class ServiceRequestNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'New Order Received for product "' . $this->serviceRequest->service->name . '"',
-            'service_request_id' => $this->serviceRequest->id
+            'message' => 'The service request order for service "' . $this->serviceRequest->service->name . '" is confirmed.',
+            'product_order_id' => $this->serviceRequest->id
         ];
     }
 }

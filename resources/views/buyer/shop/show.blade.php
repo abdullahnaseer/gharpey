@@ -64,12 +64,16 @@
                                                 <span class="product-price">Starting From RS. {{number_format($service->pivot->price, 0)}}</span>
                                             </div><!-- End .price-box -->
 
+                                            <div>
+                                                Available: {{$service->pivot->cities->pluck('name')->implode(", ")}}
+                                            </div>
+
                                             <div class="product-action">
                                                 {{--                                    <a href="#" class="paction add-wishlist" title="Add to Wishlist">--}}
                                                 {{--                                        <span>Add to Wishlist</span>--}}
                                                 {{--                                    </a>--}}
 
-                                                <a href="#questionsModal" class="paction add-cart" title="Order Now" data-toggle="modal" data-target="#questionsModal" data-id="{{$service->pivot->id}}">
+                                                <a href="{{route('buyer.services.sellers.show', [$service->slug, $service->pivot->id, 'city_id' => isset($city) && $city ? $city->id : null])}}" class="paction add-cart" title="Order Now">
                                                     <span>Order Now</span>
                                                 </a>
                                             </div><!-- End .product-action -->

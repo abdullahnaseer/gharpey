@@ -19,6 +19,7 @@ Route::namespace('Auth')->prefix('auth')->group(function () {
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', 'UserController@user');
+    Route::get('/user/orders', 'UserController@orderHistory');
 
     Route::post('ckeditor/upload', 'CKEditorController@upload');
 });

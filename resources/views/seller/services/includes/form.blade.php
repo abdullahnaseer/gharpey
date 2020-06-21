@@ -19,7 +19,7 @@
         <div class="form-group">
             {!! Form::label('service_id', 'Service', ['class' => "col-form-label"]) !!}
             @if(isset($service_seller)) {{Form::hidden('service_id', $service_seller->service_id)}} @endif
-            <select id="service_id" class="form-control select2-js" required="required" @if(isset($service_seller)) disabled @endif >
+            <select id="service_id" @if(!isset($service_seller)) name="service_id" @endif class="form-control select2-js" required="required" @if(isset($service_seller)) disabled @endif >
                 @foreach($categories as $category)
                     @if(count($category->services) > 0)
                         <optgroup label="{{$category->name}}">

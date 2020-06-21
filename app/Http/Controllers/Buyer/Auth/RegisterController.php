@@ -9,6 +9,7 @@ use App\Rules\Phone;
 use App\User;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -104,5 +105,18 @@ class RegisterController extends Controller
     protected function guard()
     {
         return Auth::guard('buyer');
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        if($request->has('return_url'))
+            return redirect()->to($request->input('return_url'));
     }
 }

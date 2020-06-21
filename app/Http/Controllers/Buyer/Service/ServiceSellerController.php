@@ -53,11 +53,11 @@ class ServiceSellerController extends Controller
             ->with(['category'])
             ->findOrFail($service_seller->service_id);
 
-        if(auth()->guest())
-        {
-            foreach (ServiceQuestion::getGuestUserQuestions()->reverse() as $question)
-                $service_seller->questions->prepend ($question);
-        }
+//        if(auth()->guest())
+//        {
+//            foreach (ServiceQuestion::getGuestUserQuestions()->reverse() as $question)
+//                $service_seller->questions->prepend ($question);
+//        }
 
         return view('buyer.services.sellers.show', [
             'service' => $service,
@@ -80,21 +80,23 @@ class ServiceSellerController extends Controller
 
         $validatedData = $this->validateAnswers($service, $service_seller, $request);
 
-        $user = auth()->check() ? auth()->user() : new Buyer();
-        if (auth()->guest())
-        {
-            $this->registerAndLoginGuestUser($user, $validatedData);
-            unset($validatedData['answer-name']);
-            unset($validatedData['answer-email']);
-            unset($validatedData['answer-phone']);
-        }
+//        $user = auth()->check() ? auth()->user() : new Buyer();
+//        if (auth()->guest())
+//        {
+//            $this->registerAndLoginGuestUser($user, $validatedData);
+//            unset($validatedData['answer-name']);
+//            unset($validatedData['answer-email']);
+//            unset($validatedData['answer-phone']);
+//        }
 
         $amount = (double) $service_seller->price;
 
         $serviceRequest = ServiceRequest::create([
             'service_seller_id' => $service_seller->id,
-            'buyer_id' => auth('buyer')->id(),
-            'location_id' => City::find($validatedData['city_id'])->id
+            'service_id' => $service_seller->service_id,
+            'seller_id' => $service_seller->seller_id,
+            'buyer_id' => auth('buyer')->check() ? auth('buyer')->id() : null,
+            'location_id' => isset($validatedData['city_id']) ? City::find($validatedData['city_id'])->id : null
         ]);
 
         foreach ($service_seller->questions as $q) {
@@ -149,24 +151,25 @@ class ServiceSellerController extends Controller
      */
     private function validateAnswers(Service $service, ServiceSeller $service_seller, Request $request)
     {
-        $rules = [
-            'city_id' => [
-                'bail',
-                'required',
-                'exists:cities,id',
-                Rule::exists('service_seller_location', 'location_id')->where(function ($query) use ($service_seller) {
-                    $query->where('location_type', City::class);
-                    $query->where('service_seller_id', $service_seller->id);
-                }),
-            ]
-        ];
+        $rules = [];
+//        $rules = [
+//            'city_id' => [
+//                'bail',
+//                'required',
+//                'exists:cities,id',
+//                Rule::exists('service_seller_location', 'location_id')->where(function ($query) use ($service_seller) {
+//                    $query->where('location_type', City::class);
+//                    $query->where('service_seller_id', $service_seller->id);
+//                }),
+//            ]
+//        ];
 
-        if(auth()->guest())
-        {
-            $rules['answer-name'] = 'required|string|max:100';
-            $rules['answer-email'] = 'required|email|unique:buyers,email';
-            $rules['answer-phone'] = ['required', new Phone()];
-        }
+//        if(auth()->guest())
+//        {
+//            $rules['answer-name'] = 'required|string|max:100';
+//            $rules['answer-email'] = 'required|email|unique:buyers,email';
+//            $rules['answer-phone'] = ['required', new Phone()];
+//        }
 
         foreach ($service_seller->questions as $q) {
             $name = 'answer-' . $q->id;

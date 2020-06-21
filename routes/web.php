@@ -103,6 +103,8 @@ Route::name('seller.')->prefix('seller')->namespace('Seller')->group(function ()
     Route::post('products/json', 'Product\ProductController@json')->name('products.json');
     Route::resource('products', 'Product\ProductController')->only(['index', 'store', 'update', 'destroy']);
 
+    Route::post('services/requests/json', 'Service\ServiceRequestController@json')->name('requests.json');
+    Route::resource('services/requests', 'Service\ServiceRequestController');
     Route::post('services/json', 'Service\ServiceController@json')->name('services.json');
     Route::resource('services', 'Service\ServiceController');
 

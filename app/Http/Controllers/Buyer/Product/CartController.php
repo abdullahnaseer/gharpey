@@ -17,9 +17,37 @@ class CartController extends Controller
      */
     public function index(Request $request)
     {
-
-
         $cart = Cart::session($request->session()->get('_token'));
+
+        if($request->has('item') && $request->has('quantity'))
+        {
+            $items = explode(",", $request->input('item', ''));
+            $quantities = explode(",", $request->input('quantity', ''));
+
+            if(count($items) == count($quantities))
+            {
+                $cart->clear();
+
+                for ($i = 0; $i < count($items); $i++)
+                {
+                    $product = Product::find($items[$i]);
+                    $quantity = (int) $quantities[$i];
+
+                    if(!is_null($product))
+                    {
+                        // add the product to cart
+                        $cart->add(array(
+                            'id' => $product->id,
+                            'name' => $product->name,
+                            'price' => $product->price,
+                            'quantity' => $quantity > 0 ? $quantity : 1,
+                            'attributes' => array(),
+                            'associatedModel' => $product
+                        ));
+                    }
+                }
+            }
+        }
 
         if ($request->has('clear')) {
             flash()->info("Cart Cleared...");

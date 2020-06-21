@@ -35,12 +35,15 @@ class Service extends Model
             'cities.*' => 'required|exists:cities,id',
             'featured_image' => ($editId ? 'file|image' : 'required|file|image'),
 
-            'name' => 'required|array',
-            'name.*' => 'required|min:3|max:255',
-            'question' => 'required|array',
-            'question.*' => 'required|min:3|max:255',
-            'type' => 'required|array',
-            'type.*' => 'required|string|in:' .
+
+            'name' => 'required_with:question,name|array',
+            'name.*' => 'required_with:question.*,type.*|min:3|max:255',
+
+            'question' => 'required_with:type,name|array',
+            'question.*' => 'required_with:type.*,name.*|min:3|max:255',
+
+            'type' => 'required_with:question,name|array',
+            'type.*' => 'required_with:question.*,name.*|string|in:' .
                 implode(",", ServiceQuestionType::getAllTypes()),
 
 //            'is_required' => 'required|array',

@@ -6,6 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class ServiceRequest extends Model
 {
+    const STATUS_NEW = 'new';
+    const STATUS_PAID = 'paid';
+    const STATUS_CONFIRMED = 'confirmed';
+    const STATUS_COMPLETED = 'completed';
+    const STATUS_CANCELED = 'canceled';
+    const STATUS_DISPUTED = 'disputed';
+
+    const STATUSES = [
+        self::STATUS_NEW,
+        self::STATUS_PAID,
+        self::STATUS_CONFIRMED,
+        self::STATUS_COMPLETED,
+        self::STATUS_CANCELED,
+        self::STATUS_DISPUTED,
+    ];
+
     /**
      * The attributes that are datetime timestamps.
      *
@@ -13,7 +29,11 @@ class ServiceRequest extends Model
      */
     protected $dates = [
         'completed_at',
-        'paid_at'
+        'paid_at',
+        'confirmed_at',
+        'canceled_at',
+        'disputed_at',
+        'reviewed_at',
     ];
 
     /**
@@ -23,18 +43,25 @@ class ServiceRequest extends Model
      */
     protected $fillable = [
         'service_seller_id',
+        'service_id',
+        'seller_id',
         'buyer_id',
         'location_id',
+        'status',
         'description',
-        'completed_at',
         'total_amount',
 
         'shipping_phone',
         'shipping_address',
         'shipping_location_id',
         'charge_id',
+        'receipt_email',
         'paid_at',
-        'receipt_email'
+        'completed_at',
+        'canceled_at',
+        'confirmed_at',
+        'disputed_at',
+        'reviewed_at',
     ];
 
     /**
@@ -51,6 +78,22 @@ class ServiceRequest extends Model
     public function service_seller()
     {
         return $this->belongsTo('App\Models\ServiceSeller');
+    }
+
+    /**
+     * Get the service for the service request.
+     */
+    public function service()
+    {
+        return $this->belongsTo('App\Models\Service');
+    }
+
+    /**
+     * Get the service for the service request.
+     */
+    public function seller()
+    {
+        return $this->belongsTo('App\Models\Seller');
     }
 
     /**

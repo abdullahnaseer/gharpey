@@ -37,7 +37,11 @@ class UserController extends Controller
             [
                 'status' => 200,
                 'message' => 'Successfully Fetched Product Orders History for Buyer.',
-                'data' => ['user' => $request->user()->orders()->with(['items', 'items.product'])->get()]
+                'data' => ['orders' => $request->user()->orders()->with([
+                    'items',
+                    'items.product',
+                    'items.review'
+                ])->get()]
             ], 200);
     }
 

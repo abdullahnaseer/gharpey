@@ -546,7 +546,7 @@
                 <div class="kt-header__topbar-user">
                     <span class="kt-header__topbar-welcome kt-hidden-mobile">Hi,</span>
                     <span class="kt-header__topbar-username kt-hidden-mobile">{{auth()->user()->name}}</span>
-                    <img alt="Pic" class="kt-radius-100" src="{{ empty(auth()->user()->avatar) ? url('assets/media/users/300_25.jpg') : url( str_replace('public', 'storage', auth()->user()->avatar) )}}"/>
+                    <img alt="Pic" class="kt-radius-100" src="assets/media/users/300_25.jpg"/>
 
                     <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
 
@@ -569,16 +569,16 @@
                     <div class="kt-user-card__name">
                         {{auth()->user()->name}}
                     </div>
-{{--                    <div class="kt-user-card__badge">--}}
-{{--                        <span class="btn btn-success btn-sm btn-bold btn-font-md">23 messages</span>--}}
-{{--                    </div>--}}
+                    <div class="kt-user-card__badge">
+                        <span class="btn btn-success btn-sm btn-bold btn-font-md">23 messages</span>
+                    </div>
                 </div>
 
                 <!--end: Head -->
 
                 <!--begin: Navigation -->
                 <div class="kt-notification">
-                    <a href="{{route('admin.profile.overview')}}" class="kt-notification__item">
+                    <a href="#" class="kt-notification__item">
                         <div class="kt-notification__item-icon">
                             <i class="flaticon2-calendar-3 kt-font-success"></i>
                         </div>

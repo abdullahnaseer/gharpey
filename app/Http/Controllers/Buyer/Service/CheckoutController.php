@@ -161,8 +161,18 @@ class CheckoutController extends Controller
                 'shipping_location_id' => $shipping['area'],
                 'receipt_email' => is_null($buyer) ? $shipping['email'] : $buyer->email,
                 'charge_id' => $charge->id,
-                'status' => ServiceRequest::STATUS_PAID,
                 'paid_at' => Carbon::now()
+            ]);
+
+            Transaction::create([
+                'user_id' => $service_request->service_seller->id,
+                'user_type' => Seller::class,
+                'reference_id' => $service_request->id,
+                'reference_type' => ServiceRequest::class,
+                'type' => Transaction::TYPE_CREDIT,
+                'amount' => $amount,
+                'balance' => $seller->transactions()->sum('amount') + $amount,
+                'note' => '',
             ]);
 
             Transaction::create([

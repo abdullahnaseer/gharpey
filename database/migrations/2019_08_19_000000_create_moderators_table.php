@@ -23,10 +23,6 @@ class CreateModeratorsTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('api_token')->nullable();
-            $table->string('avatar')->nullable();
-            $table->timestamp('banned_at')->nullable();
-            $table->text('banned_reason')->nullable();
-            $table->nullableMorphs('banned_by');
             $table->rememberToken();
             $table->timestamps();
 

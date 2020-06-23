@@ -34,8 +34,8 @@
                 <button id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary">Sign In</button>
             </div>
             <div class="kt-login__actions">
-                <a href="{{ route('seller.register') }}" class="kt-link kt-login__link-forgot">
-                    Dont Have Account? Register Now
+                <a href="{{ route('seller.home') }}" class="kt-link kt-login__link-forgot">
+                    Go to Homepage
                 </a>
             </div>
             <!--end::Action-->

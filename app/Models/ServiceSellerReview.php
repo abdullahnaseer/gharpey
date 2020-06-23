@@ -6,14 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ServiceSellerReview extends Model
 {
-    protected $fillable = [
-        'service_seller_id',
-        'buyer_id',
-        'review',
-        'rating',
-        'service_request_id',
-    ];
-
     /**
      * Get the buyer that owns the review.
      */

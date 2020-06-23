@@ -28,7 +28,7 @@
 
                 <li class="kt-menu__item {{ (request()->is('seller/account/settings/shop')) ? 'kt-menu__item--active' : '' }} "
                     aria-haspopup="true"><a href="{{route('seller.account.getShop')}}" class="kt-menu__link "><i
-                            class="kt-menu__link-icon flaticon-settings"></i><span
+                            class="kt-menu__link-icon flaticon2-architecture-and-city"></i><span
                             class="kt-menu__link-text">Shop Settings</span></a></li>
 
                 <li class="kt-menu__section ">
@@ -37,11 +37,11 @@
                 </li>
                 <li class="kt-menu__item {{ (request()->is('seller/products')) ? 'kt-menu__item--active' : '' }} "
                     aria-haspopup="true"><a href="{{route('seller.products.index')}}" class="kt-menu__link "><i
-                            class="kt-menu__link-icon flaticon-gift"></i><span
+                            class="kt-menu__link-icon flaticon-users"></i><span
                             class="kt-menu__link-text">All Products</span></a></li>
                 <li class="kt-menu__item {{ (request()->is('seller/products/orders')) ? 'kt-menu__item--active' : '' }} "
                     aria-haspopup="true"><a href="{{route('seller.orders.index')}}" class="kt-menu__link "><i
-                            class="kt-menu__link-icon flaticon2-shopping-cart-1"></i><span
+                            class="kt-menu__link-icon flaticon-users"></i><span
                             class="kt-menu__link-text">Orders</span></a></li>
 
                 <li class="kt-menu__section ">
@@ -50,11 +50,11 @@
                 </li>
                 <li class="kt-menu__item {{ (request()->is('seller/services*') && !request()->is('seller/services*')) ? 'kt-menu__item--active' : '' }} "
                     aria-haspopup="true"><a href="{{route('seller.services.index')}}" class="kt-menu__link "><i
-                            class="kt-menu__link-icon flaticon2-lorry"></i><span
+                            class="kt-menu__link-icon flaticon-users"></i><span
                             class="kt-menu__link-text">All Services</span></a></li>
                 <li class="kt-menu__item {{ (request()->is('seller/services/requests*')) ? 'kt-menu__item--active' : '' }} "
                     aria-haspopup="true"><a href="{{route('seller.requests.index')}}" class="kt-menu__link "><i
-                            class="kt-menu__link-icon flaticon2-shopping-cart-1"></i><span
+                            class="kt-menu__link-icon flaticon-users"></i><span
                             class="kt-menu__link-text">Service Requests</span></a></li>
             </ul>
         </div>

@@ -35,19 +35,4 @@ class Transaction extends Model
     {
         return $this->morphTo();
     }
-
-    public function scopeCredit()
-    {
-        return $this->where('type', self::TYPE_CREDIT);
-    }
-
-    public function scopeDebit()
-    {
-        return $this->where('type', self::TYPE_DEBIT);
-    }
-
-    public function scopeAnyType()
-    {
-        return $this;
-    }
 }

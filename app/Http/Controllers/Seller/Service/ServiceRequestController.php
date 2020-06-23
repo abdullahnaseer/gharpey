@@ -39,7 +39,7 @@ class ServiceRequestController extends Controller
             ->user()
             ->service_requests()
             ->orderBy('created_at', 'desc')
-            ->with(['service_seller', 'service', 'answers', 'answers.answer'])
+            ->with(['service_seller', 'service'])
             ->get();
 
         return $serviceRequests;

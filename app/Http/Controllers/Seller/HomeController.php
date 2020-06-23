@@ -24,7 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        return view('seller.home');
-        return redirect()->route('seller.login');
+        return view('seller.home');
     }
 }

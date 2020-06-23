@@ -17,7 +17,6 @@ class CreateSellersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('avatar')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('approved_at')->nullable();
 
@@ -42,11 +41,6 @@ class CreateSellersTable extends Migration
 
             $table->string('password');
             $table->string('api_token')->nullable();
-
-            $table->timestamp('banned_at')->nullable();
-            $table->text('banned_reason')->nullable();
-            $table->nullableMorphs('banned_by');
-
             $table->rememberToken();
             $table->timestamps();
 

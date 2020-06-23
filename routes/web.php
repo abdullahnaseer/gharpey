@@ -21,7 +21,6 @@ Route::name('admin.')->prefix('admin')->namespace('Admin')->group(function () {
 
     Route::middleware('auth:admin')->group(function(){
         Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-        Route::get('/get-chart-data/{model_name}', 'DashboardController@getChartData')->name('get-chart-data');
 
         Route::namespace('Service')->prefix('services')->name('services.')->middleware([])->group(function () {
             Route::post('categories/json', 'CategoryController@json')->name('categories.json');
@@ -58,15 +57,6 @@ Route::name('admin.')->prefix('admin')->namespace('Admin')->group(function () {
             Route::resource('countries.states.cities', 'CityController')->only(['index', 'store', 'update', 'destroy']);
             Route::resource('countries.states.cities.areas', 'AreaController')->only(['index', 'store', 'update', 'destroy']);
         });
-
-        Route::prefix('profile')->name('profile.')->group(function () {
-            Route::get('/overview', 'ProfileController@overview')->name('overview');
-            Route::get('/pass', 'ProfileController@change_password')->name('pass');
-            Route::get('/setting', 'ProfileController@email_settings')->name('setting');
-            Route::get('/personal', 'ProfileController@personal')->name('personal');
-
-            Route::post('/', 'ProfileController@update')->name('update');
-        });
     });
 });
 
@@ -91,15 +81,6 @@ Route::name('moderator.')->prefix('moderator')->namespace('Moderator')->group(fu
 
     Route::post('products/json', 'Product\ProductController@json')->name('products.json');
     Route::resource('products', 'Product\ProductController')->only(['index', 'store', 'update', 'destroy']);
-
-    Route::prefix('profile')->name('profile.')->group(function () {
-        Route::get('/overview', 'ProfileController@overview')->name('overview');
-        Route::get('/pass', 'ProfileController@change_password')->name('pass');
-        Route::get('/setting', 'ProfileController@email_settings')->name('setting');
-        Route::get('/personal', 'ProfileController@personal')->name('personal');
-
-        Route::post('/', 'ProfileController@update')->name('update');
-    });
 });
 
 Route::name('seller.')->prefix('seller')->namespace('Seller')->group(function () {
@@ -139,15 +120,6 @@ Route::name('seller.')->prefix('seller')->namespace('Seller')->group(function ()
         Route::post('/settings/info', 'AccountController@updateInfo')->name('updateInfo');
         Route::post('/settings/address', 'AccountController@updateAddress')->name('updateAddress');
         Route::post('/settings/password', 'AccountController@updatePassword')->name('updatePassword');
-    });
-
-    Route::prefix('profile')->name('profile.')->group(function () {
-        Route::get('/overview', 'ProfileController@overview')->name('overview');
-        Route::get('/pass', 'ProfileController@change_password')->name('pass');
-        Route::get('/setting', 'ProfileController@email_settings')->name('setting');
-        Route::get('/personal', 'ProfileController@personal')->name('personal');
-
-        Route::post('/', 'ProfileController@update')->name('update');
     });
 });
 
@@ -197,11 +169,10 @@ Route::namespace('Buyer')->name('buyer.')->group(function () {
         Route::post('/settings/password', 'AccountController@updatePassword')->name('updatePassword');
 
         Route::resource('orders', 'ProductOrderController')->only(['index']);
+
         Route::resource('orders.reviews', 'ProductOrderReviewController')->only(['index', 'create', 'store']);
 
         Route::resource('service-requests', 'ServiceRequestController')->only(['index']);
-        Route::resource('service-requests.reviews', 'ServiceRequestReviewController')->only(['index', 'create', 'store']);
-
         Route::resource('wishlist', 'WishlistController')->only(['index']);
         Route::resource('notifications', 'NotificationController')->only(['index']);
     });

@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- API Token -->
-    <meta name="api-token" content="{{ auth('seller')->user()->api_token }}">
+    <meta name="api-token" content="{{ auth()->user()->api_token }}">
 
     <!--begin::Page Vendors Styles(used by this page) -->
     <link href="assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css"/>

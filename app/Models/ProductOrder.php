@@ -70,4 +70,8 @@ class ProductOrder extends Model
         return $this->hasOne(ProductReview::class, 'product_order_id', 'id');
     }
 
+    public function scopeCompleted()
+    {
+        $this->whereNotNull('completed_at');
+    }
 }

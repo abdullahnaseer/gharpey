@@ -147,4 +147,9 @@ class ServiceRequest extends Model
     {
         return $query->whereNull('paid_at');
     }
+
+    public function scopeCompleted()
+    {
+        $this->where('status', self::STATUS_COMPLETED);
+    }
 }

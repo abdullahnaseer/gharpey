@@ -116,38 +116,42 @@ Route::name('seller.')->prefix('seller')->namespace('Seller')->group(function ()
     Route::get('approval', 'Auth\ApprovalController@index')->name('approval');
     // Auth Routes End
 
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-    Route::post('products/orders/json', 'Product\OrderController@json')->name('orders.json');
-    Route::resource('products/orders', 'Product\OrderController')->only(['index', 'edit']);
-    Route::post('products/json', 'Product\ProductController@json')->name('products.json');
-    Route::resource('products', 'Product\ProductController')->only(['index', 'store', 'update', 'destroy']);
+    Route::middleware('auth:seller')->group(function () {
+        Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+        Route::get('/finance', 'FinanceController@index')->name('finance');
+        Route::post('/finance/', 'FinanceController@payment')->name('finance.payment');
+        Route::post('products/orders/json', 'Product\OrderController@json')->name('orders.json');
+        Route::resource('products/orders', 'Product\OrderController')->only(['index', 'edit']);
+        Route::post('products/json', 'Product\ProductController@json')->name('products.json');
+        Route::resource('products', 'Product\ProductController')->only(['index', 'store', 'update', 'destroy']);
 
-    Route::post('services/requests/json', 'Service\ServiceRequestController@json')->name('requests.json');
-    Route::resource('services/requests', 'Service\ServiceRequestController');
-    Route::post('services/json', 'Service\ServiceController@json')->name('services.json');
-    Route::resource('services', 'Service\ServiceController');
+        Route::post('services/requests/json', 'Service\ServiceRequestController@json')->name('requests.json');
+        Route::resource('services/requests', 'Service\ServiceRequestController');
+        Route::post('services/json', 'Service\ServiceController@json')->name('services.json');
+        Route::resource('services', 'Service\ServiceController');
 
-    Route::name('account.')->prefix('account')->namespace('Account')->middleware('auth:seller')->group(function () {
-        Route::get('/', 'AccountController@index')->name('index');
+        Route::name('account.')->prefix('account')->namespace('Account')->group(function () {
+            Route::get('/', 'AccountController@index')->name('index');
 
-        Route::get('/settings/shop', 'AccountController@getShop')->name('getShop');
-        Route::get('/settings/info', 'AccountController@getInfo')->name('getInfo');
-        Route::get('/settings/address', 'AccountController@getAddress')->name('getAddress');
-        Route::get('/settings/password', 'AccountController@getPassword')->name('getPassword');
+            Route::get('/settings/shop', 'AccountController@getShop')->name('getShop');
+            Route::get('/settings/info', 'AccountController@getInfo')->name('getInfo');
+            Route::get('/settings/address', 'AccountController@getAddress')->name('getAddress');
+            Route::get('/settings/password', 'AccountController@getPassword')->name('getPassword');
 
-        Route::post('/settings/shop', 'AccountController@updateShop')->name('updateShop');
-        Route::post('/settings/info', 'AccountController@updateInfo')->name('updateInfo');
-        Route::post('/settings/address', 'AccountController@updateAddress')->name('updateAddress');
-        Route::post('/settings/password', 'AccountController@updatePassword')->name('updatePassword');
-    });
+            Route::post('/settings/shop', 'AccountController@updateShop')->name('updateShop');
+            Route::post('/settings/info', 'AccountController@updateInfo')->name('updateInfo');
+            Route::post('/settings/address', 'AccountController@updateAddress')->name('updateAddress');
+            Route::post('/settings/password', 'AccountController@updatePassword')->name('updatePassword');
+        });
 
-    Route::prefix('profile')->name('profile.')->group(function () {
-        Route::get('/overview', 'ProfileController@overview')->name('overview');
-        Route::get('/pass', 'ProfileController@change_password')->name('pass');
-        Route::get('/setting', 'ProfileController@email_settings')->name('setting');
-        Route::get('/personal', 'ProfileController@personal')->name('personal');
+        Route::prefix('profile')->name('profile.')->group(function () {
+            Route::get('/overview', 'ProfileController@overview')->name('overview');
+            Route::get('/pass', 'ProfileController@change_password')->name('pass');
+            Route::get('/setting', 'ProfileController@email_settings')->name('setting');
+            Route::get('/personal', 'ProfileController@personal')->name('personal');
 
-        Route::post('/', 'ProfileController@update')->name('update');
+            Route::post('/', 'ProfileController@update')->name('update');
+        });
     });
 });
 

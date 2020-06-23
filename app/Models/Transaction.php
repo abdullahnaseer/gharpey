@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
@@ -27,7 +28,6 @@ class Transaction extends Model
 //        return $this->belongsTo(\App\Models\User::class, 'user_id', 'id');
 //    }
 
-
     /**
      * Get all of the owning transaction_able models.
      */
@@ -49,5 +49,20 @@ class Transaction extends Model
     public function scopeAnyType()
     {
         return $this;
+    }
+
+    public function scopeProduct()
+    {
+        return $this->where('reference_type', Product::class);
+    }
+
+    public function scopeService()
+    {
+        return $this->where('reference_type', Service::class);
+    }
+
+    public function scopeWithdrawAble()
+    {
+        return $this->where('created_at', '<=', Carbon::today()->subDays(15)->toDateTimeString());
     }
 }

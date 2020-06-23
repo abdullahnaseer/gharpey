@@ -194,6 +194,22 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
     }
 
     /**
+     * The withdraws that belong to the seller.
+     */
+    public function payment_detail()
+    {
+        return $this->hasOne(SellerPaymentDetail::class, 'seller_id', 'id');
+    }
+
+    /**
+     * The withdraws that belong to the seller.
+     */
+    public function withdraws()
+    {
+        return $this->hasMany(SellerWithdraw::class, 'seller_id', 'id');
+    }
+
+    /**
      * The services that belong to the seller.
      */
     public function seller_services()
@@ -214,8 +230,9 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
      */
     public function transactions()
     {
-        return $this->hasMany(Transaction::class, 'user_id', 'id')
-            ->where('user_type', Seller::class);
+        return $this->morphMany(Transaction::class, 'user');
+//        return $this->hasMany(Transaction::class, 'user_id', 'id')
+//            ->where('user_type', Seller::class);
     }
 
     /**

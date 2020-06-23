@@ -67,7 +67,7 @@
 
                                                         <div class="kt-notification__item-details">
                                                             <div class="kt-notification__item-title">
-                                                                {{ $notification->data['data'] }}
+                                                                {{ $notification->data['message'] }}
                                                             </div>
                                                             <div class="kt-notification__item-time">
                                                                 Today at {{$notification->created_at->format('g:i a')}}

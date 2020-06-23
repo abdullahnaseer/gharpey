@@ -50,27 +50,27 @@
 <div class="kt-grid kt-grid--hor kt-grid--root">
     <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
 
-        @auth('admin')
+        @if(auth('admin')->check())
             @include('admin.layouts.dashboard.aside')
-        @elseauth
+        @else
             @include('moderator.layouts.dashboard.aside')
-        @endauth
+        @endif
 
         <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
 
-            @auth('admin')
+            @if(auth('admin')->check())
                 @include('admin.layouts.dashboard.header')
-            @elseauth
+            @else
                 @include('moderator.layouts.dashboard.header')
-            @endauth
+            @endif
 
             <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
 
-            @auth('admin')
+            @if(auth('admin')->check())
                 @include('admin.layouts.dashboard.subheader')
-            @elseauth
+            @else
                 @include('moderator.layouts.dashboard.subheader')
-            @endauth
+            @endif
 
             <!-- begin:: Content -->
                 <div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
@@ -91,11 +91,11 @@
                 <!-- end:: Content -->
             </div>
 
-            @auth('admin')
+            @if(auth('admin')->check())
                 @include('admin.layouts.dashboard.footer')
-            @elseauth
+            @else
                 @include('moderator.layouts.dashboard.footer')
-            @endauth
+            @endif
         </div>
     </div>
 </div>

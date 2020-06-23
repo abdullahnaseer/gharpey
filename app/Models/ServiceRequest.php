@@ -129,6 +129,13 @@ class ServiceRequest extends Model
         return $this->hasMany('App\Models\ServiceRequestInvoice', 'request_id', 'id');
     }
 
+    /**
+     * Get the review for the service request.
+     */
+    public function review()
+    {
+        return $this->hasOne(ServiceSellerReview::class, 'service_request_id', 'id');
+    }
 
     /**
      * Scope a query to only include active users.

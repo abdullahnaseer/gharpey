@@ -23,7 +23,7 @@ class Buyer extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone', 'address', 'location_id', 'password', 'api_token',
+        'name', 'email', 'phone', 'address', 'location_id', 'password', 'api_token', 'banned_reason', 'banned_by_type', 'banned_by_id'
     ];
 
     /**

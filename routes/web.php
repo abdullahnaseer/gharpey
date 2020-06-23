@@ -23,6 +23,9 @@ Route::name('admin.')->prefix('admin')->namespace('Admin')->group(function () {
         Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
         Route::get('/get-chart-data/{model_name}', 'DashboardController@getChartData')->name('get-chart-data');
 
+        Route::get('/payments', 'PaymentController@get');
+        Route::post('/payments', 'PaymentController@post');
+
         Route::namespace('Service')->prefix('services')->name('services.')->middleware([])->group(function () {
             Route::post('categories/json', 'CategoryController@json')->name('categories.json');
             Route::resource('categories', 'CategoryController')->only(['index', 'store', 'update', 'destroy']);
@@ -116,10 +119,12 @@ Route::name('seller.')->prefix('seller')->namespace('Seller')->group(function ()
     Route::get('approval', 'Auth\ApprovalController@index')->name('approval');
     // Auth Routes End
 
-    Route::middleware('auth:seller')->group(function () {
+    Route::middleware(['auth:seller', 'seller.approved'])->group(function () {
         Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
         Route::get('/finance', 'FinanceController@index')->name('finance');
         Route::post('/finance/', 'FinanceController@payment')->name('finance.payment');
+        Route::get('/withdraws/', 'WithdrawController@index')->name('withdraws');
+        Route::post('/withdraws/json', 'WithdrawController@json')->name('withdraws.json');
         Route::post('products/orders/json', 'Product\OrderController@json')->name('orders.json');
         Route::resource('products/orders', 'Product\OrderController')->only(['index', 'edit']);
         Route::post('products/json', 'Product\ProductController@json')->name('products.json');

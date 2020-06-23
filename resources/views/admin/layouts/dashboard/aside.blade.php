@@ -100,6 +100,10 @@
                     <h4 class="kt-menu__section-text">System Settings</h4>
                     <i class="kt-menu__section-icon flaticon-more-v2"></i>
                 </li>
+                <li class="kt-menu__item {{ (request()->is('admin/payments*')) ? 'kt-menu__item--active' : '' }} "
+                    aria-haspopup="true"><a href="{{url('admin/payments')}}" class="kt-menu__link "><i
+                            class="kt-menu__link-icon flaticon-coins"></i><span
+                            class="kt-menu__link-text">Payments</span></a></li>
                 <li class="kt-menu__item {{ (request()->is('admin/location*')) ? 'kt-menu__item--active' : '' }} "
                     aria-haspopup="true"><a href="{{route('admin.location.countries.index')}}" class="kt-menu__link "><i
                             class="kt-menu__link-icon flaticon2-location"></i><span

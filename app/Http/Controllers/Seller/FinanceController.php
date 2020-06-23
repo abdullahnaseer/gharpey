@@ -30,9 +30,14 @@ class FinanceController extends Controller
     public function index()
     {
         $last_transaction = auth('seller')->user()->transactions()->orderBy('created_at', 'desc')->first();
-        $total_withdrawn = auth('seller')->user()->transactions()->where('reference_type', SellerWithdraw::class)->sum('amount');
+
+        $total_withdrawn = -auth('seller')->user()->transactions()->where('reference_type', SellerWithdraw::class)->sum('amount');
+
         $withdraw_able = auth('seller')->user()->transactions()->withdrawable()->sum('amount') - $total_withdrawn;
         $withdraw_able = $withdraw_able >= 0 ? $withdraw_able : 0;
+        $profit_percentage = env('APP_PROFIT_PERCENTAGE', 5);
+        $withdraw_able = $withdraw_able * ($profit_percentage / 100);
+
         $lifetime_earnings = auth('seller')->user()->transactions()->where('type', Transaction::TYPE_CREDIT)->orderBy('created_at', 'desc')->sum('amount');
 
         return view('seller.finance', [

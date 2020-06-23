@@ -32,12 +32,24 @@ class ChartData
 
     public static function getSellerRevenuesChartData($seller_id)
     {
-        return Seller::findOrFail($seller_id)->transactions()->selectRaw('sum(amount) as value, DATE(created_at) as date')->groupBy('date')->get()->toJson();
+        return Seller::findOrFail($seller_id)
+            ->transactions()
+            ->productOrService()
+            ->selectRaw('sum(amount) as value, DATE(created_at) as date')
+            ->groupBy('date')
+            ->get()
+            ->toJson();
     }
 
     public static function getSellerProductRevenuesChartData($seller_id)
     {
-        return Seller::findOrFail($seller_id)->transactions()->product()->selectRaw('sum(amount) as value, DATE(created_at) as date')->groupBy('date')->get()->toJson();
+         return Seller::findOrFail($seller_id)
+            ->transactions()
+            ->product()
+            ->selectRaw('sum(amount) as value, DATE(created_at) as date')
+            ->groupBy('date')
+            ->get()
+            ->toJson();
     }
 
     public static function getSellerServiceRevenuesChartData($seller_id)

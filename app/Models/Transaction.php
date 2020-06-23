@@ -53,16 +53,29 @@ class Transaction extends Model
 
     public function scopeProduct()
     {
-        return $this->where('reference_type', Product::class);
+        return $this->where('reference_type', ProductOrder::class);
     }
 
     public function scopeService()
     {
-        return $this->where('reference_type', Service::class);
+        return $this->where('reference_type', ServiceRequest::class);
     }
+
+    public function scopeProductOrService()
+    {
+        return $this->where(function ($query){
+            $query->where('reference_type', ProductOrder::class)
+                ->orWhere('reference_type', ServiceRequest::class);
+        });
+    }
+
 
     public function scopeWithdrawAble()
     {
-        return $this->where('created_at', '<=', Carbon::today()->subDays(15)->toDateTimeString());
+        return $this->where('created_at', '<=', Carbon::today()->subDays(15)->toDateTimeString())
+                    ->where(function ($query){
+                        $query->where('reference_type', ProductOrder::class)
+                            ->orWhere('reference_type', ServiceRequest::class);
+                    });;
     }
 }

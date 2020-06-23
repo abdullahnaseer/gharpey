@@ -604,6 +604,19 @@
                             </div>
                         </div>
                     </a>
+                    <a href="{{route('seller.withdraws')}}" class="kt-notification__item">
+                        <div class="kt-notification__item-icon">
+                            <i class="flaticon-coins kt-font-danger"></i>
+                        </div>
+                        <div class="kt-notification__item-details">
+                            <div class="kt-notification__item-title kt-font-bold">
+                                Transactions
+                            </div>
+                            <div class="kt-notification__item-time">
+                                Withdraws
+                            </div>
+                        </div>
+                    </a>
                     <div class="kt-notification__custom kt-space-between">
                         <a class="btn btn-label btn-label-brand btn-sm btn-bold" href="{{ route('seller.logout') }}"
                            onclick="event.preventDefault();

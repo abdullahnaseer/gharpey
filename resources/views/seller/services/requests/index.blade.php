@@ -126,6 +126,53 @@
                                     return "<p class='text-danger'>Unknown Status!!! Something went wrong!!!!</p>";
                             }
                         },{
+                            field: 'answers',
+                            title: 'Answers',
+                            width: 500,
+                            autoHide: true,
+                            template: function(row) {
+                                for(var i = 0; i < row.answers.length; i++)
+                                {
+                                    console.log(row.answers[i]);
+                                }
+
+                                var html = "<table class=\"table table-borderless\" align=\"left\">" +
+                                    "<thead>" +
+                                    "    <tr>" +
+                                    "        <th scope=\"col\">#</th>" +
+                                    "        <th scope=\"col\">Question</th>" +
+                                    "        <th scope=\"col\">Answer</th>" +
+                                    "        <th scope=\"col\">Price Change</th>" +
+                                    "     </tr>" +
+                                    "</thead>" +
+                                    "<tbody>";
+
+                                for(var i = 0; i < row.answers.length; i++) {
+                                    html +=
+                                        "<tr>" +
+                                        "    <th scope=\"row\">"+(i+1)+"</th>" +
+                                        "    <td>"+row.answers[i].question+"</td>\n" +
+                                        "    <td>";
+
+                                    if(row.answers[i].answer_type == "{{str_replace('\\', '\\\\', \App\Models\ServiceRequestAnswerChoice::class)}}")
+                                        html += row.answers[i].answer.choice;
+                                    else
+                                        html += row.answers[i].answer.answer;
+
+                                    html += "</td><td>";
+
+                                    if(row.answers[i].answer_type == "{{str_replace('\\', '\\\\', \App\Models\ServiceRequestAnswerChoice::class)}}")
+                                        html += row.answers[i].answer.price_change;
+                                    else
+                                        html += "N/A";
+
+                                    html += "</td><td>";
+                                }
+                                html += "</tbody></table>";
+
+                                return html;
+                            }
+                        },{
                             field: 'Actions',
                             title: 'Actions',
                             sortable: false,
@@ -133,10 +180,6 @@
                             autoHide: false,
                             overflow: 'visible',
                             template: function(row) {
-                                {{--if(!row.paid_at && !row.completed_at)--}}
-                                {{--    return "<a href='{{url('/seller/services/requests')}}/"+row.id+"/edit?status=cancel' class='btn btn-outline-danger'>Cancel</a>";--}}
-                                {{--else --}}
-
                                 if(row.status == '{{\App\Models\ServiceRequest::STATUS_NEW}}')
                                     return "<a href='{{url('/seller/services/requests')}}/"+row.id+"/edit?status=cancel' class='btn btn-outline-danger'>Cancel</a>";
                                 else if(row.status == '{{\App\Models\ServiceRequest::STATUS_PAID}}')
@@ -158,7 +201,6 @@
                 });
 
                 $('#kt_form_status,#kt_form_type').selectpicker();
-
             };
 
             return {

@@ -17,7 +17,9 @@ class Moderator extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone', 'address', 'location_id', 'password', 'api_token'
+        'name', 'email', 'phone', 'address', 'location_id', 'password', 'api_token',
+        'avatar',
+        'banned_reason', 'banned_by_type', 'banned_by_id'
     ];
 
     /**

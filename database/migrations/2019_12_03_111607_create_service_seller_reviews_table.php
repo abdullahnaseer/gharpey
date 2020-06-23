@@ -15,16 +15,16 @@ class CreateServiceSellerReviewsTable extends Migration
     {
         Schema::create('service_seller_reviews', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('service_seller_id')->index();
-            $table->unsignedBigInteger('service_request_id')->index();
-            $table->unsignedBigInteger('buyer_id')->index();
+            $table->unsignedBigInteger('service_seller_id')->index()->nullable();
+            $table->unsignedBigInteger('service_request_id')->index()->nullable();
+            $table->unsignedBigInteger('buyer_id')->index()->nullable();
             $table->text('review');
             $table->unsignedSmallInteger('rating')->default(0);
             $table->timestamps();
 
             $table->foreign('service_seller_id')->references('id')->on('service_seller')->onDelete('cascade');
             $table->foreign('service_request_id')->references('id')->on('service_requests')->onDelete('cascade');
-            $table->foreign('buyer_id')->references('id')->on('buyers')->onDelete('cascade');
+            $table->foreign('buyer_id')->references('id')->on('buyers')->onDelete('set null');
         });
     }
 

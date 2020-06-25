@@ -77,14 +77,14 @@ class ServiceController extends Controller
                 $query->where('location_id', $request->input('city_id'));
             })->where('service_id', $service->id)
                 ->with(['seller'])
-                ->get();
+                ->paginate();
         }
 
         return view('buyer.services.show', [
             'service' => $service,
             'cities' => $cities,
             'city' => isset($city) ? $city : null,
-            'service_sellers' => isset($service_sellers) ? $service_sellers : null
+            'service_sellers' => isset($service_sellers) ? $service_sellers : collect([])
         ]);
     }
 }

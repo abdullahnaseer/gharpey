@@ -17,43 +17,6 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-9">
-{{--                <nav class="toolbox">--}}
-{{--                    <div class="toolbox-left">--}}
-{{--                        <div class="toolbox-item toolbox-sort">--}}
-{{--                            <div class="select-custom">--}}
-{{--                                <select name="orderby" class="form-control">--}}
-{{--                                    <option value="menu_order" selected="selected">Default sorting</option>--}}
-{{--                                    <option value="popularity">Sort by popularity</option>--}}
-{{--                                    <option value="rating">Sort by average rating</option>--}}
-{{--                                    <option value="date">Sort by newness</option>--}}
-{{--                                    <option value="price">Sort by price: low to high</option>--}}
-{{--                                    <option value="price-desc">Sort by price: high to low</option>--}}
-{{--                                </select>--}}
-{{--                            </div>--}}
-{{--                            <!-- End .select-custom -->--}}
-
-{{--                            <a href="#" class="sorter-btn" title="Set Ascending Direction"><span class="sr-only">Set Ascending Direction</span></a>--}}
-{{--                        </div>--}}
-{{--                        <!-- End .toolbox-item -->--}}
-{{--                    </div>--}}
-{{--                    <!-- End .toolbox-left -->--}}
-
-{{--                    <div class="toolbox-item toolbox-show">--}}
-{{--                        <label>Showing {{$products->firstItem()}}–{{$products->lastItem()}} of {{$products->total()}} results</label>--}}
-{{--                    </div>--}}
-{{--                    <!-- End .toolbox-item -->--}}
-
-{{--                    <div class="layout-modes">--}}
-{{--                        <a href="#" class="layout-btn btn-grid active" title="Grid">--}}
-{{--                            <i class="icon-mode-grid"></i>--}}
-{{--                        </a>--}}
-{{--                        <a href="category-list.html" class="layout-btn btn-list" title="List">--}}
-{{--                            <i class="icon-mode-list"></i>--}}
-{{--                        </a>--}}
-{{--                    </div>--}}
-{{--                    <!-- End .layout-modes -->--}}
-{{--                </nav>--}}
-
                 @if($products->count())
                     <div class="row row-sm">
                         @foreach($products as $product)
@@ -88,13 +51,6 @@
 
                                             <a href="{{route('buyer.shop.show', [$product->seller->shop_slug])}}">{{$product->seller->shop_name}}</a>
                                         </p>
-
-                                        <!-- End .price-box -->
-
-{{--                                        <p class="product-location mr-5 text-right">--}}
-{{--                                            <img src="assets/images/svg/shop/map-pin.svg" width="15" alt="">--}}
-{{--                                            <a href="#">Islamabad</a>--}}
-{{--                                        </p>--}}
 
                                         <div class="product-action ml-5">
                                             @if(is_null($product->cart_item))

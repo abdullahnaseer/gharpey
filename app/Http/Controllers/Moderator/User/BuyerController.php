@@ -47,6 +47,20 @@ class BuyerController extends Controller
     }
 
     /**
+     * Display the resource.
+     *
+     * @param Request $request
+     * @param int $record_id
+     * @return mixed
+     */
+    public function show(Request $request, int $record_id)
+    {
+        $cities = City::with('areas')->get();
+        $buyer = Buyer::findOrFail($record_id);
+        return view('moderator.users.buyers.show', ['user' => $buyer, 'cities' => $cities]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param Request $request

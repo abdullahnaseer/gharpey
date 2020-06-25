@@ -65,7 +65,7 @@ class PaymentController extends Controller
             $withdraw_able = (int) $seller->transactions()->withdrawable()->sum('amount') - $total_withdrawn;
             $withdraw_able = $withdraw_able <= 0 ? 0: $withdraw_able;
 
-            $profit_percentage = env('APP_PROFIT_PERCENTAGE', 5);
+            $profit_percentage = (float) env('APP_PROFIT_PERCENTAGE', 5);
             $withdraw_able = $withdraw_able * ($profit_percentage / 100);
 
             if (!is_null($seller->payment_detail)) {

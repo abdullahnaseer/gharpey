@@ -32,11 +32,18 @@ class OrderController extends Controller
      *
      * @return mixed
      */
-    public function json()
+    public function json($seller_id = null)
     {
-        $orders = ProductOrder::orderBy('created_at', 'desc')
-            ->with(['product'])
-            ->get();
+        if(is_null($seller_id))
+        {
+            $orders = Seller::findOrFail($seller_id)->product_orders()->orderBy('created_at', 'desc')
+                ->with(['product'])
+                ->get();
+        } else {
+            $orders = ProductOrder::orderBy('created_at', 'desc')
+                ->with(['product'])
+                ->get();
+        }
         return $orders;
     }
 
@@ -174,7 +181,7 @@ class OrderController extends Controller
             flash()->error('Invalid Operation!!!');
         }
 
-        return redirect('/moderator/products/orders/');
+        return redirect()->back();
     }
 
     /**

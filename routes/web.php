@@ -85,8 +85,8 @@ Route::name('moderator.')->prefix('moderator')->namespace('Moderator')->group(fu
 
         Route::post('sellers/{seller_id}/approve', 'SellerController@approval')->name('sellers.approval');
 
-        Route::resource('sellers', 'SellerController')->only(['index', 'store', 'update', 'destroy']);
-        Route::resource('buyers', 'BuyerController')->only(['index', 'store', 'update', 'destroy']);
+        Route::resource('sellers', 'SellerController')->only(['index', 'show', 'store', 'update', 'destroy']);
+        Route::resource('buyers', 'BuyerController')->only(['index', 'show', 'store', 'update', 'destroy']);
     });
 
     Route::post('products/orders/json', 'Product\OrderController@json')->name('orders.json');

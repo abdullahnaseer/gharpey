@@ -77,101 +77,55 @@
 
             <div class="row">
                 <div class="col-lg-9">
-                    {{--                    <nav class="toolbox">--}}
-                    {{--                        <div class="toolbox-left">--}}
-                    {{--                            <div class="toolbox-item toolbox-sort">--}}
-                    {{--                                <div class="select-custom">--}}
-                    {{--                                    <select name="orderby" class="form-control">--}}
-                    {{--                                        <option value="menu_order" selected="selected">Default sorting</option>--}}
-                    {{--                                        <option value="popularity">Sort by popularity</option>--}}
-                    {{--                                        <option value="rating">Sort by average rating</option>--}}
-                    {{--                                        <option value="date">Sort by newness</option>--}}
-                    {{--                                        <option value="price">Sort by price: low to high</option>--}}
-                    {{--                                        <option value="price-desc">Sort by price: high to low</option>--}}
-                    {{--                                    </select>--}}
-                    {{--                                </div><!-- End .select-custom -->--}}
+                    @if($service_sellers->count())
 
-                    {{--                                <a href="#" class="sorter-btn" title="Set Ascending Direction"><span class="sr-only">Set Ascending Direction</span></a>--}}
-                    {{--                            </div><!-- End .toolbox-item -->--}}
-                    {{--                        </div><!-- End .toolbox-left -->--}}
-
-                    {{--                        <div class="toolbox-item toolbox-show">--}}
-                    {{--                            <label>Showing 1–9 of 60 results</label>--}}
-                    {{--                        </div><!-- End .toolbox-item -->--}}
-
-                    {{--    --}}{{--                    <div class="layout-modes">--}}
-                    {{--    --}}{{--                        <a href="category.html" class="layout-btn btn-grid" title="Grid">--}}
-                    {{--    --}}{{--                            <i class="icon-mode-grid"></i>--}}
-                    {{--    --}}{{--                        </a>--}}
-                    {{--    --}}{{--                        <a href="category-list.html" class="layout-btn btn-list active" title="List">--}}
-                    {{--    --}}{{--                            <i class="icon-mode-list"></i>--}}
-                    {{--    --}}{{--                        </a>--}}
-                    {{--    --}}{{--                    </div><!-- End .layout-modes -->--}}
-                    {{--                    </nav>--}}
-
-                    @foreach($service_sellers as $service_seller)
-                        <div class="product product-list-wrapper">
-                            <figure class="product-image-container">
-                                <a href="#" class="product-image">
-                                    <img src="{{ str_replace('public', '/storage', $service_seller->featured_image) }}" alt="product">
-                                </a>
-                                {{--                        <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
-                            </figure>
-                            <div class="product-details">
-                                <h2 class="product-title">
-                                    <a href="#">{{$service_seller->seller->shop_name}}</a>
-                                </h2>
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:80%"></span><!-- End .ratings -->
-                                    </div><!-- End .product-ratings -->
-                                </div><!-- End .product-container -->
-                                <div class="product-desc">
-                                    <p>{{$service_seller->description}}</p>
-                                </div><!-- End .product-desc -->
-                                <div class="price-box">
-                                    <span class="product-price">Starting From RS. {{number_format($service_seller->price, 0)}}</span>
-                                </div><!-- End .price-box -->
-
-                                <div class="product-action">
-                                    {{--                                    <a href="#" class="paction add-wishlist" title="Add to Wishlist">--}}
-                                    {{--                                        <span>Add to Wishlist</span>--}}
-                                    {{--                                    </a>--}}
-
-{{--                                    <a href="#questionsModal" class="paction add-cart" title="Order Now" data-toggle="modal" data-target="#questionsModal" data-id="{{$service_seller->id}}">--}}
-{{--                                        <span>Order Now</span>--}}
-{{--                                    </a>--}}
-
-                                    <a href="{{route('buyer.services.sellers.show', [$service->slug, $service_seller->id, 'city_id' => $city ? $city->id : null])}}" class="paction add-cart" title="Order Now">
-                                        <span>Order Now</span>
+                        @foreach($service_sellers as $service_seller)
+                            <div class="product product-list-wrapper">
+                                <figure class="product-image-container">
+                                    <a href="#" class="product-image">
+                                        <img src="{{ str_replace('public', '/storage', $service_seller->featured_image) }}" alt="product">
                                     </a>
-                                </div><!-- End .product-action -->
-                            </div><!-- End .product-details -->
-                        </div>
-                    @endforeach
+                                </figure>
+                                <div class="product-details">
+                                    <h2 class="product-title">
+                                        <a href="{{route('buyer.services.sellers.show', [$service->slug, $service_seller->id, 'city_id' => $city ? $city->id : null])}}">{{$service_seller->seller->shop_name}}</a>
+                                    </h2>
+                                    <div class="ratings-container">
+                                        <div class="product-ratings">
+                                            <span class="ratings" style="width:{{$service_seller->reviews_average * 20}}%"></span>
+                                            <!-- End .ratings -->
+                                        </div>
+                                        <!-- End .product-ratings -->
+                                        <a href="{{route('buyer.services.sellers.show', [$service->slug, $service_seller->id, 'city_id' => $city ? $city->id : null])}}#reviews" class="rating-link">( {{ $service_seller->reviews_count ?? 0 }} Reviews )</a>
+                                    </div><!-- End .product-container -->
+                                    <div class="product-desc">
+                                        <p>{{$service_seller->description}}</p>
+                                    </div><!-- End .product-desc -->
+                                    <div class="price-box">
+                                        <span class="product-price">Starting From RS. {{number_format($service_seller->price, 0)}}</span>
+                                    </div><!-- End .price-box -->
 
-                    <nav class="toolbox toolbox-pagination">
-                        <div class="toolbox-item toolbox-show">
-                            <label>Showing 1–9 of 60 results</label>
-                        </div><!-- End .toolbox-item -->
+                                    <div class="product-action">
+                                        {{--                                    <a href="#" class="paction add-wishlist" title="Add to Wishlist">--}}
+                                        {{--                                        <span>Add to Wishlist</span>--}}
+                                        {{--                                    </a>--}}
 
-                        <ul class="pagination">
-                            <li class="page-item disabled">
-                                <a class="page-link page-link-btn" href="#"><i class="icon-angle-left"></i></a>
-                            </li>
-                            <li class="page-item active">
-                                <a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><span>...</span></li>
-                            <li class="page-item"><a class="page-link" href="#">15</a></li>
-                            <li class="page-item">
-                                <a class="page-link page-link-btn" href="#"><i class="icon-angle-right"></i></a>
-                            </li>
-                        </ul>
-                    </nav>
+                                        {{--                                    <a href="#questionsModal" class="paction add-cart" title="Order Now" data-toggle="modal" data-target="#questionsModal" data-id="{{$service_seller->id}}">--}}
+                                        {{--                                        <span>Order Now</span>--}}
+                                        {{--                                    </a>--}}
+
+                                        {{--                                    <a href="{{route('buyer.services.sellers.show', [$service->slug, $service_seller->id, 'city_id' => $city ? $city->id : null])}}" class="paction add-cart" title="Order Now">--}}
+                                        {{--                                        <span>View Details</span>--}}
+                                        {{--                                    </a>--}}
+                                    </div><!-- End .product-action -->
+                                </div><!-- End .product-details -->
+                            </div>
+                        @endforeach
+
+                        {{ $service_sellers->links() }}
+                    @else
+                        <div class="alert alert-info">No Sellers found for your serach!!!</div>
+                    @endif
                 </div><!-- End .col-lg-9 -->
 
                 <aside class="sidebar-shop col-lg-3 order-lg-first">

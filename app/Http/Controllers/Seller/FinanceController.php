@@ -35,7 +35,7 @@ class FinanceController extends Controller
 
         $withdraw_able = auth('seller')->user()->transactions()->withdrawable()->sum('amount') - $total_withdrawn;
         $withdraw_able = $withdraw_able >= 0 ? $withdraw_able : 0;
-        $profit_percentage = env('APP_PROFIT_PERCENTAGE', 5);
+        $profit_percentage = (float) env('APP_PROFIT_PERCENTAGE', 5);
         $withdraw_able = $withdraw_able * ($profit_percentage / 100);
 
         $lifetime_earnings = auth('seller')->user()->transactions()->where('type', Transaction::TYPE_CREDIT)->orderBy('created_at', 'desc')->sum('amount');

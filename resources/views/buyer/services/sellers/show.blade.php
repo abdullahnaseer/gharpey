@@ -59,11 +59,11 @@
 
                                 <div class="ratings-container">
                                     <div class="product-ratings">
-                                        <span class="ratings" style="width:{{$service->reviews_average * 20}}%"></span>
+                                        <span class="ratings" style="width:{{$service_seller->reviews_average * 20}}%"></span>
                                         <!-- End .ratings -->
                                     </div>
                                     <!-- End .product-ratings -->
-                                    <a href="#" class="rating-link">( {{ $service->reviews_count }} Reviews )</a>
+                                    <a href="#reviews" class="rating-link">( {{ $service_seller->reviews_count ?? 0 }} Reviews )</a>
                                 </div>
 
                                 <div class="price-box">
@@ -79,7 +79,7 @@
 
                                 <div class="product-desc">
                                     <p>{{\Str::limit($service_seller->short_description, 100)}}</p>
-                                    
+
                                     <p>
                                         <strong>Available:</strong> {{$service_seller->cities->pluck('name')->implode(", ")}}
                                     </p>

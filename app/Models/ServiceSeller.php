@@ -87,11 +87,27 @@ class ServiceSeller extends Pivot
     }
 
     /**
-     * Get the owning service_seller_able model.
+     * Get the orders for the service_seller_able.
+     */
+    public function getReviewsCountAttribute()
+    {
+        return $this->reviews()->count();
+    }
+
+    /**
+     * Get the reviews for the service_seller_able.
      */
     public function reviews()
     {
         return $this->hasMany(ServiceSellerReview::class, 'service_seller_id');
+    }
+
+    /**
+     * Get the orders for the service_seller_able.
+     */
+    public function getReviewsAverageAttribute()
+    {
+        return $this->reviews()->average('rating');
     }
 
     /**

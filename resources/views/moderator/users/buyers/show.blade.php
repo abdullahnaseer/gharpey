@@ -3,16 +3,13 @@
 @section('breadcrumb')
     <a href="{{ route('moderator.dashboard') }}" class="kt-subheader__breadcrumbs-link">Dashboard</a>
     <span class="kt-subheader__breadcrumbs-separator"></span>
-    <span class="kt-subheader__breadcrumbs-link active">Buyers</span>
+    <a href="{{ route('moderator.users.buyers.index') }}" class="kt-subheader__breadcrumbs-link">Buyers</a>
+    <span class="kt-subheader__breadcrumbs-separator"></span>
+    <span class="kt-subheader__breadcrumbs-link active">Buyer Details</span>
 @endsection
 
 @section('breadcrumb-elements')
-    <div class="kt-input-icon kt-input-icon--left">
-        <input type="text" class="form-control" placeholder="Search..." id="generalSearch">
-        <span class="kt-input-icon__icon kt-input-icon__icon--left">
-            <span><i class="la la-search"></i></span>
-        </span>
-    </div>
+
 @endsection
 
 @push('styles')
@@ -24,49 +21,92 @@
         <div class="kt-portlet__head kt-portlet__head--lg">
             <div class="kt-portlet__head-label">
                 <span class="kt-portlet__head-icon">
-                    <i class="kt-font-brand flaticon2-line-chart"></i>
+                    <i class="kt-font-brand flaticon2-user"></i>
                 </span>
                 <h3 class="kt-portlet__head-title">
-                    Buyers
+                    Profile Details
                 </h3>
             </div>
             <div class="kt-portlet__head-toolbar">
                 <div class="kt-portlet__head-wrapper">
                     <div class="kt-portlet__head-actions">
-                        <a class="btn btn-brand btn-elevate btn-icon-sm" href="#createModal" data-toggle="modal"
-                           data-target="#createModal">
-                            <i class="la la-plus"></i>
-                            New Buyer
+                        <a class="btn btn-brand btn-elevate btn-icon-sm" href="#editModal" data-toggle="modal"
+                           data-target="#editModal" data-target="#editModal" data-id="{{$user->id}}" data-name="{{$user->name}}" data-email="{{$user->email}}" data-phone="{{$user->phone}}" data-address="{{$user->address}}" data-location="{{$user->location_id}}">
+                            <i class="la la-edit"></i>
+                            Edit
                         </a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="kt-portlet__body kt-portlet__body--fit">
+            <div class="table-responsive">
+                <table class="table table-light table-bordered">
+                    <tbody>
+                    <tr>
+                        <th width="150">Name</th>
+                        <td>{{$user->name}}</td>
+                    </tr>
+                    <tr>
+                        <th width="150">Email</th>
+                        <td>{{$user->email}}</td>
+                    </tr>
+                    <tr>
+                        <th width="150">Phone</th>
+                        <td>{{$user->phone}}</td>
+                    </tr>
+                    <tr>
+                        <th width="150">Address</th>
+                        <td>{{$user->address}}</td>
+                    </tr>
+                    <tr>
+                        <th width="150">Area</th>
+                        <td>{{$user->location ? $user->location->name : ''}}</td>
+                    </tr>
+                    <tr>
+                        <th width="150">City</th>
+                        <td>{{$user->location && $user->location->city ? $user->location->city->name : ''}}</td>
+                    </tr>
+                    <tr>
+                        <th width="150">State</th>
+                        <td>{{$user->location && $user->location->city && $user->location->city->state ? $user->location->city->state->name : ''}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
+                <span class="kt-portlet__head-icon">
+                    <i class="kt-font-brand flaticon2-line-chart"></i>
+                </span>
+                <h3 class="kt-portlet__head-title">
+                    Product Orders
+                </h3>
+            </div>
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-wrapper">
+                    <div class="kt-portlet__head-actions">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="kt-portlet__body kt-portlet__body--fit">
             <!--begin: Datatable -->
-            <div class="kt-datatable" id="json_data"></div>
+            <div class="kt-datatable" id="product_orders_datatable"></div>
             <!--end: Datatable -->
         </div>
     </div>
-@stop
 
-@push('modals')
-    @include('moderator.users.buyers.modals.create')
     @include('moderator.users.buyers.modals.edit')
-    @include('moderator.users.buyers.modals.delete')
-@endpush
+@endsection
 
 @push('scripts')
     <script>
-        $('#deleteModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Button that triggered the modal
-            var id = button.data('id'); // Extract info from data-* attributes
-            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-            var modal = $(this);
-            modal.find('.modal-footer form').attr('action', "{{url('moderator/users/buyers')}}/" + id);
-        });
-
         $('#editModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
             var id = button.data('id'); // Extract info from data-* attributes
@@ -180,6 +220,7 @@
                 });
 
                 $('#kt_form_status,#kt_form_type').selectpicker();
+
             };
 
             return {

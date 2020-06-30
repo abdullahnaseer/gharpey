@@ -27,7 +27,7 @@
 @endsection
 
 @section('content')
-    <h2>My Orders</h2>
+    <h2>Notifications</h2>
 
     <div class="mb-4"></div>
     <!-- margin -->

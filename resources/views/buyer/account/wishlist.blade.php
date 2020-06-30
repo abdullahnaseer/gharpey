@@ -31,8 +31,8 @@
     <div class="mb-4"></div>
     <!-- margin -->
 
-    <div class="row row-sm">
-        @if($products->count())
+    @if($products->count())
+        <div class="row row-sm">
             @foreach($products as $product)
                 <div class="col-6 col-md-4">
                     <div class="product">
@@ -99,10 +99,10 @@
                     </div>
                 </div>
             @endforeach
-        @else
-            <div class="alert alert-info">
-                No items found in your wishlist. <a href="{{route('buyer.products.index')}}">Continue Shopping!</a>
-            </div>
-        @endif
-    </div>
+        </div>
+    @else
+        <div class="alert alert-info">
+            No items found in your wishlist. <a href="{{route('buyer.products.index')}}">Continue Shopping!</a>
+        </div>
+    @endif
 @endsection

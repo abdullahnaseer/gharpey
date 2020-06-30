@@ -63,7 +63,7 @@
                             <li @if(request()->is('/account/service-requests*')) class="active" @endif ><a href="{{url('/account/service-requests')}}">My Service Requests</a></li>
                             <li @if(request()->is('/account/wishlist*')) class="active" @endif ><a href="{{route('buyer.account.wishlist.index')}}">My Wishlist</a></li>
                             <li @if(request()->is('/account/notifications*')) class="active" @endif ><a href="{{route('buyer.account.notifications.index')}}">My Notifications</a></li>
-                            <li @if(request()->is('/account/dfssdf')) class="active" @endif ><a href="#">Newsletter Subscriptions</a></li>
+{{--                            <li @if(request()->is('/account/dfssdf')) class="active" @endif ><a href="#">Newsletter Subscriptions</a></li>--}}
                         </ul>
                     </div>
                     <!-- End .widget -->

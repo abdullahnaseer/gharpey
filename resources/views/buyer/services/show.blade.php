@@ -139,12 +139,12 @@
                                 <div class="widget-body">
                                     <ul class="cat-list">
                                         @foreach($service->category->services as $service_i)
-                                            <li><a href="{{route('buyer.services.show', [$service_i->slug, 'city_id' => $city->id])}}" @if($service_i->id == $service->id) class="text-primary" @endif>{{$service_i->name}}</a></li>
+{{--                                            <li><a href="{{route('buyer.services.show', [$service_i->slug, 'city_id' => $city->id])}}" @if($service_i->id == $service->id) class="text-primary" @endif>{{$service_i->name}}</a></li>--}}
                                         @endforeach
                                     </ul>
                                 </div><!-- End .widget-body -->
                             </div><!-- End .collapse -->
-                        </div><!-- End .widget -->
+                        </div><
 
                         <div class="widget">
                             <h3 class="widget-title">

@@ -34,7 +34,7 @@ class OrderController extends Controller
      */
     public function json($seller_id = null)
     {
-        if(is_null($seller_id))
+        if(!is_null($seller_id))
         {
             $orders = Seller::findOrFail($seller_id)->product_orders()->orderBy('created_at', 'desc')
                 ->with(['product'])

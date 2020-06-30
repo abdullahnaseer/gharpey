@@ -91,6 +91,7 @@ class PaymentController extends Controller
             }
         }
 
+        flash()->success('Payment processed successfully!');
         return redirect('/admin/payments');
     }
 

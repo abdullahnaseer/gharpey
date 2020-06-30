@@ -15,11 +15,11 @@
 
     <link href="/assets/css/pages/login/login-1.css" rel="stylesheet" type="text/css"/>
 
-    <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css"/>
+    <link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="{{mix('css/metronic.css')}}">
     <link rel="stylesheet" href="{{mix('css/admin.css')}}">
 
-    <link rel="shortcut icon" href="assets/media/logos/favicon.ico"/>
+    <link rel="shortcut icon" href="/assets/media/logos/favicon.ico"/>
 </head>
 
 <!-- end::Head -->
@@ -89,7 +89,7 @@
 <!-- end:: Page -->
 
 
-<script src="assets/plugins/global/plugins.bundle.js" type="text/javascript"></script>
+<script src="/assets/plugins/global/plugins.bundle.js" type="text/javascript"></script>
 <script type="text/javascript" src="{{mix('js/admin.js')}}"></script>
 
 @stack('modals')

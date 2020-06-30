@@ -16,7 +16,7 @@
 
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="/assets1/css/bootstrap.min.css'">
+    <link rel="stylesheet" href="/assets1/css/bootstrap.min.css">
 
     <!-- Main CSS File -->
     <link rel="stylesheet" href="/assets1/css/style.min.css">

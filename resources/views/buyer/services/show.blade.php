@@ -144,7 +144,7 @@
                                     </ul>
                                 </div><!-- End .widget-body -->
                             </div><!-- End .collapse -->
-                        </div><
+                        </div>
 
                         <div class="widget">
                             <h3 class="widget-title">

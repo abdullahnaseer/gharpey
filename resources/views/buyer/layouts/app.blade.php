@@ -12,14 +12,14 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="icon" type="image/x-icon" href="{{url('assets1/images/icons/favicon.ico')}}">
+    <link rel="icon" type="image/x-icon" href="/assets1/images/icons/favicon.ico">
 
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{url('assets1/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="/assets1/css/bootstrap.min.css'">
 
     <!-- Main CSS File -->
-    <link rel="stylesheet" href="{{url('assets1/css/style.min.css')}}">
+    <link rel="stylesheet" href="/assets1/css/style.min.css">
 {{--    <link rel="stylesheet" href="{{url('assets1/css/mystyle.min.css')}}">--}}
     @yield('styles')
 </head>
@@ -49,13 +49,13 @@
     <a id="scroll-top" href="#top" title="Top" role="button"><i class="icon-angle-up"></i></a>
 
     <!-- Plugins JS File -->
-    <script src="{{url('assets1/js/jquery.min.js')}}"></script>
-    <script src="{{url('assets1/js/bootstrap.bundle.min.js')}}"></script>
-    <script src="{{url('assets1/js/plugins.min.js')}}"></script>
-    <script src="{{url('assets1/js/nouislider.min.js')}}"></script>
+    <script src="/assets1/js/jquery.min.js"></script>
+    <script src="/assets1/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets1/js/plugins.min.js"></script>
+    <script src="/assets1/js/nouislider.min.js"></script>
 
     <!-- Main JS File -->
-    <script src="{{url('assets1/js/main.min.js')}}"></script>
+    <script src="/assets1/js/main.min.js"></script>
     @yield('scripts')
 </body>
 </html>

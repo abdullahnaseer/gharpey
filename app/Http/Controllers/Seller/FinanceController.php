@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Seller;
 
 use App\Helpers\ChartData;
 use App\Http\Controllers\Controller;
+use App\Models\ProductOrder;
+use App\Models\Seller;
 use App\Models\SellerWithdraw;
+use App\Models\ServiceRequest;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 
@@ -31,12 +35,12 @@ class FinanceController extends Controller
     {
         $last_transaction = auth('seller')->user()->transactions()->orderBy('created_at', 'desc')->first();
 
-        $total_withdrawn = - ((float) auth('seller')->user()->transactions()->where('reference_type', SellerWithdraw::class)->sum('amount'));
+        $total_withdrawn = (int) auth('seller')->user()->withdraws()->sum('amount');
+        $withdraw_able = (int) auth('seller')->user()->withdraw_able_amount;
 
-        $withdraw_able = (float) auth('seller')->user()->transactions()->withdrawable()->sum('amount') - $total_withdrawn;
-        $withdraw_able = $withdraw_able >= 0 ? $withdraw_able : 0;
         $profit_percentage = (float) env('APP_PROFIT_PERCENTAGE', 5);
-        $withdraw_able -= $withdraw_able * ($profit_percentage / 100);
+        $fee = ($withdraw_able * ($profit_percentage / 100));
+        $withdraw_able = $withdraw_able - $fee;
 
         $lifetime_earnings = (float) auth('seller')->user()->transactions()->where('type', Transaction::TYPE_CREDIT)->orderBy('created_at', 'desc')->sum('amount');
 

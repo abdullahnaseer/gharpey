@@ -36,13 +36,16 @@ class PaymentController extends Controller
         $sellers_with_withdrawable_balance = collect([]);
 
         foreach ($sellers as $seller) {
-            $total_withdrawn = (int) -$seller->transactions()->where('reference_type', SellerWithdraw::class)->sum('amount');
-            $withdraw_able = (int) $seller->transactions()->withdrawable()->sum('amount') - $total_withdrawn;
+            $withdraw_able = (int) $seller->withdraw_able_amount;
+
+            $profit_percentage = (float) env('APP_PROFIT_PERCENTAGE', 5);
+            $fee = ($withdraw_able * ($profit_percentage / 100));
+            $withdraw_able = $withdraw_able - $fee;
 
             if (!is_null($seller->payment_detail)) {
                 if ($withdraw_able >= (int) $seller->payment_detail->threshold)
                 {
-                    $seller->total_withdrawn = $seller->transactions()->where('reference_type', SellerWithdraw::class)->sum('amount');
+                    $seller->total_withdrawn = (int) $seller->withdraws()->sum('amount');
                     $seller->withdrawable = $withdraw_able;
                     $sellers_with_withdrawable_balance->push($seller);
                 }
@@ -60,13 +63,13 @@ class PaymentController extends Controller
     public function post(Request $request)
     {
         $sellers = Seller::whereIn('id', $request->input('users', []))->with('last_transaction')->get();
+
         foreach ($sellers as $seller) {
-            $total_withdrawn = (int) -$seller->transactions()->where('reference_type', SellerWithdraw::class)->sum('amount');
-            $withdraw_able = (int) $seller->transactions()->withdrawable()->sum('amount') - $total_withdrawn;
-            $withdraw_able = $withdraw_able <= 0 ? 0: $withdraw_able;
+            $withdraw_able = (int) $seller->withdraw_able_amount;
 
             $profit_percentage = (float) env('APP_PROFIT_PERCENTAGE', 5);
-            $withdraw_able = $withdraw_able * ($profit_percentage / 100);
+            $fee = ($withdraw_able * ($profit_percentage / 100));
+            $withdraw_able = $withdraw_able - $fee;
 
             if (!is_null($seller->payment_detail)) {
                 if ($withdraw_able >= $seller->payment_detail->threshold) {
@@ -75,18 +78,28 @@ class PaymentController extends Controller
                         'type' => Transaction::TYPE_DEBIT,
                         'amount' => -$withdraw_able,
                         'balance' => $seller->transactions()->sum('amount') - $withdraw_able,
-                        'note' => '',
+                        'note' => 'withdraw.amount',
+                    ]);
+
+                    $transaction1 = $seller->transactions()->create([
+                        'reference_type' => SellerWithdraw::class,
+                        'type' => Transaction::TYPE_DEBIT,
+                        'amount' => -$fee,
+                        'balance' => $seller->transactions()->sum('amount') - $fee,
+                        'note' => 'withdraw.fee',
                     ]);
 
                     $withdraw = $seller->withdraws()->create([
                         'transaction_id' => $transaction->id,
                         'amount' => $withdraw_able,
+                        'fee'    => $fee,
                         'name' => $seller->payment_detail->name,
                         'bank' => $seller->payment_detail->bank,
                         'account_no' => $seller->payment_detail->account_no,
                     ]);
 
                     $transaction->update(['reference_id' => $withdraw->id]);
+                    $transaction1->update(['reference_id' => $withdraw->id]);
                 }
             }
         }

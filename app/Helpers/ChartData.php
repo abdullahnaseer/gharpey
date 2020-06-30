@@ -5,7 +5,9 @@ namespace App\Helpers;
 
 
 use App\Models\Buyer;
+use App\Models\ProductOrder;
 use App\Models\Seller;
+use App\Models\ServiceRequest;
 use App\Models\Transaction;
 
 class ChartData
@@ -34,7 +36,10 @@ class ChartData
     {
         return Seller::findOrFail($seller_id)
             ->transactions()
-            ->productOrService()
+            ->where(function ($query){
+                $query->where('reference_type', ProductOrder::class)
+                    ->orWhere('reference_type', ServiceRequest::class);
+            })
             ->selectRaw('sum(amount) as value, DATE(created_at) as date')
             ->groupBy('date')
             ->get()
@@ -45,7 +50,7 @@ class ChartData
     {
          return Seller::findOrFail($seller_id)
             ->transactions()
-            ->product()
+             ->where('reference_type', ProductOrder::class)
             ->selectRaw('sum(amount) as value, DATE(created_at) as date')
             ->groupBy('date')
             ->get()
@@ -54,16 +59,34 @@ class ChartData
 
     public static function getSellerServiceRevenuesChartData($seller_id)
     {
-        return Seller::findOrFail($seller_id)->transactions()->service()->selectRaw('sum(amount) as value, DATE(created_at) as date')->groupBy('date')->get()->toJson();
+        return Seller::findOrFail($seller_id)
+            ->transactions()
+            ->where('reference_type', ServiceRequest::class)
+            ->selectRaw('sum(amount) as value, DATE(created_at) as date')
+            ->groupBy('date')
+            ->get()
+            ->toJson();
     }
 
     public static function getSellerProductSalesChartData($seller_id)
     {
-        return Seller::findOrFail($seller_id)->product_orders()->completed()->selectRaw('count(product_order.id) as value, DATE(product_order.created_at) as date')->groupBy('date')->get()->toJson();
+        return Seller::findOrFail($seller_id)
+            ->product_orders()
+            ->completed()
+            ->selectRaw('count(product_order.id) as value, DATE(product_order.created_at) as date')
+            ->groupBy('date')
+            ->get()
+            ->toJson();
     }
 
     public static function getSellerServiceRequestsChartData($seller_id)
     {
-        return Seller::findOrFail($seller_id)->service_requests()->completed()->selectRaw('count(id) as value, DATE(created_at) as date')->groupBy('date')->get()->toJson();
+        return Seller::findOrFail($seller_id)
+            ->service_requests()
+            ->completed()
+            ->selectRaw('count(id) as value, DATE(created_at) as date')
+            ->groupBy('date')
+            ->get()
+            ->toJson();
     }
 }

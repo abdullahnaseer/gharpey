@@ -18,6 +18,7 @@ class CreateSellerWithdrawsTable extends Migration
             $table->unsignedBigInteger('seller_id')->index()->nullable();
             $table->unsignedBigInteger('transaction_id')->index()->nullable();
             $table->unsignedInteger('amount');
+            $table->unsignedInteger('fee')->default(0);
             $table->string('bank')->nullable();
             $table->string('name')->nullable();
             $table->string('account_no')->nullable();

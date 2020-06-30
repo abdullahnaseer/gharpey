@@ -63,7 +63,7 @@
                         </svg><!--end::Svg Icon--></span>
                     </span>
                     <span class="kt-widget17__subtitle">
-                        WithdrawAble Amount
+                        WithdrawAble Amount After Fees
                     </span>
                     <span class="kt-widget17__desc">
                         PKR. {{ $withdraw_able }}

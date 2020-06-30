@@ -9,7 +9,7 @@ class SellerWithdraw extends Model
     protected $appends = ['created_at_formatted'];
 
     protected $fillable = [
-        'bank', 'name', 'account_no', 'seller_id', 'transaction_id', 'amount'
+        'bank', 'name', 'account_no', 'seller_id', 'transaction_id', 'amount', 'fee'
     ];
 
     public function getCreatedAtFormattedAttribute()

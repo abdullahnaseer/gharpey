@@ -7,6 +7,7 @@ use App\Models\Traits\MustVerifyPhoneTrait;
 use App\Models\Traits\UserApiTokenTrait;
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -52,6 +53,27 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
         'phone_verified_at' => 'datetime',
         'approved_at' => 'datetime'
     ];
+
+
+    /**
+     * Get the user's first name.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getWithdrawAbleAmountAttribute()
+    {
+        $total_withdrawn = (int) $this->withdraws()->sum('amount');
+        $total_fees = (int) $this->withdraws()->sum('fee');
+
+        return (int) $this->transactions()
+            ->where('user_type', Seller::class)
+            ->where('created_at', '<=', Carbon::today()->subDays(15)->toDateTimeString())
+            ->where(function ($query){
+                $query->where('reference_type', ProductOrder::class)
+                    ->orWhere('reference_type', ServiceRequest::class);
+            })->sum('amount') - $total_withdrawn - $total_fees;
+    }
 
     public function hasAddress()
     {

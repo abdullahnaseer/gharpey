@@ -97,7 +97,7 @@
                             width: 100,
                             template: function (row) {
                                 return '\
-                                <img class="img-thumbnail" src="' + (row.product.featured_image ? row.product.featured_image.replace('public', '/storage') : '') + '">\
+                                <img class="img-thumbnail" src="' + (row.product && row.product.featured_image ? row.product.featured_image.replace('public', '/storage') : '') + '">\
                                 ';
                             }
                         }, {

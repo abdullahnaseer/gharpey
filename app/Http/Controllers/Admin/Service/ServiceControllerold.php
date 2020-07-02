@@ -69,7 +69,7 @@ class ServiceController extends Controller
         $request->validate([
             'name' => 'required|min:3|max:100',
             'description' => 'max:25000',
-            'category_id' => 'required|exists:product_categories,id',
+            'category_id' => 'required|exists:service_categories,id',
             'featured_image' => 'required|file|image',
         ]);
 
@@ -107,7 +107,7 @@ class ServiceController extends Controller
         $request->validate([
             'name' => 'required|min:3|max:100',
             'description' => 'max:25000',
-            'category_id' => 'required|exists:product_categories,id',
+            'category_id' => 'required|exists:service_categories,id',
             'featured_image' => 'file|image',
         ]);
 

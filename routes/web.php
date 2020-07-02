@@ -184,7 +184,7 @@ Route::namespace('Buyer')->name('buyer.')->group(function () {
     // Service Routes
     Route::resource('services', 'Service\ServiceController')->only(['index', 'show']);
     Route::resource('services.sellers', 'Service\ServiceSellerController')->only(['show', 'store']);
-    Route::resource('service_requests', 'Service\ServiceRequestController')->only(['show']);
+//    Route::resource('service_requests', 'Service\ServiceRequestController')->only(['show']);
 
     // Service Request Checkout Routes
     Route::get('service_request/{service_request_id}/checkout', 'Service\CheckoutController@getShipping')->name('service.checkout.shipping.get');

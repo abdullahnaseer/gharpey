@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Seller;
 use App\Models\ServiceRequest;
 use App\Models\Transaction;
+use App\Notifications\Seller\ServiceRequest\ServiceRequestCompleteNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -40,6 +41,7 @@ class ServiceRequestController extends Controller
                 'note' => '',
             ]);
 
+            $seller->notify(new ServiceRequestCompleteNotification($service_request));
             flash()->success('Payment Released Successfully! Write Review For Seller to help us improve experience of Website.');
         } else if ($request->input('action') == 'release') {
             flash()->error('Payment Already Released for this Service Request or Seller Account is on Hold at the moment!');

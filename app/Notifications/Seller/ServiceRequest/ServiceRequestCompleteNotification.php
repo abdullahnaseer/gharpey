@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ServiceRequestNotification extends Notification
+class ServiceRequestCompleteNotification extends Notification
 {
     use Queueable;
 
@@ -42,7 +42,8 @@ class ServiceRequestNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('You have received a new service request.')
+            ->line('You have completed a service request.')
+            ->line('Buyer has released funds for service request.')
             ->action('Check Now', route('seller.requests.index'))
             ->line('Thank you for using our application!');
     }

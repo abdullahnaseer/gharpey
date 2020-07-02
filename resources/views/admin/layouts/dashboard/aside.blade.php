@@ -92,6 +92,10 @@
                                 aria-haspopup="true"><a href="{{route('admin.services.categories.index')}}" class="kt-menu__link "><i
                                         class="kt-menu__link-icon flaticon-layer"></i><span
                                         class="kt-menu__link-text">Categories</span></a></li>
+                            <li class="kt-menu__item {{ (request()->is('moderator/services/requests*')) ? 'kt-menu__item--active' : '' }} "
+                                aria-haspopup="true"><a href="{{route('moderator.requests.index')}}" class="kt-menu__link "><i
+                                        class="kt-menu__link-icon flaticon-layer"></i><span
+                                        class="kt-menu__link-text">Service Requests</span></a></li>
                         </ul>
                     </div>
                 </li>

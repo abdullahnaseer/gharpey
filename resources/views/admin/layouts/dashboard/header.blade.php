@@ -545,8 +545,8 @@
             <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
                 <div class="kt-header__topbar-user">
                     <span class="kt-header__topbar-welcome kt-hidden-mobile">Hi,</span>
-                    <span class="kt-header__topbar-username kt-hidden-mobile">{{auth()->user()->name}}</span>
-                    <img alt="Pic" class="kt-radius-100" src="{{ empty(auth()->user()->avatar) ? url('assets/media/users/300_25.jpg') : url( str_replace('public', 'storage', auth()->user()->avatar) )}}"/>
+                    <span class="kt-header__topbar-username kt-hidden-mobile">{{auth('admin')->user()->name}}</span>
+                    <img alt="Pic" class="kt-radius-100" src="{{ empty(auth('admin')->user()->avatar) ? url('assets/media/users/300_25.jpg') : url( str_replace('public', 'storage', auth('admin')->user()->avatar) )}}"/>
 
                     <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
 
@@ -564,10 +564,10 @@
 
                         <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
                         <span
-                            class="kt-badge kt-badge--lg kt-badge--rounded kt-badge--bold kt-font-success">{{substr(auth()->user()->name, 0, 1)}}</span>
+                            class="kt-badge kt-badge--lg kt-badge--rounded kt-badge--bold kt-font-success">{{substr(auth('admin')->user()->name, 0, 1)}}</span>
                     </div>
                     <div class="kt-user-card__name">
-                        {{auth()->user()->name}}
+                        {{auth('admin')->user()->name}}
                     </div>
 {{--                    <div class="kt-user-card__badge">--}}
 {{--                        <span class="btn btn-success btn-sm btn-bold btn-font-md">23 messages</span>--}}

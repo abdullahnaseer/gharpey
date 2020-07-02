@@ -65,7 +65,7 @@
                 </li>
 
 
-                <li class="kt-menu__item  kt-menu__item--submenu {{ (request()->is('admin/services') || request()->is('moderator/services*')) ? 'kt-menu__item--open kt-menu__item--here' : '' }}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                <li class="kt-menu__item  kt-menu__item--submenu {{ ( (request()->is('admin/services') || request()->is('moderator/services*')) ) ? 'kt-menu__item--open kt-menu__item--here' : '' }}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                     <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                         <i class="kt-menu__link-icon flaticon2-lorry"><span></span></i>
                         <span class="kt-menu__link-text">Services</span>
@@ -77,8 +77,8 @@
 {{--                                aria-haspopup="true"><a href="{{route('admin.services.index')}}" class="kt-menu__link "><i--}}
 {{--                                        class="kt-menu__link-icon flaticon-coins"></i><span--}}
 {{--                                        class="kt-menu__link-text">Service Sellers</span></a></li>--}}
-                            <li class="kt-menu__item {{ (request()->is('admin/services/categories*')) ? 'kt-menu__item--active' : '' }} "
-                                aria-haspopup="true"><a href="{{route('admin.services.categories.index')}}" class="kt-menu__link "><i
+                            <li class="kt-menu__item {{ (request()->is('moderator/services/requests*')) ? 'kt-menu__item--active' : '' }} "
+                                aria-haspopup="true"><a href="{{route('moderator.requests.index')}}" class="kt-menu__link "><i
                                         class="kt-menu__link-icon flaticon-layer"></i><span
                                         class="kt-menu__link-text">Service Requests</span></a></li>
                         </ul>

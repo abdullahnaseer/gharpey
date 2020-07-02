@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Service;
+namespace App\Http\Controllers\Moderator\Service;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProductOrder;
+use App\Models\Seller;
 use App\Models\Seo;
 use App\Models\ServiceRequest;
 use App\Models\User;
@@ -21,7 +23,27 @@ class ServiceRequestController extends Controller
      */
     public function __construct()
     {
-        
+
+    }
+
+    /**
+     * Return a listing of the resource.
+     *
+     * @return mixed
+     */
+    public function json($seller_id = null)
+    {
+        if(!is_null($seller_id))
+        {
+            $orders = Seller::findOrFail($seller_id)->service_requests()->orderBy('created_at', 'desc')
+                ->with(['service_seller', 'service', 'answers', 'answers.answer'])
+                ->get();
+        } else {
+            $orders = ServiceRequest::orderBy('created_at', 'desc')
+                ->with(['service_seller', 'service', 'answers', 'answers.answer'])
+                ->get();
+        }
+        return $orders;
     }
 
     /**
@@ -32,7 +54,7 @@ class ServiceRequestController extends Controller
     public function index()
     {
         $requests = ServiceRequest::with('answers', 'location', 'location.city')->paginate(50);
-        return view('admin.services.requests.index', ['requests' => $requests]);
+        return view('moderator.services.requests.index', ['requests' => $requests]);
     }
 
     /**
@@ -67,7 +89,7 @@ class ServiceRequestController extends Controller
         $serviceRequest = ServiceRequest::where('id', (int)$id)
             ->with('service', 'answers', 'answers.answer', 'location', 'location.city', 'quote', 'invoices', 'invoices.details')
             ->firstOrFail();
-        return view('admin.services.requests.show', ['request' => $serviceRequest]);
+        return view('moderator.services.requests.show', ['request' => $serviceRequest]);
     }
 
     /**
@@ -107,7 +129,7 @@ class ServiceRequestController extends Controller
         }
         Storage::deleteDirectory('public/service-requests/' . $serviceRequest->id);
         $serviceRequest->delete();
-        return redirect('/admin/service-requests')->with('status', 'Service Request is deleted successfully!!!');
+        return redirect('/moderator/service-requests')->with('status', 'Service Request is deleted successfully!!!');
     }
 
     /**
@@ -121,7 +143,7 @@ class ServiceRequestController extends Controller
         $serviceRequest = ServiceRequest::where('id', (int)$id)
             ->with('invoices', 'invoices.details')
             ->firstOrFail();
-        return view('admin.services.requests.invoices.show', ['request' => $serviceRequest]);
+        return view('moderator.services.requests.invoices.show', ['request' => $serviceRequest]);
     }
 
 
@@ -139,10 +161,8 @@ class ServiceRequestController extends Controller
             && $serviceRequest->invoices()->count()
             && $serviceRequest->invoices()->whereNull('paid_at')->count() == 0) {
             $serviceRequest->update(['completed_at' => Carbon::now()]);
-            return redirect('/admin/service-requests')->with('status', 'Service Request has been marked complete successfully!!!');
+            return redirect('/moderator/service-requests')->with('status', 'Service Request has been marked complete successfully!!!');
         }
-        return redirect('/admin/service-requests')->with('error', 'Service Request cant be marked complete!!!');
-
+        return redirect('/moderator/service-requests')->with('error', 'Service Request cant be marked complete!!!');
     }
-
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\UserApiTokenTrait;
 use App\Notifications\ResetPassword;
+use App\Notifications\VerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -38,6 +39,16 @@ class Admin extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail('admin'));
+    }
 
     /**
      * Send the password reset notification.

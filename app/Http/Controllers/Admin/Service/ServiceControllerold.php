@@ -66,35 +66,18 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(Service::getRules($request));
+        $request->validate([
+            'name' => 'required|min:3|max:100',
+            'description' => 'max:25000',
+            'category_id' => 'required|exists:product_categories,id',
+            'featured_image' => 'required|file|image',
+        ]);
 
         $fields = $request->only(['name', 'description', 'category_id']);
         $fields['featured_image'] = $request->file('featured_image')->store('public/services');
 
         $service = Service::create($fields);
         $service->update(['slug' => \Illuminate\Support\Str::slug($service->name . ' ' . $service->id)]);
-
-        for ($i = 0, $iMax = count($request->input('title', [])); $i < $iMax; $i++) {
-            $question = $service->questions()->create([
-                'order_priority' => $i + 1,
-                'title' => $request->input('title')[$i],
-                'question' => $request->input('question')[$i],
-                'type' => $request->input('type')[$i],
-                'is_required' => $request->input('is_required', [])[$i] === '1',
-                'auth_rule' => $request->input('auth_type', [])[$i]
-            ]);
-
-            if ($request->input('type')[$i] === ServiceQuestion::TYPE_SELECT || $request->input('type')[$i] === ServiceQuestion::TYPE_SELECT_MULTIPLE) {
-                $k = 1;
-                foreach ($request->input('choices.' . $i) as $choice) {
-                    $choice = ServiceQuestionChoices::create([
-                        'order_priority' => $k++,
-                        'question_id' => $question->id,
-                        'choice' => $choice,
-                    ]);
-                }
-            }
-        }
 
         flash('Successfully created the new record!')->success();
         return redirect()->route('admin.services.index');
@@ -121,7 +104,12 @@ class ServiceController extends Controller
      */
     public function update(Request $request, int $record_id)
     {
-        $request->validate(Service::getRules($request, true));
+        $request->validate([
+            'name' => 'required|min:3|max:100',
+            'description' => 'max:25000',
+            'category_id' => 'required|exists:product_categories,id',
+            'featured_image' => 'file|image',
+        ]);
 
         $record = Service::findOrFail($record_id);
 
@@ -131,47 +119,7 @@ class ServiceController extends Controller
             $fields['featured_image'] = $request->file('featured_image')->store('public/services');
 
         $record->update($fields);
-
-        ServiceQuestion::whereNotIn('id', $request->input('question_id'))->delete();
-
-        for ($i = 0, $iMax = count($request->input('title', [])); $i < $iMax; $i++) {
-            $question = null;
-            if (!is_null($request->input('question_id')[$i])) {
-                $question = ServiceQuestion::find($request->input('question_id')[$i]);
-                if ($request->input('type')[$i] == $question->type) {
-                    $question->update([
-                        'order_priority' => $i + 1,
-                        'title' => $request->input('title')[$i],
-                        'question' => $request->input('question')[$i],
-                        'is_required' => $request->input('is_required', [])[$i] === '1',
-                        'auth_rule' => $request->input('auth_type', [])[$i]
-                    ]);
-
-                    if ($request->input('type')[$i] === ServiceQuestion::TYPE_SELECT || $request->input('type')[$i] === ServiceQuestion::TYPE_SELECT_MULTIPLE)
-                        $question->choices()->delete();
-                }
-            } else {
-                $question = $record->questions()->create([
-                    'order_priority' => $i + 1,
-                    'title' => $request->input('title')[$i],
-                    'question' => $request->input('question')[$i],
-                    'type' => $request->input('type')[$i],
-                    'is_required' => $request->input('is_required', [])[$i] === '1',
-                    'auth_rule' => $request->input('auth_type', [])[$i]
-                ]);
-            }
-
-            if ($request->input('type')[$i] === ServiceQuestion::TYPE_SELECT || $request->input('type')[$i] === ServiceQuestion::TYPE_SELECT_MULTIPLE) {
-                $k = 1;
-                foreach ($request->input('choices.' . $i) as $choice) {
-                    $choice = ServiceQuestionChoices::create([
-                        'order_priority' => $k++,
-                        'question_id' => $question->id,
-                        'choice' => $choice,
-                    ]);
-                }
-            }
-        }
+        $record->update(['slug' => \Illuminate\Support\Str::slug($record->name . ' ' . $record->id)]);
 
         flash('Successfully modified the record!')->success();
         return redirect()->route('admin.services.index');

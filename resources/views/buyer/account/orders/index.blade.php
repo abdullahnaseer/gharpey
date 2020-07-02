@@ -43,8 +43,8 @@
                             <tbody>
                             @foreach($order->items as $item)
                                 <tr>
-                                    <td width="100"><img class="img-fluid" src="{{str_replace("public","/storage",$item->product->featured_image)}}" alt=""></td>
-                                    <td width="250">{{$item->product->name}}</td>
+                                    <td width="100"><img class="img-fluid" src="{{str_replace("public","/storage", $item->product ? $item->product->featured_image: '')}}" alt=""></td>
+                                    <td width="250">{{$item->product ? $item->product->name : 'Product'}}</td>
                                     <td width="150">Price Sum: {{$item->price}}<br>Qty:{{ $item->quantity }}</td>
                                     <td width="100">
                                         @if($item->status == \App\Models\ProductOrder::STATUS_COMPLETED)

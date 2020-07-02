@@ -52,10 +52,10 @@
                                 <a href="#" class="rating-link">( {{ $product->reviews_count }} Reviews )</a>
                             </div>
                             <!-- End .product-container -->
-                            <h2 class="product-title ">
+                            <h3 class="product-title mb-2">
                                 <a href="{{route('buyer.products.show', [$product->slug])}}">
                                     {{$product->name}} </a>
-                            </h2>
+                            </h3>
 
                             <div class="price-box  m-b-5">
                                 <span class="product-price">Rs. {{$product->price}}</span>

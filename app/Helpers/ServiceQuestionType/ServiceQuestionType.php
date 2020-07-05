@@ -25,8 +25,8 @@ abstract class ServiceQuestionType
     public const TYPES = [
         self::TEXT => "Text Single Line",
         self::TEXT_MULTILINE => "Text Multiple Line",
-        self::PHONE => "Email",
-        self::EMAIL => "Phone",
+        self::PHONE => "Phone",
+        self::EMAIL => "Email",
         self::SELECT => "Select From Choices",
         self::SELECT_MULTIPLE => "Select Multiple From Choices",
         self::DATE => "Date",

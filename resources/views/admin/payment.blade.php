@@ -18,7 +18,9 @@
                 <th>Payment Name</th>
                 <th>Payment Bank</th>
                 <th>Payment Threshold</th>
+                <th>Withdrawable Amount (excluding fee)</th>
                 <th>Payment Amount</th>
+                <th>Fee Amount</th>
                 <th>Paid Amount</th>
                 <th>Options</th>
             </tr>
@@ -46,6 +48,8 @@
                             <td>{!! $u->payment_detail->threshold !!}</td>
                         @endif
                         <td>{!! $u->withdrawable !!}</td>
+                        <td>{!! $u->withdrawable - $u->fee !!}</td>
+                        <td>{!! $u->fee !!}</td>
                         <td>{!! $u->total_withdrawn !!}</td>
                         <td><a href="{!! url( '/admin/publishers/edit/' . $u->id ) !!}" target="_blank">View Account</a></td>
                     </tr>

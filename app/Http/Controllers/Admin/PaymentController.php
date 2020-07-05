@@ -40,12 +40,12 @@ class PaymentController extends Controller
 
             $profit_percentage = (float) env('APP_PROFIT_PERCENTAGE', 5);
             $fee = ($withdraw_able * ($profit_percentage / 100));
-            $withdraw_able = $withdraw_able - $fee;
 
             if (!is_null($seller->payment_detail)) {
                 if ($withdraw_able >= (int) $seller->payment_detail->threshold)
                 {
                     $seller->total_withdrawn = (int) $seller->withdraws()->sum('amount');
+                    $seller->fee = $fee;
                     $seller->withdrawable = $withdraw_able;
                     $sellers_with_withdrawable_balance->push($seller);
                 }

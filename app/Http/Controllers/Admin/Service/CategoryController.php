@@ -99,8 +99,18 @@ class CategoryController extends Controller
      */
     public function destroy(Request $request, $record_id)
     {
-        ServiceCategory::findOrFail($record_id)->delete();
-        flash('Successfully deleted the record!')->success();
+        $category = ServiceCategory::findOrFail($record_id);
+
+        if ($category->child_categories()->count() > 0)
+        {
+            flash('Cannot Delete a category with active child categories!!!')->error();
+        } else if ($category->services()->withTrashed()->count() > 0)
+        {
+            flash('Cannot Delete a category with services!!!')->error();
+        } else {
+            $category->delete();
+            flash('Successfully deleted the category!')->success();
+        }
 
         return redirect()->route('admin.services.categories.index');
     }

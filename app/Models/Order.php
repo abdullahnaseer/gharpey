@@ -3,9 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Order extends Model
 {
+    use Notifiable;
+
+    const PAYMENT_GATEWAY_COD = "cod";
+    const PAYMENT_GATEWAY_STRIPE = "stripe";
+
+    const PAYMENT_GATEWAYS = [
+        self::PAYMENT_GATEWAY_COD,
+        self::PAYMENT_GATEWAY_STRIPE,
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,6 +34,19 @@ class Order extends Model
     protected $hidden = [
         'charge_id'
     ];
+
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return array|string
+     */
+    public function routeNotificationForMail($notification)
+    {
+        // Return email address only...
+        return $this->receipt_email;
+    }
 
     /**
      * Get the products for the order.

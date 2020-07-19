@@ -114,11 +114,11 @@
                             title: 'Status',
                             autoHide: false,
                             template: function(row) {
-                                if(row.status == '{{\App\Models\ProductOrder::STATUS_PAID}}')
+                                if(row.status == '{{\App\Models\ProductOrder::STATUS_NEW}}')
                                     return "<p class='text-danger'>Waiting for confirmation by seller.</p>";
                                 else if(row.status == '{{\App\Models\ProductOrder::STATUS_CONFIRMED}}')
                                     return "<p class='text-danger'>Order Confirmed and Waiting for delivery by seller.</p>";
-                                else if(row.status == '{{\App\Models\ProductOrder::STATUS_SELLET_SENT}}')
+                                else if(row.status == '{{\App\Models\ProductOrder::STATUS_SELLER_SENT}}')
                                     return "<p class='text-info'>Waiting for arrival of product at our warehouse.</p>";
                                 else if(row.status == '{{\App\Models\ProductOrder::STATUS_WAREHOUSE_RECEVIED}}')
                                     return "<p class='text-success'>Product received at warehouse and is in processing phase.</p>";
@@ -139,7 +139,7 @@
                             autoHide: false,
                             overflow: 'visible',
                             template: function(row) {
-                                if(row.status == '{{\App\Models\ProductOrder::STATUS_PAID}}' || row.status == '{{\App\Models\ProductOrder::STATUS_SELLET_SENT}}')
+                                if(row.status == '{{\App\Models\ProductOrder::STATUS_NEW}}' || row.status == '{{\App\Models\ProductOrder::STATUS_SELLER_SENT}}')
                                     return "<a href='{{url('/moderator/products/orders')}}/"+row.id+"/edit?status=received' class='btn btn-outline-primary mr-2'>Mark Received</a>" +
                                            "<a href='{{url('/moderator/products/orders')}}/"+row.id+"/edit?status=cancel' class='btn btn-outline-danger'>Cancel</a>";
                                 else if(row.status == '{{\App\Models\ProductOrder::STATUS_WAREHOUSE_RECEVIED}}')

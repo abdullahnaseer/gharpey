@@ -21,7 +21,7 @@ class CreateProductOrdersTable extends Migration
             $table->unsignedInteger('quantity')->default(1);
 
             $table->enum('status', \App\Models\ProductOrder::STATUSES)
-                ->default(\App\Models\ProductOrder::STATUS_PAID);
+                ->default(\App\Models\ProductOrder::STATUS_NEW);
 
             $table->timestamp('confirmed_at')->nullable();
             $table->timestamp('seller_send_at')->nullable();

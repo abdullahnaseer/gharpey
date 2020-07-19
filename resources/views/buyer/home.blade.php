@@ -75,11 +75,14 @@
                                 <div class="price-box  m-b-5">
                                     <span class="product-price">Rs. {{$product->price}}</span>
                                 </div>
-                                <p class="product-location text-center m-b-5">
-                                    <img src="/assets1/images/svg/shop/shop.svg" class="mr-2 d-inline-block" style="width: 15px;" alt="">
 
-                                    <a href="{{route('buyer.shop.show', [$product->seller->shop_slug])}}">{{$product->seller->shop_name}}</a>
-                                </p>
+                                @if(!is_null($product->seller))
+                                    <p class="product-location text-center m-b-5">
+                                        <img src="/assets1/images/svg/shop/shop.svg" class="mr-2 d-inline-block" style="width: 15px;" alt="">
+
+                                        <a href="{{route('buyer.shop.show', [$product->seller->shop_slug])}}">{{$product->seller->shop_name}}</a>
+                                    </p>
+                                @endif
 
                             </div>
                             <!-- End .product-details -->

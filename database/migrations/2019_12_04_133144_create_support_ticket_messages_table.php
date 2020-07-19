@@ -16,7 +16,6 @@ class CreateSupportTicketMessagesTable extends Migration
         Schema::create('support_ticket_messages', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('support_ticket_id');
-            $table->string('title');
             $table->mediumText('message')->nullable();
             $table->timestamps();
 
@@ -26,8 +25,7 @@ class CreateSupportTicketMessagesTable extends Migration
         Schema::create('support_ticket_message_files', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('support_ticket_message_id');
-            $table->string('title');
-            $table->mediumText('message')->nullable();
+            $table->string('path')->nullable();
             $table->timestamps();
 
             $table->foreign('support_ticket_message_id')->references('id')->on('support_ticket_messages')->onDelete('cascade');

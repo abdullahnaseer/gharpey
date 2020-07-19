@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2",
+        "php": "^7.4",
         "darryldecode/cart": "^4.1",
         "fideloper/proxy": "^4.3",
         "fruitcake/laravel-cors": "^1.0",
@@ -25,6 +25,7 @@
         "nexmo/laravel": "^2.2",
         "phpunit/phpunit": "^8.5",
         "s-ichikawa/laravel-sendgrid-driver": "^3.0",
+        "sentry/sentry-laravel": "1.8.0",
         "stripe/stripe-php": "^7.31"
     },
     "require-dev": {

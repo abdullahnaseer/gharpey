@@ -21,6 +21,8 @@ class CreateSupportTicketsTable extends Migration
             $table->unsignedBigInteger('moderator_id');
             $table->string('moderator_type')->default("App\\\Models\\\Moderator");
 
+            $table->string('title');
+
             $table->timestamp('resolved_at')->nullable();
             $table->timestamps();
         });

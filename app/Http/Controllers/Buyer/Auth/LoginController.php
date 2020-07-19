@@ -167,8 +167,8 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
-        if (\request()->has('return_url')) {
-            return \request()->input('return_url');
+        if (request()->has('return_url')) {
+            return request()->input('return_url');
         } else {
             return $this->redirectTo;
         }

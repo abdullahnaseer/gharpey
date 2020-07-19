@@ -49,9 +49,13 @@ class ProductCategoryController extends Controller
      */
     public function show($slug)
     {
-        $productCategory = ProductCategory::where('slug', $slug)->with('products')->firstOrFail();
+//        $productCategory = ProductCategory::where('slug', $slug)->whereHas('products.seller')->with(['products'])->firstOrFail();
 
-        return view('buyer.products.categories.show', ['category' => $productCategory]);
+//        $productCategory = ProductCategory::where('slug', $slug)->with([
+//            'products' => fn($q) => $q->whereHas('seller')
+//        ])->firstOrFail();
+
+//        return view('buyer.products.categories.show', ['category' => $productCategory]);
     }
 
     /**

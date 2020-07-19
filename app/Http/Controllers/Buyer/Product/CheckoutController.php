@@ -17,6 +17,7 @@ use Cart;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 use Stripe\Charge;
 use Stripe\Stripe;
 
@@ -29,8 +30,6 @@ class CheckoutController extends Controller
      */
     public function getShipping(Request $request)
     {
-
-
         $cart = Cart::session($request->session()->get('_token'));
 
         return view('buyer.products.checkout.shipping', [
@@ -93,16 +92,50 @@ class CheckoutController extends Controller
      */
     public function postPayment(Request $request)
     {
-        $validatedData = $request->validate([
+        $cart = Cart::session($request->session()->get('_token'));
+        $shipping = $request->session()->get('shipping');
+        $amount = $cart->getTotal();
+        $buyer = auth('buyer')->check() ? auth()->user() : null;
+
+        $validator = Validator::make($shipping, [
             'name' => ['required', 'string', 'min:8'],
             'address' => ['required', 'string', 'min:8'],
             'area' => ['required', 'integer', 'exists:city_areas,id'],
             'phone' => ['required', new Phone()]
         ]);
 
-        $request->session()->put('shipping', $validatedData);
+        if ($validator->fails()) {
+            return redirect(route('buyer.checkout.shipping.get'))
+                ->withErrors($validator)
+                ->withInput();
+        }
 
-        return redirect()->route('buyer.checkout.payment.get');
+        $order = Order::create([
+            'buyer_id' => is_null($buyer) ? null : $buyer->id,
+            'shipping_phone' => $shipping['phone'],
+            'shipping_address' => $shipping['address'],
+            'shipping_location_id' => $shipping['area'],
+            'receipt_email' => is_null($buyer) ? $shipping['receipt_email'] : $buyer->email,
+        ]);
+
+        foreach ($cart->getContent() as $item) {
+            $productOrder = ProductOrder::create([
+                'order_id' => $order->id,
+                'product_id' => $item->model->id,
+                'price' => $item->getPriceSum(),
+                'quantity' => $item->quantity,
+            ]);
+
+            $item->model->update(['inventory' => $item->model->inventory - $item->quantity]);
+
+            $seller = $item->model->seller;
+
+            $seller->notify(new ProductOrderNotification($productOrder));
+        }
+
+        $cart->clear();
+
+        return redirect()->route('buyer.checkout.success');
     }
 
     /**
@@ -154,18 +187,6 @@ class CheckoutController extends Controller
 
                 $seller = $item->model->seller;
 
-
-                Transaction::create([
-                    'user_id' => $seller->id,
-                    'user_type' => Seller::class,
-                    'reference_id' => $productOrder->id,
-                    'reference_type' => ProductOrder::class,
-                    'type' => Transaction::TYPE_CREDIT,
-                    'amount' => $item->getPriceSum(),
-                    'balance' => $seller->transactions()->sum('amount') + $item->getPriceSum(),
-                    'note' => '',
-                ]);
-
                 $seller->notify(new ProductOrderNotification($productOrder));
             }
 
@@ -196,8 +217,8 @@ class CheckoutController extends Controller
             return response()->json(['success' => 'Payment was successful']);
         } catch (Exception $ex) {
 //            return $ex->getMessage();
-            return response()->json(['error' => $ex->getMessage()]);
-//            return response()->json(['error' => 'Payment was declined']);
+//            return response()->json(['error' => $ex->getMessage()]);
+            return response()->json(['error' => 'Payment was declined']);
         }
     }
 

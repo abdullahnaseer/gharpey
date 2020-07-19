@@ -9,6 +9,7 @@ use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
@@ -16,7 +17,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhoneContract
 {
-    use HasApiTokens, Notifiable, MustVerifyPhoneTrait, UserApiTokenTrait;
+    use HasApiTokens, Notifiable, MustVerifyPhoneTrait, UserApiTokenTrait, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -203,6 +204,50 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
     }
 
     /**
+     * Get the reviews for products by seller.
+     */
+    public function product_reviews()
+    {
+        return $this->hasManyThrough(ProductReview::class, Product::class);
+    }
+
+    /**
+     * Get the reviews count for products by seller.
+     */
+    public function getProductReviewsCountAttribute()
+    {
+        return $this->product_reviews()->count();
+    }
+
+    /**
+     * Get the reviews average rating for products by seller.
+     */
+    public function getProductReviewsAverageAttribute()
+    {
+        return $this->product_reviews()->average('rating');
+    }
+
+    /**
+     * Get the reviews average rating for seller.
+     */
+    public function getReviewsAverageAttribute()
+    {
+        $reviews = $this->service_reviews()->get();
+        $reviews = $reviews->merge($this->product_reviews()->get());
+
+        return $reviews->average('rating');
+    }
+
+    /**
+     * Get the reviews average rating for seller.
+     */
+    public function getReviewsCountAttribute()
+    {
+        return ($this->product_reviews()->average('rating') + $this->service_reviews()->average('rating'));
+    }
+
+
+    /**
      * The services that belong to the seller.
      */
     public function services()
@@ -248,6 +293,37 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
     }
 
     /**
+     * Get the reviews for services by seller.
+     */
+    public function service_reviews()
+    {
+        return $this->hasManyThrough(
+            ServiceSellerReview::class,
+            ServiceSeller::class,
+            'seller_id',
+            'service_seller_id',
+            'id',
+            'id'
+        );
+    }
+
+    /**
+     * Get the reviews count for services by seller.
+     */
+    public function getServiceReviewsCountAttribute()
+    {
+        return $this->service_reviews()->count();
+    }
+
+    /**
+     * Get the reviews average rating for services by seller.
+     */
+    public function getServiceReviewsAverageAttribute()
+    {
+        return $this->service_reviews()->average('rating');
+    }
+
+    /**
      * Get the balance logs for the user.
      */
     public function transactions()
@@ -266,5 +342,13 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
             ->hasOne(Transaction::class, 'user_id', 'id')
             ->where('user_type', Seller::class)
             ->orderByDesc('id');
+    }
+
+    /**
+     * Get all of the buyer's tickets.
+     */
+    public function tickets()
+    {
+        return $this->morphMany(\App\Models\SupportTicket::class, 'user');
     }
 }

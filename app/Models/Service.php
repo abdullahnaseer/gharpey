@@ -4,9 +4,12 @@ namespace App\Models;
 
 use App\Helpers\ServiceQuestionType\ServiceQuestionType;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Service extends Model
 {
+    use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *

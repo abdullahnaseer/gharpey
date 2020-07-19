@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ServiceRequest extends Model
 {
     const STATUS_NEW = 'new';
-    const STATUS_PAID = 'paid';
+//    const STATUS_NEW = 'paid';
     const STATUS_CONFIRMED = 'confirmed';
     const STATUS_COMPLETED = 'completed';
     const STATUS_CANCELED = 'canceled';
@@ -15,7 +15,7 @@ class ServiceRequest extends Model
 
     const STATUSES = [
         self::STATUS_NEW,
-        self::STATUS_PAID,
+//        self::STATUS_NEW,
         self::STATUS_CONFIRMED,
         self::STATUS_COMPLETED,
         self::STATUS_CANCELED,

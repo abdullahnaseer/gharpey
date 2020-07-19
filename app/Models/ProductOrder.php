@@ -4,19 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductOrder extends Model
-{
-    const STATUS_PAID = 'paid';
+class ProductOrder extends Model{
+
+    const STATUS_NEW = 'new';
     const STATUS_CONFIRMED = 'confirmed';
-    const STATUS_SELLET_SENT = 'seller_sent';
+    const STATUS_SELLER_SENT = 'seller_sent';
     const STATUS_WAREHOUSE_RECEVIED = 'warehouse_received';
     const STATUS_SENT = 'sent';
     const STATUS_COMPLETED = 'completed';
     const STATUS_CANCELED = 'canceled';
     const STATUSES = [
-        self::STATUS_PAID,
+        self::STATUS_NEW,
         self::STATUS_CONFIRMED,
-        self::STATUS_SELLET_SENT,
+        self::STATUS_SELLER_SENT,
         self::STATUS_WAREHOUSE_RECEVIED,
         self::STATUS_SENT,
         self::STATUS_COMPLETED,

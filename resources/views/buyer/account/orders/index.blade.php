@@ -59,7 +59,7 @@
                                         @elseif($item->status == \App\Models\ProductOrder::STATUS_CANCELED)
                                             <p><span class="badge badge-danger">Cancelled</span></p>
                                         @elseif($item->status == \App\Models\ProductOrder::STATUS_CONFIRMED
-                                                || $item->status == \App\Models\ProductOrder::STATUS_SELLET_SENT)
+                                                || $item->status == \App\Models\ProductOrder::STATUS_SELLER_SENT)
                                             <p><span class="badge badge-info">Confirmed</span></p>
                                         @elseif($item->status == \App\Models\ProductOrder::STATUS_WAREHOUSE_RECEVIED)
                                             <p><span class="badge badge-info">In Processing</span></p>

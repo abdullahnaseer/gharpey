@@ -216,6 +216,8 @@ Route::namespace('Buyer')->name('buyer.')->group(function () {
 
         Route::resource('wishlist', 'WishlistController')->only(['index']);
         Route::resource('notifications', 'NotificationController')->only(['index']);
+
+        Route::resource('support', 'SupportController');
     });
 });
 

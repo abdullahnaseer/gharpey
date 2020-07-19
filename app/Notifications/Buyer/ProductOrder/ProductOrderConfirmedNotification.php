@@ -54,7 +54,7 @@ class ProductOrderConfirmedNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'The order for product "' . $this->productOrder->product->name . '" is confirmed by buyer.',
+            'message' => 'The order for product "' . $this->productOrder->product->name . '" is confirmed by seller.',
             'product_order_id' => $this->productOrder->id
         ];
     }

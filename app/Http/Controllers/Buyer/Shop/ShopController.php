@@ -34,8 +34,6 @@ class ShopController extends Controller
             });
         }
 
-//        return $data;
-
         return view('buyer.shop.show', $data);
     }
 }

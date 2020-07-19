@@ -196,7 +196,7 @@
                         <a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button" aria-expanded="false" aria-controls="order-cart-section">{{$service_request->service_seller->service->name}}</a>
                     </h4>
 
-                    <div class="collapse" id="order-cart-section">
+                    <div class="collapse show" id="order-cart-section">
                         <table class="table table-mini-cart">
                             <tbody>
                             <tr>

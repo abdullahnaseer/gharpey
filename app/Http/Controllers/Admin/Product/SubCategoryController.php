@@ -125,10 +125,18 @@ class SubCategoryController extends Controller
      */
     public function destroy(Request $request, $category_id, $record_id)
     {
-        $category = ProductCategory::findOrFail($category_id);
+        $category = ProductCategory::findOrFail($record_id);
 
-        $category->child_categories()->findOrFail($record_id)->delete();
-        flash('Successfully deleted the record!')->success();
+        if ($category->child_categories()->count() > 0)
+        {
+            flash('Cannot Delete a category with active child categories!!!')->error();
+        } else if ($category->products()->withTrashed()->count() > 0)
+        {
+            flash('Cannot Delete a category with products!!!')->error();
+        } else {
+            $category->delete();
+            flash('Successfully deleted the record!')->success();
+        }
 
         return redirect()->route('admin.products.categories.subcategories.index', [$category_id]);
     }

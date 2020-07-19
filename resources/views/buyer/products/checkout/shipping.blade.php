@@ -170,7 +170,7 @@
                         <a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button" aria-expanded="false" aria-controls="order-cart-section">{{$cart->getContent()->count()}} products in Cart</a>
                     </h4>
 
-                    <div class="collapse" id="order-cart-section">
+                    <div class="collapse show" id="order-cart-section">
                         <table class="table table-mini-cart">
                             <tbody>
                             @foreach($cart->getContent() as $item)

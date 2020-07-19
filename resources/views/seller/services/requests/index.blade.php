@@ -113,8 +113,6 @@
                             autoHide: false,
                             template: function(row) {
                                 if(row.status == '{{\App\Models\ServiceRequest::STATUS_NEW}}')
-                                    return "<p class='text-danger'>Waiting for payment from buyer.</p>";
-                                else if(row.status == '{{\App\Models\ServiceRequest::STATUS_PAID}}')
                                     return "<p class='text-info'>Waiting for Confirmation.</p>";
                                 else if(row.status == '{{\App\Models\ServiceRequest::STATUS_CONFIRMED}}')
                                     return "<p class='text-info'>Service Request Order Confirmed and Waiting for Buyer Confirmation of Completion.</p>";
@@ -181,8 +179,6 @@
                             overflow: 'visible',
                             template: function(row) {
                                 if(row.status == '{{\App\Models\ServiceRequest::STATUS_NEW}}')
-                                    return "<a href='{{url('/seller/services/requests')}}/"+row.id+"/edit?status=cancel' class='btn btn-outline-danger'>Cancel</a>";
-                                else if(row.status == '{{\App\Models\ServiceRequest::STATUS_PAID}}')
                                     return "<a href='{{url('/seller/services/requests')}}/"+row.id+"/edit?status=confirm' class='btn btn-outline-primary mr-2'>Confirm</a>" +
                                         "<a href='{{url('/seller/services/requests')}}/"+row.id+"/edit?status=cancel' class='btn btn-outline-danger'>Cancel</a>";
                                 else

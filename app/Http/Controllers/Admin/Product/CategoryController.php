@@ -102,8 +102,18 @@ class CategoryController extends Controller
      */
     public function destroy(Request $request, $record_id)
     {
-        ProductCategory::whereNull('parent_id')->findOrFail($record_id)->delete();
-        flash('Successfully deleted the record!')->success();
+        $category = ProductCategory::findOrFail($record_id);
+
+        if ($category->child_categories()->count() > 0)
+        {
+            flash('Cannot Delete a category with active child categories!!!')->error();
+        } else if ($category->products()->withTrashed()->count() > 0)
+        {
+            flash('Cannot Delete a category with products!!!')->error();
+        } else {
+            $category->delete();
+            flash('Successfully deleted the record!')->success();
+        }
 
         return redirect()->route('admin.products.categories.index');
     }

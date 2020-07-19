@@ -70,15 +70,27 @@ class ServiceController extends Controller
             foreach (collect(ServiceQuestion::getGuestUserQuestions())->reverse() as $q)
                $service->questions->prepend($q);
 
+        $service_sellers = ServiceSeller::query();
+
         if ($request->has('city_id')) {
             $city = City::with(['state'])->findOrFail($request->input('city_id'));
 
             $service_sellers = ServiceSeller::whereHas('cities', function (Builder $query) use ($request) {
                 $query->where('location_id', $request->input('city_id'));
-            })->where('service_id', $service->id)
-                ->with(['seller'])
-                ->paginate();
+            });
         }
+
+        if ($request->has('price-min'))
+            $service_sellers = $service_sellers->where('price', '>=', (float) $request->input('price-min'));
+
+        if ($request->has('price-max'))
+            $service_sellers = $service_sellers->where('price', '<=', (float) $request->input('price-max'));
+
+
+        $service_sellers = $service_sellers->where('service_id', $service->id)
+            ->whereHas('seller')
+            ->with(['seller'])
+            ->paginate();
 
         return view('buyer.services.show', [
             'service' => $service,

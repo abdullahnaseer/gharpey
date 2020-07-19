@@ -170,6 +170,16 @@
                                 <h4 class="seller_name text-center">
                                     {{$shop->shop_name}}
                                 </h4>
+
+                                <div class="ratings-container text-center">
+                                    <div class="product-ratings">
+                                        <span class="ratings" style="width:{{$shop->reviews_average * 20}}%"></span>
+                                        <!-- End .ratings -->
+                                    </div>
+                                    <!-- End .product-ratings -->
+                                    <a href="#" class="rating-link">({{ $shop->reviews_count }} Reviews)</a>
+                                </div>
+
 {{--                                <h5 class="seller_description text-center">Description</h5>--}}
                                 <table class="table">
                                     <tbody>

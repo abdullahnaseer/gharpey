@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Moderator\Product;
 
 use App\Http\Controllers\Controller;
+use App\Models\Buyer;
+use App\Models\Order;
 use App\Models\ProductOrder;
 use App\Models\Seller;
 use App\Models\Transaction;
@@ -37,11 +39,15 @@ class OrderController extends Controller
         if(!is_null($seller_id))
         {
             $orders = Seller::findOrFail($seller_id)->product_orders()->orderBy('created_at', 'desc')
-                ->with(['product'])
+                ->with(['product' => function($query) {
+                    return $query->withTrashed();
+                }])
                 ->get();
         } else {
             $orders = ProductOrder::orderBy('created_at', 'desc')
-                ->with(['product'])
+                ->with(['product' => function($query) {
+                    return $query->withTrashed();
+                }])
                 ->get();
         }
         return $orders;
@@ -98,23 +104,32 @@ class OrderController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $product_order = ProductOrder::findOrFail($id);
-        $buyer = $product_order->order->buyer;
-        $seller = $product_order->product->seller;
+        $product_order = ProductOrder::with(['product' => function($query) {
+            return $query->withTrashed();
+        }])->findOrFail($id);
+
+        $order = $product_order->order;
+        $product = $product_order->product()->withTrashed()->first();
+
+        $buyer = !is_null($order) ? $order->buyer()->withTrashed()->first() : null;
+        $seller = !is_null($product) ? $product->seller()->withTrashed()->first() : null;
+
         $status = $request->input('status');
         if ($status == 'received') {
-            if ($product_order->status == ProductOrder::STATUS_PAID || $product_order->status == ProductOrder::STATUS_SELLET_SENT || $product_order->status == ProductOrder::STATUS_CONFIRMED) {
+            if ($product_order->status == ProductOrder::STATUS_NEW || $product_order->status == ProductOrder::STATUS_SELLER_SENT || $product_order->status == ProductOrder::STATUS_CONFIRMED) {
                 $product_order->update([
                     'status' => ProductOrder::STATUS_WAREHOUSE_RECEVIED,
                     'warehouse_received_at' => Carbon::now()
                 ]);
 
-                $product_order->product->seller->notify(new ProductOrderReceivedNotification($product_order));
+                if(!is_null($seller))
+                    $seller->notify(new ProductOrderReceivedNotification($product_order));
 
                 flash()->success('Status Updated!');
             } else
                 flash()->error('Invalid Operation!!!');
         } else if ($status == 'sent') {
+
             if ($product_order->status == ProductOrder::STATUS_WAREHOUSE_RECEVIED) {
                 $product_order->update([
                     'status' => ProductOrder::STATUS_SENT,
@@ -123,10 +138,13 @@ class OrderController extends Controller
 
                 if (!is_null($buyer))
                     $buyer->notify(new ProductOrderDeliveryNotification($product_order));
+                else if ( !empty($product_order->order) && !empty($product_order->order->receipt_email) )
+                    $product_order->order->notify(new ProductOrderDeliveryNotification($product_order));
 
                 flash()->success('Status Updated!');
             } else
                 flash()->error('Invalid Operation!!!');
+
         } else if ($status == 'completed') {
             if ($product_order->status == ProductOrder::STATUS_SENT) {
                 $product_order->update([
@@ -134,34 +152,60 @@ class OrderController extends Controller
                     'completed_at' => Carbon::now()
                 ]);
 
+                if($product_order->payment_gateway == Order::PAYMENT_GATEWAY_COD)
+                {
+                    Transaction::create([
+                        'user_id' => is_null($buyer) ? null : $buyer->id,
+                        'user_type' => Buyer::class,
+                        'reference_id' => $product_order->id,
+                        'reference_type' => ProductOrder::class,
+                        'type' => Transaction::TYPE_CREDIT,
+                        'amount' => $product_order->price,
+                        'balance' => is_null($buyer) ? null : $buyer->transactions()->sum('amount') + $product_order->price,
+                        'note' => '',
+                    ]);
+
+                    Transaction::create([
+                        'user_id' => is_null($buyer) ? null : $buyer->id,
+                        'user_type' => Buyer::class,
+                        'reference_id' => $product_order->id,
+                        'reference_type' => ProductOrder::class,
+                        'type' => Transaction::TYPE_DEBIT,
+                        'amount' => -$product_order->price,
+                        'balance' => is_null($buyer) ? null : $buyer->transactions()->sum('amount') - $product_order->price,
+                        'note' => '',
+                    ]);
+                }
+
+                Transaction::create([
+                    'user_id' => is_null($seller) ? null : $seller->id,
+                    'user_type' => Seller::class,
+                    'reference_id' => $product_order->id,
+                    'reference_type' => ProductOrder::class,
+                    'type' => Transaction::TYPE_CREDIT,
+                    'amount' => $product_order->price,
+                    'balance' => is_null($seller) ? null : $seller->transactions()->sum('amount') + $product_order->price,
+                    'note' => '',
+                ]);
+
                 if (!is_null($buyer))
                     $buyer->notify(new ProductOrderCompletedNotification($product_order));
+                else if ( !empty($product_order->order) && !empty($product_order->order->receipt_email) )
+                    $product_order->order->notify(new ProductOrderCompletedNotification($product_order));
 
                 flash()->success('Status Updated!');
             } else
                 flash()->error('Invalid Operation!!!');
         } else if ($status == 'cancel') {
-            if ($product_order->status == ProductOrder::STATUS_PAID) {
+            if ($product_order->status == ProductOrder::STATUS_NEW) {
                 $product_order->update([
                     'status' => ProductOrder::STATUS_CANCELED,
                     'canceled_at' => Carbon::now()
                 ]);
 
                 Transaction::create([
-                    'user_id' => $product_order->product->seller->id,
-                    'user_type' => Seller::class,
-                    'reference_id' => $product_order->id,
-                    'reference_type' => ProductOrder::class,
-                    'type' => Transaction::TYPE_DEBIT,
-                    'amount' => -$product_order->price,
-                    'balance' => $product_order->product->seller->transactions()->sum('amount') - $product_order->price,
-                    'note' => '',
-                ]);
-
-                $buyer = $product_order->order->buyer;
-                Transaction::create([
                     'user_id' => is_null($buyer) ? null : $buyer->id,
-                    'user_type' => Seller::class,
+                    'user_type' => Buyer::class,
                     'reference_id' => $product_order->id,
                     'reference_type' => ProductOrder::class,
                     'type' => Transaction::TYPE_CREDIT,
@@ -170,9 +214,13 @@ class OrderController extends Controller
                     'note' => '',
                 ]);
 
-                $product_order->product->seller->notify(new ProductOrderCanceledNotification($product_order));
+                if(!is_null($seller))
+                    $seller->notify(new ProductOrderCanceledNotification($product_order));
+
                 if (!is_null($buyer))
                     $buyer->notify(new BuyerProductOrderCanceledNotification($product_order));
+                else if ( !empty($order) && !empty($order->receipt_email) )
+                    $order->notify(new BuyerProductOrderCanceledNotification($product_order));
 
                 flash()->success('Status Updated!');
             } else

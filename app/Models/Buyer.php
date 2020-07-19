@@ -7,6 +7,7 @@ use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -15,7 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Buyer extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, Notifiable, UserApiTokenTrait;
+    use HasApiTokens, Notifiable, UserApiTokenTrait, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -151,5 +152,13 @@ class Buyer extends Authenticatable implements MustVerifyEmail
     public function service_requests()
     {
         return $this->hasMany(ServiceRequest::class);
+    }
+
+    /**
+     * Get all of the buyer's tickets.
+     */
+    public function tickets()
+    {
+        return $this->morphMany(\App\Models\SupportTicket::class, 'user');
     }
 }

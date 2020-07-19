@@ -27,7 +27,10 @@ class HomeController extends Controller
     public function index()
     {
         $data['popular_services'] = Service::with(['category'])->take(10)->get();
-        $data['popular_products'] = Product::with(['category', 'seller'])->take(10)->get();
+        $data['popular_products'] = Product::with([
+            'category',
+            'seller' => fn($q) => $q->withTrashed()
+        ])->take(10)->get();
 
         return view('buyer.home', $data);
     }

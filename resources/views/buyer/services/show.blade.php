@@ -153,18 +153,45 @@
 
                             <div class="collapse show" id="widget-body-2">
                                 <div class="widget-body">
-                                    <form action="" method="GET">
+{{--                                    <form action="" method="GET">--}}
+{{--                                        <div class="price-slider-wrapper">--}}
+{{--                                            <div id="price-slider"></div><!-- End #price-slider -->--}}
+{{--                                        </div><!-- End .price-slider-wrapper -->--}}
+
+{{--                                        <div class="filter-price-action">--}}
+{{--                                            <button type="submit" class="btn btn-primary">Filter</button>--}}
+
+{{--                                            <div class="filter-price-text">--}}
+{{--                                                <span id="filter-price-range"></span>--}}
+{{--                                            </div><!-- End .filter-price-text -->--}}
+{{--                                        </div><!-- End .filter-price-action -->--}}
+{{--                                    </form>--}}
+
+
+                                    <form action="" onsubmit="handlePriceFilterForm()" id="form-price">
+
+                                        @if(request()->has('city_id'))
+                                            <input type="hidden" name="city_id" value="{{request()->input('city_id')}}">
+                                        @endif
+
+                                        <input type="hidden" name="price-min" id="input-price-min" value="{{request()->input('price-min', 100)}}" />
+                                        <input type="hidden" name="price-max" id="input-price-max" value="{{request()->input('price-max', 10000)}}" />
+
                                         <div class="price-slider-wrapper">
-                                            <div id="price-slider"></div><!-- End #price-slider -->
-                                        </div><!-- End .price-slider-wrapper -->
+                                            <div id="price-slider"></div>
+                                            <!-- End #price-slider -->
+                                        </div>
+                                        <!-- End .price-slider-wrapper -->
 
                                         <div class="filter-price-action">
-                                            <button type="submit" class="btn btn-primary">Filter</button>
+                                            <button type="submit" class="btn btn-primary" onclick="return handlePriceFilterForm();">Filter</button>
 
                                             <div class="filter-price-text">
                                                 <span id="filter-price-range"></span>
-                                            </div><!-- End .filter-price-text -->
-                                        </div><!-- End .filter-price-action -->
+                                            </div>
+                                            <!-- End .filter-price-text -->
+                                        </div>
+                                        <!-- End .filter-price-action -->
                                     </form>
                                 </div><!-- End .widget-body -->
                             </div><!-- End .collapse -->
@@ -176,4 +203,32 @@
 
         <div class="mb-5"></div><!-- margin -->
     @endif
+@endsection
+
+
+@section('scripts')
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var inputPriceMin = document.getElementById('input-price-min');
+            var inputPriceMax = document.getElementById('input-price-max');
+            document.getElementById("price-slider").noUiSlider
+                .set([inputPriceMin.value, inputPriceMax.value]);
+        });
+
+        function handlePriceFilterForm()
+        {
+            var inputPriceMin = $('input#input-price-min');
+            var inputPriceMax = $('input#input-price-max');
+
+            var prices = document.getElementById("price-slider").noUiSlider.get();
+
+            inputPriceMin.val(prices[0]);
+            inputPriceMax.val(prices[1]);
+
+            // return false;
+            document.getElementById("price-form").submit();
+            return;
+        }
+    </script>
 @endsection

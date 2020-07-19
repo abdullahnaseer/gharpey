@@ -26,7 +26,7 @@ class RedirectIfAuthenticated
             elseif ($guard == 'seller')
                 return redirect('/seller/dashboard');
             else
-                return redirect('/buyer/dashboard');
+                return redirect('/account');
         }
 
         return $next($request);

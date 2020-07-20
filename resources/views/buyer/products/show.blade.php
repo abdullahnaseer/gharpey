@@ -21,7 +21,7 @@
                                     <div class="product-item">
                                         <img class="product-single-image"
                                              src="{{str_replace("public","/storage",$product->featured_image)}}"
-                                             data-zoom-image="assets/images/products/zoom/product-1-big.jpg"/>
+                                             data-zoom-image="{{str_replace("public","/storage",$product->featured_image)}}"/>
                                     </div>
                                     {{--                                        <div class="product-item">--}}
                                     {{--                                            <img class="product-single-image" src="assets/images/products/zoom/product-2.jpg" data-zoom-image="assets/images/products/zoom/product-2-big.jpg"/>--}}
@@ -136,10 +136,21 @@
                                     @endif
                                 </div><!-- End .product-action -->
 
-                                <div class="product-single-share">
-                                    <label>Share:</label>
-                                    <!-- www.addthis.com share plugin-->
-                                    <div class="addthis_inline_share_toolbox"></div>
+                                <div class="">
+                                    <h4>Share:</h4>
+                                    <hr class="mt-1 mb-2">
+                                    <div class="post-sharing">
+                                        <ul class="list-inline">
+                                            <li>
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{route('buyer.products.show', [$product->slug])}}" target="_blank" class="fb-button btn btn-primary btn-icon">
+                                                    <i class="fa fa-facebook"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://twitter.com/intent/tweet?text={{$product->name}}&amp;url={{route('buyer.products.show', [$product->slug])}}" target="_blank" class="tw-button btn btn-primary"><i class="fa fa-twitter"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div><!-- End .product single-share -->
                             </div><!-- End .product-single-details -->
                         </div><!-- End .col-lg-5 -->
@@ -147,7 +158,7 @@
                 </div><!-- End .product-single-container -->
 
                 <div class="product-single-tabs">
-                    <ul class="nav nav-tabs" role="tablist">
+                    <ul class="nav nav-tabs" id="productTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="product-tab-desc" data-toggle="tab"
                                href="#product-desc-content" role="tab" aria-controls="product-desc-content"
@@ -174,8 +185,62 @@
                         <div class="tab-pane fade" id="product-qas-content" role="tabpanel"
                              aria-labelledby="product-tab-qas">
                             <div class="product-qas-content">
-                                <div class="alert alert-info">Under Construction!!!</div>
-                            </div><!-- End .product-tags-content -->
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
+                                @auth('buyer')
+                                    <form action="{{route('buyer.products.questions.store', [$product->id])}}" method="POST">
+                                        @csrf
+                                        <h3>Ask Question</h3>
+                                        <div class="form-group">
+                                            <label for="title">Title</label>
+                                            <input id="title" type="text" name="question_title" class="form-control" value="{{old('question_title')}}" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <textarea id="description" name="question_description" class="form-control">{{old('question_description')}}</textarea>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                @endauth
+
+
+                                @if($product->questions->count())
+                                    @foreach($product->questions as $question)
+                                        <div>
+                                            <p>
+                                                <strong>{{$question->question_title}}</strong>
+                                                <br>
+                                                {{$question->question_description}}
+                                                <br>
+                                                <small>By {{$question->buyer->name}} | {{$question->created_at->diffForHumans()}}</small>
+                                            </p>
+                                            @if(!empty($question->answer_description))
+                                                <div class="alert alert-info">
+                                                    <strong>Seller Response:</strong>
+                                                    <br>
+                                                    {{$question->answer_description}}
+                                                </div>
+                                            @endif
+                                            <hr class="my-1">
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="alert alert-info">
+                                        No questions found.
+                                    </div>
+                                @endif
+
+                            </div>
                         </div><!-- End .tab-pane -->
 
                         <div class="tab-pane fade" id="product-reviews-content" role="tabpanel"
@@ -235,192 +300,45 @@
             </aside><!-- End .col-md-3 -->
         </div><!-- End .row -->
     </div><!-- End .container -->
+@endsection
 
-    {{--        <div class="featured-section">--}}
-    {{--            <div class="container">--}}
-    {{--                <h2 class="carousel-title">Featured Products</h2>--}}
+@section('styles')
+    <style>
+        .fb-button.btn-primary:focus,
+        .fb-button.btn-primary:hover,
+        .fb-button.btn-primary {
+            background-color: #3B5998 !important;
+            border-color: #3B5998 !important;
+            padding: 0.5rem;
+            min-width: 50px;
+        }
 
-    {{--                <div class="featured-products owl-carousel owl-theme owl-dots-top">--}}
-    {{--                    <div class="product">--}}
-    {{--                        <figure class="product-image-container">--}}
-    {{--                            <a href="product.html" class="product-image">--}}
-    {{--                                <img src="assets/images/products/product-1.jpg" alt="product">--}}
-    {{--                            </a>--}}
-    {{--                            <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
-    {{--                        </figure>--}}
-    {{--                        <div class="product-details">--}}
-    {{--                            <div class="ratings-container">--}}
-    {{--                                <div class="product-ratings">--}}
-    {{--                                    <span class="ratings" style="width:80%"></span><!-- End .ratings -->--}}
-    {{--                                </div><!-- End .product-ratings -->--}}
-    {{--                            </div><!-- End .product-container -->--}}
-    {{--                            <h2 class="product-title">--}}
-    {{--                                <a href="product.html">Pen drive</a>--}}
-    {{--                            </h2>--}}
-    {{--                            <div class="price-box">--}}
-    {{--                                <span class="product-price">$189.00</span>--}}
-    {{--                            </div><!-- End .price-box -->--}}
+        .tw-button.btn-primary:hover,
+        .tw-button.btn-primary:focus,
+        .tw-button.btn-primary {
+            background-color: #00B6F1 !important;
+            border-color: #00B6F1 !important;
+            padding: 0.5rem;
+            min-width: 50px;
+        }
 
-    {{--                            <div class="product-action">--}}
-    {{--                                <a href="#" class="paction add-wishlist" title="Add to Wishlist">--}}
-    {{--                                    <span>Add to Wishlist</span>--}}
-    {{--                                </a>--}}
+        .post-sharing span,
+        .post-sharing li {
+            display: inline-block !important;
+        }
 
-    {{--                                <a href="product.html" class="paction add-cart" title="Add to Cart">--}}
-    {{--                                    <span>Add to Cart</span>--}}
-    {{--                                </a>--}}
+    </style>
+@endsection
 
-    {{--                                <a href="#" class="paction add-compare" title="Add to Compare">--}}
-    {{--                                    <span>Add to Compare</span>--}}
-    {{--                                </a>--}}
-    {{--                            </div><!-- End .product-action -->--}}
-    {{--                        </div><!-- End .product-details -->--}}
-    {{--                    </div><!-- End .product -->--}}
-
-    {{--                    <div class="product">--}}
-    {{--                        <figure class="product-image-container">--}}
-    {{--                            <a href="product.html" class="product-image">--}}
-    {{--                                <img src="assets/images/products/product-2.jpg" alt="product">--}}
-    {{--                            </a>--}}
-    {{--                            <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
-    {{--                        </figure>--}}
-    {{--                        <div class="product-details">--}}
-    {{--                            <div class="ratings-container">--}}
-    {{--                                <div class="product-ratings">--}}
-    {{--                                    <span class="ratings" style="width:100%"></span><!-- End .ratings -->--}}
-    {{--                                </div><!-- End .product-ratings -->--}}
-    {{--                            </div><!-- End .product-container -->--}}
-    {{--                            <h2 class="product-title">--}}
-    {{--                                <a href="product.html">Headphone</a>--}}
-    {{--                            </h2>--}}
-    {{--                            <div class="price-box">--}}
-    {{--                                <span class="product-price">$55.00</span>--}}
-    {{--                            </div><!-- End .price-box -->--}}
-
-    {{--                            <div class="product-action">--}}
-    {{--                                <a href="#" class="paction add-wishlist" title="Add to Wishlist">--}}
-    {{--                                    <span>Add to Wishlist</span>--}}
-    {{--                                </a>--}}
-
-    {{--                                <a href="product.html" class="paction add-cart" title="Add to Cart">--}}
-    {{--                                    <span>Add to Cart</span>--}}
-    {{--                                </a>--}}
-
-    {{--                                <a href="#" class="paction add-compare" title="Add to Compare">--}}
-    {{--                                    <span>Add to Compare</span>--}}
-    {{--                                </a>--}}
-    {{--                            </div><!-- End .product-action -->--}}
-    {{--                        </div><!-- End .product-details -->--}}
-    {{--                    </div><!-- End .product -->--}}
-
-    {{--                    <div class="product">--}}
-    {{--                        <figure class="product-image-container">--}}
-    {{--                            <a href="product.html" class="product-image">--}}
-    {{--                                <img src="assets/images/products/product-3.jpg" alt="product">--}}
-    {{--                            </a>--}}
-    {{--                            <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
-    {{--                        </figure>--}}
-    {{--                        <div class="product-details">--}}
-    {{--                            <div class="ratings-container">--}}
-    {{--                                <div class="product-ratings">--}}
-    {{--                                    <span class="ratings" style="width:40%"></span><!-- End .ratings -->--}}
-    {{--                                </div><!-- End .product-ratings -->--}}
-    {{--                            </div><!-- End .product-container -->--}}
-    {{--                            <h2 class="product-title">--}}
-    {{--                                <a href="product.html">Computer Mouse</a>--}}
-    {{--                            </h2>--}}
-    {{--                            <div class="price-box">--}}
-    {{--                                <span class="product-price">$31.00</span>--}}
-    {{--                            </div><!-- End .price-box -->--}}
-
-    {{--                            <div class="product-action">--}}
-    {{--                                <a href="#" class="paction add-wishlist" title="Add to Wishlist">--}}
-    {{--                                    <span>Add to Wishlist</span>--}}
-    {{--                                </a>--}}
-
-    {{--                                <a href="product.html" class="paction add-cart" title="Add to Cart">--}}
-    {{--                                    <span>Add to Cart</span>--}}
-    {{--                                </a>--}}
-
-    {{--                                <a href="#" class="paction add-compare" title="Add to Compare">--}}
-    {{--                                    <span>Add to Compare</span>--}}
-    {{--                                </a>--}}
-    {{--                            </div><!-- End .product-action -->--}}
-    {{--                        </div><!-- End .product-details -->--}}
-    {{--                    </div><!-- End .product -->--}}
-
-    {{--                    <div class="product">--}}
-    {{--                        <figure class="product-image-container">--}}
-    {{--                            <a href="product.html" class="product-image">--}}
-    {{--                                <img src="assets/images/products/product-4.jpg" alt="product">--}}
-    {{--                            </a>--}}
-    {{--                            <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
-    {{--                        </figure>--}}
-    {{--                        <div class="product-details">--}}
-    {{--                            <div class="ratings-container">--}}
-    {{--                                <div class="product-ratings">--}}
-    {{--                                    <span class="ratings" style="width:0%"></span><!-- End .ratings -->--}}
-    {{--                                </div><!-- End .product-ratings -->--}}
-    {{--                            </div><!-- End .product-container -->--}}
-    {{--                            <h2 class="product-title">--}}
-    {{--                                <a href="product.html">Camera</a>--}}
-    {{--                            </h2>--}}
-    {{--                            <div class="price-box">--}}
-    {{--                                <span class="product-price">$335.00</span>--}}
-    {{--                            </div><!-- End .price-box -->--}}
-
-    {{--                            <div class="product-action">--}}
-    {{--                                <a href="#" class="paction add-wishlist" title="Add to Wishlist">--}}
-    {{--                                    <span>Add to Wishlist</span>--}}
-    {{--                                </a>--}}
-
-    {{--                                <a href="product.html" class="paction add-cart" title="Add to Cart">--}}
-    {{--                                    <span>Add to Cart</span>--}}
-    {{--                                </a>--}}
-
-    {{--                                <a href="#" class="paction add-compare" title="Add to Compare">--}}
-    {{--                                    <span>Add to Compare</span>--}}
-    {{--                                </a>--}}
-    {{--                            </div><!-- End .product-action -->--}}
-    {{--                        </div><!-- End .product-details -->--}}
-    {{--                    </div><!-- End .product -->--}}
-
-    {{--                    <div class="product">--}}
-    {{--                        <figure class="product-image-container">--}}
-    {{--                            <a href="product.html" class="product-image">--}}
-    {{--                                <img src="assets/images/products/product-5.jpg" alt="product">--}}
-    {{--                            </a>--}}
-    {{--                            <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
-    {{--                        </figure>--}}
-    {{--                        <div class="product-details">--}}
-    {{--                            <div class="ratings-container">--}}
-    {{--                                <div class="product-ratings">--}}
-    {{--                                    <span class="ratings" style="width:50%"></span><!-- End .ratings -->--}}
-    {{--                                </div><!-- End .product-ratings -->--}}
-    {{--                            </div><!-- End .product-container -->--}}
-    {{--                            <h2 class="product-title">--}}
-    {{--                                <a href="product.html">Leather Boots</a>--}}
-    {{--                            </h2>--}}
-    {{--                            <div class="price-box">--}}
-    {{--                                <span class="product-price">$60.00</span>--}}
-    {{--                            </div><!-- End .price-box -->--}}
-
-    {{--                            <div class="product-action">--}}
-    {{--                                <a href="#" class="paction add-wishlist" title="Add to Wishlist">--}}
-    {{--                                    <span>Add to Wishlist</span>--}}
-    {{--                                </a>--}}
-
-    {{--                                <a href="product.html" class="paction add-cart" title="Add to Cart">--}}
-    {{--                                    <span>Add to Cart</span>--}}
-    {{--                                </a>--}}
-
-    {{--                                <a href="#" class="paction add-compare" title="Add to Compare">--}}
-    {{--                                    <span>Add to Compare</span>--}}
-    {{--                                </a>--}}
-    {{--                            </div><!-- End .product-action -->--}}
-    {{--                        </div><!-- End .product-details -->--}}
-    {{--                    </div><!-- End .product -->--}}
-    {{--                </div><!-- End .featured-proucts -->--}}
-    {{--            </div><!-- End .container -->--}}
-    {{--        </div><!-- End .featured-section -->--}}
+@section('scripts')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @if($errors->any() || isset($qa))
+                $('#productTab a[href="#product-qas-content"]').tab('show');
+                $('html, body').animate({
+                    scrollTop: $("#productTab").offset().top
+                }, 2000);
+            @endif
+        });
+    </script>
 @endsection

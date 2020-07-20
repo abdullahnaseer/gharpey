@@ -128,15 +128,26 @@ Route::name('seller.')->prefix('seller')->namespace('Seller')->group(function ()
         Route::post('/finance/', 'FinanceController@payment')->name('finance.payment');
         Route::get('/withdraws/', 'WithdrawController@index')->name('withdraws');
         Route::post('/withdraws/json', 'WithdrawController@json')->name('withdraws.json');
+
+
+
         Route::post('products/orders/json', 'Product\OrderController@json')->name('orders.json');
         Route::resource('products/orders', 'Product\OrderController')->only(['index', 'edit']);
+
+        Route::post('questions/json', 'QuestionController@json')->name('questions.json');
+        Route::resource('questions', 'QuestionController')->only(['index', 'update']);
+
         Route::post('products/json', 'Product\ProductController@json')->name('products.json');
         Route::resource('products', 'Product\ProductController')->only(['index', 'store', 'update', 'destroy']);
 
+
         Route::post('services/requests/json', 'Service\ServiceRequestController@json')->name('requests.json');
         Route::resource('services/requests', 'Service\ServiceRequestController');
+
         Route::post('services/json', 'Service\ServiceController@json')->name('services.json');
         Route::resource('services', 'Service\ServiceController');
+
+
 
         Route::name('account.')->prefix('account')->namespace('Account')->group(function () {
             Route::get('/', 'AccountController@index')->name('index');
@@ -168,6 +179,7 @@ Route::namespace('Buyer')->name('buyer.')->group(function () {
 
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('products', 'ProductController');
+    Route::resource('products.questions', 'Product\ProductQuestionsController')->middleware('auth:buyer');
 
     Route::resource('shop.product', 'Shop\ProductController');
     Route::resource('shop', 'Shop\ShopController');
@@ -187,6 +199,7 @@ Route::namespace('Buyer')->name('buyer.')->group(function () {
     // Service Routes
     Route::resource('services', 'Service\ServiceController')->only(['index', 'show']);
     Route::resource('services.sellers', 'Service\ServiceSellerController')->only(['show', 'store']);
+    Route::resource('services.sellers.questions', 'Service\ServiceQuestionsController')->middleware('auth:buyer');
 //    Route::resource('service_requests', 'Service\ServiceRequestController')->only(['show']);
 
     // Service Request Checkout Routes

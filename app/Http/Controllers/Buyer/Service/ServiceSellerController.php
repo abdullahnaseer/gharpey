@@ -24,16 +24,6 @@ use Illuminate\Validation\Rule;
 class ServiceSellerController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-//        $this->middleware('auth');
-    }
-
-    /**
      * Show the service page.
      *
      * @return mixed
@@ -43,14 +33,21 @@ class ServiceSellerController extends Controller
         $cities = City::all();
         $city = City::find($request->input('city_id'));
 
-        $service_seller = ServiceSeller::with(['seller', 'reviews', 'questions'])
+        $service_seller = ServiceSeller::with([
+            'seller',
+            'reviews',
+            'questions',
+            'service_questions' => fn($q) => $q->latest()
+        ])
             ->whereHas('cities', function (Builder $query) use ($request) {
                 if ($request->has('city_id'))
                     $query->where('location_id', $request->input('city_id'));
             })
             ->findOrFail($service_seller_id);
         $service = Service::where('slug', $service_slug)
-            ->with(['category'])
+            ->with([
+                'category'
+            ])
             ->findOrFail($service_seller->service_id);
 
 //        if(auth()->guest())

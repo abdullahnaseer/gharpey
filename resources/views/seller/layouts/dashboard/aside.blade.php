@@ -36,6 +36,11 @@
                             class="kt-menu__link-icon flaticon-coins"></i><span
                             class="kt-menu__link-text">Finance</span></a></li>
 
+                <li class="kt-menu__item {{ (request()->is('seller/questions*')) ? 'kt-menu__item--active' : '' }} "
+                    aria-haspopup="true"><a href="{{route('seller.questions.index')}}" class="kt-menu__link "><i
+                            class="kt-menu__link-icon flaticon-gift"></i><span
+                            class="kt-menu__link-text">Q&As</span></a></li>
+
                 <li class="kt-menu__section ">
                     <h4 class="kt-menu__section-text">Products</h4>
                     <i class="kt-menu__section-icon flaticon-more-v2"></i>

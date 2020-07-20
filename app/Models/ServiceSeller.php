@@ -111,6 +111,14 @@ class ServiceSeller extends Pivot
     }
 
     /**
+     * Get all of the service's questions.
+     */
+    public function service_questions()
+    {
+        return $this->morphMany(\App\Models\Question::class, 'item');
+    }
+
+    /**
      * Get all of the states that are assigned this service.
      */
     public function states()

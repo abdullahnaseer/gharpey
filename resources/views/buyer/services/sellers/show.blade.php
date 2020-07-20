@@ -93,12 +93,9 @@
                                 </div><!-- End .product-desc -->
 
                                 <div class="">
-                                    @if ($errors->any())
+                                    @if($errors->any() && !($errors->has('question_title') || $errors->has('question_description')))
                                         <div class="alert alert-danger mb-5" id="errorsDiv">
                                             <ul>
-                                                {{--                        @if ($errors->has('city_id'))--}}
-                                                {{--                            <li>The selected location is invalid or this service is not available for your location.</li>--}}
-                                                {{--                        @endif--}}
                                                 @foreach ($errors->all() as $error)
                                                     <li>{{ $error }}</li>
                                                 @endforeach
@@ -121,18 +118,30 @@
 
                                 </div><!-- End .product-action -->
 
-                                <div class="product-single-share">
-                                    <label>Share:</label>
-                                    <!-- www.addthis.com share plugin-->
-                                    <div class="addthis_inline_share_toolbox"></div>
+                                <div class="">
+                                    <h4>Share:</h4>
+                                    <hr class="mt-1 mb-2">
+                                    <div class="post-sharing">
+                                        <ul class="list-inline">
+                                            <li>
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{route('buyer.services.sellers.show', [$service_seller->service->slug, $service_seller->id])}}" target="_blank" class="fb-button btn btn-primary btn-icon">
+                                                    <i class="fa fa-facebook"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="https://twitter.com/intent/tweet?text={{$service_seller->service->name}}&amp;url={{route('buyer.services.sellers.show', [$service_seller->service->slug, $service_seller->id])}}" target="_blank" class="tw-button btn btn-primary"><i class="fa fa-twitter"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div><!-- End .product single-share -->
+
                             </div><!-- End .product-single-details -->
                         </div><!-- End .col-lg-5 -->
                     </div><!-- End .row -->
                 </div><!-- End .product-single-container -->
 
                 <div class="product-single-tabs">
-                    <ul class="nav nav-tabs" role="tablist">
+                    <ul class="nav nav-tabs" role="tablist" id="serviceTab">
                         <li class="nav-item">
                             <a class="nav-link active" id="product-tab-desc" data-toggle="tab"
                                href="#product-desc-content" role="tab" aria-controls="product-desc-content"
@@ -159,7 +168,59 @@
                         <div class="tab-pane fade" id="product-qas-content" role="tabpanel"
                              aria-labelledby="product-tab-qas">
                             <div class="product-qas-content">
-                                <div class="alert alert-info">Under Construction!!!</div>
+                                @if($errors->has('question_title') || $errors->has('question_description'))
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
+                                @auth('buyer')
+                                    <form action="{{route('buyer.services.sellers.questions.store', [$service_seller->service->slug, $service_seller->id])}}" method="POST">
+                                        @csrf
+                                        <h3>Ask Question</h3>
+                                        <div class="form-group">
+                                            <label for="title">Title</label>
+                                            <input id="title" type="text" name="question_title" class="form-control" value="{{old('question_title')}}" />
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <textarea id="description" name="question_description" class="form-control">{{old('question_description')}}</textarea>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                @endauth
+
+                                @if($service_seller->service_questions->count())
+                                    @foreach($service_seller->service_questions as $question)
+                                        <div>
+                                            <p>
+                                                <strong>{{$question->question_title}}</strong>
+                                                <br>
+                                                {{$question->question_description}}
+                                                <br>
+                                                <small>By {{$question->buyer->name}} | {{$question->created_at->diffForHumans()}}</small>
+                                            </p>
+                                            @if(!empty($question->answer_description))
+                                                <div class="alert alert-info">
+                                                    <strong>Seller Response:</strong>
+                                                    <br>
+                                                    {{$question->answer_description}}
+                                                </div>
+                                            @endif
+                                            <hr class="my-1">
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="alert alert-info">
+                                        No questions found.
+                                    </div>
+                                @endif
                             </div><!-- End .product-tags-content -->
                         </div><!-- End .tab-pane -->
 
@@ -298,6 +359,45 @@
     </div>
 @endsection
 
+@section('styles')
+    <style>
+        .fb-button.btn-primary:focus,
+        .fb-button.btn-primary:hover,
+        .fb-button.btn-primary {
+            background-color: #3B5998 !important;
+            border-color: #3B5998 !important;
+            padding: 0.5rem;
+            min-width: 50px;
+        }
+
+        .tw-button.btn-primary:hover,
+        .tw-button.btn-primary:focus,
+        .tw-button.btn-primary {
+            background-color: #00B6F1 !important;
+            border-color: #00B6F1 !important;
+            padding: 0.5rem;
+            min-width: 50px;
+        }
+
+        .post-sharing span,
+        .post-sharing li {
+            display: inline-block !important;
+        }
+
+    </style>
+@endsection
+
 @section('scripts')
+    <script type="text/javascript">
+        $(document).ready(function () {
+            @if($errors->has('question_title') || $errors->has('question_description'))
+                $('#serviceTab a[href="#product-qas-content"]').tab('show');
+                $('html, body').animate({
+                    scrollTop: $("#serviceTab").offset().top
+                }, 2000);
+            @endif
+        });
+    </script>
+
     @include('buyer.services.sellers.questions-script')
 @endsection

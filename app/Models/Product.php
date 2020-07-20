@@ -75,6 +75,14 @@ class Product extends Model
     }
 
     /**
+     * Get all of the product's questions.
+     */
+    public function questions()
+    {
+        return $this->morphMany(\App\Models\Question::class, 'item');
+    }
+
+    /**
      * Get the orders for the product.
      */
     public function getReviewsAverageAttribute()

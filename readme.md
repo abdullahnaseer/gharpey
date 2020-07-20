@@ -11,22 +11,18 @@ The proposed system will allow and encourage the Pakistani women to use digital 
 ###### Admin
 - Portal URL: [https://sydiatech.com/admin](https://sydiatech.com/admin)
 - Email: abdullahnaseer999@gmail.com
-- Password: secret123
 
 ###### Moderator
 - Portal URL: [https://sydiatech.com/moderator](https://sydiatech.com/moderator)
 - Email: abdullahnaseer999@gmail.com
-- Password: secret123
 
 ###### Seller
 - Portal URL: [https://sydiatech.com/seller](https://sydiatech.com/seller)
 - Email: abdullahnaseer999@gmail.com
-- Password: secret123
 
 ###### Buyer
 - Portal URL: [https://sydiatech.com](https://sydiatech.com)
 - Email: abdullahnaseer999@gmail.com
-- Password: secret123
 
 ## Technologies
 

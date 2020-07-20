@@ -52,41 +52,44 @@
                     <div class="home-featured-products owl-carousel owl-theme owl-dots-top">
                         @foreach($popular_products as $product)
                             <div class="product">
-                            <figure class="product-image-container">
-                                <a href="{{route('buyer.products.show', [$product->slug])}}" class="product-image">
-                                    <img src="{{str_replace("public","/storage",$product->featured_image)}}" alt="product">
-                                </a>
-                            </figure>
-                            <div class="product-details">
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:{{$product->reviews_average * 20}}%"></span>
-                                        <!-- End .ratings -->
+                                <figure class="product-image-container">
+                                    <a href="{{route('buyer.products.show', [$product->slug])}}" class="product-image">
+                                        <img src="{{str_replace("public","/storage",$product->featured_image)}}"
+                                             alt="product">
+                                    </a>
+                                </figure>
+                                <div class="product-details">
+                                    <div class="ratings-container">
+                                        <div class="product-ratings">
+                                            <span class="ratings"
+                                                  style="width:{{$product->reviews_average * 20}}%"></span>
+                                            <!-- End .ratings -->
+                                        </div>
+                                        <!-- End .product-ratings -->
+                                        <a href="#" class="rating-link">( {{ $product->reviews_count }} Reviews )</a>
                                     </div>
-                                    <!-- End .product-ratings -->
-                                    <a href="#" class="rating-link">( {{ $product->reviews_count }} Reviews )</a>
+
+                                    <h2 class="product-title ">
+                                        <a href="{{route('buyer.products.show', [$product->slug])}}">
+                                            {{$product->name}} </a>
+                                    </h2>
+
+                                    <div class="price-box  m-b-5">
+                                        <span class="product-price">Rs. {{$product->price}}</span>
+                                    </div>
+
+                                    @if(!is_null($product->seller))
+                                        <p class="product-location text-center m-b-5">
+                                            <img src="/assets1/images/svg/shop/shop.svg" class="mr-2 d-inline-block"
+                                                 style="width: 15px;" alt="">
+
+                                            <a href="{{route('buyer.shop.show', [$product->seller->shop_slug])}}">{{$product->seller->shop_name}}</a>
+                                        </p>
+                                    @endif
+
                                 </div>
-
-                                <h2 class="product-title ">
-                                    <a href="{{route('buyer.products.show', [$product->slug])}}">
-                                        {{$product->name}} </a>
-                                </h2>
-
-                                <div class="price-box  m-b-5">
-                                    <span class="product-price">Rs. {{$product->price}}</span>
-                                </div>
-
-                                @if(!is_null($product->seller))
-                                    <p class="product-location text-center m-b-5">
-                                        <img src="/assets1/images/svg/shop/shop.svg" class="mr-2 d-inline-block" style="width: 15px;" alt="">
-
-                                        <a href="{{route('buyer.shop.show', [$product->seller->shop_slug])}}">{{$product->seller->shop_name}}</a>
-                                    </p>
-                                @endif
-
+                                <!-- End .product-details -->
                             </div>
-                            <!-- End .product-details -->
-                        </div>
                         @endforeach
                     </div>
                 @endif
@@ -102,7 +105,8 @@
                             <div class="product">
                                 <figure class="product-image-container">
                                     <a href="{{route('buyer.services.show', [$service->slug])}}" class="product-image">
-                                        <img src="{{str_replace("public","/storage",$service->featured_image)}}" alt="product">
+                                        <img src="{{str_replace("public","/storage",$service->featured_image)}}"
+                                             alt="product">
                                     </a>
                                 </figure>
                                 <div class="product-details">

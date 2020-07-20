@@ -21,7 +21,9 @@
             </div>
         @endif
 
-        <div class="alert alert-info">Your account is pending approval. We will notify you when your account is approved.</div>
+        <div class="alert alert-info">Your account is pending approval. We will notify you when your account is
+            approved.
+        </div>
 
         <!--end::Form-->
     </div>

@@ -47,37 +47,42 @@
                     <h4 class="kt-menu__section-text">ECOMMERCE</h4>
                     <i class="kt-menu__section-icon flaticon-more-v2"></i>
                 </li>
-                <li class="kt-menu__item  kt-menu__item--submenu {{ (request()->is('admin/products*') || request()->is('moderator/products*')) ? 'kt-menu__item--open kt-menu__item--here' : '' }}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                <li class="kt-menu__item  kt-menu__item--submenu {{ (request()->is('admin/products*') || request()->is('moderator/products*')) ? 'kt-menu__item--open kt-menu__item--here' : '' }}"
+                    aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <a href="javascript:" class="kt-menu__link kt-menu__toggle">
                         <i class="kt-menu__link-icon flaticon-gift"><span></span></i>
                         <span class="kt-menu__link-text">Products</span>
                         <i class="kt-menu__ver-arrow la la-angle-right"></i>
                     </a>
                     <div class="kt-menu__submenu "><span class="kt-menu__arrow"></span>
                         <ul class="kt-menu__subnav">
-{{--                            <li class="kt-menu__item {{ (request()->is('moderator/products')) ? 'kt-menu__item--active' : '' }} "--}}
-{{--                                aria-haspopup="true"><a href="{{route('moderator.products.index')}}" class="kt-menu__link "><i--}}
-{{--                                        class="kt-menu__link-icon flaticon-users"></i><span--}}
-{{--                                        class="kt-menu__link-text">Products</span></a></li>--}}
+                            {{--                            <li class="kt-menu__item {{ (request()->is('moderator/products')) ? 'kt-menu__item--active' : '' }} "--}}
+                            {{--                                aria-haspopup="true"><a href="{{route('moderator.products.index')}}" class="kt-menu__link "><i--}}
+                            {{--                                        class="kt-menu__link-icon flaticon-users"></i><span--}}
+                            {{--                                        class="kt-menu__link-text">Products</span></a></li>--}}
                             <li class="kt-menu__item {{ (request()->is('admin/products/categories*')) ? 'kt-menu__item--active' : '' }} "
-                                aria-haspopup="true"><a href="{{route('admin.products.categories.index')}}" class="kt-menu__link "><i
+                                aria-haspopup="true"><a href="{{route('admin.products.categories.index')}}"
+                                                        class="kt-menu__link "><i
                                         class="kt-menu__link-icon flaticon-layer"></i><span
                                         class="kt-menu__link-text">Categories</span></a></li>
                             <li class="kt-menu__item {{ (request()->is('admin/products/tags*')) ? 'kt-menu__item--active' : '' }} "
-                                aria-haspopup="true"><a href="{{route('admin.products.tags.index')}}" class="kt-menu__link "><i
+                                aria-haspopup="true"><a href="{{route('admin.products.tags.index')}}"
+                                                        class="kt-menu__link "><i
                                         class="kt-menu__link-icon flaticon-layer"></i><span
                                         class="kt-menu__link-text">Tags</span></a></li>
 
                             <li class="kt-menu__item {{ (request()->is('moderator/products/orders')) ? 'kt-menu__item--active' : '' }} "
-                                aria-haspopup="true"><a href="{{route('moderator.orders.index')}}" class="kt-menu__link "><i
+                                aria-haspopup="true"><a href="{{route('moderator.orders.index')}}"
+                                                        class="kt-menu__link "><i
                                         class="kt-menu__link-icon flaticon2-shopping-cart-1"></i><span
                                         class="kt-menu__link-text">Orders</span></a></li>
                         </ul>
                     </div>
                 </li>
 
-                <li class="kt-menu__item  kt-menu__item--submenu {{ (request()->is('admin/services') || request()->is('moderator/services*')) ? 'kt-menu__item--open kt-menu__item--here' : '' }}" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                <li class="kt-menu__item  kt-menu__item--submenu {{ (request()->is('admin/services') || request()->is('moderator/services*')) ? 'kt-menu__item--open kt-menu__item--here' : '' }}"
+                    aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                    <a href="javascript:" class="kt-menu__link kt-menu__toggle">
                         <i class="kt-menu__link-icon flaticon2-lorry"><span></span></i>
                         <span class="kt-menu__link-text">Services</span>
                         <i class="kt-menu__ver-arrow la la-angle-right"></i>
@@ -89,11 +94,13 @@
                                         class="kt-menu__link-icon flaticon2-lorry"></i><span
                                         class="kt-menu__link-text">Services</span></a></li>
                             <li class="kt-menu__item {{ (request()->is('admin/services/categories*')) ? 'kt-menu__item--active' : '' }} "
-                                aria-haspopup="true"><a href="{{route('admin.services.categories.index')}}" class="kt-menu__link "><i
+                                aria-haspopup="true"><a href="{{route('admin.services.categories.index')}}"
+                                                        class="kt-menu__link "><i
                                         class="kt-menu__link-icon flaticon-layer"></i><span
                                         class="kt-menu__link-text">Categories</span></a></li>
                             <li class="kt-menu__item {{ (request()->is('moderator/services/requests*')) ? 'kt-menu__item--active' : '' }} "
-                                aria-haspopup="true"><a href="{{route('moderator.requests.index')}}" class="kt-menu__link "><i
+                                aria-haspopup="true"><a href="{{route('moderator.requests.index')}}"
+                                                        class="kt-menu__link "><i
                                         class="kt-menu__link-icon flaticon-layer"></i><span
                                         class="kt-menu__link-text">Service Requests</span></a></li>
                         </ul>

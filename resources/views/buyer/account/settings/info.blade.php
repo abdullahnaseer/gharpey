@@ -19,17 +19,20 @@
         @csrf
         <div class="form-group required-field">
             <label for="acc-name">Name</label>
-            <input type="text" class="form-control" id="acc-name" name="name" value="{{old('name', $user->name)}}" required>
+            <input type="text" class="form-control" id="acc-name" name="name" value="{{old('name', $user->name)}}"
+                   required>
         </div>
 
         <div class="form-group required-field">
             <label for="acc-email">Email</label>
-            <input type="email" class="form-control" id="acc-email" name="email" value="{{old('email', $user->email)}}" required>
+            <input type="email" class="form-control" id="acc-email" name="email" value="{{old('email', $user->email)}}"
+                   required>
         </div>
 
         <div class="form-group required-field">
             <label for="acc-phone">Phone</label>
-            <input type="tel" class="form-control" id="acc-phone" name="phone" value="{{old('phone', $user->phone)}}" required>
+            <input type="tel" class="form-control" id="acc-phone" name="phone" value="{{old('phone', $user->phone)}}"
+                   required>
         </div>
 
         <div class="mb-2"></div>

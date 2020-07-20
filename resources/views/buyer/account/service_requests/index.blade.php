@@ -41,46 +41,56 @@
                     <div class="table-responsive">
                         <table class="table table-borderless" align="left">
                             <tbody>
-                                <tr>
-                                    <td width="100"><img class="img-fluid" src="{{str_replace("public","/storage",$service_request->service_seller->featured_image)}}" alt=""></td>
-                                    <td width="250">{{$service_request->service->name}}</td>
-                                    <td width="150">Price Sum: {{$service_request->total_amount}}</td>
-                                    <td width="100">
-                                        @if($service_request->status == \App\Models\ServiceRequest::STATUS_COMPLETED)
-                                            <p>
-                                                <span class="badge badge-success">Completed</span>
+                            <tr>
+                                <td width="100"><img class="img-fluid"
+                                                     src="{{str_replace("public","/storage",$service_request->service_seller->featured_image)}}"
+                                                     alt=""></td>
+                                <td width="250">{{$service_request->service->name}}</td>
+                                <td width="150">Price Sum: {{$service_request->total_amount}}</td>
+                                <td width="100">
+                                    @if($service_request->status == \App\Models\ServiceRequest::STATUS_COMPLETED)
+                                        <p>
+                                            <span class="badge badge-success">Completed</span>
                                             @if(is_null($service_request->reviewed_at))
                                                 <span class="badge badge-info">Review Pending</span>
                                             @else
                                                 <span class="badge badge-success">Reviewed</span>
                                             @endif
-                                            </p>
-                                        @elseif($service_request->status == \App\Models\ServiceRequest::STATUS_CANCELED)
-                                            <p><span class="badge badge-danger">Cancelled</span></p>
-                                        @elseif($service_request->status == \App\Models\ServiceRequest::STATUS_DISPUTED)
-                                            <p><span class="badge badge-danger">Disputed</span></p>
-                                        @elseif($service_request->status == \App\Models\ServiceRequest::STATUS_CONFIRMED)
-                                            <p><span class="badge badge-info">Confirmed</span></p>
-                                        @elseif($service_request->status == \App\Models\ServiceRequest::STATUS_NEW)
-                                            <p><span class="badge badge-info">New Request</span></p>
+                                        </p>
+                                    @elseif($service_request->status == \App\Models\ServiceRequest::STATUS_CANCELED)
+                                        <p><span class="badge badge-danger">Cancelled</span></p>
+                                    @elseif($service_request->status == \App\Models\ServiceRequest::STATUS_DISPUTED)
+                                        <p><span class="badge badge-danger">Disputed</span></p>
+                                    @elseif($service_request->status == \App\Models\ServiceRequest::STATUS_CONFIRMED)
+                                        <p><span class="badge badge-info">Confirmed</span></p>
+                                    @elseif($service_request->status == \App\Models\ServiceRequest::STATUS_NEW)
+                                        <p><span class="badge badge-info">New Request</span></p>
+                                    @else
+                                        <p><span class="badge badge-info">{{$service_request->status}}</span></p>
+                                    @endif
+                                </td>
+                                <td width="200">
+                                    Order Placed On: {{ $service_request->created_at->toDateString() }}<br>
+                                    @if($service_request->status == \App\Models\ServiceRequest::STATUS_COMPLETED)
+                                        Completed On: {{ $service_request->completed_at->toDateString() }}<br>
+                                        @if(is_null($service_request->reviewed_at))
+                                            <button class="btn btn-primary btn-sm" data-toggle="modal"
+                                                    data-target="#reviewModal" data-id="{{$service_request->id}}">Write
+                                                a Review
+                                            </button>
                                         @else
-                                            <p><span class="badge badge-info">{{$service_request->status}}</span></p>
+                                            <button class="btn btn-primary btn-sm" data-toggle="modal"
+                                                    data-target="#showReviewModal" data-id="{{$service_request->id}}"
+                                                    data-rating="{{$service_request->review->rating}}"
+                                                    data-review="{{$service_request->review->review}}">View Review
+                                            </button>
                                         @endif
-                                    </td>
-                                    <td width="200">
-                                        Order Placed On: {{ $service_request->created_at->toDateString() }}<br>
-                                        @if($service_request->status == \App\Models\ServiceRequest::STATUS_COMPLETED)
-                                            Completed On: {{ $service_request->completed_at->toDateString() }}<br>
-                                            @if(is_null($service_request->reviewed_at))
-                                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#reviewModal" data-id="{{$service_request->id}}">Write a Review </button>
-                                            @else
-                                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#showReviewModal" data-id="{{$service_request->id}}" data-rating="{{$service_request->review->rating}}" data-review="{{$service_request->review->review}}">View Review </button>
-                                            @endif
-                                        @elseif($service_request->status == \App\Models\ServiceRequest::STATUS_CONFIRMED)
-                                            <a href="{{url('account/service-requests?action=release&service_request_id=' . $service_request->id)}}" type="button" class="btn btn-primary btn-sm">Release Payment</a>
-                                        @endif
-                                    </td>
-                                </tr>
+                                    @elseif($service_request->status == \App\Models\ServiceRequest::STATUS_CONFIRMED)
+                                        <a href="{{url('account/service-requests?action=release&service_request_id=' . $service_request->id)}}"
+                                           type="button" class="btn btn-primary btn-sm">Release Payment</a>
+                                    @endif
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
 
@@ -95,24 +105,24 @@
                             </thead>
                             <tbody>
                             @foreach($service_request->answers as $answer)
-                            <tr>
-                                <th scope="row">{{$loop->iteration}}</th>
-                                <td>{{$answer->question}}</td>
-                                <td>
-                                    @if(get_class($answer->answer) == \App\Models\ServiceRequestAnswerChoice::class)
-                                        {{$answer->answer->choice}}
-                                    @else
-                                        {{$answer->answer->answer}}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if(get_class($answer->answer) == \App\Models\ServiceRequestAnswerChoice::class)
-                                        {{$answer->answer->price_change}}
-                                    @else
-                                        {{ "N/A" }}
-                                    @endif
-                                </td>
-                            </tr>
+                                <tr>
+                                    <th scope="row">{{$loop->iteration}}</th>
+                                    <td>{{$answer->question}}</td>
+                                    <td>
+                                        @if(get_class($answer->answer) == \App\Models\ServiceRequestAnswerChoice::class)
+                                            {{$answer->answer->choice}}
+                                        @else
+                                            {{$answer->answer->answer}}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(get_class($answer->answer) == \App\Models\ServiceRequestAnswerChoice::class)
+                                            {{$answer->answer->price_change}}
+                                        @else
+                                            {{ "N/A" }}
+                                        @endif
+                                    </td>
+                                </tr>
                             @endforeach
                             </tbody>
                         </table>
@@ -138,7 +148,7 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            modal.find('form').attr('action', "{{url('/account/service-requests')}}/" + id + "/reviews" );
+            modal.find('form').attr('action', "{{url('/account/service-requests')}}/" + id + "/reviews");
         });
 
         $('#showReviewModal').on('show.bs.modal', function (event) {

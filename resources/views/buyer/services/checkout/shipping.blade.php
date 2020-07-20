@@ -5,7 +5,8 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{url('/')}}"><i class="icon-home"></i></a></li>
-                <li class="breadcrumb-item" aria-current="page"><a href="{{route('buyer.cart.index')}}">Shopping Cart</a></li>
+                <li class="breadcrumb-item" aria-current="page"><a href="{{route('buyer.cart.index')}}">Shopping
+                        Cart</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Checkout</li>
             </ol>
         </div>
@@ -30,19 +31,24 @@
                         @guest('buyer')
                             <form method="POST" action="{{ route('buyer.login') }}">
                                 @csrf
-                                <input type="hidden" name="return_url" value="{{route('buyer.service.checkout.shipping.get', [$service_request->id])}}">
+                                <input type="hidden" name="return_url"
+                                       value="{{route('buyer.service.checkout.shipping.get', [$service_request->id])}}">
 
                                 <div class="form-group required-field">
                                     <label>Email Address </label>
                                     <div class="form-control-tooltip">
-                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                        <input id="email" type="email"
+                                               class="form-control @error('email') is-invalid @enderror" name="email"
+                                               value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
-                                        <span class="input-tooltip" data-toggle="tooltip" title="We'll send your order confirmation here." data-placement="right"><i class="icon-question-circle"></i></span>
+                                        <span class="input-tooltip" data-toggle="tooltip"
+                                              title="We'll send your order confirmation here." data-placement="right"><i
+                                                class="icon-question-circle"></i></span>
                                     </div>
                                     <!-- End .form-control-tooltip -->
                                 </div>
@@ -50,7 +56,9 @@
 
                                 <div class="form-group required-field">
                                     <label>Password </label>
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                    <input id="password" type="password"
+                                           class="form-control @error('password') is-invalid @enderror" name="password"
+                                           required autocomplete="current-password">
 
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -75,19 +83,22 @@
                         @endguest
 
                         <form
-                        @if(auth()->check())
+                            @if(auth()->check())
                             action="{{route('buyer.service.checkout.shipping.post', [$service_request->id])}}"
-                        @else
+                            @else
                             action="{{route('buyer.register')}}"
-                        @endif
+                            @endif
                             method="POST">
 
                             @csrf
-                            <input type="hidden" name="return_url" value="{{route('buyer.service.checkout.shipping.get', [$service_request->id])}}">
+                            <input type="hidden" name="return_url"
+                                   value="{{route('buyer.service.checkout.shipping.get', [$service_request->id])}}">
 
                             <div class="form-group required-field">
                                 <label>Name</label>
-                                <input name="name" type="text" class="form-control  @error('name') is-invalid @enderror" required value="{{old('name', auth('buyer')->check() ? auth('buyer')->user()->name : null)}}">
+                                <input name="name" type="text" class="form-control  @error('name') is-invalid @enderror"
+                                       required
+                                       value="{{old('name', auth('buyer')->check() ? auth('buyer')->user()->name : null)}}">
 
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
@@ -99,8 +110,11 @@
                             <div class="form-group required-field">
                                 <label>Phone Number </label>
                                 <div class="form-control-tooltip">
-                                    <input name="phone" type="tel" class="form-control  @error('phone') is-invalid @enderror" required value="{{old('phone', auth('buyer')->check() ? auth('buyer')->user()->phone : null)}}">
-                                    <span class="input-tooltip" data-toggle="tooltip" title="For delivery questions." data-placement="right"><i class="icon-question-circle"></i></span>
+                                    <input name="phone" type="tel"
+                                           class="form-control  @error('phone') is-invalid @enderror" required
+                                           value="{{old('phone', auth('buyer')->check() ? auth('buyer')->user()->phone : null)}}">
+                                    <span class="input-tooltip" data-toggle="tooltip" title="For delivery questions."
+                                          data-placement="right"><i class="icon-question-circle"></i></span>
 
                                     @error('phone')
                                     <span class="invalid-feedback" role="alert">
@@ -115,7 +129,9 @@
                             @if(auth()->guest())
                                 <div class="form-group required-field">
                                     <label>Email</label>
-                                    <input name="email" type="text" class="form-control  @error('email') is-invalid @enderror" required value="{{old('email', auth('buyer')->check() ? auth('buyer')->user()->email : null)}}">
+                                    <input name="email" type="text"
+                                           class="form-control  @error('email') is-invalid @enderror" required
+                                           value="{{old('email', auth('buyer')->check() ? auth('buyer')->user()->email : null)}}">
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -126,7 +142,8 @@
 
                                 <div class="form-group required-field">
                                     <label>Password</label>
-                                    <input name="password" type="password" class="form-control  @error('password') is-invalid @enderror" required>
+                                    <input name="password" type="password"
+                                           class="form-control  @error('password') is-invalid @enderror" required>
 
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -138,13 +155,16 @@
                                 <div class="form-group required-field">
                                     <label for="password-confirm">{{ __('Confirm Password') }}</label>
 
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                    <input id="password-confirm" type="password" class="form-control"
+                                           name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             @endif
 
                             <div class="form-group required-field">
                                 <label>Address </label>
-                                <input name="address" type="text" class="form-control  @error('address') is-invalid @enderror" required value="{{old('address', auth('buyer')->check() ? auth('buyer')->user()->address : null)}}">
+                                <input name="address" type="text"
+                                       class="form-control  @error('address') is-invalid @enderror" required
+                                       value="{{old('address', auth('buyer')->check() ? auth('buyer')->user()->address : null)}}">
 
                                 @error('address')
                                 <span class="invalid-feedback" role="alert">
@@ -157,13 +177,15 @@
                             <div class="form-group">
                                 <label>Area</label>
                                 <div class="select-custom">
-                                    <select class="form-control kt-select2 @error('area') is-invalid @enderror" id="area" name="area" required
+                                    <select class="form-control kt-select2 @error('area') is-invalid @enderror"
+                                            id="area" name="area" required
                                             style="width: 100%">
                                         @foreach($cities as $city)
                                             @if($city->areas->count())
                                                 <optgroup label="{{$city->name}}">
                                                     @foreach($city->areas as $area)
-                                                        <option value="{{$area->id}}" @if((int) old('area', auth('buyer')->check() ? auth('buyer')->user()->location_id : null) == $area->id) selected @endif>{{$area->name}}</option>
+                                                        <option value="{{$area->id}}"
+                                                                @if((int) old('area', auth('buyer')->check() ? auth('buyer')->user()->location_id : null) == $area->id) selected @endif>{{$area->name}}</option>
                                                     @endforeach
                                                 </optgroup>
                                             @endif
@@ -193,7 +215,9 @@
                     <h3>Summary</h3>
 
                     <h4>
-                        <a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button" aria-expanded="false" aria-controls="order-cart-section">{{$service_request->service_seller->service->name}}</a>
+                        <a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button"
+                           aria-expanded="false"
+                           aria-controls="order-cart-section">{{$service_request->service_seller->service->name}}</a>
                     </h4>
 
                     <div class="collapse show" id="order-cart-section">
@@ -203,7 +227,9 @@
                                 <td class="product-col">
                                     <figure class="product-image-container">
                                         <a href="#" class="product-image">
-                                            <img src="{{str_replace("public","/storage",$service_request->service_seller->featured_image)}}" alt="product">
+                                            <img
+                                                src="{{str_replace("public","/storage",$service_request->service_seller->featured_image)}}"
+                                                alt="product">
                                         </a>
                                     </figure>
                                     <div>

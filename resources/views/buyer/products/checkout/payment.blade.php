@@ -24,7 +24,8 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{url('/')}}"><i class="icon-home"></i></a></li>
-                <li class="breadcrumb-item" aria-current="page"><a href="{{route('buyer.cart.index')}}">Shopping Cart</a></li>
+                <li class="breadcrumb-item" aria-current="page"><a href="{{route('buyer.cart.index')}}">Shopping
+                        Cart</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Checkout</li>
             </ol>
         </div>
@@ -46,7 +47,9 @@
                     <h3>Summary</h3>
 
                     <h4>
-                        <a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button" aria-expanded="false" aria-controls="order-cart-section">{{$cart->getContent()->count()}} products in Cart</a>
+                        <a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button"
+                           aria-expanded="false" aria-controls="order-cart-section">{{$cart->getContent()->count()}}
+                            products in Cart</a>
                     </h4>
 
                     <div class="collapse show" id="order-cart-section">
@@ -56,8 +59,11 @@
                                 <tr>
                                     <td class="product-col">
                                         <figure class="product-image-container">
-                                            <a href="{{route('buyer.products.show', [$item->model->slug])}}" class="product-image">
-                                                <img src="{{str_replace("public","/storage",$item->model->featured_image)}}" alt="product">
+                                            <a href="{{route('buyer.products.show', [$item->model->slug])}}"
+                                               class="product-image">
+                                                <img
+                                                    src="{{str_replace("public","/storage",$item->model->featured_image)}}"
+                                                    alt="product">
                                             </a>
                                         </figure>
                                         <div>
@@ -80,13 +86,15 @@
 
                 <div class="checkout-info-box">
                     <h3 class="step-title">Ship To:
-                        <a href="{{route('buyer.checkout.shipping.get')}}" title="Edit" class="step-title-edit"><span class="sr-only">Edit</span><i class="icon-pencil"></i></a>
+                        <a href="{{route('buyer.checkout.shipping.get')}}" title="Edit" class="step-title-edit"><span
+                                class="sr-only">Edit</span><i class="icon-pencil"></i></a>
                     </h3>
 
                     <address>
                         {{$shipping['name']}} <br>
                         {{$shipping['address']}} <br>
-                        {{$shipping['area']->name}}, {{$shipping['area']->city->name}}, {{$shipping['area']->city->state->name}} <br>
+                        {{$shipping['area']->name}}, {{$shipping['area']->city->name}}
+                        , {{$shipping['area']->city->state->name}} <br>
                         {{$shipping['area']->city->state->country->name}} <br>
                         {{$shipping['phone']}}
                     </address>
@@ -103,7 +111,8 @@
                         <address>
                             {{$shipping['name']}} <br>
                             {{$shipping['address']}} <br>
-                            {{$shipping['area']->name}}, {{$shipping['area']->city->name}}, {{$shipping['area']->city->state->name}} <br>
+                            {{$shipping['area']->name}}, {{$shipping['area']->city->name}}
+                            , {{$shipping['area']->city->state->name}} <br>
                             {{$shipping['area']->city->state->country->name}} <br>
                             {{$shipping['phone']}}
                         </address>
@@ -125,7 +134,8 @@
 
                             <button id="pay-btn" type="submit" class="btn btn-primary float-right">Place Order
                             </button>
-                            <a href="{{route('buyer.checkout.shipping.get')}}" class="btn btn-secondary float-right mr-1">Back</a>
+                            <a href="{{route('buyer.checkout.shipping.get')}}"
+                               class="btn btn-secondary float-right mr-1">Back</a>
 
                             <div class="clearfix"></div>
                         </form>
@@ -136,24 +146,28 @@
                             <form action="#" class="">
                                 <div class="form-group">
                                     <label for="name" data-tid="elements.form.name_label">Name</label>
-                                    <input id="name" name="name" data-tid="elements.form.name_placeholder" class="form-control" type="text"
+                                    <input id="name" name="name" data-tid="elements.form.name_placeholder"
+                                           class="form-control" type="text"
                                            placeholder="" required="" autocomplete="name">
                                 </div>
                                 <div class="form-group">
                                     <label for="address" data-tid="elements.form.address_label">Address</label>
-                                    <input id="address" name="address" data-tid="elements.form.address_placeholder" class="form-control"
+                                    <input id="address" name="address" data-tid="elements.form.address_placeholder"
+                                           class="form-control"
                                            type="text" placeholder="" required="" autocomplete="address-line1">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="city" name="city" data-tid="elements.form.city_label">City</label>
-                                    <input id="city" data-tid="elements.form.city_placeholder" class="form-control" type="text"
+                                    <input id="city" data-tid="elements.form.city_placeholder" class="form-control"
+                                           type="text"
                                            placeholder="" required="" autocomplete="address-level2">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="state" data-tid="elements.form.state_label">State/Province</label>
-                                    <input id="state" name="state" data-tid="elements.form.state_placeholder" class="form-control"
+                                    <input id="state" name="state" data-tid="elements.form.state_placeholder"
+                                           class="form-control"
                                            type="text" placeholder="" required="" autocomplete="address-level1">
                                 </div>
                                 <div class="form-group">
@@ -168,7 +182,8 @@
                                 {{--                            <h3 class="">Payment Gateway:</h3>--}}
 
                                 <div class="form-group">
-                                    <label for="card-number" data-tid="elements.form.card_number_label">Card number</label>
+                                    <label for="card-number" data-tid="elements.form.card_number_label">Card
+                                        number</label>
                                     <div id="card-number" class="input"></div>
                                 </div>
 
@@ -197,7 +212,8 @@
                                 <button id="pay-btn" type="submit" class="btn btn-primary float-right"
                                         data-tid="elements.form.pay_button">Pay Now
                                 </button>
-                                <a href="{{route('buyer.checkout.shipping.get')}}" class="btn btn-secondary float-right mr-1">Back</a>
+                                <a href="{{route('buyer.checkout.shipping.get')}}"
+                                   class="btn btn-secondary float-right mr-1">Back</a>
 
                                 <div class="clearfix"></div>
 
@@ -244,14 +260,11 @@
         (function () {
             'use strict';
 
-            $('#payment-gateway').on('change', function() {
-                if(this.value == "{{\App\Models\Order::PAYMENT_GATEWAY_COD}}")
-                {
+            $('#payment-gateway').on('change', function () {
+                if (this.value == "{{\App\Models\Order::PAYMENT_GATEWAY_COD}}") {
                     $('#stripe').fadeOut();
                     $('#cod').fadeIn();
-                }
-                else if(this.value == "{{\App\Models\Order::PAYMENT_GATEWAY_STRIPE}}")
-                {
+                } else if (this.value == "{{\App\Models\Order::PAYMENT_GATEWAY_STRIPE}}") {
                     $('#cod').fadeOut();
                     $('#stripe').fadeIn();
                 }
@@ -494,13 +507,13 @@
                                         enableInputs();
                                     }
                                 }).fail(function () {
-                                    console.log('fail');
+                                console.log('fail');
 
-                                    $('#pay-success').slideUp();
-                                    $('#pay-error').slideDown();
-                                    errorMessage.innerText = "Payment Declined! Something went wrong!";
-                                    enableInputs();
-                                });
+                                $('#pay-success').slideUp();
+                                $('#pay-error').slideDown();
+                                errorMessage.innerText = "Payment Declined! Something went wrong!";
+                                enableInputs();
+                            });
                         } else {
                             // Otherwise, un-disable inputs.
                             enableInputs();

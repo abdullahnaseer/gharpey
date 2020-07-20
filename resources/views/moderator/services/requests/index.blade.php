@@ -22,22 +22,22 @@
 
 @section('content')
     <div class="kt-portlet kt-portlet--mobile">
-            <div class="kt-portlet__head kt-portlet__head--lg">
-                <div class="kt-portlet__head-label">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
                     <span class="kt-portlet__head-icon">
                         <i class="kt-font-brand flaticon2-line-chart"></i>
                     </span>
-                    <h3 class="kt-portlet__head-title">
-                        Service Requests
-                    </h3>
-                </div>
-            </div>
-            <div class="kt-portlet__body kt-portlet__body--fit">
-                <!--begin: Datatable -->
-                <div class="kt-datatable" id="json_data"></div>
-                <!--end: Datatable -->
+                <h3 class="kt-portlet__head-title">
+                    Service Requests
+                </h3>
             </div>
         </div>
+        <div class="kt-portlet__body kt-portlet__body--fit">
+            <!--begin: Datatable -->
+            <div class="kt-datatable" id="json_data"></div>
+            <!--end: Datatable -->
+        </div>
+    </div>
 @stop
 
 @push('scripts')
@@ -90,9 +90,9 @@
                             width: 100,
                             template: function (row) {
                                 var image = 'image';
-                                if(row.service_seller && row.service_seller.featured_image)
+                                if (row.service_seller && row.service_seller.featured_image)
                                     image = row.service_seller.featured_image;
-                                else if(row.service && row.service.featured_image)
+                                else if (row.service && row.service.featured_image)
                                     image = row.service.featured_image;
 
                                 return '\
@@ -102,33 +102,32 @@
                         }, {
                             field: 'service.name',
                             title: 'Name',
-                        },{
+                        }, {
                             field: 'total_amount',
                             title: 'Total Price'
-                        },{
+                        }, {
                             field: 'status',
                             title: 'Status',
                             autoHide: false,
-                            template: function(row) {
-                                if(row.status == '{{\App\Models\ServiceRequest::STATUS_NEW}}')
+                            template: function (row) {
+                                if (row.status == '{{\App\Models\ServiceRequest::STATUS_NEW}}')
                                     return "<p class='text-info'>Waiting for Confirmation.</p>";
-                                else if(row.status == '{{\App\Models\ServiceRequest::STATUS_CONFIRMED}}')
+                                else if (row.status == '{{\App\Models\ServiceRequest::STATUS_CONFIRMED}}')
                                     return "<p class='text-info'>Service Request Order Confirmed and Waiting for Buyer Confirmation of Completion.</p>";
-                                else if(row.status == '{{\App\Models\ServiceRequest::STATUS_CANCELED}}')
+                                else if (row.status == '{{\App\Models\ServiceRequest::STATUS_CANCELED}}')
                                     return "<p class='text-danger'>Service Request Order Canceled.</p>";
-                                else if(row.status == '{{\App\Models\ServiceRequest::STATUS_COMPLETED}}')
+                                else if (row.status == '{{\App\Models\ServiceRequest::STATUS_COMPLETED}}')
                                     return "<p class='text-success'>Service Request Order Completed.</p>";
                                 else
                                     return "<p class='text-danger'>Unknown Status!!! Something went wrong!!!!</p>";
                             }
-                        },{
+                        }, {
                             field: 'answers',
                             title: 'Answers',
                             width: 500,
                             autoHide: true,
-                            template: function(row) {
-                                for(var i = 0; i < row.answers.length; i++)
-                                {
+                            template: function (row) {
+                                for (var i = 0; i < row.answers.length; i++) {
                                     console.log(row.answers[i]);
                                 }
 
@@ -143,21 +142,21 @@
                                     "</thead>" +
                                     "<tbody>";
 
-                                for(var i = 0; i < row.answers.length; i++) {
+                                for (var i = 0; i < row.answers.length; i++) {
                                     html +=
                                         "<tr>" +
-                                        "    <th scope=\"row\">"+(i+1)+"</th>" +
-                                        "    <td>"+row.answers[i].question+"</td>\n" +
+                                        "    <th scope=\"row\">" + (i + 1) + "</th>" +
+                                        "    <td>" + row.answers[i].question + "</td>\n" +
                                         "    <td>";
 
-                                    if(row.answers[i].answer_type == "{{str_replace('\\', '\\\\', \App\Models\ServiceRequestAnswerChoice::class)}}")
+                                    if (row.answers[i].answer_type == "{{str_replace('\\', '\\\\', \App\Models\ServiceRequestAnswerChoice::class)}}")
                                         html += row.answers[i].answer.choice;
                                     else
                                         html += row.answers[i].answer.answer;
 
                                     html += "</td><td>";
 
-                                    if(row.answers[i].answer_type == "{{str_replace('\\', '\\\\', \App\Models\ServiceRequestAnswerChoice::class)}}")
+                                    if (row.answers[i].answer_type == "{{str_replace('\\', '\\\\', \App\Models\ServiceRequestAnswerChoice::class)}}")
                                         html += row.answers[i].answer.price_change;
                                     else
                                         html += "N/A";
@@ -168,14 +167,14 @@
 
                                 return html;
                             }
-                        },{
+                        }, {
                             field: 'Actions',
                             title: 'Actions',
                             sortable: false,
                             width: 250,
                             autoHide: false,
                             overflow: 'visible',
-                            template: function(row) {
+                            template: function (row) {
                                 {{--if(row.status == '{{\App\Models\ServiceRequest::STATUS_NEW}}')--}}
                                 {{--    return "<a href='{{url('/moderator/services/requests')}}/"+row.id+"/edit?status=confirm' class='btn btn-outline-primary mr-2'>Confirm</a>" +--}}
                                 {{--        "<a href='{{url('/moderator/services/requests')}}/"+row.id+"/edit?status=cancel' class='btn btn-outline-danger'>Cancel</a>";--}}
@@ -186,11 +185,11 @@
 
                 });
 
-                $('#kt_form_status').on('change', function() {
+                $('#kt_form_status').on('change', function () {
                     datatable.search($(this).val().toLowerCase(), 'Status');
                 });
 
-                $('#kt_form_type').on('change', function() {
+                $('#kt_form_type').on('change', function () {
                     datatable.search($(this).val().toLowerCase(), 'Type');
                 });
 

@@ -32,8 +32,7 @@ class ServiceController extends Controller
      */
     public function json()
     {
-        $records = Service::with([])->get();
-        return $records;
+        return Service::with([])->get();
     }
 
     /**

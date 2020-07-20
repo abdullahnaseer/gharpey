@@ -14,7 +14,8 @@
                                 <span class="contact-info-label">Address:</span>Royal Avenue, Islamabad, Pakistan
                             </li>
                             <li>
-                                <span class="contact-info-label">Phone:</span>Toll Free <a href="tel:">(123) 456-7890</a>
+                                <span class="contact-info-label">Phone:</span>Toll Free <a href="tel:">(123)
+                                    456-7890</a>
                             </li>
                             <li>
                                 <span class="contact-info-label">Email:</span> <a href="mailto:mail@example.com">mail@gharpey.com</a>
@@ -39,7 +40,8 @@
                         <h4 class="widget-title">Subscribe newsletter</h4>
                         <div class="row">
                             <div class="col-md-6">
-                                <p>Get all the latest information on Events,Sales and Offers. Sign up for newsletter today</p>
+                                <p>Get all the latest information on Events,Sales and Offers. Sign up for newsletter
+                                    today</p>
                             </div>
                             <!-- End .col-md-6 -->
 
@@ -58,33 +60,34 @@
 
                     <div class="row">
                         @auth('buyer')
-                        <div class="col-md-5">
-                            <div class="widget">
-                                <h4 class="widget-title">My Account</h4>
+                            <div class="col-md-5">
+                                <div class="widget">
+                                    <h4 class="widget-title">My Account</h4>
 
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-5">
-                                        <ul class="links">
-                                            <li><a href="about.html">About Us</a></li>
-                                            <li><a href="contact.html">Contact Us</a></li>
-                                            <li><a href="{{route('buyer.login')}}">Login</a></li>
-                                        </ul>
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-5">
+                                            <ul class="links">
+                                                <li><a href="about.html">About Us</a></li>
+                                                <li><a href="contact.html">Contact Us</a></li>
+                                                <li><a href="{{route('buyer.login')}}">Login</a></li>
+                                            </ul>
+                                        </div>
+                                        <!-- End .col-sm-6 -->
+                                        <div class="col-sm-6 col-md-5">
+                                            <ul class="links">
+                                                <li><a href="{{route('buyer.account.index')}}">My Account</a></li>
+                                                <li><a href="{{route('buyer.account.orders.index')}}">Orders History</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- End .col-sm-6 -->
                                     </div>
-                                    <!-- End .col-sm-6 -->
-                                    <div class="col-sm-6 col-md-5">
-                                        <ul class="links">
-                                            <li><a href="{{route('buyer.account.index')}}">My Account</a></li>
-                                            <li><a href="{{route('buyer.account.orders.index')}}">Orders History</a></li>
-                                        </ul>
-                                    </div>
-                                    <!-- End .col-sm-6 -->
+                                    <!-- End .row -->
                                 </div>
-                                <!-- End .row -->
+                                <!-- End .widget -->
                             </div>
-                            <!-- End .widget -->
-                        </div>
-                        @endauth
-                        <!-- End .col-md-5 -->
+                    @endauth
+                    <!-- End .col-md-5 -->
 
                         <div class="col-md-7">
                             <div class="widget">

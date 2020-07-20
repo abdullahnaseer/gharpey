@@ -85,7 +85,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = Buyer::create([
+        return Buyer::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
@@ -93,8 +93,6 @@ class RegisterController extends Controller
             'address' => $data['address'],
             'location_id' => $data['area'],
         ]);
-
-        return $user;
     }
 
     /**
@@ -110,7 +108,7 @@ class RegisterController extends Controller
     /**
      * The user has been registered.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  mixed  $user
      * @return mixed
      */

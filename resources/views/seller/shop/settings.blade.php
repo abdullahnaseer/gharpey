@@ -36,7 +36,9 @@
                     {!! Form::file('shop_image', ['id' => 'shop_image_input']) !!}
 
                     <div style="max-width: 600px" class="mt-2">
-                        <img id="shop_image" class="img-thumbnail" src="{{$user->shop_image ? str_replace('public', '/storage', $user->shop_image) : '' }}" alt="your image" />
+                        <img id="shop_image" class="img-thumbnail"
+                             src="{{$user->shop_image ? str_replace('public', '/storage', $user->shop_image) : '' }}"
+                             alt="your image"/>
                     </div>
                 </div>
             </div>
@@ -65,9 +67,9 @@
                                 <optgroup label="{{$city->name}}">
                                     @foreach($city->areas as $area)
                                         <option value="{{$area->id}}"
-                                        @if(old('warehouse_location_id', $user->warehouse_location_id) == $area->id)
-                                            selected
-                                        @endif
+                                                @if(old('warehouse_location_id', $user->warehouse_location_id) == $area->id)
+                                                selected
+                                            @endif
                                         >{{$area->name}}</option>
                                     @endforeach
                                 </optgroup>
@@ -94,7 +96,7 @@
                                 <optgroup label="{{$city->name}}">
                                     @foreach($city->areas as $area)
                                         <option value="{{$area->id}}"
-                                            @if(old('business_location_id', $user->business_location_id) == $area->id)
+                                                @if(old('business_location_id', $user->business_location_id) == $area->id)
                                                 selected
                                             @endif
                                         >{{$area->name}}</option>
@@ -123,7 +125,7 @@
                                 <optgroup label="{{$city->name}}">
                                     @foreach($city->areas as $area)
                                         <option value="{{$area->id}}"
-                                            @if(old('return_location_id', $user->return_location_id) == $area->id)
+                                                @if(old('return_location_id', $user->return_location_id) == $area->id)
                                                 selected
                                             @endif
                                         >{{$area->name}}</option>
@@ -150,7 +152,7 @@
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
 
-                    reader.onload = function(e) {
+                    reader.onload = function (e) {
                         $('#shop_image').attr('src', e.target.result);
                     };
 
@@ -158,7 +160,7 @@
                 }
             }
 
-            $("#shop_image_input").change(function() {
+            $("#shop_image_input").change(function () {
                 readURL(this);
             });
         });

@@ -29,39 +29,44 @@
                             <tbody>
                             @if($cart_items->count())
                                 @foreach($cart_items as $item)
-                                <tr class="product-row">
-                                    <td class="product-col">
-                                        <figure class="product-image-container">
-                                            <a href="{{route('buyer.products.show', [$item->model->slug])}}" class="product-image">
-                                                <img src="{{str_replace("public","/storage",$item->model->featured_image)}}" alt="product">
-                                            </a>
-                                        </figure>
-                                        <h2 class="product-title">
-                                            <a href="{{route('buyer.products.show', [$item->model->slug])}}">{{$item->name}}</a>
-                                        </h2>
-                                    </td>
-                                    <td>{{$item->price}}</td>
-                                    <td>
-                                        <input type="hidden" name="product_id[]" value="{{$item->id}}">
-                                        <input class="vertical-quantity form-control" name="quantity[]" type="text" value="{{$item->quantity}}">
-                                    </td>
-                                    <td>{{$item->getPriceSum()}}</td>
-                                </tr>
-                                <tr class="product-action-row">
-                                    <td colspan="4" class="clearfix">
-                                        <div class="float-left">
-                                            <a href="#" class="btn-move">Move to Wishlist</a>
-                                        </div>
-                                        <!-- End .float-left -->
+                                    <tr class="product-row">
+                                        <td class="product-col">
+                                            <figure class="product-image-container">
+                                                <a href="{{route('buyer.products.show', [$item->model->slug])}}"
+                                                   class="product-image">
+                                                    <img
+                                                        src="{{str_replace("public","/storage",$item->model->featured_image)}}"
+                                                        alt="product">
+                                                </a>
+                                            </figure>
+                                            <h2 class="product-title">
+                                                <a href="{{route('buyer.products.show', [$item->model->slug])}}">{{$item->name}}</a>
+                                            </h2>
+                                        </td>
+                                        <td>{{$item->price}}</td>
+                                        <td>
+                                            <input type="hidden" name="product_id[]" value="{{$item->id}}">
+                                            <input class="vertical-quantity form-control" name="quantity[]" type="text"
+                                                   value="{{$item->quantity}}">
+                                        </td>
+                                        <td>{{$item->getPriceSum()}}</td>
+                                    </tr>
+                                    <tr class="product-action-row">
+                                        <td colspan="4" class="clearfix">
+                                            <div class="float-left">
+                                                <a href="#" class="btn-move">Move to Wishlist</a>
+                                            </div>
+                                            <!-- End .float-left -->
 
-                                        <div class="float-right">
-{{--                                            <a href="#" title="Edit product" class="btn-edit"><span class="sr-only">Edit</span><i class="icon-pencil"></i></a>--}}
-                                            <a href="{{route('buyer.products.cart.create', [$item->model->id, 'remove'])}}" title="Remove product" class="btn-remove"><span class="sr-only">Remove</span></a>
-                                        </div>
-                                        <!-- End .float-right -->
-                                    </td>
-                                </tr>
-                            @endforeach
+                                            <div class="float-right">
+                                                {{--                                            <a href="#" title="Edit product" class="btn-edit"><span class="sr-only">Edit</span><i class="icon-pencil"></i></a>--}}
+                                                <a href="{{route('buyer.products.cart.create', [$item->model->id, 'remove'])}}"
+                                                   title="Remove product" class="btn-remove"><span class="sr-only">Remove</span></a>
+                                            </div>
+                                            <!-- End .float-right -->
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @endif
                             </tbody>
 
@@ -77,13 +82,17 @@
                             <tr>
                                 <td colspan="4" class="clearfix">
                                     <div class="float-left">
-                                        <a href="{{route('buyer.products.index')}}" class="btn btn-outline-secondary">Continue Shopping</a>
+                                        <a href="{{route('buyer.products.index')}}" class="btn btn-outline-secondary">Continue
+                                            Shopping</a>
                                     </div>
 
                                     @if($cart_items->count())
                                         <div class="float-right">
-                                            <a href="{{route('buyer.cart.index', ['clear'])}}" class="btn btn-outline-secondary btn-clear-cart">Clear Shopping Cart</a>
-                                            <button type="submit" class="btn btn-outline-secondary btn-update-cart">Update Shopping Cart</button>
+                                            <a href="{{route('buyer.cart.index', ['clear'])}}"
+                                               class="btn btn-outline-secondary btn-clear-cart">Clear Shopping Cart</a>
+                                            <button type="submit" class="btn btn-outline-secondary btn-update-cart">
+                                                Update Shopping Cart
+                                            </button>
                                         </div>
                                     @endif
                                 </td>
@@ -98,7 +107,8 @@
                     <h4>Apply Discount Code</h4>
                     <form action="#">
                         <div class="input-group">
-                            <input type="text" class="form-control form-control-sm" placeholder="Enter discount code" required>
+                            <input type="text" class="form-control form-control-sm" placeholder="Enter discount code"
+                                   required>
                             <div class="input-group-append">
                                 <button class="btn btn-sm btn-primary" type="submit">Apply Discount</button>
                             </div>
@@ -135,7 +145,8 @@
                     </table>
 
                     <div class="checkout-methods">
-                        <a href="{{route('buyer.checkout.shipping.get')}}" class="btn btn-block btn-sm btn-primary">Go to Checkout</a>
+                        <a href="{{route('buyer.checkout.shipping.get')}}" class="btn btn-block btn-sm btn-primary">Go
+                            to Checkout</a>
                     </div>
                     <!-- End .checkout-methods -->
                 </div>

@@ -36,17 +36,20 @@
 <!-- end::Head -->
 
 <!-- begin::Body -->
-<body class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--fixed kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
+<body
+    class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--fixed kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
 <!-- begin:: Page -->
 <div class="kt-grid kt-grid--ver kt-grid--root">
     <div class="kt-grid kt-grid--hor kt-grid--root  kt-login kt-login--v1" id="kt_login">
-        <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--desktop kt-grid--ver-desktop kt-grid--hor-tablet-and-mobile">
+        <div
+            class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--desktop kt-grid--ver-desktop kt-grid--hor-tablet-and-mobile">
 
             <!--begin::Aside-->
-            <div class="kt-grid__item kt-grid__item--order-tablet-and-mobile-2 kt-grid kt-grid--hor kt-login__aside" style="background-image: url(assets/media/bg/bg-4.jpg);">
+            <div class="kt-grid__item kt-grid__item--order-tablet-and-mobile-2 kt-grid kt-grid--hor kt-login__aside"
+                 style="background-image: url(assets/media/bg/bg-4.jpg);">
                 <div class="kt-grid__item">
                     <a href="#" class="kt-login__logo">
-                        <img class="img-fluid" src="{{url('/assets1/images/logo.png')}}" style="height: 80px;" />
+                        <img class="img-fluid" src="{{url('/assets1/images/logo.png')}}" style="height: 80px;"/>
                     </a>
                 </div>
                 <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver">
@@ -72,7 +75,8 @@
             <!--begin::Aside-->
 
             <!--begin::Content-->
-            <div class="kt-grid__item kt-grid__item--fluid  kt-grid__item--order-tablet-and-mobile-1  kt-login__wrapper">
+            <div
+                class="kt-grid__item kt-grid__item--fluid  kt-grid__item--order-tablet-and-mobile-1  kt-login__wrapper">
 
                 <!--begin::Head-->
                 <div class="kt-login__head">

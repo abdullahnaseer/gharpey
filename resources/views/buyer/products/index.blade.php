@@ -23,19 +23,23 @@
                             <div class="col-6 col-md-4">
                                 <div class="product">
                                     <figure class="product-image-container">
-                                        <a href="{{route('buyer.products.show', [$product->slug])}}" class="product-image">
-                                            <img src="{{str_replace("public","/storage",$product->featured_image)}}" alt="product">
+                                        <a href="{{route('buyer.products.show', [$product->slug])}}"
+                                           class="product-image">
+                                            <img src="{{str_replace("public","/storage",$product->featured_image)}}"
+                                                 alt="product">
                                         </a>
                                         {{--                                    <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
                                     </figure>
                                     <div class="product-details">
                                         <div class="ratings-container">
                                             <div class="product-ratings">
-                                                <span class="ratings" style="width:{{$product->reviews_average * 20}}%"></span>
+                                                <span class="ratings"
+                                                      style="width:{{$product->reviews_average * 20}}%"></span>
                                                 <!-- End .ratings -->
                                             </div>
                                             <!-- End .product-ratings -->
-                                            <a href="#" class="rating-link">( {{ $product->reviews_count }} Reviews )</a>
+                                            <a href="#" class="rating-link">( {{ $product->reviews_count }} Reviews
+                                                )</a>
                                         </div>
                                         <!-- End .product-container -->
                                         <h2 class="product-title ">
@@ -47,25 +51,30 @@
                                             <span class="product-price">Rs. {{$product->price}}</span>
                                         </div>
                                         <p class="product-location text-center m-b-5">
-                                            <img src="/assets1/images/svg/shop/shop.svg" class="mr-2 d-inline-block" width="15" alt="">
+                                            <img src="/assets1/images/svg/shop/shop.svg" class="mr-2 d-inline-block"
+                                                 width="15" alt="">
 
                                             <a href="{{route('buyer.shop.show', [$product->seller->shop_slug])}}">{{$product->seller->shop_name}}</a>
                                         </p>
 
                                         <div class="product-action ml-5">
                                             @if(is_null($product->cart_item))
-                                                <a href="{{route('buyer.products.cart.create', [$product->id])}}" class="paction add-cart" title="Add to Cart">
+                                                <a href="{{route('buyer.products.cart.create', [$product->id])}}"
+                                                   class="paction add-cart" title="Add to Cart">
                                                     <span>Add to Cart</span>
                                                 </a>
                                             @else
-                                                <a href="{{route('buyer.products.cart.create', [$product->id, 'remove'])}}" class="paction add-cart" title="Add to Cart">
+                                                <a href="{{route('buyer.products.cart.create', [$product->id, 'remove'])}}"
+                                                   class="paction add-cart" title="Add to Cart">
                                                     <span>Remove from Cart</span>
                                                 </a>
                                             @endif
 
                                             @if(auth()->check())
                                                 @php($condition = auth('buyer')->user()->hasWish($product->id))
-                                                <a href="{{route('buyer.products.wishlist.create', [$product->id])}}" class="paction add-wishlist" title="{{$condition ? "Remove from" : "Add to"}} Wishlist"
+                                                <a href="{{route('buyer.products.wishlist.create', [$product->id])}}"
+                                                   class="paction add-wishlist"
+                                                   title="{{$condition ? "Remove from" : "Add to"}} Wishlist"
                                                    @if($condition) style="background-color: #9a2693;color: white;" @endif
                                                 >
                                                     <span>{{$condition ? "Remove from" : "Add to"}} Wishlist</span>
@@ -77,7 +86,7 @@
                                     <!-- End .product-details -->
                                 </div>
                             </div>
-                    @endforeach
+                        @endforeach
                     </div>
                     {{ $products->links() }}
                 @else
@@ -89,7 +98,8 @@
                 <div class="sidebar-wrapper">
                     <div class="widget">
                         <h3 class="widget-title">
-                            <a data-toggle="collapse" href="#widget-body-1" role="button" aria-expanded="true" aria-controls="widget-body-1">Categories</a>
+                            <a data-toggle="collapse" href="#widget-body-1" role="button" aria-expanded="true"
+                               aria-controls="widget-body-1">Categories</a>
                         </h3>
 
                         <div class="collapse show" id="widget-body-1">
@@ -113,22 +123,26 @@
 
                     <div class="widget">
                         <h3 class="widget-title">
-                            <a data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Price</a>
+                            <a data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true"
+                               aria-controls="widget-body-2">Price</a>
                         </h3>
 
                         <div class="collapse show" id="widget-body-2">
                             <div class="widget-body">
-                                <form action="{{route('buyer.products.index')}}" onsubmit="handlePriceFilterForm()" id="form-price">
+                                <form action="{{route('buyer.products.index')}}" onsubmit="handlePriceFilterForm()"
+                                      id="form-price">
                                     @if(request()->has('category'))
                                         <input type="hidden" name="category" value="{{request()->input('category')}}">
                                     @endif
 
                                     @if(request()->has('q'))
-                                        <input type="hidden" name="q" value="{{request()->input('q')}}" />
+                                        <input type="hidden" name="q" value="{{request()->input('q')}}"/>
                                     @endif
 
-                                    <input type="hidden" name="price-min" id="input-price-min" value="{{request()->input('price-min', 100)}}" />
-                                    <input type="hidden" name="price-max" id="input-price-max" value="{{request()->input('price-max', 10000)}}" />
+                                    <input type="hidden" name="price-min" id="input-price-min"
+                                           value="{{request()->input('price-min', 100)}}"/>
+                                    <input type="hidden" name="price-max" id="input-price-max"
+                                           value="{{request()->input('price-max', 10000)}}"/>
 
                                     <div class="price-slider-wrapper">
                                         <div id="price-slider"></div>
@@ -137,7 +151,9 @@
                                     <!-- End .price-slider-wrapper -->
 
                                     <div class="filter-price-action">
-                                        <button type="submit" class="btn btn-primary" onclick="return handlePriceFilterForm();">Filter</button>
+                                        <button type="submit" class="btn btn-primary"
+                                                onclick="return handlePriceFilterForm();">Filter
+                                        </button>
 
                                         <div class="filter-price-text">
                                             <span id="filter-price-range"></span>
@@ -176,8 +192,7 @@
                 .set([inputPriceMin.value, inputPriceMax.value]);
         });
 
-        function handlePriceFilterForm()
-        {
+        function handlePriceFilterForm() {
             var inputPriceMin = $('input#input-price-min');
             var inputPriceMax = $('input#input-price-max');
 
@@ -188,7 +203,7 @@
 
             // return false;
             document.getElementById("price-form").submit();
-            return;
+
         }
     </script>
 @endsection

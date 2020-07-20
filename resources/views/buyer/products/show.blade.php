@@ -19,7 +19,9 @@
                             <div class="product-slider-container product-item">
                                 <div class="product-single-carousel owl-carousel owl-theme">
                                     <div class="product-item">
-                                        <img class="product-single-image" src="{{str_replace("public","/storage",$product->featured_image)}}" data-zoom-image="assets/images/products/zoom/product-1-big.jpg"/>
+                                        <img class="product-single-image"
+                                             src="{{str_replace("public","/storage",$product->featured_image)}}"
+                                             data-zoom-image="assets/images/products/zoom/product-1-big.jpg"/>
                                     </div>
                                     {{--                                        <div class="product-item">--}}
                                     {{--                                            <img class="product-single-image" src="assets/images/products/zoom/product-2.jpg" data-zoom-image="assets/images/products/zoom/product-2-big.jpg"/>--}}
@@ -71,13 +73,14 @@
                                 </div><!-- End .price-box -->
 
                                 <p class="product-location text-left m-b-5">
-                                    <img src="/assets1/images/svg/shop/shop.svg" class="mr-2 d-inline-block" width="15" alt="">
+                                    <img src="/assets1/images/svg/shop/shop.svg" class="mr-2 d-inline-block" width="15"
+                                         alt="">
 
                                     <a href="{{route('buyer.shop.show', [$product->seller->shop_slug])}}">{{$product->seller->shop_name}}</a>
                                 </p>
 
                                 <div class="product-desc">
-                                    <p>{{\Str::limit($product->description, 100)}}</p>
+                                    <p>{{Str::limit($product->description, 100)}}</p>
                                 </div><!-- End .product-desc -->
 
                                 {{--                                    <div class="product-filters-container">--}}
@@ -110,18 +113,22 @@
 
                                     @if(is_null($cart_item))
                                         @if($product->inventory > 0)
-                                            <a href="{{route('buyer.products.cart.create', [$product->id])}}" class="paction add-cart" title="Add to Cart">
+                                            <a href="{{route('buyer.products.cart.create', [$product->id])}}"
+                                               class="paction add-cart" title="Add to Cart">
                                                 <span>Add to Cart</span>
                                             </a>
                                         @endif
                                     @else
-                                        <a href="{{route('buyer.products.cart.create', [$product->id, 'remove'])}}" class="paction add-cart" title="Add to Cart">
+                                        <a href="{{route('buyer.products.cart.create', [$product->id, 'remove'])}}"
+                                           class="paction add-cart" title="Add to Cart">
                                             <span>Remove from Cart</span>
                                         </a>
                                     @endif
                                     @if(auth()->check())
                                         @php($condition = auth('buyer')->user()->hasWish($product->id))
-                                        <a href="{{route('buyer.products.wishlist.create', [$product->id])}}" class="paction add-wishlist" title="{{$condition ? "Remove from" : "Add to"}} Wishlist"
+                                        <a href="{{route('buyer.products.wishlist.create', [$product->id])}}"
+                                           class="paction add-wishlist"
+                                           title="{{$condition ? "Remove from" : "Add to"}} Wishlist"
                                            @if($condition) style="background-color: #9a2693;color: white;" @endif
                                         >
                                             <span>{{$condition ? "Remove from" : "Add to"}} Wishlist</span>
@@ -142,39 +149,50 @@
                 <div class="product-single-tabs">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="product-tab-desc" data-toggle="tab" href="#product-desc-content" role="tab" aria-controls="product-desc-content" aria-selected="true">Description</a>
+                            <a class="nav-link active" id="product-tab-desc" data-toggle="tab"
+                               href="#product-desc-content" role="tab" aria-controls="product-desc-content"
+                               aria-selected="true">Description</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="product-tab-qas" data-toggle="tab" href="#product-qas-content" role="tab" aria-controls="product-qas-content" aria-selected="false">Q&As</a>
+                            <a class="nav-link" id="product-tab-qas" data-toggle="tab" href="#product-qas-content"
+                               role="tab" aria-controls="product-qas-content" aria-selected="false">Q&As</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="product-tab-reviews" data-toggle="tab" href="#product-reviews-content" role="tab" aria-controls="product-reviews-content" aria-selected="false">Reviews</a>
+                            <a class="nav-link" id="product-tab-reviews" data-toggle="tab"
+                               href="#product-reviews-content" role="tab" aria-controls="product-reviews-content"
+                               aria-selected="false">Reviews</a>
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel" aria-labelledby="product-tab-desc">
+                        <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel"
+                             aria-labelledby="product-tab-desc">
                             <div class="product-desc-content">
                                 <p>{{$product->description}}</p>
                             </div><!-- End .product-desc-content -->
                         </div><!-- End .tab-pane -->
 
-                        <div class="tab-pane fade" id="product-qas-content" role="tabpanel" aria-labelledby="product-tab-qas">
+                        <div class="tab-pane fade" id="product-qas-content" role="tabpanel"
+                             aria-labelledby="product-tab-qas">
                             <div class="product-qas-content">
                                 <div class="alert alert-info">Under Construction!!!</div>
                             </div><!-- End .product-tags-content -->
                         </div><!-- End .tab-pane -->
 
-                        <div class="tab-pane fade" id="product-reviews-content" role="tabpanel" aria-labelledby="product-tab-reviews">
+                        <div class="tab-pane fade" id="product-reviews-content" role="tabpanel"
+                             aria-labelledby="product-tab-reviews">
                             <div class="product-reviews-content">
                                 <div>
                                     @if(count($product->reviews))
                                         @foreach($product->reviews as $review)
                                             <div class="ratings-container mb-0">
                                                 <div class="product-ratings">
-                                                    <span class="ratings" style="width:{{$review->rating * 20}}%"></span>
+                                                    <span class="ratings"
+                                                          style="width:{{$review->rating * 20}}%"></span>
                                                 </div>
                                             </div>
-                                            <p class="text-muted mb-0"><small>By {{ !is_null($review->product_order) && !is_null($review->product_order->order) && !is_null($review->product_order->order->buyer) ? $review->product_order->order->buyer->name : 'GharPey Customer' }} ({{$review->created_at->diffForHumans()}})</small></p>
+                                            <p class="text-muted mb-0">
+                                                <small>By {{ !is_null($review->product_order) && !is_null($review->product_order->order) && !is_null($review->product_order->order->buyer) ? $review->product_order->order->buyer->name : 'GharPey Customer' }}
+                                                    ({{$review->created_at->diffForHumans()}})</small></p>
                                             <p>{{$review->review}}</p>
                                         @endforeach
                                     @else

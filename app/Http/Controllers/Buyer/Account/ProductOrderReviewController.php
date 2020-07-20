@@ -12,11 +12,9 @@ class ProductOrderReviewController extends Controller
 {
     public function index(Request $request, $product_order_id)
     {
-        $porduct_order = ProductOrder::whereHas('order', function (Builder $query) {
+        return ProductOrder::whereHas('order', function (Builder $query) {
             $query->where('buyer_id', auth()->id());
         })->findOrFail($product_order_id);
-
-        return $porduct_order;
     }
 
 

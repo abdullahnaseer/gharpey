@@ -31,8 +31,7 @@ class BuyerController extends Controller
      */
     public function json()
     {
-        $records = Buyer::with(['location', 'location.city'])->get();
-        return $records;
+        return Buyer::with(['location', 'location.city'])->get();
     }
 
     /**

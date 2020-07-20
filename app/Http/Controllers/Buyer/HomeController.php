@@ -30,7 +30,7 @@ class HomeController extends Controller
         $data['popular_products'] = Product::with([
             'category',
             'seller' => fn($q) => $q->withTrashed()
-        ])->take(10)->get();
+        ])->inStock()->take(10)->get();
 
         return view('buyer.home', $data);
     }

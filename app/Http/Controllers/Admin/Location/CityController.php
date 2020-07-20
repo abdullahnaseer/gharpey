@@ -30,8 +30,7 @@ class CityController extends Controller
      */
     public function json($country_id, $state_id)
     {
-        $records = City::where('state_id', $state_id)->get();
-        return $records;
+        return City::where('state_id', $state_id)->get();
     }
 
     /**
@@ -97,10 +96,18 @@ class CityController extends Controller
      * @param City $city
      * @return mixed
      */
-    public function destroy(Request $request, Country $country, State $state, City $city)
+    public function destroy(Country $country, State $state, City $city)
     {
-        $city->delete();
-        flash('Successfully deleted the record!')->success();
+        if($city->areas()->count() > 0)
+            flash('Cannot Delete City With Areas.')->error();
+        else if ($city->service_requests()->count() > 0)
+            flash('Cannot Delete City With Active ServiceRequests.')->error();
+        else if ($city->service_sellers()->count() > 0)
+            flash('Cannot Delete City With Active ServiceSellers.')->error();
+        else {
+            $city->delete();
+            flash('Successfully deleted the city!')->success();
+        }
 
         return redirect()->route('admin.location.countries.states.cities.index', [$country->id, $state->id]);
     }

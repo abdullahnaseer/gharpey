@@ -40,7 +40,10 @@
                                 <div class="kt-widget kt-widget--user-profile-1">
                                     <div class="kt-widget__head">
                                         <div class="kt-widget__media">
-                                            <img src="{{ empty(auth('seller')->user()->avatar) ? url('assets/media/users/300_25.jpg') : url( str_replace('public', 'storage', auth('seller')->user()->avatar) )}}" alt="image" onerror="this.src = '{{ url('assets/media/users/300_25.jpg') }}';">
+                                            <img
+                                                src="{{ empty(auth('seller')->user()->avatar) ? url('assets/media/users/300_25.jpg') : url( str_replace('public', 'storage', auth('seller')->user()->avatar) )}}"
+                                                alt="image"
+                                                onerror="this.src = '{{ url('assets/media/users/300_25.jpg') }}';">
                                         </div>
                                         <div class="kt-widget__content">
                                             <div class="kt-widget__section">
@@ -53,8 +56,8 @@
                                             </span>
                                             </div>
                                             <div class="kt-widget__action">
-{{--                                                <a href="{{route('seller.chat')}}" type="button"--}}
-{{--                                                   class="btn btn-info btn-sm">chat</a>&nbsp;--}}
+                                                {{--                                                <a href="{{route('seller.chat')}}" type="button"--}}
+                                                {{--                                                   class="btn btn-info btn-sm">chat</a>&nbsp;--}}
                                             </div>
                                         </div>
                                     </div>
@@ -62,11 +65,13 @@
                                         <div class="kt-widget__content">
                                             <div class="kt-widget__info">
                                                 <span class="kt-widget__label">Email:</span>
-                                                <span href="#" class="kt-widget__data">{{auth('seller')->user()->email}}</span>
+                                                <span href="#"
+                                                      class="kt-widget__data">{{auth('seller')->user()->email}}</span>
                                             </div>
                                             <div class="kt-widget__info">
                                                 <span class="kt-widget__label">Phone:</span>
-                                                <span href="#" class="kt-widget__data">{{auth('seller')->user()->phone}}</span>
+                                                <span href="#"
+                                                      class="kt-widget__data">{{auth('seller')->user()->phone}}</span>
                                             </div>
                                             @if(auth('seller')->user()->location)
                                                 <div class="kt-widget__info">

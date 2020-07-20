@@ -28,8 +28,7 @@ class ProductController extends Controller
      */
     public function json()
     {
-        $records = Product::with([])->get();
-        return $records;
+        return Product::with([])->get();
     }
 
     /**

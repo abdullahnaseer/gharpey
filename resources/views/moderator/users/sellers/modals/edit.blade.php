@@ -51,7 +51,8 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-3 col-sm-12">Warehouse Location</label>
                     <div class="col-lg-9 col-md-9 col-sm-12">
-                        <select class="form-control kt-select2" id="warehouse_location_select2_edit" name="warehouse_location_id"
+                        <select class="form-control kt-select2" id="warehouse_location_select2_edit"
+                                name="warehouse_location_id"
                                 style="width: 100%">
                             @foreach($cities as $city)
                                 @if($city->areas->count())
@@ -76,7 +77,8 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-3 col-sm-12">Business Location</label>
                     <div class="col-lg-9 col-md-9 col-sm-12">
-                        <select class="form-control kt-select2" id="business_location_select2_edit" name="business_location_id"
+                        <select class="form-control kt-select2" id="business_location_select2_edit"
+                                name="business_location_id"
                                 style="width: 100%">
                             @foreach($cities as $city)
                                 @if($city->areas->count())
@@ -101,7 +103,8 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-3 col-sm-12">Return Location</label>
                     <div class="col-lg-9 col-md-9 col-sm-12">
-                        <select class="form-control kt-select2" id="return_location_select2_edit" name="return_location_id"
+                        <select class="form-control kt-select2" id="return_location_select2_edit"
+                                name="return_location_id"
                                 style="width: 100%">
                             @foreach($cities as $city)
                                 @if($city->areas->count())

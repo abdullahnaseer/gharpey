@@ -6,7 +6,8 @@
                 {{ isset($page_title) ? $page_title : 'Dashboard' }} </h3>
             <span class="kt-subheader__separator kt-hidden"></span>
             <div class="kt-subheader__breadcrumbs">
-                <a href="{{url('/seller')}}" class="kt-subheader__breadcrumbs-home"><i class="flaticon2-shelter"></i></a>
+                <a href="{{url('/seller')}}" class="kt-subheader__breadcrumbs-home"><i
+                        class="flaticon2-shelter"></i></a>
 
             @yield('breadcrumb')
             <!-- <span class="kt-subheader__breadcrumbs-link kt-subheader__breadcrumbs-link--active">Active link</span> -->

@@ -28,8 +28,7 @@ class ProductController extends Controller
      */
     public function json()
     {
-        $records = auth('seller')->user()->products()->with([])->get();
-        return $records;
+        return auth('seller')->user()->products()->with([])->get();
     }
 
     /**

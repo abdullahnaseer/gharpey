@@ -27,8 +27,7 @@ class CountryController extends Controller
      */
     public function json()
     {
-        $countries = Country::get();
-        return $countries;
+        return Country::get();
     }
 
     /**
@@ -83,13 +82,19 @@ class CountryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \Spatie\Permission\Models\Country $country
+     * @param Country $country
      * @return mixed
+     * @throws \Exception
      */
-    public function destroy(Request $request, Country $country)
+    public function destroy(Country $country)
     {
-        $country->delete();
-        flash('Successfully deleted the record!')->success();
+        if($country->states()->count() > 0)
+        {
+            flash('Cannot Delete Country With States.')->error();
+        } else {
+            $country->delete();
+            flash('Successfully deleted the country!')->success();
+        }
 
         return redirect()->route('admin.location.countries.index');
     }

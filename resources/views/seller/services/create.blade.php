@@ -9,14 +9,14 @@
 @endsection
 
 @section('breadcrumb-elements')
-    <a class="btn btn-brand btn-elevate btn-icon-sm"  href="{{route('seller.services.index')}}">
+    <a class="btn btn-brand btn-elevate btn-icon-sm" href="{{route('seller.services.index')}}">
         <i class="la la-arrow-left"></i>
         Back
     </a>
 @endsection
 
 @push('styles')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet"/>
 @endpush
 
 @section('content')
@@ -50,20 +50,19 @@
 
     <script src="{{url('js/editor.js')}}"></script>
 
-{{--    <script src="{{url('js/seller-services.js')}}"></script>--}}
+    {{--    <script src="{{url('js/seller-services.js')}}"></script>--}}
     <script type="text/javascript">
-        function fixInputsIndexes()
-        {
-            $('#question_portlets > .kt-portlet').each(function( index ) {
-                $(this).find('.input-name').attr('name', 'name['+index+']');
-                $(this).find('.input-question').attr('name', 'question['+index+']');
-                $(this).find('.select-type').attr('name', 'type['+index+']');
+        function fixInputsIndexes() {
+            $('#question_portlets > .kt-portlet').each(function (index) {
+                $(this).find('.input-name').attr('name', 'name[' + index + ']');
+                $(this).find('.input-question').attr('name', 'question[' + index + ']');
+                $(this).find('.select-type').attr('name', 'type[' + index + ']');
                 // $(this).find('.select-required').attr('name', 'is_required['+index+']');
             });
-            $( ".choice-portlets").each(function( q_index ) {
-                $(this).find('.choice-portlet').each(function( index ) {
-                    $(this).find('.choice_text').attr('name', 'choice_text['+q_index+']['+index+']');
-                    $(this).find('.choice_price_effect').attr('name', 'choice_price_effect['+q_index+']['+index+']');
+            $(".choice-portlets").each(function (q_index) {
+                $(this).find('.choice-portlet').each(function (index) {
+                    $(this).find('.choice_text').attr('name', 'choice_text[' + q_index + '][' + index + ']');
+                    $(this).find('.choice_price_effect').attr('name', 'choice_price_effect[' + q_index + '][' + index + ']');
                 });
             });
         }
@@ -77,7 +76,7 @@
                         connectWith: ".question-head",
                         items: ".question-portlet",
                         opacity: 0.875,
-                        handle : '.question-head',
+                        handle: '.question-head',
                         coneHelperSize: true,
                         placeholder: 'question-placeholder',
                         forcePlaceholderSize: true,
@@ -88,20 +87,22 @@
                         helper: "clone",
                         cancel: ".kt-portlet--sortable-empty", // cancel dragging if portlet is in fullscreen mode
                         revert: 250, // animation in milliseconds
-                        update: function(b, c) {
+                        update: function (b, c) {
                             if (c.item.prev().hasClass("kt-portlet--sortable-empty")) {
                                 c.item.prev().before(c.item);
                             }
                             fixInputsIndexes();
                         },
-                        change: function(b, c) { fixInputsIndexes(); },
+                        change: function (b, c) {
+                            fixInputsIndexes();
+                        },
                     });
 
                     $(".choice-portlets").sortable({
                         connectWith: ".choice-head",
                         items: ".choice-portlet",
                         opacity: 0.75,
-                        handle : '.choice-head',
+                        handle: '.choice-head',
                         coneHelperSize: true,
                         placeholder: 'choice-placeholder',
                         forcePlaceholderSize: true,
@@ -112,26 +113,28 @@
                         helper: "clone",
                         cancel: ".kt-portlet--sortable-empty", // cancel dragging if portlet is in fullscreen mode
                         revert: 250, // animation in milliseconds
-                        update: function(b, c) {
+                        update: function (b, c) {
                             if (c.item.prev().hasClass("kt-portlet--sortable-empty")) {
                                 c.item.prev().before(c.item);
                             }
                             fixInputsIndexes();
                         },
-                        change: function(b, c) { fixInputsIndexes(); },
+                        change: function (b, c) {
+                            fixInputsIndexes();
+                        },
                     });
                 }
             };
         }();
 
-        jQuery(document).ready(function() {
-            $('body').on('click', '.up-question-btn', function() {
+        jQuery(document).ready(function () {
+            $('body').on('click', '.up-question-btn', function () {
                 var item = $(this).parent().parent().parent().parent();
                 var prev = item.prev();
                 if (prev.length == 0)
                     return;
-                prev.css('z-index', 999).css('position','relative').animate({ top: item.height() }, 250);
-                item.css('z-index', 1000).css('position', 'relative').animate({ top: '-' + prev.height() }, 300, function () {
+                prev.css('z-index', 999).css('position', 'relative').animate({top: item.height()}, 250);
+                item.css('z-index', 1000).css('position', 'relative').animate({top: '-' + prev.height()}, 300, function () {
                     prev.css('z-index', '').css('top', '').css('position', '');
                     item.css('z-index', '').css('top', '').css('position', '');
                     item.insertBefore(prev);
@@ -140,13 +143,13 @@
 
             });
 
-            $('body').on('click', '.down-question-btn', function() {
+            $('body').on('click', '.down-question-btn', function () {
                 var item = $(this).parent().parent().parent().parent();
                 var next = item.next();
                 if (next.length == 0)
                     return;
-                next.css('z-index', 999).css('position', 'relative').animate({ top: '-' + item.height() }, 250);
-                item.css('z-index', 1000).css('position', 'relative').animate({ top: next.height() }, 300, function () {
+                next.css('z-index', 999).css('position', 'relative').animate({top: '-' + item.height()}, 250);
+                item.css('z-index', 1000).css('position', 'relative').animate({top: next.height()}, 300, function () {
                     next.css('z-index', '').css('top', '').css('position', '');
                     item.css('z-index', '').css('top', '').css('position', '');
                     item.insertAfter(next);
@@ -163,19 +166,16 @@
                 closeOnSelect: false
             });
 
-            function hideAllQuestionDetailSections(elem)
-            {
+            function hideAllQuestionDetailSections(elem) {
                 hideQuestionDetailSection(elem, '.boolean-price-effect');
                 hideQuestionDetailSection(elem, '.choices-container');
             }
 
-            function hideQuestionDetailSection(elem, section)
-            {
+            function hideQuestionDetailSection(elem, section) {
                 $(elem).parent().parent().parent().parent().find(section).hide();
             }
 
-            function showQuestionDetailSection(elem, section)
-            {
+            function showQuestionDetailSection(elem, section) {
                 $(elem).parent().parent().parent().parent().find(section).show();
             }
 
@@ -204,11 +204,11 @@
                     showQuestionDetailSection(this, '.choices-container');
             });
 
-            $("#question_portlets .choices-select").each(function() {
+            $("#question_portlets .choices-select").each(function () {
                 $(this).select2({tags: true});
             });
 
-            $( "#service-form" ).submit(function( event ) {
+            $("#service-form").submit(function (event) {
                 fixInputsIndexes();
                 // $(this)
             });

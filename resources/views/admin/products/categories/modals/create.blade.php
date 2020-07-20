@@ -1,5 +1,6 @@
 <!-- Modal -->
-<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel"
+     aria-hidden="true">
     {{ Form::open(['route' => 'admin.products.categories.store', 'method' => 'POST', 'files' => true]) }}
     <div class="modal-dialog" role="document">
         <div class="modal-content">

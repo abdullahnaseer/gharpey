@@ -82,8 +82,7 @@
                         currentQuestionIndex++;
                         if ($("#service-question-" + questions[currentQuestionIndex]).data("required") == 1)
                             $('#skip').hide();
-                        else
-                        {
+                        else {
                             if (currentQuestionIndex < countQuestions - 1) // Check if not last question
                                 $('#skip').show();
                         }
@@ -106,8 +105,7 @@
                         }
                         if ($("#service-question-" + questions[currentQuestionIndex]).data("required") == 1)
                             $('#skip').hide();
-                        else
-                        {
+                        else {
                             if (currentQuestionIndex < countQuestions - 1) // Check if not last question
                                 $('#skip').show();
                         }
@@ -130,8 +128,7 @@
                         currentQuestionIndex++;
                         if ($("#service-question-" + questions[currentQuestionIndex]).data("required") == 1)
                             $('#skip').hide();
-                        else
-                        {
+                        else {
                             if (currentQuestionIndex < countQuestions - 1) // Check if not last question
                                 $('#skip').show();
                         }

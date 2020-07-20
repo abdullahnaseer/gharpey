@@ -61,7 +61,8 @@
                                 <span class="product-price">Rs. {{$product->price}}</span>
                             </div>
                             <p class="product-location text-center m-b-5">
-                                <img src="/assets1/images/svg/shop/shop.svg" class="mr-2 d-inline-block" width="15" alt="">
+                                <img src="/assets1/images/svg/shop/shop.svg" class="mr-2 d-inline-block" width="15"
+                                     alt="">
 
                                 <a href="{{route('buyer.shop.show', [$product->seller->shop_slug])}}">{{$product->seller->shop_name}}</a>
                             </p>
@@ -75,18 +76,22 @@
 
                             <div class="product-action ml-5">
                                 @if(is_null($product->cart_item))
-                                    <a href="{{route('buyer.products.cart.create', [$product->id])}}" class="paction add-cart" title="Add to Cart">
+                                    <a href="{{route('buyer.products.cart.create', [$product->id])}}"
+                                       class="paction add-cart" title="Add to Cart">
                                         <span>Add to Cart</span>
                                     </a>
                                 @else
-                                    <a href="{{route('buyer.products.cart.create', [$product->id, 'remove'])}}" class="paction add-cart" title="Add to Cart">
+                                    <a href="{{route('buyer.products.cart.create', [$product->id, 'remove'])}}"
+                                       class="paction add-cart" title="Add to Cart">
                                         <span>Remove from Cart</span>
                                     </a>
                                 @endif
 
                                 @if(auth()->check())
                                     @php($condition = auth('buyer')->user()->hasWish($product->id))
-                                    <a href="{{route('buyer.products.wishlist.create', [$product->id])}}" class="paction add-wishlist" title="{{$condition ? "Remove from" : "Add to"}} Wishlist"
+                                    <a href="{{route('buyer.products.wishlist.create', [$product->id])}}"
+                                       class="paction add-wishlist"
+                                       title="{{$condition ? "Remove from" : "Add to"}} Wishlist"
                                        @if($condition) style="background-color: #9a2693;color: white;" @endif
                                     >
                                         <span>{{$condition ? "Remove from" : "Add to"}} Wishlist</span>

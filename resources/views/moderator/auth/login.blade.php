@@ -14,9 +14,9 @@
                     @endforeach
                 </ul>
             </div>
-        @endif
+    @endif
 
-        <!--begin::Form-->
+    <!--begin::Form-->
         <form class="kt-form" method="POST" action="{{ route('moderator.login') }}" id="kt_login_form">
             @csrf
             <div class="form-group">
@@ -31,7 +31,8 @@
                 <a href="{{ route('moderator.password.request') }}" class="kt-link kt-login__link-forgot">
                     Forgot Password ?
                 </a>
-                <button id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary">Sign In</button>
+                <button id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary">Sign In
+                </button>
             </div>
 
             <!--end::Action-->

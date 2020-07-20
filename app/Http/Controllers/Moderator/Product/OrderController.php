@@ -64,43 +64,12 @@ class OrderController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return mixed
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return mixed
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return mixed
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param Request $request
      * @param int $id
-     * @return void
+     *
+     * @return mixed
      */
     public function edit(Request $request, $id)
     {
@@ -230,28 +199,5 @@ class OrderController extends Controller
         }
 
         return redirect()->back();
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return mixed
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return mixed
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

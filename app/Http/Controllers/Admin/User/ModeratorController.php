@@ -31,8 +31,7 @@ class ModeratorController extends Controller
      */
     public function json()
     {
-        $records = Moderator::with(['location', 'location.city'])->get();
-        return $records;
+        return Moderator::with(['location', 'location.city'])->get();
     }
 
     /**

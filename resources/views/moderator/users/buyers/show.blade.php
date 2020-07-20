@@ -31,7 +31,9 @@
                 <div class="kt-portlet__head-wrapper">
                     <div class="kt-portlet__head-actions">
                         <a class="btn btn-brand btn-elevate btn-icon-sm" href="#editModal" data-toggle="modal"
-                           data-target="#editModal" data-target="#editModal" data-id="{{$user->id}}" data-name="{{$user->name}}" data-email="{{$user->email}}" data-phone="{{$user->phone}}" data-address="{{$user->address}}" data-location="{{$user->location_id}}">
+                           data-target="#editModal" data-target="#editModal" data-id="{{$user->id}}"
+                           data-name="{{$user->name}}" data-email="{{$user->email}}" data-phone="{{$user->phone}}"
+                           data-address="{{$user->address}}" data-location="{{$user->location_id}}">
                             <i class="la la-edit"></i>
                             Edit
                         </a>
@@ -196,7 +198,7 @@
                             overflow: 'visible',
                             template: function (row) {
                                 return '\
-                        <a href="{{url('/moderator/users/buyers')}}/'+row.id+'" class="btn btn-sm btn-clean btn-icon btn-icon-sm" title="View Details">\
+                        <a href="{{url('/moderator/users/buyers')}}/' + row.id + '" class="btn btn-sm btn-clean btn-icon btn-icon-sm" title="View Details">\
 							<i class="la la-eye"></i>\
 						</a>\
 						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-sm" title="Edit Details" data-toggle="modal" data-target="#editModal" data-id="' + row.id + '" data-name="' + row.name + '" data-email="' + row.email + '" data-phone="' + row.phone + '" data-address="' + row.address + '" data-location="' + row.location_id + '">\

@@ -60,4 +60,13 @@ class City extends Model
             ->where('location_type', City::class)
             ->withPivot([]);
     }
+
+    /**
+     * Get the owning service_seller_able model.
+     */
+    public function service_requests()
+    {
+        return $this->hasMany(ServiceRequest::class, 'location_id', 'id')
+            ->where('location_type', City::class);
+    }
 }

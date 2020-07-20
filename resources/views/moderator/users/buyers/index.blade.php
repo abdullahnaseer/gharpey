@@ -30,17 +30,17 @@
                     Buyers
                 </h3>
             </div>
-{{--            <div class="kt-portlet__head-toolbar">--}}
-{{--                <div class="kt-portlet__head-wrapper">--}}
-{{--                    <div class="kt-portlet__head-actions">--}}
-{{--                        <a class="btn btn-brand btn-elevate btn-icon-sm" href="#createModal" data-toggle="modal"--}}
-{{--                           data-target="#createModal">--}}
-{{--                            <i class="la la-plus"></i>--}}
-{{--                            New Buyer--}}
-{{--                        </a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            {{--            <div class="kt-portlet__head-toolbar">--}}
+            {{--                <div class="kt-portlet__head-wrapper">--}}
+            {{--                    <div class="kt-portlet__head-actions">--}}
+            {{--                        <a class="btn btn-brand btn-elevate btn-icon-sm" href="#createModal" data-toggle="modal"--}}
+            {{--                           data-target="#createModal">--}}
+            {{--                            <i class="la la-plus"></i>--}}
+            {{--                            New Buyer--}}
+            {{--                        </a>--}}
+            {{--                    </div>--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
         </div>
         <div class="kt-portlet__body kt-portlet__body--fit">
             <!--begin: Datatable -->
@@ -156,7 +156,7 @@
                             overflow: 'visible',
                             template: function (row) {
                                 return '\
-                        <a href="{{url('/moderator/users/buyers')}}/'+row.id+'" class="btn btn-sm btn-clean btn-icon btn-icon-sm" title="View Details">\
+                        <a href="{{url('/moderator/users/buyers')}}/' + row.id + '" class="btn btn-sm btn-clean btn-icon btn-icon-sm" title="View Details">\
 							<i class="la la-eye"></i>\
 						</a>\
 						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-sm" title="Edit Details" data-toggle="modal" data-target="#editModal" data-id="' + row.id + '" data-name="' + row.name + '" data-email="' + row.email + '" data-phone="' + row.phone + '" data-address="' + row.address + '" data-location="' + row.location_id + '">\

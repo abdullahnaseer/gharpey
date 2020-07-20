@@ -35,14 +35,12 @@ class ServiceRequestController extends Controller
      */
     public function json()
     {
-        $serviceRequests = auth('seller')
+        return auth('seller')
             ->user()
             ->service_requests()
             ->orderBy('created_at', 'desc')
             ->with(['service_seller', 'service', 'answers', 'answers.answer'])
             ->get();
-
-        return $serviceRequests;
     }
 
     /**

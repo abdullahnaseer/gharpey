@@ -12,7 +12,8 @@
                 <div class="card">
                     <div class="card-header">Verify your phone</div>
                     <div class="card-body">
-                        <p>Thanks for registering with our platform. We will call you to verify your phone number in a jiffy. Provide the code below.</p>
+                        <p>Thanks for registering with our platform. We will call you to verify your phone number in a
+                            jiffy. Provide the code below.</p>
 
                         <div class="d-flex justify-content-center">
                             <div class="col-8">
@@ -20,7 +21,10 @@
                                     @csrf
                                     <div class="form-group">
                                         <label for="code">Verification Code</label>
-                                        <input id="code" class="form-control{{ $errors->has('code') ? ' is-invalid' : '' }}" name="code" type="text" placeholder="Verification Code" required autofocus>
+                                        <input id="code"
+                                               class="form-control{{ $errors->has('code') ? ' is-invalid' : '' }}"
+                                               name="code" type="text" placeholder="Verification Code" required
+                                               autofocus>
                                         @if ($errors->has('code'))
                                             <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('code') }}</strong>

@@ -32,8 +32,7 @@ class AreaController extends Controller
      */
     public function json($country_id, $state_id, $city_id)
     {
-        $records = CityArea::where('city_id', $city_id)->get();
-        return $records;
+        return CityArea::where('city_id', $city_id)->get();
     }
 
     /**
@@ -67,7 +66,7 @@ class AreaController extends Controller
 
         $area = $city->areas()->create(['name' => $request->input('name')]);
 
-        flash('Successfully created the new record!')->success();
+        flash('Successfully created the new Area!')->success();
         return redirect()->route('admin.location.countries.states.cities.areas.index', [$country->id, $state->id, $city->id]);
     }
 
@@ -90,7 +89,7 @@ class AreaController extends Controller
         $area->name = $request->name;
         $area->save();
 
-        flash('Successfully modified the record!')->success();
+        flash('Successfully modified the Area!')->success();
         return redirect()->route('admin.location.countries.states.cities.areas.index', [$country->id, $state->id, $city->id]);
     }
 
@@ -105,8 +104,19 @@ class AreaController extends Controller
      */
     public function destroy(Request $request, Country $country, State $state, City $city, CityArea $area)
     {
-        $area->delete();
-        flash('Successfully deleted the record!')->success();
+        if(
+            $area->seller_business_locations()->count()  > 0 ||
+            $area->seller_warehouse_locations()->count() > 0 ||
+            $area->seller_return_locations()->count()    > 0 ||
+            $area->service_sellers()->count()            > 0 ||
+            $area->product_orders()->count()             > 0 ||
+            $area->buyers()->count()                     > 0
+        ) {
+            flash('Cannot Delete Area With Active Associated Records.')->error();
+        } else {
+            $area->delete();
+            flash('Successfully deleted the Area!')->success();
+        }
 
         return redirect()->route('admin.location.countries.states.cities.areas.index', [$country->id, $state->id, $city->id]);
     }

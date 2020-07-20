@@ -26,13 +26,14 @@
                                                      document.getElementById('logout-form').submit();">LOGOUT </a></li>
                             @endauth
                             @guest('buyer')
-                                    <li><a href="{{route('seller.home')}}">Become a Seller</a></li>
+                                <li><a href="{{route('seller.home')}}">Become a Seller</a></li>
                                 <li><a href="{{route('buyer.register')}}">REGISTER</a></li>
                                 <li><a href="{{route('buyer.login')}}">LOG IN</a></li>
                             @endguest
                         </ul>
 
-                        <form id="logout-form" action="{{ route('buyer.logout') }}" method="POST" style="display: none;">
+                        <form id="logout-form" action="{{ route('buyer.logout') }}" method="POST"
+                              style="display: none;">
                             @csrf
                         </form>
                     </div>
@@ -58,45 +59,48 @@
             <div class="header-center">
                 <div class="header-search">
                     <a href="#" class="search-toggle" role="button"><i class="icon-magnifier"></i></a>
-{{--                    @if(request()->is('services*'))--}}
-{{--                        <form action="{{route('buyer.services.index')}}" method="get">--}}
-{{--                            <div class="header-search-wrapper">--}}
-{{--                                <input type="search" class="form-control" name="q" id="q" placeholder="Search..." required="">--}}
-{{--                                <div class="select-custom">--}}
-{{--                                    <select id="city" name="city">--}}
-{{--                                        @foreach(\App\Models\City::get() as $city)--}}
-{{--                                            <option value="{{$city->id}}"--}}
-{{--                                            @if(request()->input('city') == $city->id)--}}
-{{--                                                selected--}}
-{{--                                            @endif--}}
-{{--                                            >{{$city->name}}</option>--}}
-{{--                                        @endforeach--}}
-{{--                                    </select>--}}
-{{--                                </div>--}}
-{{--                                <button class="btn" type="submit"><i class="icon-magnifier"></i></button>--}}
-{{--                            </div>--}}
-{{--                        </form>--}}
-{{--                    @else--}}
-                        <form action="{{route('buyer.products.index')}}" method="get">
-                            @if(request()->has('category'))
-                                <input type="hidden" name="category" value="{{request()->input('category')}}">
-                            @endif
+                    {{--                    @if(request()->is('services*'))--}}
+                    {{--                        <form action="{{route('buyer.services.index')}}" method="get">--}}
+                    {{--                            <div class="header-search-wrapper">--}}
+                    {{--                                <input type="search" class="form-control" name="q" id="q" placeholder="Search..." required="">--}}
+                    {{--                                <div class="select-custom">--}}
+                    {{--                                    <select id="city" name="city">--}}
+                    {{--                                        @foreach(\App\Models\City::get() as $city)--}}
+                    {{--                                            <option value="{{$city->id}}"--}}
+                    {{--                                            @if(request()->input('city') == $city->id)--}}
+                    {{--                                                selected--}}
+                    {{--                                            @endif--}}
+                    {{--                                            >{{$city->name}}</option>--}}
+                    {{--                                        @endforeach--}}
+                    {{--                                    </select>--}}
+                    {{--                                </div>--}}
+                    {{--                                <button class="btn" type="submit"><i class="icon-magnifier"></i></button>--}}
+                    {{--                            </div>--}}
+                    {{--                        </form>--}}
+                    {{--                    @else--}}
+                    <form action="{{route('buyer.products.index')}}" method="get">
+                        @if(request()->has('category'))
+                            <input type="hidden" name="category" value="{{request()->input('category')}}">
+                        @endif
 
-                            @if(request()->has('price-min'))
-                                <input type="hidden" name="price-min" id="input-price-min" value="{{request()->input('price-min', 100)}}" />
-                            @endif
+                        @if(request()->has('price-min'))
+                            <input type="hidden" name="price-min" id="input-price-min"
+                                   value="{{request()->input('price-min', 100)}}"/>
+                        @endif
 
-                            @if(request()->has('price-max'))
-                                <input type="hidden" name="price-max" id="input-price-max" value="{{request()->input('price-max', 1000)}}" />
-                            @endif
+                        @if(request()->has('price-max'))
+                            <input type="hidden" name="price-max" id="input-price-max"
+                                   value="{{request()->input('price-max', 1000)}}"/>
+                        @endif
 
-                            <div class="header-search-wrapper">
-                                <input type="search" class="form-control" name="q" id="q" placeholder="Search Products..." required="" value="{{request()->input('q')}}">
+                        <div class="header-search-wrapper">
+                            <input type="search" class="form-control" name="q" id="q" placeholder="Search Products..."
+                                   required="" value="{{request()->input('q')}}">
 
-                                <button class="btn" type="submit"><i class="icon-magnifier"></i></button>
-                            </div>
-                        </form>
-{{--                    @endif--}}
+                            <button class="btn" type="submit"><i class="icon-magnifier"></i></button>
+                        </div>
+                    </form>
+                    {{--                    @endif--}}
                 </div>
                 <!-- End .header-search -->
             </div>
@@ -107,10 +111,11 @@
                     <i class="icon-menu"></i>
                 </button>
 
-                @php($cart = \Cart::session(request()->session()->get('_token')))
+                @php($cart = Cart::session(request()->session()->get('_token')))
                 @php($cart_items = $cart->getContent())
                 <div class="dropdown cart-dropdown">
-                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false" data-display="static">
                         <span class="cart-count">{{$cart_items->count()}}</span>
                     </a>
 
@@ -131,10 +136,14 @@
                                         <!-- End .product-details -->
 
                                         <figure class="product-image-container">
-                                            <a href="{{route('buyer.products.show', [$item->model->id])}}" class="product-image">
-                                                <img src="{{str_replace("public","/storage",$item->model->featured_image)}}" alt="product">
+                                            <a href="{{route('buyer.products.show', [$item->model->id])}}"
+                                               class="product-image">
+                                                <img
+                                                    src="{{str_replace("public","/storage",$item->model->featured_image)}}"
+                                                    alt="product">
                                             </a>
-                                            <a href="{{route('buyer.products.cart.create', [$item->model->id, 'remove'])}}" class="btn-remove" title="Remove Product"><i class="icon-cancel"></i></a>
+                                            <a href="{{route('buyer.products.cart.create', [$item->model->id, 'remove'])}}"
+                                               class="btn-remove" title="Remove Product"><i class="icon-cancel"></i></a>
                                         </figure>
                                     </div>
                                 @endforeach
@@ -144,7 +153,8 @@
                             <div class="dropdown-cart-total">
                                 <span>Total</span>
 
-                                <span class="cart-total-price">Rs. {{\Cart::session(request()->session()->get('_token'))->getSubTotal()}}</span>
+                                <span
+                                    class="cart-total-price">Rs. {{Cart::session(request()->session()->get('_token'))->getSubTotal()}}</span>
                             </div>
                             <!-- End .dropdown-cart-total -->
 
@@ -173,7 +183,8 @@
                         <img src="/assets1/images/logo.png" alt="GharPey Logo" width="101" height="41">
                     </a>
                     <div class="dropdown cart-dropdown">
-                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false" data-display="static">
                             <span class="cart-count">{{$cart_items->count()}}</span>
                         </a>
 
@@ -194,10 +205,14 @@
                                             <!-- End .product-details -->
 
                                             <figure class="product-image-container">
-                                                <a href="{{route('buyer.products.show', [$item->model->id])}}" class="product-image">
-                                                    <img src="{{str_replace("public","/storage",$item->model->featured_image)}}" alt="product">
+                                                <a href="{{route('buyer.products.show', [$item->model->id])}}"
+                                                   class="product-image">
+                                                    <img
+                                                        src="{{str_replace("public","/storage",$item->model->featured_image)}}"
+                                                        alt="product">
                                                 </a>
-                                                <a href="{{route('buyer.products.cart.create', [$item->model->id, 'remove'])}}" class="btn-remove" title="Remove Product"><i class="icon-cancel"></i></a>
+                                                <a href="{{route('buyer.products.cart.create', [$item->model->id, 'remove'])}}"
+                                                   class="btn-remove" title="Remove Product"><i class="icon-cancel"></i></a>
                                             </figure>
                                         </div>
                                     @endforeach
@@ -207,7 +222,8 @@
                                 <div class="dropdown-cart-total">
                                     <span>Total</span>
 
-                                    <span class="cart-total-price">Rs. w{{\Cart::session(request()->session()->get('_token'))->getSubTotal()}}</span>
+                                    <span
+                                        class="cart-total-price">Rs. w{{Cart::session(request()->session()->get('_token'))->getSubTotal()}}</span>
                                 </div>
                                 <!-- End .dropdown-cart-total -->
 

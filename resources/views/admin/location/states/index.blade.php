@@ -35,7 +35,8 @@
             <div class="kt-portlet__head-toolbar">
                 <div class="kt-portlet__head-wrapper">
                     <div class="kt-portlet__head-actions">
-                        <a class="btn btn-brand btn-elevate btn-icon-sm"  href="#createModal" data-toggle="modal" data-target="#createModal">
+                        <a class="btn btn-brand btn-elevate btn-icon-sm" href="#createModal" data-toggle="modal"
+                           data-target="#createModal">
                             <i class="la la-plus"></i>
                             New State
                         </a>
@@ -66,7 +67,7 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            modal.find('form').attr('action', "{{url('admin/location/countries/' . $country->id . '/states')}}/" + id );
+            modal.find('form').attr('action', "{{url('admin/location/countries/' . $country->id . '/states')}}/" + id);
             modal.find('form input#name').val(name);
         });
 
@@ -76,7 +77,7 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            modal.find('.modal-footer form').attr('action', "{{url('admin/location/countries/' . $country->id . '/states')}}/" + id );
+            modal.find('.modal-footer form').attr('action', "{{url('admin/location/countries/' . $country->id . '/states')}}/" + id);
         });
 
         var KTDatatableJsonRemote = function () {
@@ -123,16 +124,16 @@
                         }, {
                             field: 'name',
                             title: 'Name',
-                        },{
+                        }, {
                             field: 'Actions',
                             title: 'Actions',
                             sortable: false,
                             width: 150,
                             autoHide: false,
                             overflow: 'visible',
-                            template: function(row) {
+                            template: function (row) {
                                 return '\
-						<a href="/admin/location/countries/{{$country->id}}/states/'+row.id+'/cities" class="btn btn-sm btn-clean">\
+						<a href="/admin/location/countries/{{$country->id}}/states/' + row.id + '/cities" class="btn btn-sm btn-clean">\
                             Cities\
                         </a>\
 						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details" data-toggle="modal" data-target="#editModal" data-id="' + row.id + '" data-name="' + row.name + '">\
@@ -147,11 +148,11 @@
 
                 });
 
-                $('#kt_form_status').on('change', function() {
+                $('#kt_form_status').on('change', function () {
                     datatable.search($(this).val().toLowerCase(), 'Status');
                 });
 
-                $('#kt_form_type').on('change', function() {
+                $('#kt_form_type').on('change', function () {
                     datatable.search($(this).val().toLowerCase(), 'Type');
                 });
 

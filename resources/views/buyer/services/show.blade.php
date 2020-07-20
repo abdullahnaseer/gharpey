@@ -16,7 +16,8 @@
 
         <div class="container margin-top-50">
             @unless(is_null($city))
-                <h4 class="display-6 text-center m-padding-20 text-white">{{ $city->name }}, {{ $city->state->name }}</h4>
+                <h4 class="display-6 text-center m-padding-20 text-white">{{ $city->name }}
+                    , {{ $city->state->name }}</h4>
             @endunless
 
             <div class="col-lg-6 col-md-7 col-sm-9 mx-auto" style="background-color: rgb(255, 255, 255);color: #000;">
@@ -25,10 +26,12 @@
 
                     <form>
                         <div class="input-group">
-                            <select class="form-control custom-select" name="city_id" id="city_id_input" aria-label="Select City" required="required">
+                            <select class="form-control custom-select" name="city_id" id="city_id_input"
+                                    aria-label="Select City" required="required">
                                 <option selected disabled value="">Select City...</option>
                                 @foreach($cities as $city_i)
-                                    <option value="{{$city_i->id}}" @if(app('request')->input('city_id') == $city_i->id) selected @endif>{{$city_i->name}}</option>
+                                    <option value="{{$city_i->id}}"
+                                            @if(app('request')->input('city_id') == $city_i->id) selected @endif>{{$city_i->name}}</option>
                                 @endforeach
                             </select>
                             <div class="input-group-append">
@@ -49,7 +52,8 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{url('/')}}"><i class="icon-home"></i></a></li>
                     <li class="breadcrumb-item"><a href="{{route('buyer.services.index')}}">Services</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('buyer.services.index')}}">{{$service->category->name}}</a></li>
+                    <li class="breadcrumb-item"><a
+                            href="{{route('buyer.services.index')}}">{{$service->category->name}}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{$service->name}}</li>
                 </ol>
             </div><!-- End .container -->
@@ -83,7 +87,9 @@
                             <div class="product product-list-wrapper">
                                 <figure class="product-image-container">
                                     <a href="#" class="product-image">
-                                        <img src="{{ str_replace('public', '/storage', $service_seller->featured_image) }}" alt="product">
+                                        <img
+                                            src="{{ str_replace('public', '/storage', $service_seller->featured_image) }}"
+                                            alt="product">
                                     </a>
                                 </figure>
                                 <div class="product-details">
@@ -92,17 +98,20 @@
                                     </h2>
                                     <div class="ratings-container">
                                         <div class="product-ratings">
-                                            <span class="ratings" style="width:{{$service_seller->reviews_average * 20}}%"></span>
+                                            <span class="ratings"
+                                                  style="width:{{$service_seller->reviews_average * 20}}%"></span>
                                             <!-- End .ratings -->
                                         </div>
                                         <!-- End .product-ratings -->
-                                        <a href="{{route('buyer.services.sellers.show', [$service->slug, $service_seller->id, 'city_id' => $city ? $city->id : null])}}#reviews" class="rating-link">( {{ $service_seller->reviews_count ?? 0 }} Reviews )</a>
+                                        <a href="{{route('buyer.services.sellers.show', [$service->slug, $service_seller->id, 'city_id' => $city ? $city->id : null])}}#reviews"
+                                           class="rating-link">( {{ $service_seller->reviews_count ?? 0 }} Reviews )</a>
                                     </div><!-- End .product-container -->
                                     <div class="product-desc">
                                         <p>{{$service_seller->description}}</p>
                                     </div><!-- End .product-desc -->
                                     <div class="price-box">
-                                        <span class="product-price">Starting From RS. {{number_format($service_seller->price, 0)}}</span>
+                                        <span
+                                            class="product-price">Starting From RS. {{number_format($service_seller->price, 0)}}</span>
                                     </div><!-- End .price-box -->
 
                                     <div class="product-action">
@@ -132,14 +141,18 @@
                     <div class="sidebar-wrapper">
                         <div class="widget">
                             <h3 class="widget-title">
-                                <a data-toggle="collapse" href="#widget-body-1" role="button" aria-expanded="true" aria-controls="widget-body-1">{{$service->category->name}}</a>
+                                <a data-toggle="collapse" href="#widget-body-1" role="button" aria-expanded="true"
+                                   aria-controls="widget-body-1">{{$service->category->name}}</a>
                             </h3>
 
                             <div class="collapse show" id="widget-body-1">
                                 <div class="widget-body">
                                     <ul class="cat-list">
                                         @foreach($service->category->services as $service_i)
-                                            <li><a href="{{route('buyer.services.show', [$service_i->slug, 'city_id' => $city ? $city->id : ''])}}" @if($service_i->id == $service->id) class="text-primary" @endif>{{$service_i->name}}</a></li>
+                                            <li>
+                                                <a href="{{route('buyer.services.show', [$service_i->slug, 'city_id' => $city ? $city->id : ''])}}"
+                                                   @if($service_i->id == $service->id) class="text-primary" @endif>{{$service_i->name}}</a>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </div><!-- End .widget-body -->
@@ -148,24 +161,25 @@
 
                         <div class="widget">
                             <h3 class="widget-title">
-                                <a data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Price</a>
+                                <a data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true"
+                                   aria-controls="widget-body-2">Price</a>
                             </h3>
 
                             <div class="collapse show" id="widget-body-2">
                                 <div class="widget-body">
-{{--                                    <form action="" method="GET">--}}
-{{--                                        <div class="price-slider-wrapper">--}}
-{{--                                            <div id="price-slider"></div><!-- End #price-slider -->--}}
-{{--                                        </div><!-- End .price-slider-wrapper -->--}}
+                                    {{--                                    <form action="" method="GET">--}}
+                                    {{--                                        <div class="price-slider-wrapper">--}}
+                                    {{--                                            <div id="price-slider"></div><!-- End #price-slider -->--}}
+                                    {{--                                        </div><!-- End .price-slider-wrapper -->--}}
 
-{{--                                        <div class="filter-price-action">--}}
-{{--                                            <button type="submit" class="btn btn-primary">Filter</button>--}}
+                                    {{--                                        <div class="filter-price-action">--}}
+                                    {{--                                            <button type="submit" class="btn btn-primary">Filter</button>--}}
 
-{{--                                            <div class="filter-price-text">--}}
-{{--                                                <span id="filter-price-range"></span>--}}
-{{--                                            </div><!-- End .filter-price-text -->--}}
-{{--                                        </div><!-- End .filter-price-action -->--}}
-{{--                                    </form>--}}
+                                    {{--                                            <div class="filter-price-text">--}}
+                                    {{--                                                <span id="filter-price-range"></span>--}}
+                                    {{--                                            </div><!-- End .filter-price-text -->--}}
+                                    {{--                                        </div><!-- End .filter-price-action -->--}}
+                                    {{--                                    </form>--}}
 
 
                                     <form action="" onsubmit="handlePriceFilterForm()" id="form-price">
@@ -174,8 +188,10 @@
                                             <input type="hidden" name="city_id" value="{{request()->input('city_id')}}">
                                         @endif
 
-                                        <input type="hidden" name="price-min" id="input-price-min" value="{{request()->input('price-min', 100)}}" />
-                                        <input type="hidden" name="price-max" id="input-price-max" value="{{request()->input('price-max', 10000)}}" />
+                                        <input type="hidden" name="price-min" id="input-price-min"
+                                               value="{{request()->input('price-min', 100)}}"/>
+                                        <input type="hidden" name="price-max" id="input-price-max"
+                                               value="{{request()->input('price-max', 10000)}}"/>
 
                                         <div class="price-slider-wrapper">
                                             <div id="price-slider"></div>
@@ -184,7 +200,9 @@
                                         <!-- End .price-slider-wrapper -->
 
                                         <div class="filter-price-action">
-                                            <button type="submit" class="btn btn-primary" onclick="return handlePriceFilterForm();">Filter</button>
+                                            <button type="submit" class="btn btn-primary"
+                                                    onclick="return handlePriceFilterForm();">Filter
+                                            </button>
 
                                             <div class="filter-price-text">
                                                 <span id="filter-price-range"></span>
@@ -216,8 +234,7 @@
                 .set([inputPriceMin.value, inputPriceMax.value]);
         });
 
-        function handlePriceFilterForm()
-        {
+        function handlePriceFilterForm() {
             var inputPriceMin = $('input#input-price-min');
             var inputPriceMax = $('input#input-price-max');
 
@@ -228,7 +245,7 @@
 
             // return false;
             document.getElementById("price-form").submit();
-            return;
+
         }
     </script>
 @endsection

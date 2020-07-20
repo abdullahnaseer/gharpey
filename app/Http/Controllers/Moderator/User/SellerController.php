@@ -32,7 +32,7 @@ class SellerController extends Controller
      */
     public function json()
     {
-        $records = Seller::with([
+        return Seller::with([
             'business_location',
             'business_location.city',
             'warehouse_location',
@@ -40,7 +40,6 @@ class SellerController extends Controller
             'return_location',
             'return_location.city',
         ])->get();
-        return $records;
     }
 
     /**

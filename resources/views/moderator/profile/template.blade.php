@@ -37,7 +37,10 @@
                                 <div class="kt-widget kt-widget--user-profile-1">
                                     <div class="kt-widget__head">
                                         <div class="kt-widget__media">
-                                            <img src="{{ empty(auth('moderator')->user()->avatar) ? url('assets/media/users/300_25.jpg') : url( str_replace('public', 'storage', auth('moderator')->user()->avatar) )}}" alt="image" onerror="this.src = '{{ url('assets/media/users/300_25.jpg') }}';">
+                                            <img
+                                                src="{{ empty(auth('moderator')->user()->avatar) ? url('assets/media/users/300_25.jpg') : url( str_replace('public', 'storage', auth('moderator')->user()->avatar) )}}"
+                                                alt="image"
+                                                onerror="this.src = '{{ url('assets/media/users/300_25.jpg') }}';">
                                         </div>
                                         <div class="kt-widget__content">
                                             <div class="kt-widget__section">
@@ -56,11 +59,13 @@
                                         <div class="kt-widget__content">
                                             <div class="kt-widget__info">
                                                 <span class="kt-widget__label">Email:</span>
-                                                <span href="#" class="kt-widget__data">{{auth('moderator')->user()->email}}</span>
+                                                <span href="#"
+                                                      class="kt-widget__data">{{auth('moderator')->user()->email}}</span>
                                             </div>
                                             <div class="kt-widget__info">
                                                 <span class="kt-widget__label">Phone:</span>
-                                                <span href="#" class="kt-widget__data">{{auth('moderator')->user()->phone}}</span>
+                                                <span href="#"
+                                                      class="kt-widget__data">{{auth('moderator')->user()->phone}}</span>
                                             </div>
                                             @if(auth('moderator')->user()->location)
                                                 <div class="kt-widget__info">

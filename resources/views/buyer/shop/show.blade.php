@@ -44,7 +44,9 @@
                                     <div class="product product-list-wrapper">
                                         <figure class="product-image-container">
                                             <a href="#" class="product-image">
-                                                <img src="{{ str_replace('public', '/storage', $service->pivot->featured_image) }}" alt="product">
+                                                <img
+                                                    src="{{ str_replace('public', '/storage', $service->pivot->featured_image) }}"
+                                                    alt="product">
                                             </a>
                                             {{--                        <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
                                         </figure>
@@ -61,7 +63,8 @@
                                                 <p>{{$service->pivot->description}}</p>
                                             </div><!-- End .product-desc -->
                                             <div class="price-box">
-                                                <span class="product-price">Starting From RS. {{number_format($service->pivot->price, 0)}}</span>
+                                                <span
+                                                    class="product-price">Starting From RS. {{number_format($service->pivot->price, 0)}}</span>
                                             </div><!-- End .price-box -->
 
                                             <div>
@@ -73,7 +76,8 @@
                                                 {{--                                        <span>Add to Wishlist</span>--}}
                                                 {{--                                    </a>--}}
 
-                                                <a href="{{route('buyer.services.sellers.show', [$service->slug, $service->pivot->id, 'city_id' => isset($city) && $city ? $city->id : null])}}" class="paction add-cart" title="Order Now">
+                                                <a href="{{route('buyer.services.sellers.show', [$service->slug, $service->pivot->id, 'city_id' => isset($city) && $city ? $city->id : null])}}"
+                                                   class="paction add-cart" title="Order Now">
                                                     <span>Order Now</span>
                                                 </a>
                                             </div><!-- End .product-action -->
@@ -91,19 +95,24 @@
                                     <div class="col-6 col-md-4">
                                         <div class="product">
                                             <figure class="product-image-container">
-                                                <a href="{{route('buyer.products.show', [$product->slug])}}" class="product-image">
-                                                    <img src="{{str_replace("public","/storage",$product->featured_image)}}" alt="product">
+                                                <a href="{{route('buyer.products.show', [$product->slug])}}"
+                                                   class="product-image">
+                                                    <img
+                                                        src="{{str_replace("public","/storage",$product->featured_image)}}"
+                                                        alt="product">
                                                 </a>
                                                 {{--                                    <a href="ajax/product-quick-view.html" class="btn-quickview">Quick View</a>--}}
                                             </figure>
                                             <div class="product-details">
                                                 <div class="ratings-container">
                                                     <div class="product-ratings">
-                                                        <span class="ratings" style="width:{{$product->reviews_average * 20}}%"></span>
+                                                        <span class="ratings"
+                                                              style="width:{{$product->reviews_average * 20}}%"></span>
                                                         <!-- End .ratings -->
                                                     </div>
                                                     <!-- End .product-ratings -->
-                                                    <a href="#" class="rating-link">( {{ $product->reviews_count }} Reviews )</a>
+                                                    <a href="#" class="rating-link">( {{ $product->reviews_count }}
+                                                        Reviews )</a>
                                                 </div>
                                                 <!-- End .product-container -->
                                                 <h2 class="product-title  m-b-5">
@@ -126,18 +135,22 @@
                                                 <div class="product-action ml-5">
 
                                                     @if(is_null($product->cart_item))
-                                                        <a href="{{route('buyer.products.cart.create', [$product->id])}}" class="paction add-cart" title="Add to Cart">
+                                                        <a href="{{route('buyer.products.cart.create', [$product->id])}}"
+                                                           class="paction add-cart" title="Add to Cart">
                                                             <span>Add to Cart</span>
                                                         </a>
                                                     @else
-                                                        <a href="{{route('buyer.products.cart.create', [$product->id, 'remove'])}}" class="paction add-cart" title="Add to Cart">
+                                                        <a href="{{route('buyer.products.cart.create', [$product->id, 'remove'])}}"
+                                                           class="paction add-cart" title="Add to Cart">
                                                             <span>Remove from Cart</span>
                                                         </a>
                                                     @endif
 
                                                     @if(auth()->check())
                                                         @php($condition = auth('buyer')->user()->hasWish($product->id))
-                                                        <a href="{{route('buyer.products.wishlist.create', [$product->id])}}" class="paction add-wishlist" title="{{$condition ? "Remove from" : "Add to"}} Wishlist"
+                                                        <a href="{{route('buyer.products.wishlist.create', [$product->id])}}"
+                                                           class="paction add-wishlist"
+                                                           title="{{$condition ? "Remove from" : "Add to"}} Wishlist"
                                                            @if($condition) style="background-color: #9a2693;color: white;" @endif
                                                         >
                                                             <span>{{$condition ? "Remove from" : "Add to"}} Wishlist</span>
@@ -166,7 +179,8 @@
 
                         <div id="widget-body-1  text-center">
                             <div class="widget-body">
-                                <div class=""><img src="{{str_replace('public', '/storage', $shop->shop_image)}}" alt="" class=" seller_image img-responsive"></div>
+                                <div class=""><img src="{{str_replace('public', '/storage', $shop->shop_image)}}" alt=""
+                                                   class=" seller_image img-responsive"></div>
                                 <h4 class="seller_name text-center">
                                     {{$shop->shop_name}}
                                 </h4>
@@ -180,7 +194,7 @@
                                     <a href="#" class="rating-link">({{ $shop->reviews_count }} Reviews)</a>
                                 </div>
 
-{{--                                <h5 class="seller_description text-center">Description</h5>--}}
+                                {{--                                <h5 class="seller_description text-center">Description</h5>--}}
                                 <table class="table">
                                     <tbody>
                                     <tr>

@@ -33,7 +33,7 @@
             <div class="kt-portlet__head-toolbar">
                 <div class="kt-portlet__head-wrapper">
                     <div class="kt-portlet__head-actions">
-                        <a class="btn btn-brand btn-elevate btn-icon-sm"  href="{{route('admin.services.create')}}">
+                        <a class="btn btn-brand btn-elevate btn-icon-sm" href="{{route('admin.services.create')}}">
                             <i class="la la-plus"></i>
                             New Service
                         </a>
@@ -61,7 +61,7 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            modal.find('.modal-footer form').attr('action', "{{url('admin/services')}}/" + id );
+            modal.find('.modal-footer form').attr('action', "{{url('admin/services')}}/" + id);
         });
 
         $('#editModal').on('show.bs.modal', function (event) {
@@ -70,7 +70,7 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            modal.find('form').attr('action', "{{url('admin/services')}}/" + id );
+            modal.find('form').attr('action', "{{url('admin/services')}}/" + id);
             modal.find('form input#name').val(button.data('name'));
             modal.find('form textarea#description').val(button.data('description'));
             modal.find('form select#category_id').val(button.data('category'));
@@ -130,19 +130,19 @@
                         }, {
                             field: 'name',
                             title: 'Name',
-                        },{
+                        }, {
                             field: 'slug',
                             title: 'Slug',
-                        },{
+                        }, {
                             field: 'Actions',
                             title: 'Actions',
                             sortable: false,
                             width: 150,
                             autoHide: false,
                             overflow: 'visible',
-                            template: function(row) {
+                            template: function (row) {
                                 return '\
-						<a href="{{url("/admin/services")}}/'+row.id+'/edit" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">\
+						<a href="{{url("/admin/services")}}/' + row.id + '/edit" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">\
 						 	<i class="la la-edit"></i>\
 						</a>\
 						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Delete" data-toggle="modal" data-target="#deleteModal" data-id="' + row.id + '">\
@@ -154,11 +154,11 @@
 
                 });
 
-                $('#kt_form_status').on('change', function() {
+                $('#kt_form_status').on('change', function () {
                     datatable.search($(this).val().toLowerCase(), 'Status');
                 });
 
-                $('#kt_form_type').on('change', function() {
+                $('#kt_form_type').on('change', function () {
                     datatable.search($(this).val().toLowerCase(), 'Type');
                 });
 

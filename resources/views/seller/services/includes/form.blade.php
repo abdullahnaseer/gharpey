@@ -19,12 +19,15 @@
         <div class="form-group">
             {!! Form::label('service_id', 'Service', ['class' => "col-form-label"]) !!}
             @if(isset($service_seller)) {{Form::hidden('service_id', $service_seller->service_id)}} @endif
-            <select id="service_id" @if(!isset($service_seller)) name="service_id" @endif class="form-control select2-js" required="required" @if(isset($service_seller)) disabled @endif >
+            <select id="service_id" @if(!isset($service_seller)) name="service_id"
+                    @endif class="form-control select2-js" required="required"
+                    @if(isset($service_seller)) disabled @endif >
                 @foreach($categories as $category)
                     @if(count($category->services) > 0)
                         <optgroup label="{{$category->name}}">
                             @foreach($category->services as $service)
-                                <option value="{{$service->id}}"  @if((isset($service_seller) && $service_seller->service_id === $service->id) || old('service_id') == $service->id) selected @endif >{{$service->name}}</option>
+                                <option value="{{$service->id}}"
+                                        @if((isset($service_seller) && $service_seller->service_id === $service->id) || old('service_id') == $service->id) selected @endif >{{$service->name}}</option>
                             @endforeach
                         </optgroup>
                     @endif
@@ -48,11 +51,13 @@
         <div class="form-group">
             {!! Form::label('cities', 'Cities Available', ['class' => "col-form-label"]) !!}
 
-            <select name="cities[]" id="cities" class="form-control select2-js-multiple" required="required" multiple="multiple">
+            <select name="cities[]" id="cities" class="form-control select2-js-multiple" required="required"
+                    multiple="multiple">
                 @foreach($states as $state)
                     <optgroup label="{{$state->name}}">
                         @foreach($state->cities as $city)
-                            <option value="{{$city->id}}"  @if(collect(old('cities', isset($service_seller) ? $service_seller->cities->pluck('id') : []))->contains($city->id)) selected @endif >{{$city->name}}</option>
+                            <option value="{{$city->id}}"
+                                    @if(collect(old('cities', isset($service_seller) ? $service_seller->cities->pluck('id') : []))->contains($city->id)) selected @endif >{{$city->name}}</option>
                         @endforeach
                     </optgroup>
                 @endforeach
@@ -66,9 +71,10 @@
             ]) !!}
             <div class="mt-4" style="max-width: 300px">
                 @if(isset($service_seller->featured_image))
-                    <img id="featured_image_preview" style="" alt="Featured Image" class="img-thumbnail" src="{{str_replace('public', 'storage', $service_seller->featured_image)}}" />
+                    <img id="featured_image_preview" style="" alt="Featured Image" class="img-thumbnail"
+                         src="{{str_replace('public', 'storage', $service_seller->featured_image)}}"/>
                 @else
-                    <img id="featured_image_preview" style="display: none" alt="Featured Image" class="img-thumbnail" />
+                    <img id="featured_image_preview" style="display: none" alt="Featured Image" class="img-thumbnail"/>
                 @endif
             </div>
         </div>

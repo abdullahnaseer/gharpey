@@ -37,8 +37,8 @@
                         <td>{!! $u->id !!}</td>
                         <td>
                             <i><font color="green">
-                                {!! $u->name !!}
-                            </font></i>
+                                    {!! $u->name !!}
+                                </font></i>
                         </td>
                         @if(is_null($u->payment_detail))
                             <td colspan="3" class="text-info">Payment Information Not Set</td>
@@ -51,7 +51,8 @@
                         <td>{!! $u->withdrawable - $u->fee !!}</td>
                         <td>{!! $u->fee !!}</td>
                         <td>{!! $u->total_withdrawn !!}</td>
-                        <td><a href="{!! url( '/admin/publishers/edit/' . $u->id ) !!}" target="_blank">View Account</a></td>
+                        <td><a href="{!! url( '/admin/publishers/edit/' . $u->id ) !!}" target="_blank">View Account</a>
+                        </td>
                     </tr>
                 @endforeach
             @endif

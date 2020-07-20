@@ -43,18 +43,20 @@
                             <tbody>
                             @foreach($order->items as $item)
                                 <tr>
-                                    <td width="100"><img class="img-fluid" src="{{str_replace("public","/storage", $item->product ? $item->product->featured_image: '')}}" alt=""></td>
+                                    <td width="100"><img class="img-fluid"
+                                                         src="{{str_replace("public","/storage", $item->product ? $item->product->featured_image: '')}}"
+                                                         alt=""></td>
                                     <td width="250">{{$item->product ? $item->product->name : 'Product'}}</td>
                                     <td width="150">Price Sum: {{$item->price}}<br>Qty:{{ $item->quantity }}</td>
                                     <td width="100">
                                         @if($item->status == \App\Models\ProductOrder::STATUS_COMPLETED)
                                             <p>
                                                 <span class="badge badge-success">Completed</span>
-                                            @if(is_null($item->reviewed_at))
-                                                <span class="badge badge-info">Review Pending</span>
-                                            @else
-                                                <span class="badge badge-success">Reviewed</span>
-                                            @endif
+                                                @if(is_null($item->reviewed_at))
+                                                    <span class="badge badge-info">Review Pending</span>
+                                                @else
+                                                    <span class="badge badge-success">Reviewed</span>
+                                                @endif
                                             </p>
                                         @elseif($item->status == \App\Models\ProductOrder::STATUS_CANCELED)
                                             <p><span class="badge badge-danger">Cancelled</span></p>
@@ -74,9 +76,16 @@
                                         @if($item->status == \App\Models\ProductOrder::STATUS_COMPLETED)
                                             Delivered On: {{ $item->completed_at->toDateString() }}<br>
                                             @if(is_null($item->reviewed_at))
-                                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#reviewModal" data-id="{{$item->id}}">Write a Review </button>
+                                                <button class="btn btn-primary btn-sm" data-toggle="modal"
+                                                        data-target="#reviewModal" data-id="{{$item->id}}">Write a
+                                                    Review
+                                                </button>
                                             @else
-                                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#showReviewModal" data-id="{{$item->id}}" data-rating="{{$item->review->rating}}" data-review="{{$item->review->review}}">View Review </button>
+                                                <button class="btn btn-primary btn-sm" data-toggle="modal"
+                                                        data-target="#showReviewModal" data-id="{{$item->id}}"
+                                                        data-rating="{{$item->review->rating}}"
+                                                        data-review="{{$item->review->review}}">View Review
+                                                </button>
                                             @endif
                                         @endif
                                     </td>
@@ -106,7 +115,7 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            modal.find('form').attr('action', "{{url('/account/orders')}}/" + id + "/reviews" );
+            modal.find('form').attr('action', "{{url('/account/orders')}}/" + id + "/reviews");
         });
 
         $('#showReviewModal').on('show.bs.modal', function (event) {

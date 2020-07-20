@@ -30,16 +30,16 @@
                     Sellers
                 </h3>
             </div>
-{{--            <div class="kt-portlet__head-toolbar">--}}
-{{--                <div class="kt-portlet__head-wrapper">--}}
-{{--                    <div class="kt-portlet__head-actions">--}}
-{{--                        <a class="btn btn-brand btn-elevate btn-icon-sm"  href="#createModal" data-toggle="modal" data-target="#createModal">--}}
-{{--                            <i class="la la-plus"></i>--}}
-{{--                            New Seller--}}
-{{--                        </a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            {{--            <div class="kt-portlet__head-toolbar">--}}
+            {{--                <div class="kt-portlet__head-wrapper">--}}
+            {{--                    <div class="kt-portlet__head-actions">--}}
+            {{--                        <a class="btn btn-brand btn-elevate btn-icon-sm"  href="#createModal" data-toggle="modal" data-target="#createModal">--}}
+            {{--                            <i class="la la-plus"></i>--}}
+            {{--                            New Seller--}}
+            {{--                        </a>--}}
+            {{--                    </div>--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
         </div>
         <div class="kt-portlet__body kt-portlet__body--fit">
             <!--begin: Datatable -->
@@ -154,8 +154,8 @@
                             field: 'approved_at',
                             title: 'Status',
                             // callback function support for column rendering
-                            template: function(row) {
-                                if(row.approved_at)
+                            template: function (row) {
+                                if (row.approved_at)
                                     return '<span class="kt-badge kt-badge--success kt-badge--inline kt-badge--pill">Approved</span>';
                                 else
                                     return '<span class="kt-badge kt-badge--warning kt-badge--inline kt-badge--pill">Pending</span>';
@@ -183,10 +183,10 @@
                         }, {
                             field: 'cnic',
                             title: 'CNIC',
-                        },  {
+                        }, {
                             field: 'created_at',
                             title: 'Account Creation Time',
-                        },  {
+                        }, {
                             field: 'warehouse_address',
                             title: 'Warehouse Address',
                         }, {
@@ -221,21 +221,21 @@
                             autoHide: false,
                             overflow: 'visible',
                             template: function (row) {
-                                if(row.approved_at)
+                                if (row.approved_at)
                                     return '\
                                         <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details" data-toggle="modal" data-target="#editModal" \
                                             data-id="' + row.id + '" ' +
-                                                        'data-shop-name="' + row.shop_name + '" ' +
-                                                        'data-cnic="' + row.cnic + '" ' +
-                                                        'data-name="' + row.name + '" ' +
-                                                        'data-email="' + row.email + '" ' +
-                                                        'data-phone="' + row.phone + '" ' +
-                                                        'data-business_address="' + row.business_address + '" ' +
-                                                        'data-business_location="' + row.business_location_id + '" ' +
-                                                        'data-warehouse_address="' + row.warehouse_address + '" ' +
-                                                        'data-warehouse_location="' + row.warehouse_location_id + '" ' +
-                                                        'data-return_address="' + row.return_address + '" ' +
-                                                        'data-return_location="' + row.return_location_id + '"\
+                                        'data-shop-name="' + row.shop_name + '" ' +
+                                        'data-cnic="' + row.cnic + '" ' +
+                                        'data-name="' + row.name + '" ' +
+                                        'data-email="' + row.email + '" ' +
+                                        'data-phone="' + row.phone + '" ' +
+                                        'data-business_address="' + row.business_address + '" ' +
+                                        'data-business_location="' + row.business_location_id + '" ' +
+                                        'data-warehouse_address="' + row.warehouse_address + '" ' +
+                                        'data-warehouse_location="' + row.warehouse_location_id + '" ' +
+                                        'data-return_address="' + row.return_address + '" ' +
+                                        'data-return_location="' + row.return_location_id + '"\
                                                     >\
                                             <i class="la la-edit"></i>\
                                         </a>\
@@ -250,15 +250,15 @@
                                         </a>\
                                         <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details" data-toggle="modal" data-target="#editModal" \
                                             data-id="' + row.id + '" ' +
-                                                        'data-name="' + row.name + '" ' +
-                                                        'data-email="' + row.email + '" ' +
-                                                        'data-phone="' + row.phone + '" ' +
-                                                        'data-business_address="' + row.business_address + '" ' +
-                                                        'data-business_location="' + row.business_location_id + '" ' +
-                                                        'data-warehouse_address="' + row.warehouse_address + '" ' +
-                                                        'data-warehouse_location="' + row.warehouse_location_id + '" ' +
-                                                        'data-return_address="' + row.return_address + '" ' +
-                                                        'data-return_location="' + row.return_location_id + '"\
+                                        'data-name="' + row.name + '" ' +
+                                        'data-email="' + row.email + '" ' +
+                                        'data-phone="' + row.phone + '" ' +
+                                        'data-business_address="' + row.business_address + '" ' +
+                                        'data-business_location="' + row.business_location_id + '" ' +
+                                        'data-warehouse_address="' + row.warehouse_address + '" ' +
+                                        'data-warehouse_location="' + row.warehouse_location_id + '" ' +
+                                        'data-return_address="' + row.return_address + '" ' +
+                                        'data-return_location="' + row.return_location_id + '"\
                                                     >\
                                             <i class="la la-edit"></i>\
                                         </a>\

@@ -86,10 +86,8 @@ class LocationController extends Controller
     public function show($service_slug, $city_id)
     {
         $service = Service::where('slug', $service_slug)->firstOrFail();
-        $city = City::with(['state', 'service_sellers' => function ($query) use ($service) {
+        return City::with(['state', 'service_sellers' => function ($query) use ($service) {
             $query->where('service_id', $service->id);
         }])->findOrFail($city_id);
-
-        return $city;
     }
 }

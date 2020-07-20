@@ -9,14 +9,14 @@
 @endsection
 
 @section('breadcrumb-elements')
-    <a class="btn btn-brand btn-elevate btn-icon-sm"  href="{{route('admin.services.index')}}">
+    <a class="btn btn-brand btn-elevate btn-icon-sm" href="{{route('admin.services.index')}}">
         <i class="la la-arrow-left"></i>
         Back
     </a>
 @endsection
 
 @push('styles')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet"/>
 @endpush
 
 @section('content')

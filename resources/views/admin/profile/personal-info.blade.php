@@ -43,7 +43,8 @@
                                                 <label class="kt-avatar__upload" data-toggle="kt-tooltip" title=""
                                                        data-original-title="Change avatar">
                                                     <i class="fa fa-pen"></i>
-                                                    <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg"  onchange="document.getElementById('profile-avatar').style.backgroundImage = 'url(' + window.URL.createObjectURL(this.files[0]) + ')' ">
+                                                    <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg"
+                                                           onchange="document.getElementById('profile-avatar').style.backgroundImage = 'url(' + window.URL.createObjectURL(this.files[0]) + ')' ">
                                                 </label>
                                                 <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title=""
                                                       data-original-title="Cancel avatar">
@@ -55,7 +56,8 @@
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Name</label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <input class="form-control @error('name') is-invalid @enderror" name="name" type="text"
+                                            <input class="form-control @error('name') is-invalid @enderror" name="name"
+                                                   type="text"
                                                    value="{{auth()->user()->name}}">
                                         </div>
                                     </div>
@@ -65,7 +67,9 @@
                                             <div class="input-group">
                                                 <div class="input-group-prepend"><span class="input-group-text"><i
                                                             class="la la-at"></i></span></div>
-                                                <input disabled type="text" class="form-control disabled @error('email') is-invalid @enderror" name="email"
+                                                <input disabled type="text"
+                                                       class="form-control disabled @error('email') is-invalid @enderror"
+                                                       name="email"
                                                        value="{{auth()->user()->email}}" placeholder="Email"
                                                        aria-describedby="basic-addon1">
                                             </div>
@@ -77,7 +81,9 @@
                                             <div class="input-group">
                                                 <div class="input-group-prepend"><span class="input-group-text"><i
                                                             class="la la-phone"></i></span></div>
-                                                <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone"
+                                                <input type="text"
+                                                       class="form-control @error('phone') is-invalid @enderror"
+                                                       name="phone"
                                                        value="{{auth()->user()->phone}}" placeholder="Phone"
                                                        aria-describedby="basic-addon1">
                                             </div>
@@ -86,7 +92,8 @@
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Address</label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <input class="form-control @error('address') is-invalid @enderror" name="address" type="text"
+                                            <input class="form-control @error('address') is-invalid @enderror"
+                                                   name="address" type="text"
                                                    value="{{auth()->user()->address}}">
 
                                         </div>
@@ -94,13 +101,15 @@
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Area</label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <select class="form-control kt-select2 @error('area') is-invalid @enderror" id="area" name="area" required
+                                            <select class="form-control kt-select2 @error('area') is-invalid @enderror"
+                                                    id="area" name="area" required
                                                     style="width: 100%">
                                                 @foreach($cities as $city)
                                                     @if($city->areas->count())
                                                         <optgroup label="{{$city->name}}">
                                                             @foreach($city->areas as $area)
-                                                                <option value="{{$area->id}}" @if((int) old('area', auth()->user()->location_id) == $area->id) selected @endif>{{$area->name}}</option>
+                                                                <option value="{{$area->id}}"
+                                                                        @if((int) old('area', auth()->user()->location_id) == $area->id) selected @endif>{{$area->name}}</option>
                                                             @endforeach
                                                         </optgroup>
                                                     @endif

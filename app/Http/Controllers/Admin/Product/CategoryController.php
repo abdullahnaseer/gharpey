@@ -27,8 +27,7 @@ class CategoryController extends Controller
      */
     public function json()
     {
-        $records = ProductCategory::whereNull('parent_id')->get();
-        return $records;
+        return ProductCategory::whereNull('parent_id')->get();
     }
 
     /**

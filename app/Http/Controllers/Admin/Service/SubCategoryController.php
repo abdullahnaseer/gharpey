@@ -28,8 +28,7 @@ class SubCategoryController extends Controller
     public function json($category_id)
     {
         $category = ServiceCategory::findOrFail($category_id);
-        $records = $category->child_categories()->get();
-        return $records;
+        return $category->child_categories()->get();
     }
 
     /**

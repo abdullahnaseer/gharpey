@@ -20,33 +20,33 @@
 @endpush
 
 @section('content')
-        <div class="kt-portlet kt-portlet--mobile">
-            <div class="kt-portlet__head kt-portlet__head--lg">
-                <div class="kt-portlet__head-label">
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
                     <span class="kt-portlet__head-icon">
                         <i class="kt-font-brand flaticon2-line-chart"></i>
                     </span>
-                    <h3 class="kt-portlet__head-title">
-                        Withdraw History
-                    </h3>
-                </div>
-                <div class="kt-portlet__head-toolbar">
-                    <div class="kt-portlet__head-wrapper">
-                        <div class="kt-portlet__head-actions">
-{{--                            <a class="btn btn-brand btn-elevate btn-icon-sm"  href="#createModal" data-toggle="modal" data-target="#createModal">--}}
-{{--                                <i class="la la-plus"></i>--}}
-{{--                                New Service--}}
-{{--                            </a>--}}
-                        </div>
+                <h3 class="kt-portlet__head-title">
+                    Withdraw History
+                </h3>
+            </div>
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-wrapper">
+                    <div class="kt-portlet__head-actions">
+                        {{--                            <a class="btn btn-brand btn-elevate btn-icon-sm"  href="#createModal" data-toggle="modal" data-target="#createModal">--}}
+                        {{--                                <i class="la la-plus"></i>--}}
+                        {{--                                New Service--}}
+                        {{--                            </a>--}}
                     </div>
                 </div>
             </div>
-            <div class="kt-portlet__body kt-portlet__body--fit">
-                <!--begin: Datatable -->
-                <div class="kt-datatable" id="json_data"></div>
-                <!--end: Datatable -->
-            </div>
         </div>
+        <div class="kt-portlet__body kt-portlet__body--fit">
+            <!--begin: Datatable -->
+            <div class="kt-datatable" id="json_data"></div>
+            <!--end: Datatable -->
+        </div>
+    </div>
 @stop
 
 @push('modals')
@@ -99,24 +99,24 @@
                         }, {
                             field: 'bank',
                             title: 'Bank Name',
-                        },{
+                        }, {
                             field: 'name',
                             title: 'Name',
-                        },{
+                        }, {
                             field: 'amount',
                             title: 'Amount',
-                        },{
+                        }, {
                             field: 'created_at_formatted',
                             title: 'Time',
                         }
                     ],
                 });
 
-                $('#kt_form_status').on('change', function() {
+                $('#kt_form_status').on('change', function () {
                     datatable.search($(this).val().toLowerCase(), 'Status');
                 });
 
-                $('#kt_form_type').on('change', function() {
+                $('#kt_form_type').on('change', function () {
                     datatable.search($(this).val().toLowerCase(), 'Type');
                 });
 

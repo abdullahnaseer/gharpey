@@ -20,7 +20,8 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{url('/')}}"><i class="icon-home"></i></a></li>
                 <li class="breadcrumb-item" aria-current="page">Account</li>
-                <li class="breadcrumb-item" aria-current="page"><a href="{{route('buyer.account.support.index')}}">Support Tickets</a></li>
+                <li class="breadcrumb-item" aria-current="page"><a href="{{route('buyer.account.support.index')}}">Support
+                        Tickets</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Create New</li>
             </ol>
         </div>
@@ -39,10 +40,11 @@
 
         <div class="form-group">
             <label for="title" class="col-form-label">{{ __('Title') }}</label>
-            <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required autocomplete="title" autofocus>
+            <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title"
+                   value="{{ old('title') }}" required autocomplete="title" autofocus>
 
             @error('title')
-                <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
@@ -50,7 +52,8 @@
 
         <div class="form-group">
             <label for="message" class="col-form-label">{{ __('Message') }}</label>
-            <textarea id="message" type="text" class="form-control @error('message') is-invalid @enderror" name="message" value="{{ old('message') }}" required autocomplete="message" autofocus></textarea>
+            <textarea id="message" type="text" class="form-control @error('message') is-invalid @enderror"
+                      name="message" value="{{ old('message') }}" required autocomplete="message" autofocus></textarea>
 
             @error('message')
             <span class="invalid-feedback" role="alert">
@@ -61,7 +64,8 @@
 
         <div class="form-group">
             <label for="files" class="col-form-label">{{ __('Files') }}</label>
-            <input id="files" type="text" class="form-control @error('files') is-invalid @enderror" name="files" value="{{ old('files') }}">
+            <input id="files" type="text" class="form-control @error('files') is-invalid @enderror" name="files"
+                   value="{{ old('files') }}">
 
             @error('files')
             <span class="invalid-feedback" role="alert">

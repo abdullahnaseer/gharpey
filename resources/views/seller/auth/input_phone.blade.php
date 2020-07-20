@@ -12,7 +12,8 @@
                 <div class="card">
                     <div class="card-header">Enter your phone</div>
                     <div class="card-body">
-                        <p>Thanks for registering with our platform. We need your phone number to complete registration.</p>
+                        <p>Thanks for registering with our platform. We need your phone number to complete
+                            registration.</p>
 
                         <div class="d-flex justify-content-center">
                             <div class="col-8">
@@ -20,7 +21,9 @@
                                     @csrf
                                     <div class="form-group">
                                         <label for="code">Phone Number</label>
-                                        <input id="phone" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" type="text" placeholder="Phone Number" required autofocus>
+                                        <input id="phone"
+                                               class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}"
+                                               name="phone" type="text" placeholder="Phone Number" required autofocus>
                                         @if ($errors->has('phone'))
                                             <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('phone') }}</strong>

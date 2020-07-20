@@ -7,7 +7,7 @@
 
     <title>GharPey</title>
 
-    <meta name="keywords" content="HTML5 Template" />
+    <meta name="keywords" content="HTML5 Template"/>
     <meta name="description" content="Porto - Bootstrap eCommerce Template">
     <meta name="author" content="SW-THEMES">
 
@@ -58,12 +58,17 @@
                         <h3 class="widget-title">My Account</h3>
 
                         <ul class="list">
-                            <li @if(request()->is('/account/settings*')) class="active" @endif ><a href="{{route('buyer.account.index')}}">Account Information</a></li>
-                            <li @if(request()->is('/account/orders*')) class="active" @endif ><a href="{{route('buyer.account.orders.index')}}">My Product Orders</a></li>
-                            <li @if(request()->is('/account/service-requests*')) class="active" @endif ><a href="{{url('/account/service-requests')}}">My Service Requests</a></li>
-                            <li @if(request()->is('/account/wishlist*')) class="active" @endif ><a href="{{route('buyer.account.wishlist.index')}}">My Wishlist</a></li>
-                            <li @if(request()->is('/account/notifications*')) class="active" @endif ><a href="{{route('buyer.account.notifications.index')}}">My Notifications</a></li>
-{{--                            <li @if(request()->is('/account/dfssdf')) class="active" @endif ><a href="#">Newsletter Subscriptions</a></li>--}}
+                            <li @if(request()->is('/account/settings*')) class="active" @endif ><a
+                                    href="{{route('buyer.account.index')}}">Account Information</a></li>
+                            <li @if(request()->is('/account/orders*')) class="active" @endif ><a
+                                    href="{{route('buyer.account.orders.index')}}">My Product Orders</a></li>
+                            <li @if(request()->is('/account/service-requests*')) class="active" @endif ><a
+                                    href="{{url('/account/service-requests')}}">My Service Requests</a></li>
+                            <li @if(request()->is('/account/wishlist*')) class="active" @endif ><a
+                                    href="{{route('buyer.account.wishlist.index')}}">My Wishlist</a></li>
+                            <li @if(request()->is('/account/notifications*')) class="active" @endif ><a
+                                    href="{{route('buyer.account.notifications.index')}}">My Notifications</a></li>
+                            {{--                            <li @if(request()->is('/account/dfssdf')) class="active" @endif ><a href="#">Newsletter Subscriptions</a></li>--}}
                         </ul>
                     </div>
                     <!-- End .widget -->

@@ -20,7 +20,7 @@
                     @endforeach
                 </ul>
             </div>
-        @endif
+    @endif
 
     <!--begin::Form-->
         <form class="kt-form" method="POST" action="{{ route('moderator.password.email') }}" id="kt_login_form">

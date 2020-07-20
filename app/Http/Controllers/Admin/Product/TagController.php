@@ -26,8 +26,7 @@ class TagController extends Controller
      */
     public function json()
     {
-        $records = ProductTag::get();
-        return $records;
+        return ProductTag::get();
     }
 
     /**

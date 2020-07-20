@@ -56,8 +56,9 @@
                                         @if($notification->created_at->format('d') === date('d'))
                                             <div style="outline: 1px dotted green;">
                                                 <div class="kt-notification">
-                                                    <span class="kt-notification__item" @if($notification->read_at === null)
-                                                    style="transition: background-color 0.3s ease;
+                                                    <span class="kt-notification__item"
+                                                          @if($notification->read_at === null)
+                                                          style="transition: background-color 0.3s ease;
                                                         background-color: #f7f8fa;"
                                                         @endif
                                                         >

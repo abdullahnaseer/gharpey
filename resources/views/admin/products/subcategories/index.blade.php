@@ -9,7 +9,8 @@
     @foreach($parent_categories as $parent_category)
         <span class="kt-subheader__breadcrumbs-separator"></span>
         @if (!$loop->last)
-            <a href="{{ route('admin.products.categories.subcategories.index', $parent_category->id) }}" class="kt-subheader__breadcrumbs-link">{{$parent_category->name}}</a>
+            <a href="{{ route('admin.products.categories.subcategories.index', $parent_category->id) }}"
+               class="kt-subheader__breadcrumbs-link">{{$parent_category->name}}</a>
         @else
             <span class="kt-subheader__breadcrumbs-link active">{{$parent_category->name}}</span>
         @endif
@@ -30,33 +31,34 @@
 @endpush
 
 @section('content')
-        <div class="kt-portlet kt-portlet--mobile">
-            <div class="kt-portlet__head kt-portlet__head--lg">
-                <div class="kt-portlet__head-label">
+    <div class="kt-portlet kt-portlet--mobile">
+        <div class="kt-portlet__head kt-portlet__head--lg">
+            <div class="kt-portlet__head-label">
 										<span class="kt-portlet__head-icon">
 											<i class="kt-font-brand flaticon2-line-chart"></i>
 										</span>
-                    <h3 class="kt-portlet__head-title">
-                        Sub Categories for {{$category->name}}
-                    </h3>
-                </div>
-                <div class="kt-portlet__head-toolbar">
-                    <div class="kt-portlet__head-wrapper">
-                        <div class="kt-portlet__head-actions">
-                            <a class="btn btn-brand btn-elevate btn-icon-sm"  href="#createModal" data-toggle="modal" data-target="#createModal">
-                                <i class="la la-plus"></i>
-                                New SubCategory
-                            </a>
-                        </div>
+                <h3 class="kt-portlet__head-title">
+                    Sub Categories for {{$category->name}}
+                </h3>
+            </div>
+            <div class="kt-portlet__head-toolbar">
+                <div class="kt-portlet__head-wrapper">
+                    <div class="kt-portlet__head-actions">
+                        <a class="btn btn-brand btn-elevate btn-icon-sm" href="#createModal" data-toggle="modal"
+                           data-target="#createModal">
+                            <i class="la la-plus"></i>
+                            New SubCategory
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="kt-portlet__body kt-portlet__body--fit">
-                <!--begin: Datatable -->
-                <div class="kt-datatable" id="json_data"></div>
-                <!--end: Datatable -->
-            </div>
         </div>
+        <div class="kt-portlet__body kt-portlet__body--fit">
+            <!--begin: Datatable -->
+            <div class="kt-datatable" id="json_data"></div>
+            <!--end: Datatable -->
+        </div>
+    </div>
 @stop
 
 @push('modals')
@@ -73,7 +75,7 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            modal.find('.modal-footer form').attr('action', "{{url('admin/products/categories/'.$category->id.'/subcategories')}}/" + id );
+            modal.find('.modal-footer form').attr('action', "{{url('admin/products/categories/'.$category->id.'/subcategories')}}/" + id);
         });
 
         $('#editModal').on('show.bs.modal', function (event) {
@@ -82,7 +84,7 @@
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
             var modal = $(this);
-            modal.find('form').attr('action', "{{url('admin/products/categories/'.$category->id.'/subcategories')}}/" + id );
+            modal.find('form').attr('action', "{{url('admin/products/categories/'.$category->id.'/subcategories')}}/" + id);
             modal.find('form input#name').val(button.data('name'));
         });
 
@@ -140,19 +142,19 @@
                         }, {
                             field: 'name',
                             title: 'Name',
-                        },{
+                        }, {
                             field: 'slug',
                             title: 'Slug',
-                        },{
+                        }, {
                             field: 'Actions',
                             title: 'Actions',
                             sortable: false,
                             width: 200,
                             autoHide: false,
                             overflow: 'visible',
-                            template: function(row) {
+                            template: function (row) {
                                 return '\
-                        <a href="{{url('/admin/products/categories/')}}/'+row.id+'/subcategories" class="btn btn-sm btn-outline-primary'+(row.depth >= 2 ? ' d-none' : '')+'" title="SubCategories">\
+                        <a href="{{url('/admin/products/categories/')}}/' + row.id + '/subcategories" class="btn btn-sm btn-outline-primary' + (row.depth >= 2 ? ' d-none' : '') + '" title="SubCategories">\
                             SubCategories\
 						</a>\
 						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details" data-toggle="modal" data-target="#editModal" data-id="' + row.id + '" data-name="' + row.name + '" data-description="' + row.description + '"data-category="' + row.category_id + '">\
@@ -167,11 +169,11 @@
 
                 });
 
-                $('#kt_form_status').on('change', function() {
+                $('#kt_form_status').on('change', function () {
                     datatable.search($(this).val().toLowerCase(), 'Status');
                 });
 
-                $('#kt_form_type').on('change', function() {
+                $('#kt_form_type').on('change', function () {
                     datatable.search($(this).val().toLowerCase(), 'Type');
                 });
 

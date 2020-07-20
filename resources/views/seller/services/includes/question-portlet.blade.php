@@ -7,10 +7,16 @@
         </div>
         <div class="kt-portlet__head-toolbar">
             <div class="kt-portlet__head-group">
-{{--                <button onclick="return false;" role="button" class="btn btn-sm btn-outline-success btn-elevate up-question-btn">Rules</button>--}}
-                <button onclick="return false;" role="button" class="btn btn-sm btn-icon btn-outline-success btn-elevate btn-icon-md up-question-btn"><i class="la la-arrow-up"></i></button>
-                <button onclick="return false;" role="button" class="btn btn-sm btn-icon btn-outline-success btn-elevate btn-icon-md down-question-btn"><i class="la la-arrow-down"></i></button>
-                <button onclick="return false;" role="button" class="btn btn-sm btn-icon btn-outline-danger btn-elevate btn-icon-md remove-question-btn"><i class="la la-close"></i></button>
+                {{--                <button onclick="return false;" role="button" class="btn btn-sm btn-outline-success btn-elevate up-question-btn">Rules</button>--}}
+                <button onclick="return false;" role="button"
+                        class="btn btn-sm btn-icon btn-outline-success btn-elevate btn-icon-md up-question-btn"><i
+                        class="la la-arrow-up"></i></button>
+                <button onclick="return false;" role="button"
+                        class="btn btn-sm btn-icon btn-outline-success btn-elevate btn-icon-md down-question-btn"><i
+                        class="la la-arrow-down"></i></button>
+                <button onclick="return false;" role="button"
+                        class="btn btn-sm btn-icon btn-outline-danger btn-elevate btn-icon-md remove-question-btn"><i
+                        class="la la-close"></i></button>
             </div>
         </div>
     </div>

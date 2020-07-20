@@ -24,7 +24,8 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{url('/')}}"><i class="icon-home"></i></a></li>
-                <li class="breadcrumb-item" aria-current="page"><a href="{{route('buyer.cart.index')}}">Shopping Cart</a></li>
+                <li class="breadcrumb-item" aria-current="page"><a href="{{route('buyer.cart.index')}}">Shopping
+                        Cart</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Checkout</li>
             </ol>
         </div>
@@ -46,7 +47,9 @@
                     <h3>Summary</h3>
 
                     <h4>
-                        <a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button" aria-expanded="false" aria-controls="order-cart-section">{{$service_request->service_seller->service->name}}</a>
+                        <a data-toggle="collapse" href="#order-cart-section" class="collapsed" role="button"
+                           aria-expanded="false"
+                           aria-controls="order-cart-section">{{$service_request->service_seller->service->name}}</a>
                     </h4>
 
                     <div class="collapse show" id="order-cart-section">
@@ -56,7 +59,9 @@
                                 <td class="product-col">
                                     <figure class="product-image-container">
                                         <a href="#" class="product-image">
-                                            <img src="{{str_replace("public","/storage",$service_request->service_seller->featured_image)}}" alt="product">
+                                            <img
+                                                src="{{str_replace("public","/storage",$service_request->service_seller->featured_image)}}"
+                                                alt="product">
                                         </a>
                                     </figure>
                                     <div>
@@ -78,13 +83,15 @@
 
                 <div class="checkout-info-box">
                     <h3 class="step-title">Ship To:
-                        <a href="{{route('buyer.service.checkout.shipping.get', [$service_request->id])}}" title="Edit" class="step-title-edit"><span class="sr-only">Edit</span><i class="icon-pencil"></i></a>
+                        <a href="{{route('buyer.service.checkout.shipping.get', [$service_request->id])}}" title="Edit"
+                           class="step-title-edit"><span class="sr-only">Edit</span><i class="icon-pencil"></i></a>
                     </h3>
 
                     <address>
                         {{$shipping['name']}} <br>
                         {{$shipping['address']}} <br>
-                        {{$shipping['area']->name}}, {{$shipping['area']->city->name}}, {{$shipping['area']->city->state->name}} <br>
+                        {{$shipping['area']->name}}, {{$shipping['area']->city->name}}
+                        , {{$shipping['area']->city->state->name}} <br>
                         {{$shipping['area']->city->state->country->name}} <br>
                         {{$shipping['phone']}}
                     </address>
@@ -101,7 +108,8 @@
                         <address>
                             {{$shipping['name']}} <br>
                             {{$shipping['address']}} <br>
-                            {{$shipping['area']->name}}, {{$shipping['area']->city->name}}, {{$shipping['area']->city->state->name}} <br>
+                            {{$shipping['area']->name}}, {{$shipping['area']->city->name}}
+                            , {{$shipping['area']->city->state->name}} <br>
                             {{$shipping['area']->city->state->country->name}} <br>
                             {{$shipping['phone']}}
                         </address>
@@ -111,24 +119,28 @@
                         <form action="#" class="">
                             <div class="form-group">
                                 <label for="name" data-tid="elements.form.name_label">Name</label>
-                                <input id="name" name="name" data-tid="elements.form.name_placeholder" class="form-control" type="text"
+                                <input id="name" name="name" data-tid="elements.form.name_placeholder"
+                                       class="form-control" type="text"
                                        placeholder="" required="" autocomplete="name">
                             </div>
                             <div class="form-group">
                                 <label for="address" data-tid="elements.form.address_label">Address</label>
-                                <input id="address" name="address" data-tid="elements.form.address_placeholder" class="form-control"
+                                <input id="address" name="address" data-tid="elements.form.address_placeholder"
+                                       class="form-control"
                                        type="text" placeholder="" required="" autocomplete="address-line1">
                             </div>
 
                             <div class="form-group">
                                 <label for="city" name="city" data-tid="elements.form.city_label">City</label>
-                                <input id="city" data-tid="elements.form.city_placeholder" class="form-control" type="text"
+                                <input id="city" data-tid="elements.form.city_placeholder" class="form-control"
+                                       type="text"
                                        placeholder="" required="" autocomplete="address-level2">
                             </div>
 
                             <div class="form-group">
                                 <label for="state" data-tid="elements.form.state_label">State/Province</label>
-                                <input id="state" name="state" data-tid="elements.form.state_placeholder" class="form-control"
+                                <input id="state" name="state" data-tid="elements.form.state_placeholder"
+                                       class="form-control"
                                        type="text" placeholder="" required="" autocomplete="address-level1">
                             </div>
                             <div class="form-group">
@@ -146,7 +158,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="card-expiry" data-tid="elements_examples.form.card_expiry_label">Expiration</label>
+                                <label for="card-expiry"
+                                       data-tid="elements_examples.form.card_expiry_label">Expiration</label>
                                 <div id="card-expiry" class="input"></div>
                             </div>
                             <div class="form-group">
@@ -171,7 +184,8 @@
                             <button id="pay-btn" type="submit" class="btn btn-primary float-right"
                                     data-tid="elements.form.pay_button">Pay Now
                             </button>
-                            <a href="{{route('buyer.service.checkout.shipping.get', [$service_request->id])}}" class="btn btn-secondary float-right mr-1">Back</a>
+                            <a href="{{route('buyer.service.checkout.shipping.get', [$service_request->id])}}"
+                               class="btn btn-secondary float-right mr-1">Back</a>
 
                             <div class="clearfix"></div>
 
@@ -186,20 +200,20 @@
                 </div>
                 <!-- End .checkout-payment -->
 
-{{--                <div class="checkout-discount">--}}
-{{--                    <h4>--}}
-{{--                        <a data-toggle="collapse" href="#checkout-discount-section" class="collapsed" role="button" aria-expanded="false" aria-controls="checkout-discount-section">Apply Discount Code</a>--}}
-{{--                    </h4>--}}
+                {{--                <div class="checkout-discount">--}}
+                {{--                    <h4>--}}
+                {{--                        <a data-toggle="collapse" href="#checkout-discount-section" class="collapsed" role="button" aria-expanded="false" aria-controls="checkout-discount-section">Apply Discount Code</a>--}}
+                {{--                    </h4>--}}
 
-{{--                    <div class="collapse" id="checkout-discount-section">--}}
-{{--                        <form action="#">--}}
-{{--                            <input type="text" class="form-control form-control-sm" placeholder="Enter discount code" required>--}}
-{{--                            <button class="btn btn-sm btn-outline-secondary" type="submit">Apply Discount</button>--}}
-{{--                        </form>--}}
-{{--                    </div>--}}
-{{--                    <!-- End .collapse -->--}}
-{{--                </div>--}}
-{{--                <!-- End .checkout-discount -->--}}
+                {{--                    <div class="collapse" id="checkout-discount-section">--}}
+                {{--                        <form action="#">--}}
+                {{--                            <input type="text" class="form-control form-control-sm" placeholder="Enter discount code" required>--}}
+                {{--                            <button class="btn btn-sm btn-outline-secondary" type="submit">Apply Discount</button>--}}
+                {{--                        </form>--}}
+                {{--                    </div>--}}
+                {{--                    <!-- End .collapse -->--}}
+                {{--                </div>--}}
+                {{--                <!-- End .checkout-discount -->--}}
             </div>
             <!-- End .col-lg-8 -->
         </div>

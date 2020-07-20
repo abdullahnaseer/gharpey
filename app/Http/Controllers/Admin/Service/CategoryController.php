@@ -27,8 +27,7 @@ class CategoryController extends Controller
      */
     public function json()
     {
-        $records = ServiceCategory::get();
-        return $records;
+        return ServiceCategory::get();
     }
 
     /**

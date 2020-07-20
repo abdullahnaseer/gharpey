@@ -83,6 +83,17 @@ class Product extends Model
     }
 
     /**
+     * Get the products only in stock.
+     * @param $query
+     *
+     * @return mixed
+     */
+    public function scopeInStock($query)
+    {
+        return $query->where('inventory', '>', 0);
+    }
+
+    /**
      * The wishlist buyer that belong to the product.
      */
     public function wishlist_buyers()

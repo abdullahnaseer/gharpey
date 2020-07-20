@@ -17,7 +17,8 @@
                 <div class="kt-portlet kt-portlet--height-fluid">
                     <div class="kt-portlet__head">
                         <div class="kt-portlet__head-label">
-                            <h3 class="kt-portlet__head-title">Change Password<small>change or reset your account password</small></h3>
+                            <h3 class="kt-portlet__head-title">Change Password<small>change or reset your account
+                                    password</small></h3>
                         </div>
                     </div>
                     <form class="kt-form kt-form--label-right" method="POST"
@@ -29,25 +30,29 @@
                                     <div class="row">
                                         <label class="col-xl-3"></label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <h3 class="kt-section__title kt-section__title-sm">Change Or Recover Your Password:</h3>
+                                            <h3 class="kt-section__title kt-section__title-sm">Change Or Recover Your
+                                                Password:</h3>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Current Password</label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <input type="password" class="form-control" name="current_password" value="">
+                                            <input type="password" class="form-control" name="current_password"
+                                                   value="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">New Password</label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <input type="password" class="form-control" name="new_password" value="" autocomplete="off">
+                                            <input type="password" class="form-control" name="new_password" value=""
+                                                   autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="form-group form-group-last row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">Verify Password</label>
                                         <div class="col-lg-9 col-xl-6">
-                                            <input type="password" class="form-control" name="new_password_confirmation" value="" autocomplete="off">
+                                            <input type="password" class="form-control" name="new_password_confirmation"
+                                                   value="" autocomplete="off">
                                         </div>
                                     </div>
                                 </div>

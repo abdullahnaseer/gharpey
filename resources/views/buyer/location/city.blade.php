@@ -1,5 +1,5 @@
 @php
-    $seo_title =  "Find a local professional in {$city->city}, {$city->state_code} | Serviced By ONE";
+    $seo_title =  "Find a local professional in {$city->city}, {$city->state_code} | Serviced By ONE"
 @endphp
 
 @extends('buyer.layouts.app')

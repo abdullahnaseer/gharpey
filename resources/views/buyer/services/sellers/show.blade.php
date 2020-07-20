@@ -6,7 +6,9 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{url('/')}}"><i class="icon-home"></i></a></li>
                 <li class="breadcrumb-item"><a href="{{route('buyer.services.index')}}">Services</a></li>
-                <li class="breadcrumb-item"><a href="{{route('buyer.services.show', [$service->slug, 'city_id' => $city ? $city->id : ''])}}">{{$service->name}}</a></li>
+                <li class="breadcrumb-item"><a
+                        href="{{route('buyer.services.show', [$service->slug, 'city_id' => $city ? $city->id : ''])}}">{{$service->name}}</a>
+                </li>
                 <li class="breadcrumb-item active" aria-current="page">{{$service_seller->seller->shop_name}}</li>
             </ol>
         </div><!-- End .container -->
@@ -20,7 +22,9 @@
                             <div class="product-slider-container product-item">
                                 <div class="product-single-carousel owl-carousel owl-theme">
                                     <div class="product-item">
-                                        <img class="product-single-image" src="{{str_replace("public","/storage",$service->featured_image)}}" data-zoom-image="assets/images/products/zoom/product-1-big.jpg"/>
+                                        <img class="product-single-image"
+                                             src="{{str_replace("public","/storage",$service->featured_image)}}"
+                                             data-zoom-image="assets/images/products/zoom/product-1-big.jpg"/>
                                     </div>
                                     {{--                                        <div class="product-item">--}}
                                     {{--                                            <img class="product-single-image" src="assets/images/products/zoom/product-2.jpg" data-zoom-image="assets/images/products/zoom/product-2-big.jpg"/>--}}
@@ -59,11 +63,13 @@
 
                                 <div class="ratings-container">
                                     <div class="product-ratings">
-                                        <span class="ratings" style="width:{{$service_seller->reviews_average * 20}}%"></span>
+                                        <span class="ratings"
+                                              style="width:{{$service_seller->reviews_average * 20}}%"></span>
                                         <!-- End .ratings -->
                                     </div>
                                     <!-- End .product-ratings -->
-                                    <a href="#reviews" class="rating-link">( {{ $service_seller->reviews_count ?? 0 }} Reviews )</a>
+                                    <a href="#reviews" class="rating-link">( {{ $service_seller->reviews_count ?? 0 }}
+                                        Reviews )</a>
                                 </div>
 
                                 <div class="price-box">
@@ -72,13 +78,14 @@
                                 </div><!-- End .price-box -->
 
                                 <p class="product-location text-left m-b-5">
-                                    <img src="/assets1/images/svg/shop/shop.svg" class="mr-2 d-inline-block" width="15" alt="">
+                                    <img src="/assets1/images/svg/shop/shop.svg" class="mr-2 d-inline-block" width="15"
+                                         alt="">
 
                                     <a href="{{route('buyer.shop.show', [$service_seller->seller->shop_slug])}}">{{$service_seller->seller->shop_name}}</a>
                                 </p>
 
                                 <div class="product-desc">
-                                    <p>{{\Str::limit($service_seller->short_description, 100)}}</p>
+                                    <p>{{Str::limit($service_seller->short_description, 100)}}</p>
 
                                     <p>
                                         <strong>Available:</strong> {{$service_seller->cities->pluck('name')->implode(", ")}}
@@ -105,8 +112,10 @@
                                     {{--                                        <div class="product-single-qty">--}}
                                     {{--                                            <input class="horizontal-quantity form-control" type="text">--}}
                                     {{--                                        </div><!-- End .product-single-qty -->--}}
-                                    <a href="#questionsModal" class="paction add-cart" title="Order Now" data-toggle="modal" data-target="#questionsModal" data-id="{{$service_seller->id}}">
-{{--                                    <a href="{{route('buyer.products.cart.create', [$service->id])}}" class="paction add-cart" title="Add to Cart">--}}
+                                    <a href="#questionsModal" class="paction add-cart" title="Order Now"
+                                       data-toggle="modal" data-target="#questionsModal"
+                                       data-id="{{$service_seller->id}}">
+                                        {{--                                    <a href="{{route('buyer.products.cart.create', [$service->id])}}" class="paction add-cart" title="Add to Cart">--}}
                                         <span>Order Now</span>
                                     </a>
 
@@ -125,39 +134,50 @@
                 <div class="product-single-tabs">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="product-tab-desc" data-toggle="tab" href="#product-desc-content" role="tab" aria-controls="product-desc-content" aria-selected="true">Description</a>
+                            <a class="nav-link active" id="product-tab-desc" data-toggle="tab"
+                               href="#product-desc-content" role="tab" aria-controls="product-desc-content"
+                               aria-selected="true">Description</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="product-tab-qas" data-toggle="tab" href="#product-qas-content" role="tab" aria-controls="product-qas-content" aria-selected="false">Q&As</a>
+                            <a class="nav-link" id="product-tab-qas" data-toggle="tab" href="#product-qas-content"
+                               role="tab" aria-controls="product-qas-content" aria-selected="false">Q&As</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="product-tab-reviews" data-toggle="tab" href="#product-reviews-content" role="tab" aria-controls="product-reviews-content" aria-selected="false">Reviews</a>
+                            <a class="nav-link" id="product-tab-reviews" data-toggle="tab"
+                               href="#product-reviews-content" role="tab" aria-controls="product-reviews-content"
+                               aria-selected="false">Reviews</a>
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel" aria-labelledby="product-tab-desc">
+                        <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel"
+                             aria-labelledby="product-tab-desc">
                             <div class="product-desc-content">
                                 <p>{!! $service_seller->long_description !!}</p>
                             </div><!-- End .product-desc-content -->
                         </div><!-- End .tab-pane -->
 
-                        <div class="tab-pane fade" id="product-qas-content" role="tabpanel" aria-labelledby="product-tab-qas">
+                        <div class="tab-pane fade" id="product-qas-content" role="tabpanel"
+                             aria-labelledby="product-tab-qas">
                             <div class="product-qas-content">
                                 <div class="alert alert-info">Under Construction!!!</div>
                             </div><!-- End .product-tags-content -->
                         </div><!-- End .tab-pane -->
 
-                        <div class="tab-pane fade" id="product-reviews-content" role="tabpanel" aria-labelledby="product-tab-reviews">
+                        <div class="tab-pane fade" id="product-reviews-content" role="tabpanel"
+                             aria-labelledby="product-tab-reviews">
                             <div class="product-reviews-content">
                                 <div>
                                     @if(count($service_seller->reviews))
                                         @foreach($service_seller->reviews as $review)
                                             <div class="ratings-container mb-0">
                                                 <div class="product-ratings">
-                                                    <span class="ratings" style="width:{{$review->rating * 20}}%"></span>
+                                                    <span class="ratings"
+                                                          style="width:{{$review->rating * 20}}%"></span>
                                                 </div>
                                             </div>
-                                            <p class="text-muted mb-0"><small>By {{ !is_null($review->buyer) ? $review->buyer->name : 'GharPey Customer' }} ({{$review->created_at->diffForHumans()}})</small></p>
+                                            <p class="text-muted mb-0">
+                                                <small>By {{ !is_null($review->buyer) ? $review->buyer->name : 'GharPey Customer' }}
+                                                    ({{$review->created_at->diffForHumans()}})</small></p>
                                             <p>{{$review->review}}</p>
                                         @endforeach
                                     @else
@@ -205,7 +225,8 @@
          aria-labelledby="questionsModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="{{route('buyer.services.sellers.store', [$service->id, $service_seller->id])}}" method="POST" enctype="multipart/form-data"
+                <form action="{{route('buyer.services.sellers.store', [$service->id, $service_seller->id])}}"
+                      method="POST" enctype="multipart/form-data"
                       id="questionsForm">
                     @csrf
                     <div class="modal-header">

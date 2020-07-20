@@ -1,5 +1,5 @@
 @php
-    $seo_title =  "{$category->name} services | Serviced By ONE";
+    $seo_title =  "{$category->name} services | Serviced By ONE"
 @endphp
 
 

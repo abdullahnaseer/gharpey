@@ -20,7 +20,8 @@
         @csrf
         <div class="form-group required-field">
             <label for="acc-address">Address</label>
-            <input type="text" class="form-control @error('area') is-invalid @enderror" id="acc-address" name="address" value="{{old('address', $user->address)}}" required>
+            <input type="text" class="form-control @error('area') is-invalid @enderror" id="acc-address" name="address"
+                   value="{{old('address', $user->address)}}" required>
         </div>
 
         <div class="form-group required-field">
@@ -31,7 +32,8 @@
                     @if($city->areas->count())
                         <optgroup label="{{$city->name}}">
                             @foreach($city->areas as $area)
-                                <option value="{{$area->id}}" @if((int) old('area', $user->location_id) == $area->id) selected @endif>{{$area->name}}</option>
+                                <option value="{{$area->id}}"
+                                        @if((int) old('area', $user->location_id) == $area->id) selected @endif>{{$area->name}}</option>
                             @endforeach
                         </optgroup>
                     @endif

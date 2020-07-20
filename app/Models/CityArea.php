@@ -45,4 +45,54 @@ class CityArea extends Model
     {
         return $this->belongsTo(City::class);
     }
+
+    /**
+     * Get the Seller(s) associated with the CityArea.
+     */
+    public function seller_business_locations()
+    {
+        return $this->hasMany(Seller::class, 'business_location_id', 'id');
+    }
+
+    /**
+     * Get the Seller(s) associated with the CityArea.
+     */
+    public function seller_warehouse_locations()
+    {
+        return $this->hasMany(Seller::class, 'warehouse_location_id', 'id');
+    }
+
+    /**
+     * Get the Seller(s) associated with the CityArea.
+     */
+    public function seller_return_locations()
+    {
+        return $this->hasMany(Seller::class, 'return_location_id', 'id');
+    }
+
+    /**
+     * Get the Buyer(s) associated with the CityArea.
+     */
+    public function buyers()
+    {
+        return $this->hasMany(Buyer::class, 'location_id', 'id');
+    }
+
+    /**
+     * Get the ProductOrder(s) associated with the CityArea.
+     */
+    public function product_orders()
+    {
+        return $this->hasMany(Order::class, 'shipping_location_id', 'id');
+    }
+
+    /**
+     * Get the owning service_seller_able model.
+     */
+    public function service_sellers()
+    {
+        return $this->belongsToMany(ServiceSeller::class, 'service_seller_location', 'location_id', 'service_seller_id')
+            ->where('location_type', CityArea::class)
+            ->withPivot([]);
+    }
 }

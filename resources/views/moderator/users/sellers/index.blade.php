@@ -223,6 +223,9 @@
                             template: function (row) {
                                 if (row.approved_at)
                                     return '\
+                                        <a href="{{url('/moderator/users/sellers')}}/' + row.id + '" class="btn btn-sm btn-clean btn-icon btn-icon-sm" title="View Details">\
+                                            <i class="la la-eye"></i>\
+                                        </a>\
                                         <a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details" data-toggle="modal" data-target="#editModal" \
                                             data-id="' + row.id + '" ' +
                                         'data-shop-name="' + row.shop_name + '" ' +

@@ -157,15 +157,7 @@
                             template: function (row) {
                                 console.log('order', row)
 
-                                let view = "<a href='javascript:;' class='btn btn-outline-warning mr-2' title='Show Details' " +
-                                    "data-toggle='modal' data-target='#showModal' " +
-                                    "  data-id='" + row.id +
-                                    "' data-name='" + row.product.name +
-                                    "' data-price='" + row.price +
-                                    "' data-status='" + row.status +
-                                    "' data-quantity='" + row.quantity +
-                                    "' data-image='" + row.product.featured_image +
-                                    "'>View</a>"
+                                let view = "<a href='{{url('moderator/products/orders')}}/"+row.id+"' class='btn btn-outline-warning mr-2' title='Show Details'>View</a>"
 
                                 if (row.status === '{{\App\Models\ProductOrder::STATUS_NEW}}' || row.status === '{{\App\Models\ProductOrder::STATUS_SELLER_SENT}}')
                                     return view +

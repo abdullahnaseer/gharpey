@@ -1,17 +1,18 @@
-@extends('moderator.layouts.dashboard', ['page_title' => "Product Categories"])
+@extends('moderator.layouts.dashboard', ['page_title' => "Service Requests"])
+
 
 @section('breadcrumb')
-    <a href="{{ auth('moderator')->check() ? route('moderator.dashboard') : route('admin.dashboard') }}" class="kt-subheader__breadcrumbs-link">Dashboard</a>
+    <a href="{{ route('moderator.dashboard') }}" class="kt-subheader__breadcrumbs-link">Dashboard</a>
     <span class="kt-subheader__breadcrumbs-separator"></span>
-    <span class="kt-subheader__breadcrumbs-link active">Products</span>
+    <span class="kt-subheader__breadcrumbs-link active">Service Requests</span>
 @endsection
 
 @section('breadcrumb-elements')
     <div class="kt-input-icon kt-input-icon--left">
         <input type="text" class="form-control" placeholder="Search..." id="generalSearch">
         <span class="kt-input-icon__icon kt-input-icon__icon--left">
-                                            <span><i class="la la-search"></i></span>
-                                        </span>
+            <span><i class="la la-search"></i></span>
+        </span>
     </div>
 @endsection
 
@@ -23,23 +24,12 @@
     <div class="kt-portlet kt-portlet--mobile">
         <div class="kt-portlet__head kt-portlet__head--lg">
             <div class="kt-portlet__head-label">
-										<span class="kt-portlet__head-icon">
-											<i class="kt-font-brand flaticon2-line-chart"></i>
-										</span>
+                    <span class="kt-portlet__head-icon">
+                        <i class="kt-font-brand flaticon2-line-chart"></i>
+                    </span>
                 <h3 class="kt-portlet__head-title">
-                    Products
+                    Service Requests
                 </h3>
-            </div>
-            <div class="kt-portlet__head-toolbar">
-                <div class="kt-portlet__head-wrapper">
-                    <div class="kt-portlet__head-actions">
-{{--                        <a class="btn btn-brand btn-elevate btn-icon-sm" href="#createModal" data-toggle="modal"--}}
-{{--                           data-target="#createModal">--}}
-{{--                            <i class="la la-plus"></i>--}}
-{{--                            New Product--}}
-{{--                        </a>--}}
-                    </div>
-                </div>
             </div>
         </div>
         <div class="kt-portlet__body kt-portlet__body--fit">
@@ -50,35 +40,8 @@
     </div>
 @stop
 
-@push('modals')
-    @include('moderator.products.modals.create', ['categories' => $categories])
-    @include('moderator.products.modals.edit')
-    @include('moderator.products.modals.delete')
-@endpush
-
 @push('scripts')
     <script>
-        $('#deleteModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Button that triggered the modal
-            var id = button.data('id'); // Extract info from data-* attributes
-            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-            var modal = $(this);
-            modal.find('.modal-footer form').attr('action', "{{url('moderator/products')}}/" + id);
-        });
-
-        $('#editModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Button that triggered the modal
-            var id = button.data('id'); // Extract info from data-* attributes
-            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-            var modal = $(this);
-            modal.find('form').attr('action', "{{url('moderator/products')}}/" + id);
-            modal.find('form input#name').val(button.data('name'));
-            modal.find('form textarea#description').val(button.data('description'));
-            modal.find('form select#category_id').val(button.data('category'));
-        });
-
         var KTDatatableJsonRemote = function () {
             var jsonResource = function () {
                 var datatable = $('.kt-datatable').KTDatatable({
@@ -87,7 +50,7 @@
                         type: 'remote',
                         source: {
                             read: {
-                                url: '{{route('moderator.products.json')}}',
+                                url: '{{route('moderator.service_sellers.json')}}',
                                 method: 'POST',
                                 headers: {
                                     'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
@@ -126,32 +89,34 @@
                             sortable: false,
                             width: 100,
                             template: function (row) {
+                                var image = 'image';
+                                if (row.featured_image)
+                                    image = row.featured_image;
+                                else if (row.service && row.service.featured_image)
+                                    image = row.service.featured_image;
+
                                 return '\
-                                <img class="img-thumbnail" src="' + (row.featured_image ? row.featured_image.replace('public', '/storage') : '') + '">\
+                                <img class="img-thumbnail" src="' + (image.replace('public', '/storage')) + '">\
                                 ';
                             }
                         }, {
-                            field: 'name',
+                            field: 'service.name',
                             title: 'Name',
                         }, {
-                            field: 'slug',
-                            title: 'Slug',
+                            field: 'price',
+                            title: 'Base Price'
+                        }, {
+                            field: 'short_description',
+                            title: 'Description'
                         }, {
                             field: 'Actions',
                             title: 'Actions',
                             sortable: false,
-                            width: 150,
+                            width: 250,
                             autoHide: false,
                             overflow: 'visible',
                             template: function (row) {
-                                return '\
-						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details" data-toggle="modal" data-target="#editModal" data-id="' + row.id + '" data-name="' + row.name + '" data-description="' + row.description + '"data-category="' + row.category_id + '">\
-							<i class="la la-edit"></i>\
-						</a>\
-						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Delete" data-toggle="modal" data-target="#deleteModal" data-id="' + row.id + '">\
-							<i class="la la-trash"></i>\
-						</a>\
-					';
+                                return "<a href='{{url('/moderator/services/service_sellers')}}/" + row.id + "' class='btn btn-outline-warning mr-2' title='Show details'>View</a>";
                             },
                         }],
 
@@ -166,7 +131,6 @@
                 });
 
                 $('#kt_form_status,#kt_form_type').selectpicker();
-
             };
 
             return {

@@ -73,6 +73,22 @@ class OrderController extends Controller
     }
 
     /**
+     * Display the resource.
+     *
+     * @param $record_id
+     * @return mixed
+     */
+    public function show($record_id)
+    {
+        return view('moderator.products.orders.show', [
+            'order' => ProductOrder::with([
+                'order',
+                'product' => fn($q) => $q->withTrashed()
+            ])->findOrFail((int) $record_id)
+        ]);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param Request $request

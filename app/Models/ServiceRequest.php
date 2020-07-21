@@ -69,7 +69,7 @@ class ServiceRequest extends Model
      */
     public function location()
     {
-        return $this->belongsTo('App\Models\CityArea', 'city_area_id', 'id');
+        return $this->belongsTo('App\Models\CityArea', 'location_id', 'id');
     }
 
     /**

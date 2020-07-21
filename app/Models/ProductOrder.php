@@ -61,7 +61,6 @@ class ProductOrder extends Model{
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
-
     /**
      * Get the review for the order.
      */

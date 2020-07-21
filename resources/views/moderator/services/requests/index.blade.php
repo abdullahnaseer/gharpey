@@ -189,7 +189,7 @@
                                         "<a href='{{url('/moderator/services/requests')}}/" + row.id + "/edit?status=confirm' class='btn btn-outline-primary mr-2'>Confirm</a>" +
                                         "<a href='{{url('/moderator/services/requests')}}/" + row.id + "/edit?status=cancel' class='btn btn-outline-danger'>Cancel</a>";
                                 else
-                                    return "No Action Available";
+                                    return "<a href='{{url('/moderator/services/requests')}}/" + row.id + "' class='btn btn-outline-warning mr-2' title='Show details'>View</a>";
                             },
                         }],
 

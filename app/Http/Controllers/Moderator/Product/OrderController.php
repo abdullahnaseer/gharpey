@@ -130,7 +130,7 @@ class OrderController extends Controller
                     'completed_at' => Carbon::now()
                 ]);
 
-                if($product_order->payment_gateway == Order::PAYMENT_GATEWAY_COD)
+                if($order->payment_gateway == Order::PAYMENT_GATEWAY_COD)
                 {
                     Transaction::create([
                         'user_id' => is_null($buyer) ? null : $buyer->id,

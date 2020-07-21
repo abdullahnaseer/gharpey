@@ -104,13 +104,12 @@ class ServiceRequest extends Model
         return $this->hasMany('App\Models\ServiceRequestAnswer', 'request_id', 'id');
     }
 
-
     /**
-     * Get the user that owns the service request.
+     * Get the buyer that owns the service request.
      */
-    public function user()
+    public function buyer()
     {
-        return $this->belongsTo('App\Models\User', 'user_id', 'id');
+        return $this->belongsTo('App\Models\Buyer', 'buyer_id', 'id');
     }
 
     /**

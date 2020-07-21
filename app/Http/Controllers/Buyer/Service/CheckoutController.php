@@ -176,17 +176,6 @@ class CheckoutController extends Controller
                 'note' => '',
             ]);
 
-            Transaction::create([
-                'user_id' => is_null($buyer) ? null : $buyer->id,
-                'user_type' => Buyer::class,
-                'reference_id' => $service_request->id,
-                'reference_type' => ServiceRequest::class,
-                'type' => Transaction::TYPE_DEBIT,
-                'amount' => -$amount,
-                'balance' => is_null($buyer) ? null : $buyer->transactions()->sum('amount') - $amount,
-                'note' => '',
-            ]);
-
             $seller->notify(new ServiceRequestNotification($service_request));
 
             return response()->json(['success' => 'Payment was successful']);

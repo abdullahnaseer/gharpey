@@ -591,19 +591,6 @@
                             </div>
                         </div>
                     </a>
-                    <a href="custom/apps/user/profile-2.html" class="kt-notification__item">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon2-rocket-1 kt-font-danger"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title kt-font-bold">
-                                My Activities
-                            </div>
-                            <div class="kt-notification__item-time">
-                                Logs and notifications
-                            </div>
-                        </div>
-                    </a>
                     <a href="{{route('seller.withdraws')}}" class="kt-notification__item">
                         <div class="kt-notification__item-icon">
                             <i class="flaticon-coins kt-font-danger"></i>

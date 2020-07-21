@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Buyer\Account;
 
 use App\Http\Controllers\Controller;
+use App\Models\Buyer;
 use App\Models\Seller;
 use App\Models\ServiceRequest;
 use App\Models\Transaction;
@@ -22,6 +23,7 @@ class ServiceRequestController extends Controller
     public function index(Request $request)
     {
         $service_request = auth()->user()->service_requests()->find($request->input('service_request_id'));
+        $buyer = !is_null($service_request) ? $service_request->buyer : null;
         $seller = !is_null($service_request) ? $service_request->seller : null;
         if($request->input('action') == 'release' && !is_null($service_request) && !is_null($seller) && $service_request->status == ServiceRequest::STATUS_CONFIRMED)
         {
@@ -31,13 +33,24 @@ class ServiceRequestController extends Controller
             ]);
 
             Transaction::create([
-                'user_id' => $seller->id,
+                'user_id' => is_null($buyer) ? $buyer->id : null,
+                'user_type' => Buyer::class,
+                'reference_id' => $service_request->id,
+                'reference_type' => ServiceRequest::class,
+                'type' => Transaction::TYPE_DEBIT,
+                'amount' => -$service_request->total_amount,
+                'balance' => is_null($buyer) ? $buyer->transactions()->sum('amount') - $service_request->total_amount : null,
+                'note' => '',
+            ]);
+
+            Transaction::create([
+                'user_id' => is_null($seller) ? $seller->id : null,
                 'user_type' => Seller::class,
                 'reference_id' => $service_request->id,
                 'reference_type' => ServiceRequest::class,
                 'type' => Transaction::TYPE_CREDIT,
                 'amount' => $service_request->total_amount,
-                'balance' => $seller->transactions()->sum('amount') + $service_request->total_amount,
+                'balance' => is_null($seller) ? $seller->transactions()->sum('amount') + $service_request->total_amount : null,
                 'note' => '',
             ]);
 
@@ -50,71 +63,5 @@ class ServiceRequestController extends Controller
         return view('buyer.account.service_requests.index', [
             'service_requests' => auth()->user()->service_requests()->with(['service_seller', 'service_seller.service', 'answers'])->get()
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return mixed
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return mixed
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return mixed
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return mixed
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return mixed
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return mixed
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

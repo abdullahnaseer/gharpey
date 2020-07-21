@@ -592,19 +592,6 @@
                             </div>
                         </div>
                     </a>
-                    <a href="#" class="kt-notification__item">
-                        <div class="kt-notification__item-icon">
-                            <i class="flaticon2-rocket-1 kt-font-danger"></i>
-                        </div>
-                        <div class="kt-notification__item-details">
-                            <div class="kt-notification__item-title kt-font-bold">
-                                My Activities
-                            </div>
-                            <div class="kt-notification__item-time">
-                                Logs and notifications
-                            </div>
-                        </div>
-                    </a>
                     <div class="kt-notification__custom kt-space-between">
                         <a class="btn btn-label btn-label-brand btn-sm btn-bold" href="{{ route('admin.logout') }}"
                            onclick="event.preventDefault();

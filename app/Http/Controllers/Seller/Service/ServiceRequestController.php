@@ -95,6 +95,8 @@ class ServiceRequestController extends Controller
     public function edit(Request $request, $id)
     {
         $service_request = ServiceRequest::findOrFail($id);
+        $seller = $service_request->seller;
+        $buyer = $service_request->buyer;
         $status = $request->input('status');
         if ($status == 'confirm') {
             if (is_null($service_request->completed_at)) {
@@ -103,8 +105,8 @@ class ServiceRequestController extends Controller
                     'confirmed_at' => Carbon::now()
                 ]);
 
-                if (!is_null($service_request->buyer))
-                    $service_request->buyer->notify(new ServiceRequestConfirmNotification($service_request));
+                if (!is_null($buyer))
+                    $buyer->notify(new ServiceRequestConfirmNotification($service_request));
 
                 flash()->success('Service Request Order Confirmed Successfully.');
             } else
@@ -118,29 +120,6 @@ class ServiceRequestController extends Controller
 
                 if(!is_null($service_request->paid_at))
                 {
-                    Transaction::create([
-                        'user_id' => $service_request->seller_id,
-                        'user_type' => Seller::class,
-                        'reference_id' => $service_request->id,
-                        'reference_type' => ServiceRequest::class,
-                        'type' => Transaction::TYPE_DEBIT,
-                        'amount' => -$service_request->total_amount,
-                        'balance' => $service_request->seller->transactions()->sum('amount') - $service_request->total_amount,
-                        'note' => '',
-                    ]);
-
-                    $buyer = $service_request->buyer;
-                    Transaction::create([
-                        'user_id' => is_null($buyer) ? null : $buyer->id,
-                        'user_type' => Seller::class,
-                        'reference_id' => $service_request->id,
-                        'reference_type' => ProductOrder::class,
-                        'type' => Transaction::TYPE_CREDIT,
-                        'amount' => $service_request->total_amount,
-                        'balance' => is_null($buyer) ? null : $buyer->transactions()->sum('amount') + $service_request->total_amount,
-                        'note' => '',
-                    ]);
-
                     if (!is_null($buyer))
                         $buyer->notify(new ServiceRequestCanceledNotification($service_request));
                 }

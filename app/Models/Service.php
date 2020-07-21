@@ -99,6 +99,19 @@ class Service extends Model
     /**
      * The sellers that belong to the service.
      */
+    public function reviews()
+    {
+        return $this->hasManyThrough(ServiceSellerReview::class, ServiceSeller::class,
+            'service_id',
+            'service_seller_id',
+            'id',
+            'id'
+        );
+    }
+
+    /**
+     * The sellers that belong to the service.
+     */
     public function sellers()
     {
         return $this->belongsToMany(Seller::class, 'service_seller', 'service_id', 'seller_id')

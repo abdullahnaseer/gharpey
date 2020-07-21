@@ -68,8 +68,7 @@
                                         <!-- End .ratings -->
                                     </div>
                                     <!-- End .product-ratings -->
-                                    <a href="#reviews" class="rating-link">( {{ $service_seller->reviews_count ?? 0 }}
-                                        Reviews )</a>
+                                    <a href="#reviews" class="rating-link">({{ $service_seller->reviews_count ?? 0 }} Reviews)</a>
                                 </div>
 
                                 <div class="price-box">

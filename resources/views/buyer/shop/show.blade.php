@@ -43,7 +43,7 @@
                                 @foreach($services as $service)
                                     <div class="product product-list-wrapper">
                                         <figure class="product-image-container">
-                                            <a href="#" class="product-image">
+                                            <a href="{{route('buyer.services.sellers.show', [$service->slug, $service->pivot->id, 'city_id' => isset($city) && $city ? $city->id : null])}}" class="product-image">
                                                 <img
                                                     src="{{ str_replace('public', '/storage', $service->pivot->featured_image) }}"
                                                     alt="product">
@@ -52,7 +52,7 @@
                                         </figure>
                                         <div class="product-details">
                                             <h2 class="product-title">
-                                                <a href="#">{{$service->name}}</a>
+                                                <a href="{{route('buyer.services.sellers.show', [$service->slug, $service->pivot->id, 'city_id' => isset($city) && $city ? $city->id : null])}}">{{$service->name}}</a>
                                             </h2>
                                             <div class="ratings-container">
                                                 <div class="product-ratings">

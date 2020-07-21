@@ -47,6 +47,8 @@ class ProductController extends Controller
             $products = $products->where('price', '<=', $request->input('price-max'));
 
         $products = $products->whereHas('seller')
+            ->withCount('reviews')
+            ->orderBy('reviews_count', 'desc')
             ->with([
                 'seller'
             ])->paginate(15);

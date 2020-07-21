@@ -37,21 +37,19 @@
 
                 <div class="col-lg-9">
                     <div class="widget widget-newsletter">
-                        <h4 class="widget-title">Subscribe newsletter</h4>
+                        <h4 class="widget-title">About GharPey</h4>
                         <div class="row">
-                            <div class="col-md-6">
-                                <p>Get all the latest information on Events,Sales and Offers. Sign up for newsletter
-                                    today</p>
+                            <div class="col-md-12">
+                                <p>There are a huge number of hardworking women in Pakistan who work at home or any workplace making products. GharPey allows hard working women to showcase their products and offer services. </p>
                             </div>
-                            <!-- End .col-md-6 -->
 
-                            <div class="col-md-6">
-                                <form action="#">
-                                    <input type="email" class="form-control" placeholder="Email address" required>
+{{--                            <div class="col-md-6">--}}
+{{--                                <form action="#">--}}
+{{--                                    <input type="email" class="form-control" placeholder="Email address" required>--}}
 
-                                    <input type="submit" class="btn" value="Subscribe">
-                                </form>
-                            </div>
+{{--                                    <input type="submit" class="btn" value="Subscribe">--}}
+{{--                                </form>--}}
+{{--                            </div>--}}
                             <!-- End .col-md-6 -->
                         </div>
                         <!-- End .row -->
@@ -96,9 +94,9 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <ul class="links">
-                                            <li><a href="#">Pakistan Top Selling Sites for Women Sellers</a></li>
-                                            <li><a href="#">Unique Services</a></li>
-                                            <li><a href="#">Unique Products</a></li>
+                                            <li><a href="{{url('/')}}">Pakistan Top Selling Sites for Women Sellers</a></li>
+                                            <li><a href="{{url('/services')}}">Unique Services</a></li>
+                                            <li><a href="{{url('/products')}}">Unique Products</a></li>
                                         </ul>
                                     </div>
                                     <!-- End .col-sm-6 -->

@@ -23,8 +23,8 @@ class ServiceRequestController extends Controller
     public function index(Request $request)
     {
         $service_request = auth()->user()->service_requests()->find($request->input('service_request_id'));
-        $buyer = !is_null($service_request) ? $service_request->buyer : null;
-        $seller = !is_null($service_request) ? $service_request->seller : null;
+        $buyer = !is_null($service_request) ? $service_request->buyer()->withTrashed()->first() : null;
+        $seller = !is_null($service_request) ? $service_request->seller()->withTrashed()->first() : null;
         if($request->input('action') == 'release' && !is_null($service_request) && !is_null($seller) && $service_request->status == ServiceRequest::STATUS_CONFIRMED)
         {
             $service_request->update([
@@ -33,24 +33,24 @@ class ServiceRequestController extends Controller
             ]);
 
             Transaction::create([
-                'user_id' => is_null($buyer) ? $buyer->id : null,
+                'user_id' => !is_null($buyer) ? $buyer->id : null,
                 'user_type' => Buyer::class,
                 'reference_id' => $service_request->id,
                 'reference_type' => ServiceRequest::class,
                 'type' => Transaction::TYPE_DEBIT,
                 'amount' => -$service_request->total_amount,
-                'balance' => is_null($buyer) ? $buyer->transactions()->sum('amount') - $service_request->total_amount : null,
+                'balance' => !is_null($buyer) ? $buyer->transactions()->sum('amount') - $service_request->total_amount : null,
                 'note' => '',
             ]);
 
             Transaction::create([
-                'user_id' => is_null($seller) ? $seller->id : null,
+                'user_id' => !is_null($seller) ? $seller->id : null,
                 'user_type' => Seller::class,
                 'reference_id' => $service_request->id,
                 'reference_type' => ServiceRequest::class,
                 'type' => Transaction::TYPE_CREDIT,
                 'amount' => $service_request->total_amount,
-                'balance' => is_null($seller) ? $seller->transactions()->sum('amount') + $service_request->total_amount : null,
+                'balance' => !is_null($seller) ? $seller->transactions()->sum('amount') + $service_request->total_amount : null,
                 'note' => '',
             ]);
 

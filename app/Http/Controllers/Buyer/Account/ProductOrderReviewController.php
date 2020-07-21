@@ -17,12 +17,6 @@ class ProductOrderReviewController extends Controller
         })->findOrFail($product_order_id);
     }
 
-
-    public function create(Request $request)
-    {
-
-    }
-
     public function store(Request $request, $product_order_id)
     {
         $data = $request->validate([

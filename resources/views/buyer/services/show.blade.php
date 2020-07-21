@@ -86,7 +86,8 @@
                         @foreach($service_sellers as $service_seller)
                             <div class="product product-list-wrapper">
                                 <figure class="product-image-container">
-                                    <a href="#" class="product-image">
+                                    <a href="{{route('buyer.services.sellers.show', [$service->slug, $service_seller->id, 'city_id' => $city ? $city->id : null])}}"
+                                       class="product-image">
                                         <img
                                             src="{{ str_replace('public', '/storage', $service_seller->featured_image) }}"
                                             alt="product">

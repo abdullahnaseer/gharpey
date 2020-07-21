@@ -24,7 +24,7 @@
                                     <div class="product-item">
                                         <img class="product-single-image"
                                              src="{{str_replace("public","/storage",$service->featured_image)}}"
-                                             data-zoom-image="assets/images/products/zoom/product-1-big.jpg"/>
+                                             data-zoom-image="{{str_replace("public","/storage",$service->featured_image)}}"/>
                                     </div>
                                     {{--                                        <div class="product-item">--}}
                                     {{--                                            <img class="product-single-image" src="assets/images/products/zoom/product-2.jpg" data-zoom-image="assets/images/products/zoom/product-2-big.jpg"/>--}}

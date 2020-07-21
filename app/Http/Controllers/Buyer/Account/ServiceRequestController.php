@@ -22,9 +22,16 @@ class ServiceRequestController extends Controller
      */
     public function index(Request $request)
     {
-        $service_request = auth()->user()->service_requests()->find($request->input('service_request_id'));
-        $buyer = !is_null($service_request) ? $service_request->buyer()->withTrashed()->first() : null;
-        $seller = !is_null($service_request) ? $service_request->seller()->withTrashed()->first() : null;
+        $service_request = auth('buyer')->user()->service_requests()
+            ->with([
+                'service' => fn($q) => $q->withTrashed(),
+                'buyer' => fn($q) => $q->withTrashed(),
+                'seller' => fn($q) => $q->withTrashed(),
+            ])
+            ->find($request->input('service_request_id'));
+
+        $buyer = !is_null($service_request) ? $service_request->buyer : null;
+        $seller = !is_null($service_request) ? $service_request->seller : null;
         if($request->input('action') == 'release' && !is_null($service_request) && !is_null($seller) && $service_request->status == ServiceRequest::STATUS_CONFIRMED)
         {
             $service_request->update([

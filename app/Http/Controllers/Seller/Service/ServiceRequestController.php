@@ -39,7 +39,14 @@ class ServiceRequestController extends Controller
             ->user()
             ->service_requests()
             ->orderBy('created_at', 'desc')
-            ->with(['service_seller', 'service', 'answers', 'answers.answer'])
+            ->with([
+                'service' => fn($q) => $q->withTrashed(),
+                'buyer' => fn($q) => $q->withTrashed(),
+                'seller' => fn($q) => $q->withTrashed(),
+                'service_seller' => fn($q) => $q->withTrashed(),
+                'answers',
+                'answers.answer'
+            ])
             ->get();
     }
 
@@ -94,9 +101,17 @@ class ServiceRequestController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $service_request = ServiceRequest::findOrFail($id);
-        $seller = $service_request->seller;
-        $buyer = $service_request->buyer;
+        $service_request = auth('seller')->user()->service_requests()
+            ->with([
+                'service' => fn($q) => $q->withTrashed(),
+                'buyer' => fn($q) => $q->withTrashed(),
+                'seller' => fn($q) => $q->withTrashed(),
+            ])
+            ->find($request->input('service_request_id'));
+
+        $buyer = !is_null($service_request) ? $service_request->buyer : null;
+        $seller = !is_null($service_request) ? $service_request->seller : null;
+
         $status = $request->input('status');
         if ($status == 'confirm') {
             if (is_null($service_request->completed_at)) {

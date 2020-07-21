@@ -58,7 +58,7 @@
                     <h4 class="kt-menu__section-text">Services</h4>
                     <i class="kt-menu__section-icon flaticon-more-v2"></i>
                 </li>
-                <li class="kt-menu__item {{ (request()->is('seller/services*') && !request()->is('seller/services*')) ? 'kt-menu__item--active' : '' }} "
+                <li class="kt-menu__item {{ (request()->is('seller/services*') && !request()->is('seller/services/requests*')) ? 'kt-menu__item--active' : '' }} "
                     aria-haspopup="true"><a href="{{route('seller.services.index')}}" class="kt-menu__link "><i
                             class="kt-menu__link-icon flaticon2-lorry"></i><span
                             class="kt-menu__link-text">All Services</span></a></li>

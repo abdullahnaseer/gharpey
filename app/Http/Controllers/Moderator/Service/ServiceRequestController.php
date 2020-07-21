@@ -132,37 +132,24 @@ class ServiceRequestController extends Controller
         return redirect('/moderator/service-requests')->with('status', 'Service Request is deleted successfully!!!');
     }
 
-    /**
-     * Show the invoice list.
-     *
-     * @param user_id
-     * @return mixed
-     */
-    public function showInvoice($id)
-    {
-        $serviceRequest = ServiceRequest::where('id', (int)$id)
-            ->with('invoices', 'invoices.details')
-            ->firstOrFail();
-        return view('moderator.services.requests.invoices.show', ['request' => $serviceRequest]);
-    }
-
-
-    /**
-     * Update the specified resource in storage and mark it complete.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return mixed
-     */
-    public function confirm(Request $request, $id)
-    {
-        $serviceRequest = ServiceRequest::findOrFail((int)$id);
-        if (is_null($serviceRequest->completed_at)
-            && $serviceRequest->invoices()->count()
-            && $serviceRequest->invoices()->whereNull('paid_at')->count() == 0) {
-            $serviceRequest->update(['completed_at' => Carbon::now()]);
-            return redirect('/moderator/service-requests')->with('status', 'Service Request has been marked complete successfully!!!');
-        }
-        return redirect('/moderator/service-requests')->with('error', 'Service Request cant be marked complete!!!');
-    }
+//    /**
+//     * Update the specified resource in storage and mark it complete.
+//     *
+//     * @param Request $request
+//     * @param int $id
+//     * @return mixed
+//     */
+//    public function confirm(Request $request, $id)
+//    {
+//        $serviceRequest = ServiceRequest::findOrFail((int)$id);
+//        if (is_null($serviceRequest->completed_at)
+//            && $serviceRequest->invoices()->count()
+//            && $serviceRequest->invoices()->whereNull('paid_at')->count() == 0) {
+//
+//            $serviceRequest->update(['completed_at' => Carbon::now()]);
+//            return redirect('/moderator/service-requests')->with('status', 'Service Request has been marked complete successfully!!!');
+//
+//        }
+//        return redirect('/moderator/service-requests')->with('error', 'Service Request cant be marked complete!!!');
+//    }
 }

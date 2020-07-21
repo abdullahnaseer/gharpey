@@ -103,20 +103,20 @@
                     <!-- End .cart-table-container -->
                 </form>
 
-                <div class="cart-discount">
-                    <h4>Apply Discount Code</h4>
-                    <form action="#">
-                        <div class="input-group">
-                            <input type="text" class="form-control form-control-sm" placeholder="Enter discount code"
-                                   required>
-                            <div class="input-group-append">
-                                <button class="btn btn-sm btn-primary" type="submit">Apply Discount</button>
-                            </div>
-                        </div>
-                        <!-- End .input-group -->
-                    </form>
-                </div>
-                <!-- End .cart-discount -->
+{{--                <div class="cart-discount">--}}
+{{--                    <h4>Apply Discount Code</h4>--}}
+{{--                    <form action="#">--}}
+{{--                        <div class="input-group">--}}
+{{--                            <input type="text" class="form-control form-control-sm" placeholder="Enter discount code"--}}
+{{--                                   required>--}}
+{{--                            <div class="input-group-append">--}}
+{{--                                <button class="btn btn-sm btn-primary" type="submit">Apply Discount</button>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <!-- End .input-group -->--}}
+{{--                    </form>--}}
+{{--                </div>--}}
+{{--                <!-- End .cart-discount -->--}}
             </div>
             <!-- End .col-lg-8 -->
 

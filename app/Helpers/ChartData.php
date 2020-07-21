@@ -15,7 +15,7 @@ class ChartData
 {
     public static function getRevenuesChartData()
     {
-        return Transaction::credit()->selectRaw('sum(amount) as value, DATE(created_at) as date')->groupBy('date')->get()->toJson();
+        return Transaction::selectRaw('sum(amount) as value, DATE(created_at) as date')->groupBy('date')->get()->toJson();
     }
 
     public static function getProfitsChartData()

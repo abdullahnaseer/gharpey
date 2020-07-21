@@ -96,7 +96,7 @@ Route::name('moderator.')->prefix('moderator')->namespace('Moderator')->group(fu
     Route::resource('products', 'Product\ProductController')->only(['index', 'store', 'update', 'destroy']);
 
     Route::post('services/requests/json', 'Service\ServiceRequestController@json')->name('requests.json');
-    Route::resource('services/requests', 'Service\ServiceRequestController')->only(['index', 'edit']);
+    Route::resource('services/requests', 'Service\ServiceRequestController')->only(['index', 'edit', 'show']);
 
     Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/overview', 'ProfileController@overview')->name('overview');

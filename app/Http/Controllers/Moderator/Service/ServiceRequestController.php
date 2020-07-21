@@ -89,6 +89,8 @@ class ServiceRequestController extends Controller
         $serviceRequest = ServiceRequest::where('id', (int)$id)
             ->with('service', 'answers', 'answers.answer', 'location', 'location.city', 'quote', 'invoices', 'invoices.details')
             ->firstOrFail();
+
+//        return $serviceRequest;
         return view('moderator.services.requests.show', ['request' => $serviceRequest]);
     }
 
@@ -100,7 +102,7 @@ class ServiceRequestController extends Controller
      */
     public function edit(ServiceRequest $serviceRequest)
     {
-        //
+
     }
 
     /**

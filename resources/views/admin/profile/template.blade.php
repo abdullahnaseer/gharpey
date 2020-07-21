@@ -41,14 +41,14 @@
                                     <div class="kt-widget__head">
                                         <div class="kt-widget__media">
                                             <img
-                                                src="{{ empty(auth()->user()->avatar) ? url('assets/media/users/300_25.jpg') : url( str_replace('public', 'storage', auth()->user()->avatar) )}}"
+                                                src="{{ empty(auth('admin')->user()->avatar) ? url('assets/media/users/300_25.jpg') : url( str_replace('public', 'storage', auth('admin')->user()->avatar) )}}"
                                                 alt="image"
                                                 onerror="this.src = '{{ url('assets/media/users/300_25.jpg') }}';">
                                         </div>
                                         <div class="kt-widget__content">
                                             <div class="kt-widget__section">
                                             <span class="kt-widget__username">
-                                                {{auth()->user()->name}}
+                                                {{auth('admin')->user()->name}}
                                                 <!-- <i class="flaticon2-correct kt-font-success"></i> -->
                                             </span>
                                                 <span class="kt-widget__subtitle">
@@ -65,17 +65,17 @@
                                         <div class="kt-widget__content">
                                             <div class="kt-widget__info">
                                                 <span class="kt-widget__label">Email:</span>
-                                                <span href="#" class="kt-widget__data">{{auth()->user()->email}}</span>
+                                                <span href="#" class="kt-widget__data">{{auth('admin')->user()->email}}</span>
                                             </div>
                                             <div class="kt-widget__info">
                                                 <span class="kt-widget__label">Phone:</span>
-                                                <span href="#" class="kt-widget__data">{{auth()->user()->phone}}</span>
+                                                <span href="#" class="kt-widget__data">{{auth('admin')->user()->phone}}</span>
                                             </div>
-                                            @if(auth()->user()->location)
+                                            @if(auth('admin')->user()->location)
                                                 <div class="kt-widget__info">
                                                     <span class="kt-widget__label">Location:</span>
                                                     <span class="kt-widget__data">
-                                                        {{auth()->user()->location->name . ', ' . auth()->user()->location->city->name}}
+                                                        {{auth('admin')->user()->location->name . ', ' . auth('admin')->user()->location->city->name}}
                                                     </span>
                                                 </div>
                                             @endif

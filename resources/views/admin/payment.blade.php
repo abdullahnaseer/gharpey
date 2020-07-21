@@ -51,7 +51,7 @@
                         <td>{!! $u->withdrawable - $u->fee !!}</td>
                         <td>{!! $u->fee !!}</td>
                         <td>{!! $u->total_withdrawn !!}</td>
-                        <td><a href="{!! url( '/admin/publishers/edit/' . $u->id ) !!}" target="_blank">View Account</a>
+                        <td><a href="{!! route( 'moderator.users.sellers.edit', [$u->id] ) !!}" target="_blank">View Account</a>
                         </td>
                     </tr>
                 @endforeach

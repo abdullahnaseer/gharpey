@@ -1,7 +1,7 @@
 @extends('moderator.layouts.dashboard', ['page_title' => "Buyers"])
 
 @section('breadcrumb')
-    <a href="{{ route('moderator.dashboard') }}" class="kt-subheader__breadcrumbs-link">Dashboard</a>
+    <a href="{{ auth('moderator')->check() ? route('moderator.dashboard') : route('admin.dashboard') }}" class="kt-subheader__breadcrumbs-link">Dashboard</a>
     <span class="kt-subheader__breadcrumbs-separator"></span>
     <a href="{{ route('moderator.users.buyers.index') }}" class="kt-subheader__breadcrumbs-link">Buyers</a>
     <span class="kt-subheader__breadcrumbs-separator"></span>
@@ -132,13 +132,13 @@
 
         var KTDatatableJsonRemote = function () {
             var jsonResource = function () {
-                var datatable = $('.kt-datatable').KTDatatable({
+                var datatable = $('#product_orders_datatable').KTDatatable({
                     // datasource definition
                     data: {
                         type: 'remote',
                         source: {
                             read: {
-                                url: '{{route('moderator.users.buyers.json')}}',
+                                url: '{{route('moderator.orders.json', ['buyer_id' => $user->id])}}',
                                 method: 'POST',
                                 headers: {
                                     'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
@@ -172,42 +172,65 @@
                             type: 'number',
                             textAlign: 'center',
                         }, {
-                            field: 'name',
+                            field: 'product.featured_image',
+                            title: 'Image',
+                            sortable: false,
+                            width: 100,
+                            template: function (row) {
+                                return '\
+                                <img class="img-thumbnail" src="' + (row.product && row.product.featured_image ? row.product.featured_image.replace('public', '/storage') : '') + '">\
+                                ';
+                            }
+                        }, {
+                            field: 'product.name',
                             title: 'Name',
                         }, {
-                            field: 'email',
-                            title: 'Email',
+                            field: 'price',
+                            title: 'Total Price'
                         }, {
-                            field: 'phone',
-                            title: 'Phone',
+                            field: 'quantity',
+                            title: 'Quantity',
                         }, {
-                            field: 'address',
-                            title: 'Address',
-                        }, {
-                            field: 'location.name',
-                            title: 'Location',
-                        }, {
-                            field: 'location.city.name',
-                            title: 'City',
+                            field: 'status',
+                            title: 'Status',
+                            autoHide: false,
+                            template: function (row) {
+                                if (row.status == '{{\App\Models\ProductOrder::STATUS_NEW}}')
+                                    return "<p class='text-danger'>Waiting for confirmation by seller.</p>";
+                                else if (row.status == '{{\App\Models\ProductOrder::STATUS_CONFIRMED}}')
+                                    return "<p class='text-danger'>Order Confirmed and Waiting for delivery by seller.</p>";
+                                else if (row.status == '{{\App\Models\ProductOrder::STATUS_SELLER_SENT}}')
+                                    return "<p class='text-info'>Waiting for arrival of product at our warehouse.</p>";
+                                else if (row.status == '{{\App\Models\ProductOrder::STATUS_WAREHOUSE_RECEVIED}}')
+                                    return "<p class='text-success'>Product received at warehouse and is in processing phase.</p>";
+                                else if (row.status == '{{\App\Models\ProductOrder::STATUS_SENT}}')
+                                    return "<p class='text-info'>In delivery phase to buyer.</p>";
+                                else if (row.status == '{{\App\Models\ProductOrder::STATUS_CANCELED}}')
+                                    return "<p class='text-danger'>Order Canceled</p>";
+                                else if (row.status == '{{\App\Models\ProductOrder::STATUS_COMPLETED}}')
+                                    return "<p class='text-success'>Order Completed</p>";
+                                else
+                                    return "<p class='text-danger'>Unknown Status!!! Something went wrong!!!!</p>";
+                            }
                         }, {
                             field: 'Actions',
                             title: 'Actions',
                             sortable: false,
-                            width: 150,
+                            width: 250,
                             autoHide: false,
                             overflow: 'visible',
                             template: function (row) {
-                                return '\
-                        <a href="{{url('/moderator/users/buyers')}}/' + row.id + '" class="btn btn-sm btn-clean btn-icon btn-icon-sm" title="View Details">\
-							<i class="la la-eye"></i>\
-						</a>\
-						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-sm" title="Edit Details" data-toggle="modal" data-target="#editModal" data-id="' + row.id + '" data-name="' + row.name + '" data-email="' + row.email + '" data-phone="' + row.phone + '" data-address="' + row.address + '" data-location="' + row.location_id + '">\
-							<i class="la la-edit"></i>\
-						</a>\
-						<a href="javascript:;" class="btn btn-sm btn-clean btn-icon btn-icon-sm" title="Delete" data-toggle="modal" data-target="#deleteModal" data-id="' + row.id + '">\
-							<i class="la la-trash"></i>\
-						</a>\
-					';
+                                if (row.status == '{{\App\Models\ProductOrder::STATUS_NEW}}' || row.status == '{{\App\Models\ProductOrder::STATUS_SELLER_SENT}}')
+                                    return "<a href='{{url('/moderator/products/orders')}}/" + row.id + "/edit?status=received' class='btn btn-outline-primary mr-2'>Mark Received</a>" +
+                                        "<a href='{{url('/moderator/products/orders')}}/" + row.id + "/edit?status=cancel' class='btn btn-outline-danger'>Cancel</a>";
+                                else if (row.status == '{{\App\Models\ProductOrder::STATUS_WAREHOUSE_RECEVIED}}')
+                                    return "<a href='{{url('/moderator/products/orders')}}/" + row.id + "/edit?status=sent' class='btn btn-outline-primary mr-2'>Mark Sent</a>" +
+                                        "<a href='{{url('/moderator/products/orders')}}/" + row.id + "/edit?status=cancel' class='btn btn-outline-danger'>Cancel</a>";
+                                else if (row.status == '{{\App\Models\ProductOrder::STATUS_SENT}}')
+                                    return "<a href='{{url('/moderator/products/orders')}}/" + row.id + "/edit?status=completed' class='btn btn-outline-primary mr-2'>Mark Completed</a>" +
+                                        "<a href='{{url('/moderator/products/orders')}}/" + row.id + "/edit?status=cancel' class='btn btn-outline-danger'>Cancel</a>";
+                                else
+                                    return "No Action Available";
                             },
                         }],
 
@@ -222,7 +245,6 @@
                 });
 
                 $('#kt_form_status,#kt_form_type').selectpicker();
-
             };
 
             return {

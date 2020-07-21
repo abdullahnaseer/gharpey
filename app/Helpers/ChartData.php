@@ -7,6 +7,7 @@ namespace App\Helpers;
 use App\Models\Buyer;
 use App\Models\ProductOrder;
 use App\Models\Seller;
+use App\Models\SellerWithdraw;
 use App\Models\ServiceRequest;
 use App\Models\Transaction;
 
@@ -19,7 +20,7 @@ class ChartData
 
     public static function getProfitsChartData()
     {
-        return Transaction::selectRaw('sum(amount) as value, DATE(created_at) as date')->groupBy('date')->get()->toJson();
+        return SellerWithdraw::selectRaw('sum(fee) as value, DATE(created_at) as date, created_at')->groupBy('date')->get()->toJson();
     }
 
     public static function getSellersChartData()

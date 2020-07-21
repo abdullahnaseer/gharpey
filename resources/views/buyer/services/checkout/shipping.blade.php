@@ -83,7 +83,7 @@
                         @endguest
 
                         <form
-                            @if(auth()->check())
+                            @if(auth('buyer')->check())
                             action="{{route('buyer.service.checkout.shipping.post', [$service_request->id])}}"
                             @else
                             action="{{route('buyer.register')}}"
@@ -126,7 +126,7 @@
                             </div>
                             <!-- End .form-group -->
 
-                            @if(auth()->guest())
+                            @if(auth('buyer')->guest())
                                 <div class="form-group required-field">
                                     <label>Email</label>
                                     <input name="email" type="text"

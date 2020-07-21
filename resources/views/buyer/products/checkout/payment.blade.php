@@ -597,7 +597,7 @@
     {{--                country: 'US',--}}
     {{--                currency: 'pkr',--}}
     {{--                total: {--}}
-    {{--                    label: "Payment for Product Order by Buyer#{{auth()->id()}}",--}}
+    {{--                    label: "Payment for Product Order by Buyer#{{auth('buyer')->id()}}",--}}
     {{--                    amount: {{(int) ($cart->getTotal() * 100)}},--}}
     {{--                },--}}
     {{--                requestPayerName: true,--}}

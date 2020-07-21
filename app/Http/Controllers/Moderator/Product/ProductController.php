@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Moderator\Product;
 
 use App\Http\Controllers\Controller;
+use App\Models\Buyer;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\ProductOrder;
+use App\Models\Seller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Str;
@@ -24,11 +27,20 @@ class ProductController extends Controller
     /**
      * Return a listing of the resource.
      *
+     * @param Request $request
      * @return mixed
      */
-    public function json()
+    public function json(Request $request)
     {
-        return Product::with([])->get();
+        $seller_id = $request->input('seller_id');
+
+        if(!is_null($seller_id)) {
+            $products = Seller::findOrFail($seller_id)->products()->with([])->get();
+        } else {
+            $products = Product::with([])->get();
+        }
+
+        return $products;
     }
 
     /**

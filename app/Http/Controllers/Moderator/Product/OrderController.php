@@ -34,11 +34,20 @@ class OrderController extends Controller
      *
      * @return mixed
      */
-    public function json($seller_id = null)
+    public function json(Request $request)
     {
-        if(!is_null($seller_id))
-        {
+        $seller_id = $request->input('seller_id');
+        $buyer_id = $request->input('buyer_id');
+
+        if(!is_null($seller_id)) {
             $orders = Seller::findOrFail($seller_id)->product_orders()->orderBy('created_at', 'desc')
+                ->with(['product' => function ($query) {
+                    return $query->withTrashed();
+                }])
+                ->get();
+        } else if(!is_null($buyer_id))
+        {
+            $orders = Buyer::findOrFail($buyer_id)->product_orders()->orderBy('created_at', 'desc')
                 ->with(['product' => function($query) {
                     return $query->withTrashed();
                 }])

@@ -39,7 +39,7 @@
                                         <div class="col-lg-9 col-xl-6">
                                             <div class="kt-avatar kt-avatar--outline" id="kt_user_avatar">
                                                 <div class="kt-avatar__holder" id="profile-avatar"
-                                                     style="background-image: url({{ empty(auth()->user()->avatar) ? url('assets/media/users/300_25.jpg') : url( str_replace('public', 'storage', auth()->user()->avatar) )}})"></div>
+                                                     style="background-image: url({{ empty(auth('admin')->user()->avatar) ? url('assets/media/users/300_25.jpg') : url( str_replace('public', 'storage', auth('admin')->user()->avatar) )}})"></div>
                                                 <label class="kt-avatar__upload" data-toggle="kt-tooltip" title=""
                                                        data-original-title="Change avatar">
                                                     <i class="fa fa-pen"></i>
@@ -58,7 +58,7 @@
                                         <div class="col-lg-9 col-xl-6">
                                             <input class="form-control @error('name') is-invalid @enderror" name="name"
                                                    type="text"
-                                                   value="{{auth()->user()->name}}">
+                                                   value="{{auth('admin')->user()->name}}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -70,7 +70,7 @@
                                                 <input disabled type="text"
                                                        class="form-control disabled @error('email') is-invalid @enderror"
                                                        name="email"
-                                                       value="{{auth()->user()->email}}" placeholder="Email"
+                                                       value="{{auth('admin')->user()->email}}" placeholder="Email"
                                                        aria-describedby="basic-addon1">
                                             </div>
                                         </div>
@@ -84,7 +84,7 @@
                                                 <input type="text"
                                                        class="form-control @error('phone') is-invalid @enderror"
                                                        name="phone"
-                                                       value="{{auth()->user()->phone}}" placeholder="Phone"
+                                                       value="{{auth('admin')->user()->phone}}" placeholder="Phone"
                                                        aria-describedby="basic-addon1">
                                             </div>
                                         </div>
@@ -94,7 +94,7 @@
                                         <div class="col-lg-9 col-xl-6">
                                             <input class="form-control @error('address') is-invalid @enderror"
                                                    name="address" type="text"
-                                                   value="{{auth()->user()->address}}">
+                                                   value="{{auth('admin')->user()->address}}">
 
                                         </div>
                                     </div>
@@ -109,7 +109,7 @@
                                                         <optgroup label="{{$city->name}}">
                                                             @foreach($city->areas as $area)
                                                                 <option value="{{$area->id}}"
-                                                                        @if((int) old('area', auth()->user()->location_id) == $area->id) selected @endif>{{$area->name}}</option>
+                                                                        @if((int) old('area', auth('admin')->user()->location_id) == $area->id) selected @endif>{{$area->name}}</option>
                                                             @endforeach
                                                         </optgroup>
                                                     @endif

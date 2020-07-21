@@ -1,7 +1,7 @@
 @extends('moderator.layouts.dashboard', ['page_title' => "Product Orders"])
 
 @section('breadcrumb')
-    <a href="{{ route('moderator.dashboard') }}" class="kt-subheader__breadcrumbs-link">Dashboard</a>
+    <a href="{{ auth('moderator')->check() ? route('moderator.dashboard') : route('admin.dashboard') }}" class="kt-subheader__breadcrumbs-link">Dashboard</a>
     <span class="kt-subheader__breadcrumbs-separator"></span>
     <a href="{{ route('moderator.products.index') }}" class="kt-subheader__breadcrumbs-link">Products</a>
     <span class="kt-subheader__breadcrumbs-separator"></span>

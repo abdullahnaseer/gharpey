@@ -24,7 +24,6 @@ class QuestionController extends Controller
         $this->middleware('seller.approved');
     }
 
-
     /**
      * Return a listing of the resource.
      *
@@ -36,7 +35,10 @@ class QuestionController extends Controller
             'item',
             [Product::class, ServiceSeller::class],
             fn (Builder $q) => $q->where('seller_id', auth('seller')->id())
-        )->with(['item'])->get();
+        )->with([
+            'item',
+            'buyer' => fn($q) => $q->withTrashed()
+        ])->get();
 
         $questions->each(fn($q) => $q->item_type == \App\Models\ServiceSeller::class ? ($q->item->name = $q->item->service->name) : true);
 

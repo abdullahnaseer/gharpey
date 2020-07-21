@@ -113,6 +113,9 @@
                                 }
                             }
                         }, {
+                            field: 'buyer.name',
+                            title: 'Buyer Name',
+                        }, {
                             field: 'question_title',
                             title: 'Title',
                         }, {

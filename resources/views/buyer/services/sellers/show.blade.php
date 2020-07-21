@@ -310,12 +310,12 @@
                             @php($required = false)
                             @php($continue = false)
                             @if(($question->auth_rule->isOnlyForAuthenticatedUser()))
-                                @unless(auth()->check())
+                                @unless(auth('buyer')->check())
                                     @php($continue = true)
                                 @endunless
                             @endif
                             @if(($question->auth_rule->isOnlyForGuestUser()))
-                                @unless(auth()->guest())
+                                @unless(auth('buyer')->guest())
                                     @php($continue = true)
                                 @endunless
                             @endif

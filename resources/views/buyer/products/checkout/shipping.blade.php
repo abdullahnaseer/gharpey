@@ -96,7 +96,7 @@
                                 @enderror
                             </div>
 
-                            @if(auth()->guest())
+                            @if(auth('buyer')->guest())
                                 <div class="form-group required-field">
                                     <label>Receipt Email</label>
                                     <input name="receipt_email" type="text"

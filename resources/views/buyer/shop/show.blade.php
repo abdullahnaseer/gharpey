@@ -146,7 +146,7 @@
                                                         </a>
                                                     @endif
 
-                                                    @if(auth()->check())
+                                                    @if(auth('buyer')->check())
                                                         @php($condition = auth('buyer')->user()->hasWish($product->id))
                                                         <a href="{{route('buyer.products.wishlist.create', [$product->id])}}"
                                                            class="paction add-wishlist"

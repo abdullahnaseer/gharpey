@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Moderator\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Buyer;
 use App\Models\City;
 use App\Models\Seller;
 use App\Notifications\NewUser\NewSellerNotification;
@@ -68,6 +69,21 @@ class SellerController extends Controller
     {
         $cities = City::with('areas')->get();
         return view('moderator.users.sellers.index', ['cities' => $cities]);
+    }
+
+    /**
+     * Display the resource.
+     *
+     * @param Request $request
+     * @param int $record_id
+     * @return mixed
+     */
+    public function show(Request $request, int $record_id)
+    {
+        return view('moderator.users.sellers.show', [
+            'user' => Seller::findOrFail($record_id),
+            'cities' => City::with('areas')->get()
+        ]);
     }
 
     /**

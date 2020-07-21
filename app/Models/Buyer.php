@@ -145,6 +145,13 @@ class Buyer extends Authenticatable implements MustVerifyEmail
             ->using(Wishlist::class);
     }
 
+    /**
+     * Get the product orders for the buyer.
+     */
+    public function product_orders()
+    {
+        return $this->hasManyThrough(ProductOrder::class, Order::class);
+    }
 
     /**
      * Get the service_requests for the buyer.

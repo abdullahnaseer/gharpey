@@ -22,7 +22,7 @@
                 <p>Please allow us a few hours to contact you with your personalized quote base on the information you
                     provided us. In the mean time we ask that you confirm your email so that you can sign in and view
                     your quote request details, the quote we provided, make payments online and more.</p>
-                <p>An email has been sent to {{ auth()->user()->email }}, please click the link to confirm your email
+                <p>An email has been sent to {{ auth('buyer')->user()->email }}, please click the link to confirm your email
                     and set your account password.</p>
             @endif
         </div>

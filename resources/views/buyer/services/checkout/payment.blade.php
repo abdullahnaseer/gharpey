@@ -237,7 +237,7 @@
                 country: 'US',
                 currency: 'pkr',
                 total: {
-                    label: "Payment for Product Order by Buyer#{{auth()->id()}}",
+                    label: "Payment for Product Order by Buyer#{{auth('buyer')->id()}}",
                     amount: {{(int) ($service_request->total_amount * 100)}},
                 },
                 requestPayerName: true,

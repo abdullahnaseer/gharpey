@@ -54,11 +54,19 @@
                                             <h2 class="product-title">
                                                 <a href="{{route('buyer.services.sellers.show', [$service->slug, $service->pivot->id, 'city_id' => isset($city) && $city ? $city->id : null])}}">{{$service->name}}</a>
                                             </h2>
+
                                             <div class="ratings-container">
                                                 <div class="product-ratings">
-                                                    <span class="ratings" style="width:80%"></span><!-- End .ratings -->
-                                                </div><!-- End .product-ratings -->
-                                            </div><!-- End .product-container -->
+                                                        <span class="ratings"
+                                                              style="width:{{$service->reviews_average * 20}}%"></span>
+                                                    <!-- End .ratings -->
+                                                </div>
+                                                <!-- End .product-ratings -->
+                                                <a href="{{route('buyer.services.sellers.show', [$service->slug, $service->pivot->id, 'city_id' => isset($city) && $city ? $city->id : null])}}#reviews"
+                                                   class="rating-link">({{ $service->reviews_count }}
+                                                    Reviews)</a>
+                                            </div>
+
                                             <div class="product-desc">
                                                 <p>{{$service->pivot->description}}</p>
                                             </div><!-- End .product-desc -->
@@ -111,8 +119,8 @@
                                                         <!-- End .ratings -->
                                                     </div>
                                                     <!-- End .product-ratings -->
-                                                    <a href="#" class="rating-link">( {{ $product->reviews_count }}
-                                                        Reviews )</a>
+                                                    <a href="{{route('buyer.products.show', [$product->slug])}}#reviews" class="rating-link">({{ $product->reviews_count }}
+                                                        Reviews)</a>
                                                 </div>
                                                 <!-- End .product-container -->
                                                 <h2 class="product-title  m-b-5">

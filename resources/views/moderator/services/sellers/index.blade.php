@@ -4,7 +4,7 @@
 @section('breadcrumb')
     <a href="{{ route('moderator.dashboard') }}" class="kt-subheader__breadcrumbs-link">Dashboard</a>
     <span class="kt-subheader__breadcrumbs-separator"></span>
-    <span class="kt-subheader__breadcrumbs-link active">Service Requests</span>
+    <span class="kt-subheader__breadcrumbs-link active">Service Sellers</span>
 @endsection
 
 @section('breadcrumb-elements')
@@ -28,7 +28,7 @@
                         <i class="kt-font-brand flaticon2-line-chart"></i>
                     </span>
                 <h3 class="kt-portlet__head-title">
-                    Service Requests
+                    Service Sellers
                 </h3>
             </div>
         </div>

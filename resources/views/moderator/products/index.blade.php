@@ -139,6 +139,12 @@
                                 ';
                             },
                         }, {
+                            field: 'name',
+                            title: 'Product Name',
+                        }, {
+                            field: 'price',
+                            title: 'Product Price',
+                        }, {
                             field: 'slug',
                             title: 'Slug',
                         }, {

@@ -1,4 +1,4 @@
-@extends('moderator.layouts.dashboard', ['page_title' => "Service Requests"])
+@extends('moderator.layouts.dashboard', ['page_title' => "Service Sellers"])
 
 
 @section('breadcrumb')

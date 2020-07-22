@@ -485,6 +485,14 @@
                             field: 'quantity',
                             title: 'Quantity',
                         }, {
+                            field: 'order.buyer',
+                            title: 'Buyer',
+                            template: function (row) {
+                                return '\
+                                    <a href="/moderator/users/buyers/'+row.order.buyer.id+'">'+row.order.buyer.name+'</a>\
+                                ';
+                            },
+                        }, {
                             field: 'status',
                             title: 'Status',
                             autoHide: false,

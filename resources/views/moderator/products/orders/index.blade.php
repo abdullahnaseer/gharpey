@@ -126,6 +126,22 @@
                             field: 'price',
                             title: 'Total Price'
                         }, {
+                            field: 'product.seller',
+                            title: 'Seller',
+                            template: function (row) {
+                                return '\
+                                    <a href="/moderator/users/sellers/'+row.product.seller.id+'">'+row.product.seller.shop_name+'</a>\
+                                ';
+                            },
+                        }, {
+                            field: 'order.buyer',
+                            title: 'Buyer',
+                            template: function (row) {
+                                return '\
+                                    <a href="/moderator/users/buyers/'+row.order.buyer.id+'">'+row.order.buyer.name+'</a>\
+                                ';
+                            },
+                        }, {
                             field: 'status',
                             title: 'Status',
                             autoHide: false,

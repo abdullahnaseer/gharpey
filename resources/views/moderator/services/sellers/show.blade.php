@@ -1,10 +1,10 @@
-@extends('moderator.layouts.dashboard', ['page_title' => "Service Requests"])
+@extends('moderator.layouts.dashboard', ['page_title' => "Service Seller Detail"])
 
 
 @section('breadcrumb')
     <a href="{{ route('moderator.dashboard') }}" class="kt-subheader__breadcrumbs-link">Dashboard</a>
     <span class="kt-subheader__breadcrumbs-separator"></span>
-    <span class="kt-subheader__breadcrumbs-link active">Service Requests</span>
+    <span class="kt-subheader__breadcrumbs-link active">Service Sellers</span>
 @endsection
 
 @section('breadcrumb-elements')
@@ -28,7 +28,7 @@
                     <i class="kt-font-brand flaticon2-user"></i>
                 </span>
                 <h3 class="kt-portlet__head-title">
-                    Service Request Details
+                    Service Seller Details
                 </h3>
             </div>
         </div>

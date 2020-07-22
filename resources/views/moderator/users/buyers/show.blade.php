@@ -191,6 +191,14 @@
                             field: 'quantity',
                             title: 'Quantity',
                         }, {
+                            field: 'product.seller',
+                            title: 'Seller',
+                            template: function (row) {
+                                return '\
+                                    <a href="/moderator/users/sellers/'+row.product.seller.id+'">'+row.product.seller.shop_name+'</a>\
+                                ';
+                            },
+                        }, {
                             field: 'status',
                             title: 'Status',
                             autoHide: false,

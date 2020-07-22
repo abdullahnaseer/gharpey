@@ -41,22 +41,28 @@ class OrderController extends Controller
 
         if(!is_null($seller_id)) {
             $orders = Seller::findOrFail($seller_id)->product_orders()->orderBy('created_at', 'desc')
-                ->with(['product' => function ($query) {
-                    return $query->withTrashed();
-                }])
+                ->with([
+                    'product' => fn($q) => $q->withTrashed(),
+                    'product.seller' => fn($q) => $q->withTrashed(),
+                    'order.buyer' => fn($q) => $q->withTrashed(),
+                ])
                 ->get();
         } else if(!is_null($buyer_id))
         {
             $orders = Buyer::findOrFail($buyer_id)->product_orders()->orderBy('created_at', 'desc')
-                ->with(['product' => function($query) {
-                    return $query->withTrashed();
-                }])
+                ->with([
+                    'product' => fn($q) => $q->withTrashed(),
+                    'product.seller' => fn($q) => $q->withTrashed(),
+                    'order.buyer' => fn($q) => $q->withTrashed(),
+                ])
                 ->get();
         } else {
             $orders = ProductOrder::orderBy('created_at', 'desc')
-                ->with(['product' => function($query) {
-                    return $query->withTrashed();
-                }])
+                ->with([
+                    'product' => fn($q) => $q->withTrashed(),
+                    'product.seller' => fn($q) => $q->withTrashed(),
+                    'order.buyer' => fn($q) => $q->withTrashed(),
+                ])
                 ->get();
         }
         return $orders;

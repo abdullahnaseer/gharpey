@@ -68,7 +68,7 @@
                 </li>
 
 
-                <li class="kt-menu__item  kt-menu__item--submenu {{ ( (request()->is('admin/services') || (request()->is('admin/services*') ||  request()->is('moderator/services*')) ) ? 'kt-menu__item--open kt-menu__item--here' : '' }}"
+                <li class="kt-menu__item  kt-menu__item--submenu {{ ( (request()->is('admin/services') || request()->is('admin/services*') ||  request()->is('moderator/services*')) ) ? 'kt-menu__item--open kt-menu__item--here' : '' }}"
                     aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                     <a href="javascript:" class="kt-menu__link kt-menu__toggle">
                         <i class="kt-menu__link-icon flaticon2-lorry"><span></span></i>

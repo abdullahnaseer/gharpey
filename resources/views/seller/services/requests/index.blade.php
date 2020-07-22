@@ -108,6 +108,30 @@
                             field: 'total_amount',
                             title: 'Total Price'
                         }, {
+                            field: 'buyer.name',
+                            title: 'Buyer Name'
+                        }, {
+                            field: 'buyer.email',
+                            title: 'Buyer Email'
+                        }, {
+                            field: 'buyer.phone',
+                            title: 'Buyer Phone'
+                        }, {
+                            field: 'shipping_address',
+                            title: 'Address'
+                        }, {
+                            field: 'shipping_location.name',
+                            title: 'Area'
+                        }, {
+                            field: 'shipping_location.city.name',
+                            title: 'City'
+                        }, {
+                            field: 'shipping_location.city.state.name',
+                            title: 'State/Province'
+                        }, {
+                            field: 'buyer.phone',
+                            title: 'Buyer Phone'
+                        }, {
                             field: 'status',
                             title: 'Status',
                             autoHide: false,

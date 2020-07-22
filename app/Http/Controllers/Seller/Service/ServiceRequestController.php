@@ -45,7 +45,10 @@ class ServiceRequestController extends Controller
                 'seller' => fn($q) => $q->withTrashed(),
                 'service_seller' => fn($q) => $q->withTrashed(),
                 'answers',
-                'answers.answer'
+                'answers.answer',
+                'shipping_location',
+                'shipping_location.city',
+                'shipping_location.city.state'
             ])
             ->get();
     }

@@ -73,6 +73,14 @@ class ServiceRequest extends Model
     }
 
     /**
+     * Get the location for the service request.
+     */
+    public function shipping_location()
+    {
+        return $this->belongsTo('App\Models\CityArea', 'shipping_location_id', 'id');
+    }
+
+    /**
      * Get the service for the service request.
      */
     public function service_seller()

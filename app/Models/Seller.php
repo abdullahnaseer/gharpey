@@ -285,6 +285,14 @@ class Seller extends Authenticatable implements MustVerifyEmail, MustVerifyPhone
     }
 
     /**
+     * The services that belong to the seller.
+     */
+    public function service_sellers()
+    {
+        return $this->hasMany(ServiceSeller::class, 'seller_id', 'id');
+    }
+
+    /**
      * Get the service requests for the seller.
      */
     public function service_requests()

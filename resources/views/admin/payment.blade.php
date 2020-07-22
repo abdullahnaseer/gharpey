@@ -26,7 +26,7 @@
             </tr>
             @if($users->isEmpty())
                 <tr>
-                    <td colspan="3" style="text-align:center;">There are no payments or earnings for your search.</td>
+                    <td colspan="11" style="text-align:center;">There are no payments or earnings for your search.</td>
                 </tr>
             @else
                 @foreach($users as $u)

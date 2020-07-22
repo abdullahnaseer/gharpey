@@ -35,9 +35,13 @@ class ProductController extends Controller
         $seller_id = $request->input('seller_id');
 
         if(!is_null($seller_id)) {
-            $products = Seller::findOrFail($seller_id)->products()->with([])->get();
+            $products = Seller::findOrFail($seller_id)->products()->with([
+                'seller' => fn($q) => $q->withTrashed()
+            ])->get();
         } else {
-            $products = Product::with([])->get();
+            $products = Product::with([
+                'seller' => fn($q) => $q->withTrashed()
+            ])->get();
         }
 
         return $products;

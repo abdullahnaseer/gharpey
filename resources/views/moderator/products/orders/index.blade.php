@@ -155,8 +155,6 @@
                             autoHide: false,
                             overflow: 'visible',
                             template: function (row) {
-                                console.log('order', row)
-
                                 let view = "<a href='{{url('moderator/products/orders')}}/"+row.id+"' class='btn btn-outline-warning mr-2' title='Show Details'>View</a>"
 
                                 if (row.status === '{{\App\Models\ProductOrder::STATUS_NEW}}' || row.status === '{{\App\Models\ProductOrder::STATUS_SELLER_SENT}}')

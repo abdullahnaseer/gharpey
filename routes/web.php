@@ -89,7 +89,7 @@ Route::name('moderator.')->prefix('moderator')->namespace('Moderator')->group(fu
         Route::resource('buyers', 'BuyerController')->only(['index', 'show', 'store', 'update', 'destroy']);
     });
 
-    Route::post('products/orders/json/{seller_id?}', 'Product\OrderController@json')->name('orders.json');
+    Route::post('products/orders/json/', 'Product\OrderController@json')->name('orders.json');
     Route::resource('products/orders', 'Product\OrderController')->only(['index', 'show', 'edit']);
 
     Route::post('products/json', 'Product\ProductController@json')->name('products.json');

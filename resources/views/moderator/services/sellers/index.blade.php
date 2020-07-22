@@ -100,6 +100,14 @@
                                 ';
                             }
                         }, {
+                            field: 'seller',
+                            title: 'Seller',
+                            template: function (row) {
+                                return '\
+                                    <a href="/moderator/users/sellers/'+row.seller.id+'">'+row.seller.shop_name+'</a>\
+                                ';
+                            },
+                        }, {
                             field: 'service.name',
                             title: 'Name',
                         }, {
@@ -116,7 +124,8 @@
                             autoHide: false,
                             overflow: 'visible',
                             template: function (row) {
-                                return "<a href='{{url('/moderator/services/service_sellers')}}/" + row.id + "' class='btn btn-outline-warning mr-2' title='Show details'>View</a>";
+                                return "No Action Available";
+                                {{--return "<a href='{{url('/moderator/services/service_sellers')}}/" + row.id + "' class='btn btn-outline-warning mr-2' title='Show details'>View</a>";--}}
                             },
                         }],
 

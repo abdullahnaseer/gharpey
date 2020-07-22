@@ -36,10 +36,14 @@ class ServiceSellerController extends Controller
         $seller_id = $request->input('seller_id');
 
         if(!is_null($seller_id)) {
-            $service_sellers = Seller::findOrFail($seller_id)->services()->with([])->get();
+            $service_sellers = Seller::findOrFail($seller_id)->service_sellers()->with([
+                'service',
+                'seller' => fn($q) => $q->withTrashed()
+            ])->get();
         } else {
             $service_sellers = ServiceSeller::with([
-                'service'
+                'service',
+                'seller' => fn($q) => $q->withTrashed()
             ])->get();
         }
 

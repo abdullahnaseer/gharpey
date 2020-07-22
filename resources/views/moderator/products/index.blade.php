@@ -10,8 +10,8 @@
     <div class="kt-input-icon kt-input-icon--left">
         <input type="text" class="form-control" placeholder="Search..." id="generalSearch">
         <span class="kt-input-icon__icon kt-input-icon__icon--left">
-                                            <span><i class="la la-search"></i></span>
-                                        </span>
+            <span><i class="la la-search"></i></span>
+        </span>
     </div>
 @endsection
 
@@ -131,8 +131,13 @@
                                 ';
                             }
                         }, {
-                            field: 'name',
-                            title: 'Name',
+                            field: 'seller',
+                            title: 'Seller',
+                            template: function (row) {
+                                return '\
+                                    <a href="/moderator/users/sellers/'+row.seller.id+'">'+row.seller.shop_name+'</a>\
+                                ';
+                            },
                         }, {
                             field: 'slug',
                             title: 'Slug',

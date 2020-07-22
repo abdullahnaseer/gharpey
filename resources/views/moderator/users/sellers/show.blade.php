@@ -239,7 +239,7 @@
 
         var KTDatatableJsonRemoteProducts = function () {
             var jsonResource = function () {
-                var datatable = $('#services_datatable').KTDatatable({
+                var datatable = $('#products_datatable').KTDatatable({
                     // datasource definition
                     data: {
                         type: 'remote',
@@ -302,11 +302,12 @@
                             autoHide: false,
                             overflow: 'visible',
                             template: function (row) {
-                                return '\
-                                    <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Show Product Detail">\
-                                        <i class="la la-eye"></i>\
-                                    </a>\
-                                ';
+                                return "No Action Available."
+                                // return '\
+                                //     <a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Show Product Detail">\
+                                //         <i class="la la-eye"></i>\
+                                //     </a>\
+                                // ';
                             },
                         }],
 
@@ -334,7 +335,7 @@
 
         var KTDatatableJsonRemoteServices = function () {
             var jsonResource = function () {
-                var datatable = $('#product_orders_datatable').KTDatatable({
+                var datatable = $('#services_datatable').KTDatatable({
                     // datasource definition
                     data: {
                         type: 'remote',
@@ -551,7 +552,7 @@
 
         jQuery(document).ready(function () {
             KTDatatableJsonRemoteProducts.init();
-            // KTDatatableJsonRemoteServices.init();
+            KTDatatableJsonRemoteServices.init();
             KTDatatableJsonRemoteProductOrders.init();
         });
     </script>

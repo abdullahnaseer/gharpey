@@ -17,7 +17,7 @@
         "laracasts/flash": "^3.1",
         "laravel/framework": "^7.10",
         "laravel/nexmo-notification-channel": "^2.3",
-        "laravel/sanctum": "^2.3",
+        "laravel/sanctum": "^2.4",
         "laravel/tinker": "^2.4",
         "laravel/ui": "^2.0",
         "laravelcollective/html": "^6.1",

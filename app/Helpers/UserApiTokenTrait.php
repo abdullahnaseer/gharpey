@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Models\Traits;
+namespace App\Helpers;
 
 trait UserApiTokenTrait
 {

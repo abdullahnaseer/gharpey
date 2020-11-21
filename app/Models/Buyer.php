@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Traits\UserApiTokenTrait;
+use App\Helpers\UserApiTokenTrait;
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
 use Darryldecode\Cart\Facades\CartFacade as Cart;

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Interfaces\MustVerifyPhoneInterface as MustVerifyPhoneContract;
-use App\Models\Traits\MustVerifyPhoneTrait;
-use App\Models\Traits\UserApiTokenTrait;
+use App\Helpers\MustVerifyPhoneInterface as MustVerifyPhoneContract;
+use App\Helpers\MustVerifyPhoneTrait;
+use App\Helpers\UserApiTokenTrait;
 use App\Notifications\ResetPassword;
 use App\Notifications\VerifyEmail;
 use Carbon\Carbon;

@@ -18,6 +18,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Stripe\Charge;
 use Stripe\Stripe;
 
@@ -27,10 +28,16 @@ class CheckoutController extends Controller
      * Display a form for shipping location.
      *
      * @return mixed
+     * @throws ValidationException
      */
     public function getShipping(Request $request)
     {
         $cart = Cart::session($request->session()->get('_token'));
+
+        if($cart->getContent()->isEmpty())
+        {
+            throw ValidationException::withMessages(['cart' => "Cart is empty!"]);
+        }
 
         return view('buyer.products.checkout.shipping', [
             'user' => auth()->user(),

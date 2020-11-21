@@ -9,19 +9,19 @@ The proposed system will allow and encourage the Pakistani women to use digital 
 ## Credentials
 
 ###### Admin
-- Portal URL: [https://sydiatech.com/admin](https://sydiatech.com/admin)
+- Portal URL: [https://gharpey.ml/admin](https://sydiatech.com/admin)
 - Email: abdullahnaseer999@gmail.com
 
 ###### Moderator
-- Portal URL: [https://sydiatech.com/moderator](https://sydiatech.com/moderator)
+- Portal URL: [https://gharpey.ml/moderator](https://sydiatech.com/moderator)
 - Email: abdullahnaseer999@gmail.com
 
 ###### Seller
-- Portal URL: [https://sydiatech.com/seller](https://sydiatech.com/seller)
+- Portal URL: [https://gharpey.ml/seller](https://sydiatech.com/seller)
 - Email: abdullahnaseer999@gmail.com
 
 ###### Buyer
-- Portal URL: [https://sydiatech.com](https://sydiatech.com)
+- Portal URL: [https://gharpey.ml](https://sydiatech.com)
 - Email: abdullahnaseer999@gmail.com
 
 ## Technologies
